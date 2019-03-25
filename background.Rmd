@@ -1,0 +1,117 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# Different kind of predictors 
+1. Judge's characteristics: Gender, political views, religious background
+2. Number of questions asked by the judge: Epstein et al. (2010) 
+3. Vocal cue: (Chen et al., 2016, 2017, 2019; Chen, 2018)
+
+Tutton et al. (2018) present a qualitative/observational study of judicial behaviour based on watching the audio footage, but do not use the footage to predict case outcomes.  
+
+
+# Some law concepts:
+1. Full court: usually only one judge, Full Court has more than one, usually 3, 5 or 7
+2. Appeal: A review of cases when a party requests a change in the decision made
+3. Hearing:
+4. Tribunal: A person with the authority to judge 
+5. Counsel: approximately lawyer
+5. hierarchy of court: supreme court of state and territories < high court
+check this webpage: http://www.hcourt.gov.au/assets/education/PrimaryStudentsActivitiesAnswers.pdf
+
+# Steph's paper (Department - comparing four API for face recognition)
+- Judge's decision is "subjective" to their experience and view of the case, necessary to know how they think -> a way is view from demeanor
+-  Very likely to have false discovery for the associate's faces
+
+# OpenFace
+- Google’s FaceNet or Facebook’s DeepFace.
+- Theoratical paper:  FaceNet: A Unified Embedding for Face Recognition and Clustering by Florian Schroff, Dmitry Kalenichenko, and James Philbin at Google: http://elijah.cs.cmu.edu/DOCS/CMU-CS-16-118.pdf
+- https://github.com/TadasBaltrusaitis/OpenFace (Tadas Baltrušaitis)
+
+# Workflow of OpenFace
+1. Detect faces and extract the faces from the background via dlib
+2. neural network embedding to reduce teh face to a 128-dimensional hypersphere. Note that NN embedding has an advantage over linear PCA dimensional reduction in a sense that the distance between points gives information on the similarity between points. If two faces are from the same person (they are similar), they are expected to have a small distance adn this feature will have application for further classification and comparison
+
+
+# t-distributed stochastic neighbor embedding
+- reference: http://www.jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf
+- Dimension reduction; Non-linear mothed
+- Similar observations are locating near each other while dissimilar observations are  apart: can then calculate distance for recommander system
+- Steps
+  - have P1 as the probability of A will choose B as its neightbour under Gaussain mean of A
+  - compute the probability in the high dimension(128 dimension) as $p^1_1$ and in the reduced dimension sphere (3 dimension) as $p^2_1$ and get the difference $diff - p^1_1 - p^2_1$
+  - minimise teh difference via KL divergence using gradient decent
+```How much deeper d you think i need to know about this```
+
+
+# HandTrack
+- Seems to be for realtime hand track: https://victordibia.github.io/handtrack.js/#/
+- Egohand dataset for training citation: Bambach, Sven, et al. “Lending a hand: Detecting hands and recognizing activities in complex egocentric interactions.” Proceedings of the IEEE International Conference on Computer Vision. 2015.
+- more to read on hand track and training tensorflow object detection API from here: 
+  - https://hackernoon.com/handtrackjs-677c29c1d585
+  - https://github.com/victordibia/handtracking
+  - https://medium.com/@victor.dibia/how-to-build-a-real-time-hand-detector-using-neural-networks-ssd-on-tensorflow-d6bac0e4b2ce
+  - https://pythonprogramming.net/training-custom-objects-tensorflow-object-detection-api-tutorial/
+  - https://towardsdatascience.com/how-to-train-your-own-object-detector-with-tensorflows-object-detector-api-bec72ecfe1d9
+  - https://github.com/irllabs/handtrack
+  - https://github.com/victordibia/handtrack.js/
+  - https://tensorflow-object-detection-api-tutorial.readthedocs.io/en/latest/
+  - https://becominghuman.ai/tensorflow-object-detection-api-tutorial-training-and-evaluating-custom-object-detector-ed2594afcf73
+
+
+
+
+
+
+# Data Structure
+|JudgeID|Trial ID|Time|Expression or movement vars|
+|----|----|-----|-----|
+
+
+# Overall about the Project 
+- see how Google and OpenFace work: what kind of data we can get on a small sample (1 photo per video)  
+- then roll out to more photos per video: using Taipan
+- get the 128-dimension matrix and dimension reduction 
+- build model based on that
+
+
+
+
+# Getting data from google 
+
+# Getting data from OpenFace 
+First using `opencv` to detect the face landmark
+
+# Steph's paper(TA): 
+- http://www.sloansportsconference.com/wp-content/uploads/2018/02/2005.pdf
+- Over	the	past	two	decades,	there	has	been	extraordinary	progress	using	machine	learning	toperform	a	variety	of	facial	recognition	tasks	with	video	and	image	data	(Sariyanidi,	Gunes,	and	Cavallaro	2015).
+- Facial Action Coding System (FACS)
+  - (Ekman and Friesen,1978):	‘anger’,	‘fear’,	‘sadness’,	‘happiness’,	‘surprise’,	and	‘disgust’
+  - This system is of limited use in the court because judges are expected not to present any recognisable demeanour as per the court etiquette. 
+- Facial Action Unit
+- ffpmeg, a video conversion tool,  can extract frame at a given rate 
+- FaceOpen can detect and crop face 
+- The emotion tage used: ‘anger’,	‘annoyance’,	‘anxiety’,	‘dejection’,	‘elation’,	‘focus’,	and ‘fired	up’ are selected from Sport Emotion Questionnaire, which	is	an	established	psychometric	instrument	in	sport	psychology
+
+
+# Problem faced:
+- My computer is only full HD, the image/ face may be better recognised in a 4K screen. 
+
+
+
+# Face landmarking detection
+
+# Keras
+Keras is an API for training deep learning models - it may be useful after we collect the data ourselves. See in the page, the tutorial loads the data in the package first before building the mdoel: https://tensorflow.rstudio.com/keras/#tutorials
+
+
+
+
+
+# more
+- use taipan to crop and then send faces to google 
+
+
+Questions:
+1. Can't get access to Taylor and Francis database???!!!

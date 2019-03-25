@@ -1,0 +1,66 @@
+---
+title: "taipan"
+author: "Huize Zhang"
+date: "24/03/2019"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+
+library(taipan)
+library(shiny)
+library(imager)
+library(purrr)
+```
+
+
+```{r}
+questions <- taipanQuestions(
+  scene = sliderInput("quality", label = "Image Quality",
+                      min = 0, max = 10, value = 5),
+  selection = div(
+    radioButtons("hotdog", label = "Hotdog?",
+                 choices = list("Hotdog", "Not hotdog")),
+    checkboxGroupInput("extra", label = "Condiments",
+                       choices = list("Onion", "Tomato (Ketchup)", "Barbeque", "Mustard"))
+  )
+)
+
+buildTaipan(
+  questions = questions,
+  images = c("https://raw.githubusercontent.com/srkobakian/taipan/master/sample_images/hotdog.jpg",
+             "https://raw.githubusercontent.com/srkobakian/taipan/master/sample_images/not_hotdog.jpg"),
+  appdir = file.path(tempdir(), "taipan"), overwrite = TRUE
+)
+```
+
+```{r}
+questions <- taipanQuestions(
+  scene = sliderInput("quality", label = "Image Quality",
+                      min = 0, max = 10, value = 5),
+  selection = div(
+    radioButtons("Face", label = "Face?",
+                 choices = list("Face", "Not Face"))
+  )
+)
+
+nauru_a <- list.files("av_footage/nauru-a")
+nauru_a <- nauru_a[1:length(nauru_a)-1]
+naurua_file_name = paste0("av_footage/nauru-a/",nauru_a)
+nauru <- map(naurua_file_name, load.image)
+
+
+
+buildTaipan(
+  questions = questions,
+  images = "av_footage/nauru-a/nauru-a_003.png",
+  appdir = file.path(tempdir(), "taipan"), overwrite = TRUE
+)
+
+```
+
+
+
