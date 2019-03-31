@@ -3,6 +3,19 @@ title: "R Notebook"
 output: html_notebook
 ---
 
+lunch talk 8th March
+- tennis club people are playing
+- project on racquet
+- Rob's Facebook project
+
+Also something about my project
+- reading Steph's report on tennis
+- "You are supposed to work 12 hours of research a week :O"
+- OpenFace and OpenPose to capture face from video(Acutally they allow video)
+- better to do OpenPose on Docker
+- May want to start from static expression and then to see if it is time ordered to see if we want to proceed to temporal
+
+
 # Different kind of predictors 
 1. Judge's characteristics: Gender, political views, religious background
 2. Number of questions asked by the judge: Epstein et al. (2010) 
