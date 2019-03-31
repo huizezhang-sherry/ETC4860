@@ -132,4 +132,15 @@ webshot("https://www.r-bloggers.com/take-screenshot-of-webpage-using-r/", "rblog
 
 ## meeting #4
 - maybe try docker: since we have version issue 
+- go get Taipan and fix stuff [tick]
+- send to google/ OpenFace API to get desired data format
 
+# Taipan
+
+- We use Taipan to get the x and y coordinates of the face for each set of frame photos. Currently there are some issues with Shiny in terms of the dimension of the photos (can't select some part of the picture). We modify the app locally and manage to fix it - but not on the public version. 
+- The output is stored in `taipan-export.csv`
+
+# Task week 4
+- use `imager` or other tools to crop the faces from video frames 
+- try docker version to use OpenFace to do face landmark for the cropped faces: http://cmusatyalab.github.io/openface/
+- try google if OpenFace doesn't work 
