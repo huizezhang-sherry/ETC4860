@@ -389,12 +389,12 @@ library(purrr)</code></pre>
 ## 
 ##     flatten</code></pre>
 <pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ─────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ── Attaching packages ──────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.1.0          ✔ readr   1.3.1     
 ## ✔ tibble  2.1.1          ✔ dplyr   0.8.0.9010
 ## ✔ tidyr   0.8.3          ✔ stringr 1.4.0     
 ## ✔ ggplot2 3.1.0          ✔ forcats 0.4.0</code></pre>
-<pre><code>## ── Conflicts ────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+<pre><code>## ── Conflicts ─────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter()  masks stats::filter()
 ## ✖ purrr::flatten() masks jsonlite::flatten()
 ## ✖ dplyr::lag()     masks stats::lag()</code></pre>
@@ -446,8 +446,8 @@ library(purrr)</code></pre>
 <p>using r script to take screenshot of the media - ffemeg(looks doable):<a href="https://www.ffmpeg.org/ffprobe.html" class="uri">https://www.ffmpeg.org/ffprobe.html</a> - PhantomJS - R: webshot, takescreenshot - have a look at how to do openpose</p>
 </div>
 </div>
-<div id="google" class="section level1">
-<h1>Google</h1>
+<div id="google-api" class="section level1">
+<h1>Google API</h1>
 <pre class="r"><code>dt &lt;- jsonlite::fromJSON(&quot;goog_oks.json&quot;)
 
 landmark &lt;- dt$faceAnnotations$landmarks
@@ -472,18 +472,8 @@ tbody &lt;- html_table(nodes)
 recording &lt;- data.frame(tbody)
 names(recording) &lt;- recording[1,]
 recording &lt;- recording[-c(1,nrow(recording)),-c(4)]</code></pre>
-<pre class="r"><code>library(ROpenCVLite) #devtools::install_github(&quot;swarm-lab/ROpenCVLite&quot;)
-library(Rvision)</code></pre>
-<pre><code>## 
-## Attaching package: 'Rvision'</code></pre>
-<pre><code>## The following objects are masked from 'package:graphics':
-## 
-##     frame, image</code></pre>
-<pre><code>## The following objects are masked from 'package:base':
-## 
-##     mean, merge, split, sum</code></pre>
-<div id="further-for-week-3-1" class="section level2">
-<h2>Further for week 3</h2>
+<div id="week-3-task" class="section level2">
+<h2>week 3 Task</h2>
 <p>using r script to take screenshot of the media - ffemeg(looks doable):<a href="https://www.ffmpeg.org/ffprobe.html" class="uri">https://www.ffmpeg.org/ffprobe.html</a> - PhantomJS - R: webshot, takescreenshot</p>
 </div>
 </div>
@@ -501,13 +491,210 @@ webshot(&quot;https://www.r-bloggers.com/take-screenshot-of-webpage-using-r/&quo
 <li>FFemeg is a collection of different project that handle multimedia files. The command line tool ffemeg(<a href="https://www.ffmpeg.org/ffmpeg.html" class="uri">https://www.ffmpeg.org/ffmpeg.html</a>) is the one I’m using to take screenshot of the video</li>
 <li>A very comprehensive tutorial: <a href="http://keycorner.org/pub/text/doc/ffmpeg-tutorial.htm" class="uri">http://keycorner.org/pub/text/doc/ffmpeg-tutorial.htm</a></li>
 </ul>
-<p>Tutorial for ffepeg - Extracting images from video: ffmpeg -i inputfile.fmt -r 1 image%2d.jpg 1) -r: frame rate: no. of frames per second: accept decimal 2) image%2d.jpg: [name_of_image]_[numbering_system].jpg: 2d means 2 digits: 01, 02, 03… if 3d: 001, 002…</p>
 </div>
-<div id="youtube-dl" class="section level1">
-<h1>youtube-dl</h1>
+<div id="tutorial-for-ffepeg" class="section level1">
+<h1>Tutorial for ffepeg</h1>
 <ul>
-<li>use</li>
+<li>Extracting images from video: ffmpeg -i inputfile.fmt -r 1 image%2d.jpg
+<ol style="list-style-type: decimal">
+<li>-r: frame rate: no. of frames per second: accept decimal</li>
+<li>image%2d.jpg: [name_of_image]_[numbering_system].jpg: 2d means 2 digits: 01, 02, 03… if 3d: 001, 002…</li>
+</ol></li>
 </ul>
+</div>
+<div id="youtube-dl---how-does-it-work" class="section level1">
+<h1>youtube-dl - How does it work???</h1>
+<ul>
+<li>“sorry, the video does not exist”</li>
+<li>seems to use scripting to find the video and execute downloads</li>
+</ul>
+</div>
+<div id="workflow" class="section level1">
+<h1>Workflow</h1>
+<ul>
+<li>use <code>youtube-dl</code> to download video from <a href="http://www.hcourt.gov.au/cases/recent-av-recordings" class="uri">http://www.hcourt.gov.au/cases/recent-av-recordings</a>: <code>youtube-dl [url_of_vidoe_page]</code></li>
+<li>use ffemeg to automatically extract frames for every minute from the video: <code>ffmpeg -i nauru-a.mp4 -r 1/60 image%2d.png</code></li>
+</ul>
+<div id="openface-1" class="section level2">
+<h2>OpenFace</h2>
+<ul>
+<li>Baltrušaitis, Tadas, Peter Robinson, and Louis-Philippe Morency. 2016. “Openface: An Open Source Facial Behavior Analysis Toolkit.” In Applications of Computer Vision (WACV), 2016 IEEE Winter Conference on, 1–10. IEEE.</li>
+<li><a href="https://www.cl.cam.ac.uk/research/rainbow/projects/openface/wacv2016.pdf" class="uri">https://www.cl.cam.ac.uk/research/rainbow/projects/openface/wacv2016.pdf</a></li>
+<li>see Mendelay</li>
+</ul>
+</div>
+<div id="openface-via-command-line" class="section level2">
+<h2>OpenFace via Command line</h2>
+<ul>
+<li>Has executable for sequence analysis that contains one face: <code>FeatureExtraction</code>; <code>FaceLandmarkVidMulti</code> is for sequence analysis that contains multiple faces; <code>FaceLandmarkImg</code>: for individual images that contains one or more faces</li>
+</ul>
+</div>
+<div id="meeting-4" class="section level2">
+<h2>meeting #4</h2>
+<ul>
+<li>maybe try docker: since we have version issue</li>
+<li>go get Taipan and fix stuff [tick]</li>
+<li>send to google/ OpenFace API to get desired data format</li>
+</ul>
+</div>
+</div>
+<div id="taipan" class="section level1">
+<h1>Taipan</h1>
+<ul>
+<li>We use Taipan to get the x and y coordinates of the face for each set of frame photos. Currently there are some issues with Shiny in terms of the dimension of the photos (can’t select some part of the picture). We modify the app locally and manage to fix it - but not on the public version.</li>
+<li>The output is stored in <code>taipan-export-2019-03-31.csv</code></li>
+</ul>
+</div>
+<div id="task-week-4" class="section level1">
+<h1>Task week 4</h1>
+<ul>
+<li>use <code>imager</code> or other tools to crop the faces from video frames</li>
+<li>try docker version to use OpenFace to do face landmark for the cropped faces: <a href="http://cmusatyalab.github.io/openface/" class="uri">http://cmusatyalab.github.io/openface/</a></li>
+<li>try google if OpenFace doesn’t work</li>
+</ul>
+</div>
+<div id="crop-faces-from-frames" class="section level1">
+<h1>Crop faces from frames</h1>
+<p>The xy cordinate of the ideal faces is in taipan-export-2019-03-31. We can use command line tool magick to crop the whole image based on the cordinate supplied. The mogrify option allows for batch processing [may need to “mappify” the code]</p>
+<pre class="r"><code>library(imager)
+library(tidyverse)
+library(magick)
+xy_cord
+cord &lt;- xy_cord %&gt;% 
+  mutate(geom = paste0((xmax - xmin), &quot;x&quot;,(ymax- ymin) , &quot;+&quot;, xmin, &quot;+&quot;, ymin))
+
+nauru &lt;- image_read(&quot;data/nauru-a/nauru-a_003.png&quot;)
+image &lt;- magick::image_crop(nauru, cord$geom)
+
+nauru &lt;- image_read(system.file())</code></pre>
+<pre class="r"><code>cmd = c()
+for (j in seq(1,3,1)){
+  cmd[j] = paste0(&quot;cd data/nauru-a; magick mogrify -crop &quot;, cord$geom[j + 25], &quot; -path ../cropped/nauru-a&quot;, &quot;/&quot;, j, &quot; *.png&quot;)
+}
+
+for (i in 1:length(cmd)){
+  system(cmd[i])
+}</code></pre>
+<pre class="r"><code># nauru-b
+cmd = c()
+for (j in seq(1,3,1)){
+  cmd[j] = paste0(&quot;cd data/nauru-b; magick mogrify -crop &quot;, cord$geom[j + 28], &quot; -path ../cropped/nauru-b&quot;, &quot;/&quot;, j, &quot; *.png&quot;)
+}
+
+for (i in 1:length(cmd)){
+  system(cmd[i])
+}
+
+#11-18-14a
+cmd = c()
+for (j in seq(1,5,1)){
+  cmd[j] = paste0(&quot;cd data/18-11-14a; magick mogrify -crop &quot;, cord$geom[j], &quot; -path ../cropped/18-11-14a&quot;, &quot;/&quot;, j, &quot; *.png&quot;)
+}
+
+for (i in 1:length(cmd)){
+  system(cmd[i])
+}
+
+#18-11-14b
+cmd = c()
+for (j in seq(1,5,1)){
+  cmd[j] = paste0(&quot;cd data/18-11-14b; magick mogrify -crop &quot;, cord$geom[j + 10], &quot; -path ../cropped/18-11-14b&quot;, &quot;/&quot;, j, &quot; *.png&quot;)
+}
+
+for (i in 1:length(cmd)){
+  system(cmd[i])
+}</code></pre>
+<pre class="r"><code>cmd = c()
+for (j in seq(1,5,1)){
+  cmd[j] = paste0(&quot;cd data/18-11-13; magick mogrify -crop &quot;, cord$geom[j + 5], &quot; -path ../cropped/18-11-13&quot;, &quot;/&quot;, j, &quot; *.png&quot;)
+}
+
+for (i in 1:length(cmd)){
+  system(cmd[i])
+}
+
+#18-12-07
+cmd = c()
+for (j in seq(1,5,1)){
+  cmd[j] = paste0(&quot;cd data/18-12-07; magick mogrify -crop &quot;, cord$geom[j + 15], &quot; -path ../cropped/18-12-07&quot;, &quot;/&quot;, j, &quot; *.png&quot;)
+}
+
+for (i in 1:length(cmd)){
+  system(cmd[i])
+}
+
+#19-02-14
+cmd = c()
+for (j in seq(1,5,1)){
+  cmd[j] = paste0(&quot;cd data/19-02-14; magick mogrify -crop &quot;, cord$geom[j + 20], &quot; -path ../cropped/19-02-14&quot;, &quot;/&quot;, j, &quot; *.png&quot;)
+}
+
+for (i in 1:length(cmd)){
+  system(cmd[i])
+}</code></pre>
+<pre class="r"><code>for (i in nauru){
+  for (j in seq(26, 31, 1)){
+    cmd[i] = paste0(&quot;cd data/&quot;, i, &quot;; magick mogrify -crop &quot;, cord$geom[j], &quot; -path ../cropped/&quot;, i, &quot; *.png&quot;)
+  }
+}
+
+system(cmd)
+which(&quot;nauru-a&quot; == substr(cord$image_name, 1,7))
+
+j = seq(26, 31, 1)</code></pre>
+</div>
+<div id="docker-for-openface-api" class="section level1">
+<h1>Docker for OpenFace API</h1>
+<ul>
+<li>citation: OpenFace 2.0: Facial Behavior Analysis Toolkit Tadas Baltrušaitis, Amir Zadeh, Yao Chong Lim, and Louis-Philippe Morency, IEEE International Conference on Automatic Face and Gesture Recognition, 2018</li>
+<li>a good starting point: <a href="https://docker-curriculum.com/" class="uri">https://docker-curriculum.com/</a></li>
+<li>Command used:
+<ol style="list-style-type: decimal">
+<li>docker cp cropped/nauru-a/1 b811e9b14812:/home/openface-build</li>
+<li>build/bin/FaceLandmarkImg -f nauru-a_003.png</li>
+<li>build/bin/FaceLandmarkImg -fdir data/1/</li>
+<li>docker cp b811e9b14812:/home/openface-build/processed/nauru-a_003.csv ~</li>
+</ol></li>
+<li>First pull the “repo” from DockerHub and run it via docker run -it –rm algebr/openface:latest. This opens a docker terminal. Copy the directory from local to docker outside the docker using 1). Use 2) inside the docker for single image processing adn 3) for batch processing. Use 4) to copy the processed file from docker to local machine.</li>
+</ul>
+<p>Meeting week 5 - add image id - readr::read_csv() - batch process .csv’s</p>
+</div>
+<div id="read-in-multiple-csvs-with-image-id-and-face-id" class="section level1">
+<h1>Read in multiple csvs with image id and face id</h1>
+<pre class="r"><code>library(purrr)
+library(tidyverse)
+judges &lt;- c(&quot;1&quot;,&quot;2&quot;,&quot;3&quot;)
+names &lt;- map(judges, .f = function(number) {paste0(&quot;data/csv/face&quot;,number, &quot;/processed&quot;)})
+filenames &lt;- map(names, list.files, pattern = &quot;*.csv&quot;, full.names = TRUE)
+names(filenames) &lt;- judges
+
+nauru &lt;- filenames %&gt;% 
+  map_df(.f = function(names){
+  map_df(names, .f= function(file){
+    read_csv(file = file) %&gt;% 
+      mutate(info = file)
+  })
+})
+
+nauru</code></pre>
+</div>
+<div id="eda" class="section level1">
+<h1>EDA</h1>
+<pre class="r"><code>library(GGally)
+scatmat(nauru_a, columns = 3:5)
+
+ggplot(nauru_a, aes(x=gaze_0_x, y=gaze_0_y, colour=factor(face))) + geom_point() +
+  geom_path() + facet_wrap(~face)
+ggplot(nauru_a, aes(x=gaze_1_x, y=gaze_1_y, colour=factor(face))) + geom_point() +
+  geom_path() + facet_wrap(~face)
+
+ggplot(nauru_a, aes(pose_Tx, y = pose_Ty, colour = factor(face))) + 
+  geom_point() + facet_wrap(~face)
+library(dplyr)
+nauru_a %&gt;% mutate(t=1:423) %&gt;% ggplot(aes(t, pose_Tx, colour = factor(face))) + 
+  geom_line() 
+library(tidyverse)
+head(nauru_a$AU01_r)</code></pre>
 </div>
 
 
