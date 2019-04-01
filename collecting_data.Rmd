@@ -47,7 +47,7 @@ using r script to take screenshot of the media
 - have a look at how to do openpose 
 
 # Google API
-```{r}
+```{r eval = FALSE}
 
 dt <- jsonlite::fromJSON("goog_oks.json")
 
@@ -67,7 +67,7 @@ face_oks <- face %>% mutate(ID = seq(1:nrow(face)))
 ```
 
 # Scraping the list of video
-```{r}
+```{r eval = FALSE}
 url = "http://www.hcourt.gov.au/cases/recent-av-recordings"
 webpage = read_html(url)
 nodes<- html_nodes(webpage, xpath = '//*[@id="container"]/div[3]/div[1]/table')
@@ -75,12 +75,6 @@ tbody <- html_table(nodes)
 recording <- data.frame(tbody)
 names(recording) <- recording[1,]
 recording <- recording[-c(1,nrow(recording)),-c(4)]
-```
-
-```{r}
-library(ROpenCVLite) #devtools::install_github("swarm-lab/ROpenCVLite")
-library(Rvision)
-
 ```
 
 ## week 3 Task
@@ -118,7 +112,7 @@ webshot("https://www.r-bloggers.com/take-screenshot-of-webpage-using-r/", "rblog
 # Workflow
 
 - use `youtube-dl` to download video from http://www.hcourt.gov.au/cases/recent-av-recordings: `youtube-dl [url_of_vidoe_page]` 
-- use ffemeg to automatically extract frames for every minute from the video: `ffmpeg -i inputfile.fmt -r 1 image%2d.jpg` 
+- use ffemeg to automatically extract frames for every minute from the video: `ffmpeg -i nauru-a.mp4 -r 1/60 image%2d.png` 
 
 ## OpenFace
 
@@ -130,7 +124,7 @@ webshot("https://www.r-bloggers.com/take-screenshot-of-webpage-using-r/", "rblog
 
 - Has executable for sequence analysis that contains one face: `FeatureExtraction`; `FaceLandmarkVidMulti` is for sequence analysis that contains multiple faces; `FaceLandmarkImg`: for individual images that contains one or more faces 
 
-## meeting #4
+## Meeting #4
 - maybe try docker: since we have version issue 
 - go get Taipan and fix stuff [tick]
 - send to google/ OpenFace API to get desired data format
@@ -138,9 +132,179 @@ webshot("https://www.r-bloggers.com/take-screenshot-of-webpage-using-r/", "rblog
 # Taipan
 
 - We use Taipan to get the x and y coordinates of the face for each set of frame photos. Currently there are some issues with Shiny in terms of the dimension of the photos (can't select some part of the picture). We modify the app locally and manage to fix it - but not on the public version. 
-- The output is stored in `taipan-export.csv`
+- The output is stored in `taipan-export-2019-03-31.csv`
 
 # Task week 4
 - use `imager` or other tools to crop the faces from video frames 
 - try docker version to use OpenFace to do face landmark for the cropped faces: http://cmusatyalab.github.io/openface/
 - try google if OpenFace doesn't work 
+
+# Crop faces from frames
+The xy cordinate of the ideal faces is in taipan-export-2019-03-31. We can use command line tool magick to crop the whole image based on the cordinate supplied. The mogrify option allows for batch processing [may need to "mappify" the code]
+```{r eval = FALSE}
+library(imager)
+library(tidyverse)
+library(magick)
+xy_cord
+cord <- xy_cord %>% 
+  mutate(geom = paste0((xmax - xmin), "x",(ymax- ymin) , "+", xmin, "+", ymin))
+
+nauru <- image_read("data/nauru-a/nauru-a_003.png")
+image <- magick::image_crop(nauru, cord$geom)
+
+nauru <- image_read(system.file())
+
+```
+
+```{r nauru-a, eval = FALSE}
+
+cmd = c()
+for (j in seq(1,3,1)){
+  cmd[j] = paste0("cd data/nauru-a; magick mogrify -crop ", cord$geom[j + 25], " -path ../cropped/nauru-a", "/", j, " *.png")
+}
+
+for (i in 1:length(cmd)){
+  system(cmd[i])
+}
+```
+
+```{r nauru-b & 18-11-14a &18-11-14b, eval = FALSE}
+# nauru-b
+cmd = c()
+for (j in seq(1,3,1)){
+  cmd[j] = paste0("cd data/nauru-b; magick mogrify -crop ", cord$geom[j + 28], " -path ../cropped/nauru-b", "/", j, " *.png")
+}
+
+for (i in 1:length(cmd)){
+  system(cmd[i])
+}
+
+#11-18-14a
+cmd = c()
+for (j in seq(1,5,1)){
+  cmd[j] = paste0("cd data/18-11-14a; magick mogrify -crop ", cord$geom[j], " -path ../cropped/18-11-14a", "/", j, " *.png")
+}
+
+for (i in 1:length(cmd)){
+  system(cmd[i])
+}
+
+#18-11-14b
+cmd = c()
+for (j in seq(1,5,1)){
+  cmd[j] = paste0("cd data/18-11-14b; magick mogrify -crop ", cord$geom[j + 10], " -path ../cropped/18-11-14b", "/", j, " *.png")
+}
+
+for (i in 1:length(cmd)){
+  system(cmd[i])
+}
+```
+
+```{r 18-11-13&18-12-07&19-02-14, eval = FALSE}
+cmd = c()
+for (j in seq(1,5,1)){
+  cmd[j] = paste0("cd data/18-11-13; magick mogrify -crop ", cord$geom[j + 5], " -path ../cropped/18-11-13", "/", j, " *.png")
+}
+
+for (i in 1:length(cmd)){
+  system(cmd[i])
+}
+
+#18-12-07
+cmd = c()
+for (j in seq(1,5,1)){
+  cmd[j] = paste0("cd data/18-12-07; magick mogrify -crop ", cord$geom[j + 15], " -path ../cropped/18-12-07", "/", j, " *.png")
+}
+
+for (i in 1:length(cmd)){
+  system(cmd[i])
+}
+
+#19-02-14
+cmd = c()
+for (j in seq(1,5,1)){
+  cmd[j] = paste0("cd data/19-02-14; magick mogrify -crop ", cord$geom[j + 20], " -path ../cropped/19-02-14", "/", j, " *.png")
+}
+
+for (i in 1:length(cmd)){
+  system(cmd[i])
+}
+```
+
+```{r eval = FALSE}
+
+for (i in nauru){
+  for (j in seq(26, 31, 1)){
+    cmd[i] = paste0("cd data/", i, "; magick mogrify -crop ", cord$geom[j], " -path ../cropped/", i, " *.png")
+  }
+}
+
+system(cmd)
+which("nauru-a" == substr(cord$image_name, 1,7))
+
+j = seq(26, 31, 1)
+```
+
+
+# Docker for OpenFace API
+
+- citation: OpenFace 2.0: Facial Behavior Analysis Toolkit Tadas Baltrušaitis, Amir Zadeh, Yao Chong Lim, and Louis-Philippe Morency, IEEE International Conference on Automatic Face and Gesture Recognition, 2018
+- a good starting point: https://docker-curriculum.com/
+- Command used: 
+  1.  docker cp cropped/nauru-a/1 b811e9b14812:/home/openface-build 
+  2.  build/bin/FaceLandmarkImg -f nauru-a_003.png
+  3.  build/bin/FaceLandmarkImg -fdir data/1/
+  4.  docker cp b811e9b14812:/home/openface-build/processed/nauru-a_003.csv ~
+- First pull the "repo" from DockerHub and run it via docker run -it --rm algebr/openface:latest. This opens a docker terminal. Copy the directory from local to docker outside the docker using 1). Use 2) inside the docker for single image processing adn 3) for batch processing. Use 4) to copy the processed file from docker to local machine. 
+
+
+Meeting #5
+- add image id 
+- readr::read_csv() - batch process .csv's
+
+# Read in multiple csvs with image id and face id 
+```{r eval = FALSE}
+library(purrr)
+library(tidyverse)
+judges <- c("1","2","3")
+names <- map(judges, .f = function(number) {paste0("data/csv/face",number, "/processed")})
+filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
+names(filenames) <- judges
+
+nauru <- filenames %>% 
+  map_df(.f = function(names){
+  map_df(names, .f= function(file){
+    read_csv(file = file) %>% 
+      mutate(info = file)
+  })
+})
+
+nauru
+```
+
+# EDA
+```{r eval =FALSE}
+library(GGally)
+scatmat(nauru_a, columns = 3:5)
+
+ggplot(nauru_a, aes(x=gaze_0_x, y=gaze_0_y, colour=factor(face))) + geom_point() +
+  geom_path() + facet_wrap(~face)
+ggplot(nauru_a, aes(x=gaze_1_x, y=gaze_1_y, colour=factor(face))) + geom_point() +
+  geom_path() + facet_wrap(~face)
+
+ggplot(nauru_a, aes(pose_Tx, y = pose_Ty, colour = factor(face))) + 
+  geom_point() + facet_wrap(~face)
+library(dplyr)
+nauru_a %>% mutate(t=1:423) %>% ggplot(aes(t, pose_Tx, colour = factor(face))) + 
+  geom_line() 
+library(tidyverse)
+head(nauru_a$AU01_r)
+
+```
+
+# Task week 5
+- Tidy the data [mostly done] - read something on purrr
+  - https://jennybc.github.io/purrr-tutorial/talks.html
+- gganimate to see the change instead of geom_path()
+- Russell will come for next Monday's meeting 
+
