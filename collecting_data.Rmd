@@ -303,8 +303,9 @@ head(nauru_a$AU01_r)
 ```
 
 # Task week 5
-- Tidy the data [mostly done] - read something on purrr
+- Tidy the data [mostly done] - read something on purrr & repurrrsive
   - https://jennybc.github.io/purrr-tutorial/talks.html
+  - https://github.com/jennybc/repurrrsive#readme
 - gganimate to see the change instead of geom_path()
 - Russell will come for next Monday's meeting 
 
