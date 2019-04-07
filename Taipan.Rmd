@@ -47,17 +47,24 @@ questions <- taipanQuestions(
   )
 )
 
-nauru_a <- list.files("av_footage/nauru-a")
-nauru_a <- nauru_a[1:length(nauru_a)-1]
-naurua_file_name = paste0("av_footage/nauru-a/",nauru_a)
-nauru <- map(naurua_file_name, load.image)
+## not relevant: Taipan only need the file name of the image, dont need the picture to be loaded##
+# nauru_a <- list.files("av_footage/nauru-a")
+# nauru_a <- nauru_a[1:length(nauru_a)-1]
+# naurua_file_name = paste0("av_footage/nauru-a/",nauru_a)
+# nauru <- map(naurua_file_name, load.image)
+# 
 
-
-
+## dont use this cause it is from the published version. Do it through the files in the app folder
 buildTaipan(
   questions = questions,
-  images = "av_footage/nauru-a/nauru-a_003.png",
-  appdir = file.path(tempdir(), "taipan"), overwrite = TRUE
+  images = c("av_footage/nauru-a/nauru-a_003.png",
+             "av_footage/nauru-b/nauru-b_003.png", 
+             "av_footage/18-11-13/2018-11-13-300592675.fdash-fastly_skyfire_sep-video-1148347567_003.png",
+             "av_footage/18-11-14a/2018_11_14a_003.png",
+             "av_footage/18-11-14b/2018-11-14b-300710411.fdash-fastly_skyfire_sep-video-1148946720_003.png",
+             "av_footage/18-12-07/2018-12-07-304963408_003.png",
+             "av_footage/19-02-14/2019-02-14-317155140_003.png"),
+  appdir = "./app", overwrite = TRUE
 )
 
 ```

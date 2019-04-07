@@ -14,9 +14,16 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 library(jsonlite)
+library(rvest)
+
+library(imager)
+library(magick)
+
 library(purrr)
 library(tidyverse)
-library(rvest)
+library(ggplot2)
+library(GGally)
+library(gganimate)
 ```
 
 # Documentation
@@ -103,6 +110,8 @@ webshot("https://www.r-bloggers.com/take-screenshot-of-webpage-using-r/", "rblog
 - Extracting images from video: ffmpeg -i inputfile.fmt -r 1 image%2d.jpg
   1) -r: frame rate: no. of frames per second: accept decimal
   2) image%2d.jpg: [name_of_image]_[numbering_system].jpg: 2d means 2 digits: 01, 02, 03... if 3d: 001, 002...
+  3) ffmpeg -ss 00:03:00 -i nauru-a.mp4 -to 00:05:00 -c copy nauru-a_3to5.mp4
+
 
 # youtube-dl - How does it work???
 
@@ -142,9 +151,7 @@ webshot("https://www.r-bloggers.com/take-screenshot-of-webpage-using-r/", "rblog
 # Crop faces from frames
 The xy cordinate of the ideal faces is in taipan-export-2019-03-31. We can use command line tool magick to crop the whole image based on the cordinate supplied. The mogrify option allows for batch processing [may need to "mappify" the code]
 ```{r eval = FALSE}
-library(imager)
-library(tidyverse)
-library(magick)
+
 xy_cord
 cord <- xy_cord %>% 
   mutate(geom = paste0((xmax - xmin), "x",(ymax- ymin) , "+", xmin, "+", ymin))
@@ -261,51 +268,4 @@ j = seq(26, 31, 1)
 Meeting #5
 - add image id 
 - readr::read_csv() - batch process .csv's
-
-# Read in multiple csvs with image id and face id 
-```{r eval = FALSE}
-library(purrr)
-library(tidyverse)
-judges <- c("1","2","3")
-names <- map(judges, .f = function(number) {paste0("data/csv/face",number, "/processed")})
-filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
-names(filenames) <- judges
-
-nauru <- filenames %>% 
-  map_df(.f = function(names){
-  map_df(names, .f= function(file){
-    read_csv(file = file) %>% 
-      mutate(info = file)
-  })
-})
-
-nauru
-```
-
-# EDA
-```{r eval =FALSE}
-library(GGally)
-scatmat(nauru_a, columns = 3:5)
-
-ggplot(nauru_a, aes(x=gaze_0_x, y=gaze_0_y, colour=factor(face))) + geom_point() +
-  geom_path() + facet_wrap(~face)
-ggplot(nauru_a, aes(x=gaze_1_x, y=gaze_1_y, colour=factor(face))) + geom_point() +
-  geom_path() + facet_wrap(~face)
-
-ggplot(nauru_a, aes(pose_Tx, y = pose_Ty, colour = factor(face))) + 
-  geom_point() + facet_wrap(~face)
-library(dplyr)
-nauru_a %>% mutate(t=1:423) %>% ggplot(aes(t, pose_Tx, colour = factor(face))) + 
-  geom_line() 
-library(tidyverse)
-head(nauru_a$AU01_r)
-
-```
-
-# Task week 5
-- Tidy the data [mostly done] - read something on purrr & repurrrsive
-  - https://jennybc.github.io/purrr-tutorial/talks.html
-  - https://github.com/jennybc/repurrrsive#readme
-- gganimate to see the change instead of geom_path()
-- Russell will come for next Monday's meeting 
 
