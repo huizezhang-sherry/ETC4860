@@ -99,9 +99,11 @@ First using `opencv` to detect the face landmark
 # Steph's paper(TA): 
 - http://www.sloansportsconference.com/wp-content/uploads/2018/02/2005.pdf
 - Over	the	past	two	decades,	there	has	been	extraordinary	progress	using	machine	learning	toperform	a	variety	of	facial	recognition	tasks	with	video	and	image	data	(Sariyanidi,	Gunes,	and	Cavallaro	2015).
+
 - Facial Action Coding System (FACS)
   - (Ekman and Friesen,1978):	‘anger’,	‘fear’,	‘sadness’,	‘happiness’,	‘surprise’,	and	‘disgust’
   - This system is of limited use in the court because judges are expected not to present any recognisable demeanour as per the court etiquette. 
+
 - Facial Action Unit
 - ffpmeg, a video conversion tool,  can extract frame at a given rate 
 - FaceOpen can detect and crop face 
