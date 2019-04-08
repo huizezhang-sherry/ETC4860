@@ -100,7 +100,7 @@ webshot("https://www.r-bloggers.com/take-screenshot-of-webpage-using-r/", "rblog
 webshot("https://www.r-bloggers.com/take-screenshot-of-webpage-using-r/", "rblogger.png", cliprect = "viewport")
 ```
 
-# FFemeg 
+# FFepeg 
 
 - FFemeg is a collection of different project that handle multimedia files. The command line tool ffemeg(https://www.ffmpeg.org/ffmpeg.html) is the one I'm using to take screenshot of the video
 - A very comprehensive tutorial: http://keycorner.org/pub/text/doc/ffmpeg-tutorial.htm
@@ -268,4 +268,4 @@ j = seq(26, 31, 1)
 Meeting #5
 - add image id 
 - readr::read_csv() - batch process .csv's
-
+ 
