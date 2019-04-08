@@ -3,37 +3,65 @@ title: "EDA"
 author: "Huize Zhang"
 date: "08/04/2019"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+library(purrr)
+library(tidyverse)
+library(ggplot2)
+library(GGally)
+library(gganimate)
 ```
 
+
 # Read in multiple csvs with image id and face id 
+- combined multiple csvs into one and add entries for missing record (1, 2, 64)
+
 ```{r eval = FALSE}
 judges <- c("1","2","3")
 
-names <- map(judges, ~paste0("data/csv/face",.x, "/processed")})
+names <- map(judges, ~paste0("data/csv/nauru-a/face",.x, "/processed"))
 
 filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
+filenames_n <- map(names, 
+                   ~paste0(.x,"/nauru-a_" ,
+                           formatC(seq(1, 151, 1), width=3, flag="0"), 
+                           ".csv"))
 
 names(filenames) <- judges
 
-temp_nauru_a <- map_df(filenames, function(x){
-      map_df(x, function(x){
-        read_csv(x) %>% 
-          mutate(info = x) %>% 
-          mutate(judge_id = as.factor(substr(x, 14,14))) %>% 
-          mutate(frame_id = substr(x, 34,36))
-      })
-    })
+# temp_nauru_a <- map_df(filenames, function(x){
+#       map_df(x, function(x){
+#         read_csv(x) %>%
+#           mutate(info = x)
+#       })
+#     })
+# 
+# save(temp_nauru_a,file = "data/temp_nauru_a.rda")
 
-temp_nauru_a_1 <- temp_nauru_a %>% select(-c(X_0 : Z_67, eye_lmk_X_0:eye_lmk_Z_55))
+load("data/temp_nauru_a.rda")
 
-nauru_a <- temp_nauru_a_1 %>% 
-  group_by(judge_id) %>% 
-  mutate(record_id = row_number())
+temp_nauru_a_1 <- temp_nauru_a %>% select(-c(X_0 : Z_67, eye_lmk_x_0:eye_lmk_Z_55, p_scale:p_33))
 
+missing_files <- setdiff(unlist(filenames_n),  unlist(filenames))
+
+dt <- temp_nauru_a_1 %>% add_row(info = missing_files)
+
+nauru_a <- dt %>% 
+  separate(info,
+           into = c("dt", "csv", "nauru_a", "judge_id", "processed", "nauru_a_id"), 
+           sep = "/") %>%
+  separate(nauru_a_id, into= c("nauru_a", "frame_no"), sep = "_") %>% 
+  separate(frame_no, into = c("frame_id", "csv"), sep = "\\.") %>% 
+  arrange(judge_id, frame_id) %>% 
+  mutate(judge_id = sub("face","", judge_id)) %>% 
+  select(-c("dt", "csv", "nauru_a", "processed", "csv"))
+
+save(temp_nauru_a,file = "data/temp_nauru_a.csv")
 ```
 
 # EDA
@@ -48,7 +76,6 @@ Our judge: Justice Nettle, Justice Gageler, Justice Edelman
 
 - Insights: Justice Nettle doesn't seem to look straight forwards very often. 
 - Insights2: we may only want to use the observation with high confidence (may want to confirm the threshold)
-
 
 ```{r}
 ggplot(nauru_a, aes(x= confidence)) +
@@ -66,6 +93,10 @@ high_conf <- nauru_a %>%
 
 ggplot(high_conf) +
   geom_point(aes(x = record_id, y = indicator))+
+  facet_wrap(~judge_id, ncol = 1)
+
+ggplot(nauru_a) + 
+  geom_line(aes(x = as.numeric(frame_id), y = confidence)) + 
   facet_wrap(~judge_id, ncol = 1)
 
 # A period that Justice Nettle (judge 1) looks up is from frame 62 to 91
@@ -101,11 +132,18 @@ temp <- nauru_a %>% select(judge_id,gaze_0_x, gaze_0_y,gaze_1_x, gaze_1_y) %>%
 ggplot(temp) + 
   geom_histogram(aes(x = x_diff)) + 
   geom_histogram(aes(x= y_diff))
+
+p1_statics + 
+  geom_point(data = subset(nauru_a, confidence > 0.9), 
+             aes(x=gaze_0_x, y=gaze_0_y, colour=judge_id), col = "black") + 
+  facet_wrap(~judge_id, nrow= 3)
 ```
 
 There's literally minor difference between the behaviour of left and right eyes - the difference in the x and y coordinates are marginal comparing to the measure of the unit. 
 
 The scatter plot shows that Justice Nettle tends to look towards right (positive `gaze_1_x`) while the other two justices tend to look towards left. this could be because of the position where the judges sit (those who sit on the RLS tend to look towards right - look at the center)
+
+There's also not much different for the more confident and less confident points - more confident points having larger y value is mainly because these are the points when judges look forwards. (Since judge was sitting on a higher position in the courtroom, the angle gets larger when they look forwards, comparing to when they look at the legal documents)
 
 ```{r}
 # animation 
@@ -114,7 +152,7 @@ p1 <- ggplot(nauru_a,
   geom_point() + 
   facet_wrap(~judge_id, nrow = 3) +
   transition_reveal(as.numeric(frame_id)) + 
-  shadow_mark() + 
+  shadow_wake(wake_length = 1) + 
   theme(legend.position = "none")
 
 p1
@@ -146,20 +184,14 @@ p1
 # new_gif
 # anim_save("eye_track.avi", path = "animation/")
 
-ggplot(subset(nauru_a, confidence > 0.8)) + 
-  geom_point(aes(x = gaze_angle_x, y = gaze_angle_y, colour = judge_id)) +  
-  geom_point(data = subset(nauru_a, between(gaze_angle_x, -0.05, 0.05) &
-                             between(gaze_angle_y, -0.05, 0.05) &
-                             confidence > 0.8),
-             aes(x = gaze_angle_x, y = gaze_angle_y), colour = "black")+
-  facet_wrap(~ judge_id)
+
 ```
 
 ## Pose
 
 - Reflection: animation could be a good way to visualise data, especially for related high-dimensional data
 
-- more work here to think about how to visualise it!
+- very similar to the result from 
 ```{r}
 scatmat(high_conf, columns = 3:5)
 
@@ -170,12 +202,17 @@ temp1 <- nauru_a %>%
                          ifelse(as.numeric(frame_id) > 60 & 
                                   as.numeric(frame_id) < 90, 2,3)))) 
 
-ggplot(temp1) + 
-  geom_point(aes(pose_Tx, y = pose_Ty)) + 
-  facet_wrap(~judge_id) +
+pose <- ggplot(temp1) + 
+  geom_point(aes(pose_Tx, y = pose_Ty, col = judge_id)) + 
+  geom_point(data = subset(nauru_a, confidence > 0.9), 
+             aes(x=pose_Tx, y=pose_Ty, colour=judge_id), col = "black") +
+  facet_wrap(~judge_id, nrow = 3)
+
+pose
+  
+pose +
   transition_reveal(as.numeric(record_id)) + 
   shadow_wake(wake_length = 0.5)
-
 
 ggsave("position.png", path = "images/")  
 ```
@@ -185,7 +222,8 @@ ggsave("position.png", path = "images/")
 - play around more with the animation for best visual result 
 
 ```{r eyebrow}
-eyebrow <- nauru_a %>% select(judge_id, frame_id, record_id, confidence, x_17:x_26, y_17:y_26)
+eyebrow <- nauru_a %>% 
+  select(judge_id, frame_id, record_id, confidence, x_17:x_26, y_17:y_26)
 
 list <- list(paste0("y_", seq(17, 26, 1)))
 
@@ -208,8 +246,37 @@ ggplot(eyebrow2) +
   transition_states(record_id) + 
   shadow_wake(wake_length = 0.5)
 
+ggplot(eyebrow2) + 
+  geom_point(aes(x = x, y = y)) + 
+  facet_wrap(~judge_id) + 
+  transition_components(as.numeric(label)) + 
+  shadow_wake(wake_length = 0.5)
+
 anim_save("eyebrow.mp4", path = "animation/")
 ```
+
+```{r}
+data <- data.frame(
+  x = runif(10),
+  y = runif(10),
+  size = sample(1:3, 10, TRUE),
+  time = c(1, 4, 6, 7, 9, 6, 7, 8, 9, 10),
+  id = rep(1:2, each = 5)
+)
+
+anim <- ggplot(data, aes(x, y, group = id, size = size)) +
+  geom_point() +
+  transition_components(time)
+
+anim
+
+anim2 <- ggplot(data, aes(x, y, group = id, size = size)) +
+  geom_point() +
+  transition_components(time, range = c(4, 8))
+
+anim2
+```
+
 
 ```{r lip}
 lips <- nauru_a %>% 
@@ -245,7 +312,8 @@ anim_save("lip.mp4", path = "animation/")
 - As indicated from the documentation (TadasBaltrusaitis/OpenFace), The AUs are more accurate in the videos than images. My results from using `FaceLandmarkImg` shows that for the intensity, which is supposed to be on a scale of 0-5 has the maximum of 3.71 for the first judge and only 4 observations has intensity greater than 3. 
 
 ```{r eval = FALSE}
-au <- nauru_a %>% select(confidence, judge_id, frame_id, AU01_r:AU45_c)
+au <- nauru_a %>% 
+  select(confidence, judge_id, frame_id, record_id, AU01_r:AU45_c)
 
 # Intensity 
 au_r <- au %>% select(frame_id, AU01_r:AU45_r)
@@ -265,24 +333,23 @@ temp %>% gather(AU, value, -c(frame_id)) %>% filter(value > 3)
 # ggsave("intensity_of_AU.png", path = "images/")
 
 
-Presence
-au_present <- au %>% select(confidence, judge_id, frame_id, AU01_c:AU45_c)
+# Presence
+au_present <- au %>% 
+  select(confidence, judge_id, frame_id, record_id, AU01_c:AU45_c)
 
 au_list <- split(au_present, au_present$judge_id)
 
 plot <- map(au_list, function(au_list){
-  au_list %>% gather(AU, value, -c(confidence, judge_id, frame_id)) %>%
+  au_list %>% 
+    gather(AU, value, -c(confidence, judge_id, record_id, frame_id)) %>%
   ggplot() +
-  geom_tile(aes(x = frame_id, y = AU, fill = as.factor(value))) +
+  geom_tile(aes(x = record_id, y = AU, fill = as.factor(value))) +
   theme(legend.position = "right") +
   scale_color_discrete()
 })
 
 gridExtra::grid.arrange(plot[[1]], plot[[2]], plot[[3]], nrow = 3)
 ggsave("presence_of_AU.png", path = "images/")
-
-
-
 ```
 
 https://imotions.com/blog/facial-action-coding-system/
@@ -311,4 +378,31 @@ Tutton, J., Mack, K., & Roach Anleu, S. (2018). Judicial Demeanor: Oral Argument
   - https://github.com/jennybc/repurrrsive#readme
 - gganimate to see the change instead of geom_path()
 - Russell will come for next Monday's meeting 
+
+
+Meeting #6
+
+- fix the record_id with frame_id
+- obtain the whole dataset 
+- investigate individuality from the full dataset
+- investigate if female and male judge would behave differently 
+
+- script command line command in a bash file
+- look at the transcript for the cases and add a column for appellent/response speaking
+- also add a column for which judge is asking questions - 0 for no-one asking
+
+- action unit for video processed 
+
+animation: 
+- play around with animation for better visual result
+- investigate the outliner from the animation 
+- investigate when the eyebrow has angle - what could be the reason 
+
+read_csv: 
+- investigate why 64 is missing
+
+confidence: 
+- plot confidence against pose
+- plot the line chart for confidence rather than the indication variable: investigate the "very wiggly" 
+
 
