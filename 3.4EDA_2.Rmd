@@ -1,0 +1,78 @@
+---
+title: "3.4EDA_2"
+author: "Huize Zhang"
+date: "15/04/2019"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(purrr)
+library(tidyverse)
+library(ggplot2)
+library(GGally)
+library(gganimate)
+library(naniar)
+library(visdat)
+```
+
+Meeting #6 
+1. missing map 
+2. find the outcome variables 
+3. text analysis - # of questions asked by each judge 
+4. find the appellent and respondent addressing time [done] - need to reload all the data to have it work 
+5. average (RGB)
+
+```{r}
+load("data/court.rda")
+court <- rbind(nauru_a, nauru_b, McKell, OKS, Parkes, Rinehart_a, Rinehart_b)
+
+vis_dat(McKell %>% select(x_1))
+tem <- McKell %>% filter(judge_id == "Edelman") %>% select(x_1) %>% vis_dat()
+
+
+
+plot_missing <- function(video){
+  browser()
+  videos <- c("Nauru_a", "Nauru_b", "McKell", "OKS", "Parkes","Rinehart_a", "Rinehart_b")
+  name <- court %>% filter(video_id == "OKS") %>% select(judge_id) %>% unique()
+  plot <- map2(.x = name, .y = videos, .f = court %>% filter(video_id == .y) %>% 
+                filter(judge_id == .x) %>% select(x_1) %>% vis_dat())
+}
+
+missingplot <- map(video, plot_missing)
+
+missingplot[3]
+
+videos <- c("Nauru_a", "Nauru_b", "McKell", "OKS", "Parkes","Rinehart_a", "Rinehart_b")
+name_list <- map(video, ~court %>% filter(video_id == .x) %>% select(judge_id) %>% unique())
+names(name_list) <- videos
+
+missingplot <- function(x){
+  browser()
+  data <- court %>% 
+    filter(video_id == names(x)) %>% filter(judge_id == x) %>% select(x_1) 
+  data %>% vis_dat()
+}
+
+map(name_list[3], missingplot)
+
+missingplot <- map(video, function(x){
+    map_df(names, function(ind){
+       plot <- court %>% 
+         filter(video_id == names(x)) %>% filter(judge_id == ind) %>% select(x_1) %>% vis_dat()
+    })
+  })
+
+
+list <- name_list[3]
+a<- map(names, videos,  ~subset(court, video_id == names(.y) & judge_id == .x) %>% select(x_1) %>% vis_dat)
+
+subset(court, video_id == names(name_list[) & judge_id == "Edelman") %>% select(x_1) %>% vis_dat
+
+gridExtra::grid.arrange(grobs = list(missingplot[1], missingplot[2]))
+```
+

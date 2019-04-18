@@ -1,0 +1,185 @@
+---
+title: "2. collecting_data_2"
+author: "Huize Zhang"
+date: "13/04/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Meeting 4
+## Meeting #4
+- maybe try docker: since we have version issue 
+- go get Taipan and fix stuff [tick]
+- send to google/ OpenFace API to get desired data format
+
+## Task week 4
+- use `imager` or other tools to crop the faces from video frames 
+- try docker version to use OpenFace to do face landmark for the cropped faces: http://cmusatyalab.github.io/openface/
+- try google if OpenFace doesn't work 
+
+
+# Step 3: Taipan and Magick
+- We use Taipan to get the x and y coordinates of the face for each set of frame photos. Currently there are some issues with Shiny in terms of the dimension of the photos (can't select some part of the picture). We modify the app locally and manage to fix it - but not on the public version. 
+- The output is stored in `taipan-export-2019-03-31.csv`
+
+
+## Magick: crop faces from frames
+The xy cordinate of the ideal faces is in taipan-export-2019-03-31. We can use command line tool magick to crop the whole image based on the cordinate supplied. The mogrify option allows for batch processing [may need to "mappify" the code]
+```{r eval = FALSE}
+
+xy_cord <- read_csv("taipan-export-2019-03-31.csv")
+cord <- xy_cord %>% 
+  mutate(geom = paste0((xmax - xmin), "x",(ymax- ymin) , "+", xmin, "+", ymin)) %>% 
+  separate(image_name, into = c("date", "suffix"), sep = "-") %>% 
+  select(-suffix)
+# after the re-download this should work 
+
+cmd = numeric()
+
+
+for(j in seq_along(1:nrow(cord))){
+  system("cd ")
+}  
+  
+```
+
+```{r nauru-a, eval = FALSE}
+
+cmd = c()
+for (j in seq(1,3,1)){
+  cmd[j] = paste0("cd data/nauru-a; magick mogrify -crop ", cord$geom[j + 25], " -path ../cropped/nauru-a", "/", j, " *.png")
+}
+
+for (i in 1:length(cmd)){
+  system(cmd[i])
+}
+
+# nauru-b
+cmd = c()
+for (j in seq(1,3,1)){
+  cmd[j] = paste0("cd data/nauru-b; magick mogrify -crop ", cord$geom[j + 28], " -path ../cropped/nauru-b", "/", j, " *.png")
+}
+
+for (i in 1:length(cmd)){
+  system(cmd[i])
+}
+
+#11-18-14a
+cmd = c()
+for (j in seq(1,5,1)){
+  cmd[j] = paste0("cd data/18-11-14a; magick mogrify -crop ", cord$geom[j], " -path ../cropped/18-11-14a", "/", j, " *.png")
+}
+
+for (i in 1:length(cmd)){
+  system(cmd[i])
+}
+
+#18-11-14b
+cmd = c()
+for (j in seq(1,5,1)){
+  cmd[j] = paste0("cd data/18-11-14b; magick mogrify -crop ", cord$geom[j + 10], " -path ../cropped/18-11-14b", "/", j, " *.png")
+}
+
+for (i in 1:length(cmd)){
+  system(cmd[i])
+}
+
+cmd = c()
+for (j in seq(1,5,1)){
+  cmd[j] = paste0("cd data/18-11-13; magick mogrify -crop ", cord$geom[j + 5], " -path ../cropped/18-11-13", "/", j, " *.png")
+}
+
+for (i in 1:length(cmd)){
+  system(cmd[i])
+}
+
+#18-12-07
+cmd = c()
+for (j in seq(1,5,1)){
+  cmd[j] = paste0("cd data/18-12-07; magick mogrify -crop ", cord$geom[j + 15], " -path ../cropped/18-12-07", "/", j, " *.png")
+}
+
+for (i in 1:length(cmd)){
+  system(cmd[i])
+}
+
+#19-02-14
+cmd = c()
+for (j in seq(1,5,1)){
+  cmd[j] = paste0("cd data/19-02-14; magick mogrify -crop ", cord$geom[j + 20], " -path ../cropped/19-02-14", "/", j, " *.png")
+}
+
+for (i in 1:length(cmd)){
+  system(cmd[i])
+}
+```
+
+```{r eval = FALSE}
+
+for (i in nauru){
+  for (j in seq(26, 31, 1)){
+    cmd[i] = paste0("cd data/", i, "; magick mogrify -crop ", cord$geom[j], " -path ../cropped/", i, " *.png")
+  }
+}
+
+system(cmd)
+which("nauru-a" == substr(cord$image_name, 1,7))
+
+j = seq(26, 31, 1)
+```
+
+# Step 4: OpenFace
+
+## General Info
+  - Baltrušaitis,	Tadas,	Peter	Robinson,	and	Louis-Philippe	Morency.	2016.	“Openface:	An	Open	Source	Facial	Behavior	Analysis	Toolkit.”	In	Applications	of	Computer	Vision	(WACV),	2016	IEEE	Winter	Conference	on,	1–10.	IEEE.
+  - https://www.cl.cam.ac.uk/research/rainbow/projects/openface/wacv2016.pdf
+  - see Mendelay
+  - citation: OpenFace 2.0: Facial Behavior Analysis Toolkit Tadas Baltrušaitis, Amir Zadeh, Yao Chong Lim, and Louis-Philippe Morency, IEEE International Conference on Automatic Face and Gesture Recognition, 2018
+
+## Commnad 
+
+  - `FeatureExtraction`: image/ video with one face only 
+  - `FaceLandmarkVidMulti`: image/ video with multiple faces
+  - `FaceLandmarkImg`: sequence of images 
+
+
+## Docker Implementation
+- a good starting point: https://docker-curriculum.com/
+
+  1) pull the "repo" from DockerHub and run it via 
+    
+    docker run -it --rm algebr/openface:latest.
+  
+  2) copy the image/video from local to docker 
+  
+    docker cp cropped/nauru-a/1 b811e9b14812:/home/openface-build 
+  
+  3) use openface inside docker to generate metrics
+  
+    build/bin/FaceLandmarkImg -f nauru-a_003.png
+    build/bin/FaceLandmarkImg -fdir data/1/
+
+  4) copy the metrics from processed folder to local machine
+  
+    docker cp b811e9b14812:/home/openface-build/processed/nauru-a_003.csv /Users/huizezhang/Monash/Honours/ETC4860/data/csv/[specific address]
+
+
+## Dockerfile
+- run "docker build -t algebr/openface:latest ." in the docker folder 
+
+# Meeting #5
+- add image id 
+- readr::read_csv() - batch process .csv's
+ 
+
+step 1: (terminal): docker cp cropped 9f2742ffb4f2:/home/openface-build 
+step 2: (docker): build/bin/FaceLandmarkImg -fdir cropped/18-11-13/1
+mkdir 18-11-13
+cd 18-11-13
+mkdir face1
+cd face1
+docker cp 9f2742ffb4f2:/home/openface-build/processed/. /Users/huizezhang/Monash/Honours/ETC4860/data/csv/18-11-13/face1 
+

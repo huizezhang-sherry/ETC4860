@@ -1,0 +1,83 @@
+---
+title: "proposal"
+author: "Huize Zhang"
+date: "15/04/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Topic statement
+a statement of the topic.
+
+
+# Background
+
+ background material that provides 
+ motivation for the topic,
+including a brief review of key literature.
+
+What has been done to predict outcomes of court cases
+- audio
+-transripts
+-interruptions
+-how a judge votes before
+-av has been a recent development (cite examples of people who have used it)
+but this falls short of the potential of analysing judges facial expressions
+
+The idea of facial expression
+
+- paul ekman
+
+examples of who has used it
+tennis steph
+
+formailsed facs
+
+openface implements these ideas
+
+other examples of people using openface for research
+
+
+
+#data 
+We have chosen to derive faces from video by using screenshots, this has been done for tennis (cite steph). 
+- Stephs open face 
+   Steph's paper (Department - comparing four API for face recognition)
+
+what we will do with data:
+
+
+# Aims
+apply techniques in facial expression analysis to explore court proceedings
+
+ An outline of the aims of your research.
+- can we understand more about a judge
+
+can we understand how they respond to apellant or respondent
+
+understand how expressions change during a case, or are diferent between cases
+
+
+
+# Plan  
+A statement of your research plan
+Timeline: Completed:
+
+what data you will use if conducting empirical research; 
+- use court videos, crop individual faces 
+
+what econometric techniques you intend to apply;
+
+
+Timeline: Intended
+
+what theoretical results you intend to derive;
+
+
+
+what techniques you will use to evaluate your results/methods and to compare them with other comparable results/methods in the
+literature; and so on).

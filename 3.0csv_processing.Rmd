@@ -1,0 +1,448 @@
+---
+title: "3.0csv_processing"
+author: "Huize Zhang"
+date: "13/04/2019"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(purrr)
+library(tidyverse)
+```
+
+
+# Read in multiple csvs with image id and face id 
+- combined multiple csvs into one and add entries for missing record (1, 2, 64)
+
+```{r nauru-a}
+names <- map(judges, ~paste0("data/csv/nauru-a/face",.x, "/processed"))
+filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
+temp_nauru_a <- map_df(filenames, function(x){
+      map_df(x, function(x){
+        read_csv(x) %>%
+          mutate(info = x)
+      })
+    })
+
+save(temp_nauru_a,file = "data/temp_nauru_a.rda")
+
+load("data/temp_nauru_a.rda")
+
+judges <- c("1","2","3")
+names <- map(judges, ~paste0("data/csv/nauru-a/face",.x, "/processed"))
+filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
+
+filenames_n <- map(names,
+                   ~paste0(.x,"/nauru-a_" ,
+                           formatC(seq(1, 151, 1), width=3, flag="0"),
+                           ".csv"))
+
+names(filenames) <- judges
+
+temp_nauru_a_1 <- temp_nauru_a %>% select(-c(X_0 : Z_67, eye_lmk_x_0:eye_lmk_Z_55, p_scale:p_33))
+
+missing_files <- setdiff(unlist(filenames_n),  unlist(filenames))
+
+dt <- temp_nauru_a_1 %>% add_row(info = missing_files)
+
+nauru_a <- dt %>%
+  separate(info,
+           into = c("dt", "csv", "nauru_a", "judge_id", "processed", "nauru_a_id"),
+           sep = "/") %>%
+  separate(nauru_a_id, into= c("nauru_a", "frame_no"), sep = "_") %>%
+  separate(frame_no, into = c("frame_id", "csv"), sep = "\\.") %>%
+  arrange(judge_id, frame_id) %>%
+  mutate(judge_id = sub("face","", judge_id)) %>%
+  mutate(judge_id = ifelse(judge_id ==1, "Nettle",
+                           ifelse(judge_id ==2, "Gageler", "Edelman"))) %>% 
+  mutate(frame_id = as.numeric(frame_id)) %>%
+  mutate(video_id = as.factor("Nauru_a")) %>%
+  # by observation, after 1:28, respondent start to speak 
+  mutate(speaker = ifelse(frame_id < 90, "Appellent", "Respondent"))
+  select(-c("dt", "csv", "nauru_a", "processed", "csv"))
+
+save(nauru_a,file = "data/nauru_a.rda")
+
+load("data/nauru_a.rda")
+```
+
+```{r nauru-b}
+judges <- c("1","2","3")
+names <- map(judges, ~paste0("data/csv/nauru-b/",.x))
+filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
+temp_nauru-b <- map_df(filenames, function(x){
+      map_df(x, function(x){
+        read_csv(x) %>%
+          mutate(info = x)
+      })
+    })
+
+save(temp_nauru-b,file = "data/temp_nauru_b.rda")
+
+load("data/temp_nauru_b.rda")
+
+filenames_n <- map(names,
+                   ~paste0(.x,"/nauru-b_" ,
+                           formatC(seq(1, 101, 1), width=3, flag="0"),
+                           ".csv"))
+
+names(filenames) <- judges
+
+temp_nauru_b_1 <- temp_nauru_b %>% select(-c(X_0 : Z_67, eye_lmk_x_0:eye_lmk_Z_55, p_scale:p_33))
+
+# missing_files <- setdiff( unlist(filenames),unlist(filenames_n))
+# dt <- temp_nauru_b_1 %>% add_row(info = missing_files)
+
+nauru_b <- temp_nauru_b_1 %>%
+  separate(info,
+           into = c("dt", "csv", "nauru-b", "judge_id", "nauru_b_id"),
+           sep = "/") %>%
+  separate(nauru_b_id, into= c("nauru-b", "frame_no"), sep = "_") %>%
+  separate(frame_no, into = c("frame_id", "csv"), sep = "\\.") %>%
+  arrange(judge_id, frame_id) %>%
+  mutate(judge_id = sub("face","", judge_id)) %>%
+  mutate(judge_id = ifelse(judge_id ==1, "Nettle",
+                           ifelse(judge_id ==2, "Gageler", "Edelman"))) %>% 
+  mutate(frame_id = as.numeric(frame_id)) %>%
+  mutate(video_id = as.factor("Nauru_b")) %>%
+  mutate(speaker = ifelse(frame_id < 90, "Appellent", "Respondent")) %>% 
+  select(-c("dt", "csv", "nauru-b", "csv"))
+
+save(nauru_b,file = "data/nauru_b.rda")
+
+load("data/nauru_b.rda")
+
+```
+
+```{r McKell}
+# judges <- c("1","2","3", "4", "5")
+# names <- map(judges, ~paste0("data/csv/McKell/",.x))
+# filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
+# temp_McKell <- map_df(filenames, function(x){
+#       map_df(x, function(x){
+#         read_csv(x) %>%
+#           mutate(info = x)
+#       })
+#     })
+# 
+# save(temp_McKell,file = "data/temp_McKell.rda")
+
+load("data/temp_McKell.rda")
+judges <- c("1","2","3", "4", "5")
+names <- map(judges, ~paste0("data/csv/McKell/",.x))
+filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
+filenames_n <- map(names,
+                   ~paste0(.x,"/McKell_" ,
+                           formatC(seq(1, 132, 1), width=3, flag="0"),
+                           ".csv"))
+
+names(filenames) <- judges
+
+temp_McKell_1 <- temp_McKell %>% select(-c(X_0 : Z_67, eye_lmk_x_0:eye_lmk_Z_55, p_scale:p_33))
+
+missing_files <- setdiff(unlist(filenames_n),  unlist(filenames))
+
+dt <- temp_McKell_1 %>% add_row(info = missing_files)
+
+McKell <- dt %>%
+  separate(info,
+           into = c("dt", "csv", "McKell", "judge_id", "McKell_id"),
+           sep = "/") %>%
+  separate(McKell_id, into= c("McKell", "frame_no"), sep = "_") %>%
+  separate(frame_no, into = c("frame_id", "csv"), sep = "\\.") %>%
+  arrange(judge_id, frame_id) %>%
+  mutate(judge_id = sub("face","", judge_id)) %>%
+  mutate(judge_id = ifelse(judge_id ==1, "Gordon",
+                           ifelse(judge_id ==2, "Gageler", 
+                                  ifelse(judge_id ==3, "Bell",
+                                         ifelse(judge_id ==4, "Keane", "Edelman"))))) %>% 
+  mutate(frame_id = as.numeric(frame_id)) %>%
+  mutate(video_id = as.factor("McKell")) %>%
+  mutate(speaker = ifelse(frame_id < 90, "Appellent", "Respondent")) %>% 
+  select(-c("dt", "csv", "McKell", "csv"))
+
+save(McKell,file = "data/McKell.rda")
+
+load("data/McKell.rda")
+
+```
+
+```{r OKS}
+# judges <- c("1","2","3", "4", "5")
+# names <- map(judges, ~paste0("data/csv/OKS/",.x))
+# filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
+# temp_OKS <- map_df(filenames, function(x){
+#       map_df(x, function(x){
+#         read_csv(x) %>%
+#           mutate(info = x)
+#       })
+#     })
+# 
+# save(temp_OKS,file = "data/temp_OKS.rda")
+
+load("data/temp_OKS.rda")
+judges <- c("1","2","3", "4", "5")
+names <- map(judges, ~paste0("data/csv/OKS/",.x))
+filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
+
+filenames_n <- map(names,
+                   ~paste0(.x,"/OKS_" ,
+                           formatC(seq(1, 42, 1), width=3, flag="0"),
+                           ".csv"))
+
+names(filenames) <- judges
+
+temp_OKS_1 <- temp_OKS %>% select(-c(X_0 : Z_67, eye_lmk_x_0:eye_lmk_Z_55, p_scale:p_33))
+
+missing_files <- setdiff(unlist(filenames_n),  unlist(filenames))
+
+dt <- temp_OKS_1 %>% add_row(info = missing_files)
+
+OKS <- dt %>%
+  separate(info,
+           into = c("dt", "csv", "OKS", "judge_id", "OKS_id"),
+           sep = "/") %>%
+  separate(OKS_id, into= c("OKS", "frame_no"), sep = "_") %>%
+  separate(frame_no, into = c("frame_id", "csv"), sep = "\\.") %>%
+  arrange(judge_id, frame_id) %>%
+  mutate(judge_id = sub("face","", judge_id)) %>%
+  mutate(judge_id = ifelse(judge_id ==1, "Gordon",
+                           ifelse(judge_id ==2, "Keane", 
+                                  ifelse(judge_id ==3, "Bell",
+                                         ifelse(judge_id ==4, "Gageler", "Edelman"))))) %>% 
+  mutate(frame_id = as.numeric(frame_id)) %>%
+  mutate(video_id = as.factor("OKS")) %>%
+  mutate(speaker = ifelse(frame_id < 23, "Appellent", "Respondent")) %>% 
+  select(-c("dt", "csv", "OKS", "csv"))
+
+
+save(OKS,file = "data/OKS.rda")
+
+load("data/OKS.rda")
+```
+
+```{r Parkes}
+# judges <- c("1","2","3", "4", "5")
+# names <- map(judges, ~paste0("data/csv/Parkes/",.x))
+# filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
+# temp_Parkes <- map_df(filenames, function(x){
+#       map_df(x, function(x){
+#         read_csv(x) %>%
+#           mutate(info = x)
+#       })
+#     })
+# 
+# save(temp_Parkes,file = "data/temp_Parkes.rda")
+
+load("data/temp_Parkes.rda")
+judges <- c("1","2","3", "4", "5")
+names <- map(judges, ~paste0("data/csv/Parkes/",.x))
+filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
+filenames_n <- map(names,
+                   ~paste0(.x,"/Parkes_" ,
+                           formatC(seq(1, 227, 1), width=3, flag="0"),
+                           ".csv"))
+
+names(filenames) <- judges
+
+temp_Parkes_1 <- temp_Parkes %>% select(-c(X_0 : Z_67, eye_lmk_x_0:eye_lmk_Z_55, p_scale:p_33))
+
+missing_files <- setdiff(unlist(filenames_n),  unlist(filenames))
+
+dt <- temp_Parkes_1 %>% add_row(info = missing_files)
+
+Parkes <- dt %>%
+  separate(info,
+           into = c("dt", "csv", "Parkes", "judge_id", "Parkes_id"),
+           sep = "/") %>%
+  separate(Parkes_id, into= c("Parkes", "frame_no"), sep = "_") %>%
+  separate(frame_no, into = c("frame_id", "csv"), sep = "\\.") %>%
+  arrange(judge_id, frame_id) %>%
+  mutate(judge_id = sub("face","", judge_id)) %>%
+  mutate(judge_id = ifelse(judge_id ==1, "Gordon",
+                           ifelse(judge_id ==2, "Bell", 
+                                  ifelse(judge_id ==3, "Kiefel",
+                                         ifelse(judge_id ==4, "Keane", "Edelman"))))) %>% 
+  mutate(frame_id = as.numeric(frame_id)) %>%
+  mutate(video_id = as.factor("Parkes")) %>%
+  mutate(speaker = ifelse(frame_id < 82, "Appellent", "Respondent")) %>% 
+  select(-c("dt", "csv", "Parkes", "csv"))
+
+
+
+save(Parkes,file = "data/Parkes.rda")
+
+load("data/Parkes.rda")
+```
+
+```{r Rinehart-a}
+# judges <- c("1","2","3", "4", "5")
+# names <- map(judges, ~paste0("data/csv/Rinehart-a/",.x))
+# filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
+# 
+# temp_Rinehart_a <- map_df(filenames, function(x){
+#       map_df(x, function(x){
+#         read_csv(x) %>%
+#           mutate(info = x)
+#       })
+#     })
+# 
+# save(temp_Rinehart_a,file = "data/temp_Rinehart_a.rda")
+
+load("data/temp_Rinehart_a.rda")
+judges <- c("1","2","3", "4", "5")
+names <- map(judges, ~paste0("data/csv/Rinehart-a/",.x))
+filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
+
+filenames_n <- map(names,
+                   ~paste0(.x,"/Rinehart-a_" ,
+                           formatC(seq(1, 332, 1), width=3, flag="0"),
+                           ".csv"))
+
+names(filenames) <- judges
+
+temp_Rinehart_a_1 <- temp_Rinehart_a %>% select(-c(X_0 : Z_67, eye_lmk_x_0:eye_lmk_Z_55, p_scale:p_33))
+
+missing_files <- setdiff(unlist(filenames_n), unlist(filenames))
+dt <- temp_Rinehart_a_1 %>% add_row(info = missing_files)
+
+
+Rinehart_a <- dt %>%
+  separate(info,
+           into = c("dt", "csv", "Rinehart_a", "judge_id", "Rinehart_a_id"),
+           sep = "/") %>%
+  separate(Rinehart_a_id, into= c("Rinehart_a", "frame_no"), sep = "_") %>%
+  separate(frame_no, into = c("frame_id", "csv"), sep = "\\.") %>%
+  arrange(judge_id, frame_id) %>%
+  mutate(judge_id = sub("face","", judge_id)) %>%
+  mutate(judge_id = ifelse(judge_id ==1, "Gordon",
+                           ifelse(judge_id ==2, "Gageler", 
+                                  ifelse(judge_id ==3, "Kiefel",
+                                         ifelse(judge_id ==4, "Nettle", "Edelman"))))) %>% 
+  mutate(frame_id = as.numeric(frame_id)) %>%
+  mutate(video_id = as.factor("Rinehart_a")) %>%
+  mutate(speaker = ifelse(frame_id < 120, "Appellent", "Respondent")) %>% 
+  select(-c("dt", "csv", "Rinehart_a", "csv"))
+
+
+
+save(Rinehart_a,file = "data/Rinehart_a.rda")
+
+load("data/Rinehart_a.rda")
+```
+
+```{r Rinehart-b}
+# judges <- c("1","2","3", "4", "5")
+# names <- map(judges, ~paste0("data/csv/Rinehart-b/",.x))
+# filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
+# 
+# temp_Rinehart_b <- map_df(filenames, function(x){
+#       map_df(x, function(x){
+#         read_csv(x) %>%
+#           mutate(info = x)
+#       })
+#     })
+# 
+# save(temp_Rinehart_b,file = "data/temp_Rinehart_b.rda")
+
+load("data/temp_Rinehart_b.rda")
+judges <- c("1","2","3", "4", "5")
+names <- map(judges, ~paste0("data/csv/Rinehart-b/",.x))
+filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
+
+filenames_n <- map(names,
+                   ~paste0(.x,"/Rinehart-b_" ,
+                           formatC(seq(1, 36, 1), width=3, flag="0"),
+                           ".csv"))
+
+names(filenames_n) <- judges
+
+temp_Rinehart_b_1 <- temp_Rinehart_b %>% select(-c(X_0 : Z_67, eye_lmk_x_0:eye_lmk_Z_55, p_scale:p_33))
+
+missing_files <- setdiff(unlist(filenames_n), unlist(filenames))
+
+dt <- temp_Rinehart_b_1 %>% add_row(info = missing_files)
+
+Rinehart_b <- dt %>%
+  separate(info,
+           into = c("dt", "csv", "Rinehart_b", "judge_id", "Rinehart_b_id"),
+           sep = "/") %>%
+  separate(Rinehart_b_id, into= c("Rinehart_b", "frame_no"), sep = "_") %>%
+  separate(frame_no, into = c("frame_id", "csv"), sep = "\\.") %>%
+  arrange(judge_id, frame_id) %>%
+  mutate(judge_id = as.numeric(judge_id)) %>% 
+  mutate(judge_id = ifelse(judge_id ==1, "Gordon",
+                           ifelse(judge_id ==2, "Gageler", 
+                                  ifelse(judge_id ==3, "Kiefel",
+                                         ifelse(judge_id ==4, "Nettle", "Edelman"))))) %>%
+  mutate(frame_id = as.numeric(frame_id)) %>%
+  mutate(video_id = as.factor("Rinehart_b")) %>%
+  mutate(speaker = ifelse(frame_id < 120, "Appellent", "Respondent")) %>%
+  select(-c("dt", "csv", "Rinehart_b"))
+
+save(Rinehart_b,file = "data/Rinehart_b.rda")
+
+load("data/Rinehart_b.rda")
+```
+
+
+
+
+
+## Trying to incorporate into one ???
+```{r}
+dt_list = c(temp_McKell, temp_OKS, temp_Parkes, temp_Rinehart_a, temp_Rinehart_b)
+video_list = c("McKell", "OKS", "Parkes", "Rinehart_a", "Rinehart_b")
+video = "Rinehart_b"
+length_list = c(132, 42, 227,332,36)
+length = 36
+
+tidy <- function(dt, video, length){
+  judges <- c("1","2","3", "4", "5")
+  names <- map(judges, ~paste0("data/csv/", video, "/",.x))
+  filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
+
+  filenames_n <- map(names,
+                   ~paste0(.x,"/", video, "_" ,
+                           formatC(seq(1, length, 1), width=3, flag="0"),
+                           ".csv"))
+
+  names(filenames_n) <- judges
+
+  temp <- dt %>% select(-c(X_0 : Z_67, eye_lmk_x_0:eye_lmk_Z_55, p_scale:p_33))
+
+  missing_files <- setdiff(unlist(filenames_n), unlist(filenames))
+
+  temp2 <- temp %>% add_row(info = missing_files)
+
+  data <- temp2 %>%
+    separate(info,
+             into = c("dt", "csv", "Rinehart_b", "judge_id", "Rinehart_b_id"),
+             sep = "/") %>%
+    separate(Rinehart_b_id, into= c("Rinehart_b", "frame_no"), sep = "_") %>%
+    separate(frame_no, into = c("frame_id", "csv"), sep = "\\.") %>%
+    arrange(judge_id, frame_id) %>%
+    mutate(judge_id = as.numeric(judge_id)) %>% 
+    mutate(frame_id = as.numeric(frame_id)) %>%
+    mutate(video_id = as.factor("Rinehart_b")) %>%
+    select(-c("dt", "csv", "Rinehart_b"))
+  
+  save(data,file =paste0("data/",video,"_1.rda"))
+}
+
+pmap(.l = data.frame(dt_list, video_list,length_list), tidy)
+
+tidy(temp_Rinehart_b, "Rinehart-b", 36)
+tidy(temp_Rinehart_a, "Rinehart-a", 332)
+
+load("data/Rinehart-a_1.rda")
+Rinehart_b %>% glimpse()
+aaa %>% glimpse()
+```
+

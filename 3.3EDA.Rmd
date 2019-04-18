@@ -1,0 +1,133 @@
+---
+title: "3.3EDA"
+author: "Huize Zhang"
+date: "15/04/2019"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(purrr)
+library(tidyverse)
+library(ggplot2)
+library(GGally)
+library(gganimate)
+```
+
+# Loading data
+```{r}
+load("data/court.rda")
+```
+
+# Confidence 
+```{r}
+ggplot(subset(court, video_id %in% c("nauru-a", "nauru-b")), 
+       aes(x = confidence)) + 
+  geom_histogram(binwidth = 0.1) + 
+  facet_grid(judge_id~video_id)
+ggsave("conf_nauru.png", path = "images/")
+
+
+ggplot(court, aes(x = confidence)) + 
+  geom_histogram(binwidth = 0.1) + 
+  facet_grid(judge_id~video_id)
+ggsave("conf_all.png", path = "images/")
+```
+
+# Gaze
+```{r}
+video <- c("Nauru_a", "Nauru_b", "McKell", "OKS", "Parkes","Rinehart_a", "Rinehart_b")
+gaze_left <- function(video){
+  ggplot(subset(court, video_id == video), 
+             aes(x=gaze_0_x, y=gaze_0_y, colour=judge_id)) + 
+    geom_point() + 
+    facet_wrap(~as.factor(judge_id), nrow = 5) + 
+    theme(legend.position = "none") + 
+    ggtitle(video) + 
+    xlab("x") +
+    ylab("y")
+}
+
+gaze_plot <- map(video, gaze_left)
+names(gaze_plot) <- video
+gridExtra::grid.arrange(grobs = gaze_plot,nrow = 5,ncol = 2,
+                        layout_matrix = cbind(c(1,1,1),c(2,2,2), 
+                                              c(3,3,3,3),c(6,6,7,7), c(5,4,4,4)), 
+                        top = "Where are the judges looking at when they are in the court")
+
+save("gaze_all.png", device = "png", path = "images/")
+```
+
+# AUC
+comparing with their normal - deviation 
+invidual difference: Edelman - ususally - deviation from usual - facet by appellant/respondent 
+
+nubmer of questions asked by the judge
+the change hand fo appellant/ respondent 
+
+paper: PNAS: they make decision based on if it is before lunch 
+
+```{r}
+# Presence
+
+
+
+
+
+
+
+###from nauru-a
+au_present <- au %>% 
+  select(confidence, judge_id, frame_id, AU01_c:AU45_c)
+
+au_list <- split(au_present, au_present$judge_id)
+
+plot <- map(au_list, function(au_list){
+  au_list %>% 
+    gather(AU, value, -c(confidence, judge_id, frame_id)) %>%
+  ggplot() +
+  geom_tile(aes(x = frame_id, y = AU, fill = as.factor(value))) +
+  theme(legend.position = "right") +
+  scale_color_discrete()
+})
+
+gridExtra::grid.arrange(plot[[1]], plot[[2]], plot[[3]], nrow = 3)
+ggsave("presence_of_AU.png", path = "images/")
+```
+
+
+# Landmarking
+```{r}
+eyebrow <- nauru_a %>% 
+  select(judge_id, frame_id, confidence, x_17:x_26, y_17:y_26)
+
+eyebrow2 <- eyebrow %>% 
+  gather(metrics, value, -c(judge_id, frame_id, confidence)) %>% 
+  separate(metrics, c("cord", "label")) %>% 
+  spread(key = cord, value = value) %>% 
+  filter(frame_id> 2)
+
+ggplot(subset(eyebrow2, frame_id == 3)) + 
+  geom_point(aes(x = x, y = -y)) 
+  
+
+#, group = interaction(label, judge_id)
+g1<- ggplot(subset(eyebrow2, frame_id > 2)) + 
+  geom_point(aes(x = x, y = -y, group = label)) + 
+  facet_wrap(~judge_id) + 
+  transition_reveal(frame_id)
+
+gganimate::animate(g1, nframes = 10, fps = 1)
+# the problem is not with grouping. If i use transition_time, no need for grouping, while if transition_components is used, it plots every frame_id adn i want all the 10 points in each group to be shown so need group = label
+
+ggplot(eyebrow2) + 
+  geom_point(aes(x = x, y = y)) + 
+  facet_wrap(~judge_id) + 
+  transition_components(as.numeric(label)) + 
+  shadow_wake(wake_length = 0.5)
+
+anim_save("eyebrow.mp4", path = "animation/")
+```
+

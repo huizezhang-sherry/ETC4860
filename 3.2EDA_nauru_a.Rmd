@@ -1,0 +1,397 @@
+---
+title: "EDA"
+author: "Huize Zhang"
+date: "08/04/2019"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(purrr)
+library(tidyverse)
+library(ggplot2)
+library(GGally)
+library(gganimate)
+library(naniar)
+library(visdat)
+```
+
+
+# Read in multiple csvs with image id and face id 
+- combined multiple csvs into one and add entries for missing record (1, 2, 64)
+
+```{r eval = FALSE}
+load("data/nauru_a.rda")
+```
+
+# EDA
+
+Our judge: Justice Nettle, Justice Gageler, Justice Edelman
+
+## Confidence
+
+- very likely the position of the judge will affect the clarity (confidence) of the landmarking result 
+- may only want to look at the observations with certain confidence 
+- 0.9 as a threshold because by comparing the confidence rate with the actual face in the image, I find that when confidence is greater than 0.9, the judges are usually looking forwards. 
+
+- Insights: Justice Nettle doesn't seem to look straight forwards very often. 
+- Insights2: we may only want to use the observation with high confidence (may want to confirm the threshold)
+
+```{r}
+ggplot(nauru_a, aes(x= confidence)) +
+  geom_histogram(binwidth = 0.1) + 
+  facet_wrap(~judge_id)
+
+ggplot(subset(court, video_id %in% c("nauru-a", "nauru-b")), aes(x = confidence)) + 
+  geom_histogram(binwidth = 0.1) + 
+  facet_grid(judge_id~video_id)
+ggsave()
+
+
+ggplot(court, aes(x = confidence)) + 
+  geom_histogram(binwidth = 0.1) + 
+  facet_grid(judge_id~video_id)
+ggsave()
+
+nauru_a %>% filter(confidence >=0.9) %>% group_by(judge_id) %>% summarise(
+  count = n(), 
+  freq = count/148
+)
+
+high_conf <- nauru_a %>% 
+  filter(confidence >= 0.9) %>% 
+  mutate(indicator = as.factor(1))
+
+ggplot(nauru_a) + 
+  geom_line(aes(x = frame_id, y = confidence)) + 
+  facet_wrap(~judge_id, ncol = 1) + 
+  scale_x_continuous(limits = c(0, 150), breaks = seq(0, 150, 10))
+
+
+```
+
+Very wiggly at around frame 20-35, frame 85-90, frame 115-120, frame 140-150. May want to read the transcript to see if there's any pattern for this concentrated ups-and-downs. 
+
+## Gaze variables 
+
+- Gaze tracking: the vector from your pupil to corneal reflection. A bit of physio: When the light comes into your eye, you will have an relection from your outer and inner surface of your corneal and len. THe corneal relection used for gaze tracking is the reflection from the outer surface of the corneal.  
+- `gaze_0_*` are for left eyes and `gaze_1_*` are for the right eyess
+
+```{r eval =FALSE}
+# statics 
+p1_statics <- ggplot(nauru_a, 
+             aes(x=gaze_0_x, y=gaze_0_y, colour=judge_id)) + 
+  geom_point() + 
+  facet_wrap(~judge_id, nrow = 3) + 
+  theme(legend.position = "none")
+
+p2_statics <- ggplot(nauru_a, 
+             aes(x=gaze_1_x, y=gaze_1_y, colour=judge_id)) + 
+  geom_point() +
+  facet_wrap(~judge_id, nrow = 3) +
+  theme(legend.position = "none")
+
+gridExtra::grid.arrange(p1_statics, p2_statics, nrow = 1)
+
+temp <- nauru_a %>% select(judge_id,gaze_0_x, gaze_0_y,gaze_1_x, gaze_1_y) %>% 
+  mutate(x_diff = gaze_0_x - gaze_1_x,
+         y_diff = gaze_0_y - gaze_1_y)
+
+ggplot(temp) + 
+  geom_histogram(aes(x = x_diff)) + 
+  geom_histogram(aes(x= y_diff))
+
+p1_statics + 
+  geom_point(data = subset(nauru_a, confidence > 0.9), 
+             aes(x=gaze_0_x, y=gaze_0_y, colour=judge_id), col = "black") + 
+  facet_wrap(~judge_id, nrow= 3)
+```
+
+There's literally minor difference between the behaviour of left and right eyes - the difference in the x and y coordinates are marginal comparing to the measure of the unit. (Therefore, no need to create side-by-side animation for both eyes)
+
+The scatter plot shows that Justice Nettle tends to look towards right (positive `gaze_1_x`) while the other two justices tend to look towards left. this could be because of the position where the judges sit (those who sit on the RLS tend to look towards right - look at the center)
+
+There's also not much different for the more confident and less confident points - more confident points having larger y value is mainly because these are the points when judges look forwards. (Since judge was sitting on a higher position in the courtroom, the angle gets larger when they look forwards, comparing to when they look at the legal documents)
+
+```{r}
+# animation 
+# p1 <- ggplot(nauru_a, 
+#              aes(x=gaze_0_x, y=gaze_0_y, colour=judge_id)) + 
+#   geom_point() + 
+#   facet_wrap(~judge_id, nrow = 3) +
+#   transition_reveal(as.numeric(frame_id)) + 
+#   shadow_wake(wake_length = 1) + 
+#   theme(legend.position = "none")
+# 
+# p1
+# 
+
+# was think of having animation for both eyes side by side 
+# 
+# p2 <- ggplot(nauru_a, 
+#              aes(x=gaze_1_x, y=gaze_1_y, colour=judge_id)) + 
+#   geom_point() +
+#   facet_wrap(~judge_id, nrow = 3) +
+#   transition_state(as.numeric(frame_id)) + 
+#   shadow_wake(wake_length = 0.5) +
+#   theme(legend.position = "none")
+# 
+# p2
+# 
+# p_a <- gganimate::animate(p1, render = ffmpeg_renderer(),fps = 7)
+# p2_a <- gganimate::animate(p2, render = ffmpeg_renderer(), width = 200, height = 600, fps = 7)
+# 
+# a_mgif <- image_read(p_a)
+# b_mgif <- image_read(p2_a)
+# new_gif <- image_append(c(a_mgif[1], b_mgif[1]))
+# 
+# for(i in 2:100){
+#   combined <- image_append(c(a_mgif[i], b_mgif[i]))
+#   new_gif <- c(new_gif, combined)
+# }
+# 
+# new_gif
+# anim_save("eye_track.avi", path = "animation/")
+
+
+```
+
+## Pose
+
+- Reflection: animation could be a good way to visualise data, especially for related high-dimensional data
+
+- very similar to the result from 
+```{r}
+scatmat(high_conf, columns = 3:5)
+
+temp1 <- nauru_a %>% 
+  select(pose_Tx, pose_Ty, judge_id, frame_id, confidence) %>% 
+  mutate(signif = as.factor(ifelse(confidence > 0.9, 1, 0))) %>% 
+  mutate (state = as.factor(ifelse(as.numeric(frame_id)< 60, 1,
+                         ifelse(as.numeric(frame_id) > 60 & 
+                                  as.numeric(frame_id) < 90, 2,3)))) 
+
+pose <- ggplot(temp1) + 
+  geom_point(aes(pose_Tx, y = pose_Ty, col = judge_id)) + 
+  geom_point(data = subset(nauru_a, confidence > 0.9), 
+             aes(x=pose_Tx, y=pose_Ty, colour=judge_id), col = "black") +
+  facet_wrap(~judge_id, nrow = 3)
+
+pose
+  
+pose +
+  transition_reveal(frame_id) + 
+  shadow_wake(wake_length = 0.5)
+
+ggsave("position.png", path = "images/")  
+```
+
+# face landmarking
+
+- play around more with the animation for best visual result 
+
+```{r eyebrow}
+eyebrow <- nauru_a %>% 
+  select(judge_id, frame_id, confidence, x_17:x_26, y_17:y_26)
+
+eyebrow2 <- eyebrow %>% 
+  gather(metrics, value, -c(judge_id, frame_id, confidence)) %>% 
+  separate(metrics, c("cord", "label")) %>% 
+  spread(key = cord, value = value) %>% 
+  filter(frame_id> 2)
+
+ggplot(subset(eyebrow2, frame_id == 3)) + 
+  geom_point(aes(x = x, y = -y)) 
+  
+
+#, group = interaction(label, judge_id)
+g1<- ggplot(subset(eyebrow2, frame_id > 2)) + 
+  geom_point(aes(x = x, y = -y, group = label)) + 
+  facet_wrap(~judge_id) + 
+  transition_reveal(frame_id)
+
+gganimate::animate(g1, nframes = 10, fps = 1)
+# the problem is not with grouping. If i use transition_time, no need for grouping, while if transition_components is used, it plots every frame_id adn i want all the 10 points in each group to be shown so need group = label
+
+ggplot(eyebrow2) + 
+  geom_point(aes(x = x, y = y)) + 
+  facet_wrap(~judge_id) + 
+  transition_components(as.numeric(label)) + 
+  shadow_wake(wake_length = 0.5)
+
+anim_save("eyebrow.mp4", path = "animation/")
+```
+
+
+
+
+```{r lip}
+lips <- nauru_a %>% 
+  select(judge_id, frame_id, confidence, x_48:x_67, y_48:y_67)
+
+lips_list <- list(paste0("y_", seq(48, 67, 1)))
+
+lips_mod <- map_df(lips_list, function(list){
+  lips[list] = -lips[list]
+  return(lips)
+})
+
+lip2 <- lips_mod %>% 
+  gather(metrics, value, -c(judge_id, frame_id, confidence)) %>% 
+  separate(metrics, c("cord", "label")) %>% 
+  spread(key = cord, value = value)
+
+ggplot(subset(lip2, frame_id == 3)) + 
+  geom_point(aes(x = x, y = y))
+
+ggplot(lip2) + 
+  geom_point(aes(x = x, y= y)) + 
+  facet_wrap(~judge_id) +
+  transition_states(frame_id)
+
+anim_save("lip.mp4", path = "animation/")  
+```
+
+```{r}
+rb <- rinehart_b_video %>% select(timestamp, X_17: X_26,Y_17: Y_26)
+temp <- rb %>% gather(metrics, value, -c(timestamp)) %>% 
+  separate(metrics, c("cord", "label")) %>% 
+  spread(key = cord, value = value)
+
+ggplot(subset(temp, timestamp == 3)) + 
+  geom_point(aes(x = X, y = -Y))
+
+g1 <- ggplot(temp) + 
+  geom_point(aes(x = X, y = -Y)) + 
+  transition_states(timestamp)
+
+gganimate::animate(g1, nframes = 10)
+
+
+a <- rinehart_b_video %>% select(timestamp, X_0: Y_67) %>% mutate(id = row_number())
+b <- a %>% gather(metrics, value, -c(timestamp, id)) %>% 
+  separate(metrics, c("cord", "label")) %>% 
+  mutate(label = as.numeric(label)) %>% 
+  spread(key = cord, value = value)
+
+ggplot(subset(b, timestamp ==101)) + 
+  geom_point(aes(x= X, y =-Y)) 
+
+  
+g <- ggplot(subset(b, between(label, 17, 26))) + 
+  geom_point(aes(x= X, y =-Y, group = label)) +
+  transition_components(id)
+gganimate::animate(g)
+ggsave("g.mp4")
+
+
+```
+
+# Action Unit (Presence + Intensity)
+
+- As indicated from the documentation (TadasBaltrusaitis/OpenFace), The AUs are more accurate in the videos than images. My results from using `FaceLandmarkImg` shows that for the intensity, which is supposed to be on a scale of 0-5 has the maximum of 3.71 for the first judge and only 4 observations has intensity greater than 3. 
+
+```{r eval = FALSE}
+au <- nauru_a %>% 
+  select(confidence, judge_id, frame_id, AU01_r:AU45_c)
+
+# Intensity 
+au_r <- au %>% select(frame_id, AU01_r:AU45_r)
+au_list_r <- split(au_r, au_present$judge_id)
+
+temp <- au_list_r[[1]]
+temp %>% gather(AU, value, -c(frame_id)) %>% filter(value > 3)
+
+# plot_r <- map(au_list_r, function(au_list){
+#   au_list %>% gather(AU, value, -c(frame_id)) %>% 
+#   ggplot() + 
+#   geom_tile(aes(x = frame_id, y = AU, fill = value)) + 
+#   theme(legend.position = "right") + 
+#   scale_color_discrete()
+# })
+# gridExtra::grid.arrange(plot_r[[1]], plot_r[[2]], plot_r[[3]], nrow = 3)
+# ggsave("intensity_of_AU.png", path = "images/")
+
+
+# Presence
+au_present <- au %>% 
+  select(confidence, judge_id, frame_id, AU01_c:AU45_c)
+
+au_list <- split(au_present, au_present$judge_id)
+
+plot <- map(au_list, function(au_list){
+  au_list %>% 
+    gather(AU, value, -c(confidence, judge_id, frame_id)) %>%
+  ggplot() +
+  geom_tile(aes(x = frame_id, y = AU, fill = as.factor(value))) +
+  theme(legend.position = "right") +
+  scale_color_discrete()
+})
+
+gridExtra::grid.arrange(plot[[1]], plot[[2]], plot[[3]], nrow = 3)
+ggsave("presence_of_AU.png", path = "images/")
+```
+
+https://imotions.com/blog/facial-action-coding-system/
+
+# # 2, 14, 25
+# # 2, 14, 20
+# # 2, 14, 25
+
+# paper reading
+Tutton, J., Mack, K., & Roach Anleu, S. (2018). Judicial Demeanor: Oral Argument in the High Court of Australia. Justice System Journal, 39(3), 273-299.
+
+- using AV in a observational manner
+
+- by video, such as where a judge looked (down at his or her desk, forward at the speaking barrister, across to another judge, or elsewhere in the courtroom), his or her posture (leaning forward, sitting upright, or leaning back), head or body movements (shaking or nodding the head, shrugging shoulders, or swiveling), hand movements (touching books, papers, a tablet, or parts of the face, leaning on a fist, writing, or crossing his or her arms), and interacting with other judges or an associate; 
+
+- In the observed interactions, the judges depart from their usual appearance of detachment by: (a) displaying a helpful or supportive tone toward counsel; (b) displaying emotion; (c) using judicial humor; or (d) laughing or evoking laughter. Although these behaviors may be characterized as departures from strict norms of judicial conduct, this does not mean that they are improper or evidence of any bias. 
+
+- Of the five occasions where emotion appeared to be clearly displayed, the most apparent judicial emotion was frustration, apparently in response to a barrister making a submission the judge appeared to regard as irrelevant.
+
+- This judicial concern for getting to what the judge regards as the point can lead to a display of apparent frustration, especially when a barrister makes submissions on a point perceived to be irrelevant or quotes at length from material that is not thought to be relevant or helpful.
+
+
+# Task week 5
+- Tidy the data [mostly done] - read something on purrr & repurrrsive
+  - https://jennybc.github.io/purrr-tutorial/talks.html
+  - https://github.com/jennybc/repurrrsive#readme
+- gganimate to see the change instead of geom_path()
+- Russell will come for next Monday's meeting 
+
+
+Meeting #6
+
+- fix the record_id with frame_id[done]
+- obtain the whole dataset [done]
+- investigate individuality from the full dataset
+- investigate if female and male judge would behave differently 
+
+- script command line command in a bash file
+- look at the transcript for the cases and add a column for appellent/response speaking[done]
+- also add a column for which judge is asking questions - 0 for no-one asking[separate dt]
+
+- action unit for video processed 
+
+animation: 
+- play around with animation for better visual result
+- investigate the outliner from the animation 
+- investigate when the eyebrow has angle - what could be the reason 
+
+read_csv: 
+- investigate why 64 is missing[fine just leave it there]
+
+confidence: 
+- plot confidence against pose[done]
+- plot the line chart for confidence rather than the indication variable: investigate the "very wiggly": Action: read the transcript to see if there's an pattern[done]
+
+
+
+## Bash file 
+
+Step 1: create a .txt file and give it a name, say bash_file.txt
+Step 2: command line run: chmod 700 bash_file.txt
+Step 3: run ./bash_file.txt
