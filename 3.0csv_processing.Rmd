@@ -23,14 +23,14 @@ library(tidyverse)
 ```{r nauru-a}
 names <- map(judges, ~paste0("data/csv/nauru-a/face",.x, "/processed"))
 filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
-temp_nauru_a <- map_df(filenames, function(x){
-      map_df(x, function(x){
-        read_csv(x) %>%
-          mutate(info = x)
-      })
-    })
-
-save(temp_nauru_a,file = "data/temp_nauru_a.rda")
+# temp_nauru_a <- map_df(filenames, function(x){
+#       map_df(x, function(x){
+#         read_csv(x) %>%
+#           mutate(info = x)
+#       })
+#     })
+# 
+# save(temp_nauru_a,file = "data/temp_nauru_a.rda")
 
 load("data/temp_nauru_a.rda")
 
@@ -64,7 +64,7 @@ nauru_a <- dt %>%
   mutate(frame_id = as.numeric(frame_id)) %>%
   mutate(video_id = as.factor("Nauru_a")) %>%
   # by observation, after 1:28, respondent start to speak 
-  mutate(speaker = ifelse(frame_id < 90, "Appellent", "Respondent"))
+  mutate(speaker = ifelse(frame_id < 90, "Appellent", "Respondent")) %>% 
   select(-c("dt", "csv", "nauru_a", "processed", "csv"))
 
 save(nauru_a,file = "data/nauru_a.rda")
@@ -73,17 +73,17 @@ load("data/nauru_a.rda")
 ```
 
 ```{r nauru-b}
-judges <- c("1","2","3")
-names <- map(judges, ~paste0("data/csv/nauru-b/",.x))
-filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
-temp_nauru-b <- map_df(filenames, function(x){
-      map_df(x, function(x){
-        read_csv(x) %>%
-          mutate(info = x)
-      })
-    })
-
-save(temp_nauru-b,file = "data/temp_nauru_b.rda")
+# judges <- c("1","2","3")
+# names <- map(judges, ~paste0("data/csv/nauru-b/",.x))
+# filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
+# temp_nauru-b <- map_df(filenames, function(x){
+#       map_df(x, function(x){
+#         read_csv(x) %>%
+#           mutate(info = x)
+#       })
+#     })
+# 
+# save(temp_nauru_b,file = "data/temp_nauru_b.rda")
 
 load("data/temp_nauru_b.rda")
 

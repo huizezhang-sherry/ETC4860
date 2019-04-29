@@ -52,9 +52,7 @@ gaze_left <- function(video){
 
 gaze_plot <- map(video, gaze_left)
 names(gaze_plot) <- video
-gridExtra::grid.arrange(grobs = gaze_plot,nrow = 5,ncol = 2,
-                        layout_matrix = cbind(c(1,1,1),c(2,2,2), 
-                                              c(3,3,3,3),c(6,6,7,7), c(5,4,4,4)), 
+gridExtra::grid.arrange(grobs = gaze_plot,ncol = 7,
                         top = "Where are the judges looking at when they are in the court")
 
 save("gaze_all.png", device = "png", path = "images/")

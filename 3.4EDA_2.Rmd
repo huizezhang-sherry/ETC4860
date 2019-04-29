@@ -31,21 +31,31 @@ load("data/court.rda")
 court <- rbind(nauru_a, nauru_b, McKell, OKS, Parkes, Rinehart_a, Rinehart_b)
 
 vis_dat(McKell %>% select(x_1))
-tem <- McKell %>% filter(judge_id == "Edelman") %>% select(x_1) %>% vis_dat()
+McKell %>% filter(judge_id == "Edelman") %>% select(x_1) %>% vis_dat()
 
+plotting <- function(name, video){
+  court %>% filter(video_id == video) %>% 
+                filter(judge_id == name) %>% select(x_1) %>% vis_dat()
+}
 
-
+videos <- list("Nauru_a", "Nauru_b", "McKell", "OKS", "Parkes","Rinehart_a", "Rinehart_b")
 plot_missing <- function(video){
-  browser()
-  videos <- c("Nauru_a", "Nauru_b", "McKell", "OKS", "Parkes","Rinehart_a", "Rinehart_b")
-  name <- court %>% filter(video_id == "OKS") %>% select(judge_id) %>% unique()
-  plot <- map2(.x = name, .y = videos, .f = court %>% filter(video_id == .y) %>% 
-                filter(judge_id == .x) %>% select(x_1) %>% vis_dat())
+  name <- court %>% filter(video_id == videos) %>% select(judge_id) %>% unique()
+  plot <- map2(.x = name, .y = videos, plotting)
 }
 
 missingplot <- map(video, plot_missing)
 
-missingplot[3]
+missingplot
+
+
+
+
+
+
+
+
+
 
 videos <- c("Nauru_a", "Nauru_b", "McKell", "OKS", "Parkes","Rinehart_a", "Rinehart_b")
 name_list <- map(video, ~court %>% filter(video_id == .x) %>% select(judge_id) %>% unique())

@@ -1,8 +1,9 @@
 ---
-title: "proposal"
+title: "Exploration of Facial Expression in Legal Proceedings"
 author: "Huize Zhang"
-date: "15/04/2019"
-output: html_document
+date: "22/04/2019"
+output: pdf_document
+bibliography: 0.reference.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -10,74 +11,44 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-# Topic statement
-a statement of the topic.
-
 
 # Background
 
- background material that provides 
- motivation for the topic,
-including a brief review of key literature.
+In @guidetojudicalconduct, A judge is expected to "maintain a standard of behaviour in court that ... does not diminish the confidence of
+litigants, ... ,in the ability, the integrity, the impartiality and the independence of the judge" and this is achieved through certain judical demeanor (@tutton2018judicial and @goffman1956nature). However, from a behaviour perspective, some facial and vocal inflections are often unbekown to the speakers (@ekman1991invited) and thus many scholars are studying the court outcome through the language and words used by the judges in the court (@Shullman2004illusion) and their vocal and facial characteristics (@Chen2018blind). 
 
-What has been done to predict outcomes of court cases
-- audio
--transripts
--interruptions
--how a judge votes before
--av has been a recent development (cite examples of people who have used it)
-but this falls short of the potential of analysing judges facial expressions
+There's existing literature to understand the emotion of the Justices from a linguistic perspective and suggest some factors that could be useful to indicate the justices' vote and thus the court outcome. These factors includes the use of pleasant and unpleasant language by @black2011emotions, the freqency and content of Justices' questions by Shullman [-@Shullman2004illusion] and @johnson2009inquiring. A statistical method is used by @epstein2010Inferring to include a regression analysis to the number of quetsions aksed by the Justices to infer the winning party in the court. 
 
-The idea of facial expression
+Other scholars have studied the emotion of the Justices from vocal characteristics and suggesting that these vacal characterstics espcially the percieved masculinity is strongly correlationed with the court outcomes @chen2016Perceived, @chen2017covering, @schubert1992observing. @Dietrich2019 uses a multilevel logistic model with random effect to suggest subconscious vocal inflections contains information that are not available from textual information. 
 
-- paul ekman
+@Chen2018blind's work in 2018 employed both vocal and facial characteristics to predict the court votes using the Supreme Court datafrom 1946-2014. The audio clips is first preprocessed to get the Mel-frequency  Cepstral  Coefficients (MFCC) and then applied to a random forest model while the image features are extracted using Histrogram of Oriented Gradients (HOG). However, this approach on image feature extraction is a general method for image analysis and more specific facial recognition software is readily available to  extract human facial features. We have yet to see these facial recognition technology being applied to the legal study. 
 
-examples of who has used it
-tennis steph
-
-formailsed facs
-
-openface implements these ideas
-
-other examples of people using openface for research
+Also, most of the paper above are conducted using the U.S. Supreme Court Database and less studies have conducted using Australia High Court data. @Tutton2018 has used an ethnographic apporach to study the transcript and audio visual recordings in the High Court of Australia but the study is conducted in an observational manner via matching the Justices' body movement and appearance with the transcript.
 
 
 
-#data 
-We have chosen to derive faces from video by using screenshots, this has been done for tennis (cite steph). 
-- Stephs open face 
-   Steph's paper (Department - comparing four API for face recognition)
-
-what we will do with data:
 
 
-# Aims
-apply techniques in facial expression analysis to explore court proceedings
+It is thus not difficult to notice that a more accurate approach could be employed to understand the emotion of the Justices in the court. An Anatomical analysis of facial action was conducted in 1976 by @ekman1976 and there comes the Facial Action Code(FAC) @ekman1978, which has been further revised by @ekman2002. This decomposition of facial muscles is widely used in scientific research, animation (https://www.paulekman.com/facial-action-coding-system/) and even nowadays, computer vision(@openface2). 
 
- An outline of the aims of your research.
-- can we understand more about a judge
 
-can we understand how they respond to apellant or respondent
+A series of emotion recognition challenges then pop up with an aim to better detect the facial emotions in the real-world audio-video based images(Emotion Recognition In The Wild Challenge and Workshop (EmotiW) 2013: @dhall2013emotion and @kahou2013combining; Audio/Visual Emotion Challenge: @schuller2012aver and @schuller2011avec). 
 
-understand how expressions change during a case, or are diferent between cases
+
+An example is its application in competitive sprots, specifically tennis. @kovalchik2018 find that the emotion of professional tennis players will have an impact on the their performance and the Facial Action Coding System(FACS) is modified to sport-relevent emotions to better suits the context. 
 
 
 
-# Plan  
-A statement of your research plan
-Timeline: Completed:
-
-what data you will use if conducting empirical research; 
-- use court videos, crop individual faces 
-
-what econometric techniques you intend to apply;
 
 
-Timeline: Intended
-
-what theoretical results you intend to derive;
+Therefore, there's a gap of employing statistical analysis to the Justices' facial images in the context of the High Court of Australia and this will be the focus of my thesis.
 
 
 
-what techniques you will use to evaluate your results/methods and to compare them with other comparable results/methods in the
-literature; and so on).
+
+OpenFace @Baltrusaitis2018 provides a state-of-the-sart implementation of facial expression detection including facial landmarking, eye gaze tracking and facial action unit detection. Along with its previous version (@Baltrusaitis2016), the OpenFace toolkit has been used in different social researches including depression classificaiton(@yang2016 and @Nasir2016) and social signal precessing (@Schneider2019)
+
+
+
+
+# Reference

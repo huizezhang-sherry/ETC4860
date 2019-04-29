@@ -14,7 +14,7 @@ To do:
 - Dockerfile -c
 - csv_procesing better code -b 
 - missing plot -a
-- text analysis -a
+- text analysis [done]
 - outcome variables -a 
 - pixel analysis: 1day
 - proposal: 1day

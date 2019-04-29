@@ -19,7 +19,7 @@ court <- rbind(nauru_a, nauru_b, McKell, OKS, Parkes, Rinehart_a, Rinehart_b)
 save(court, file = "data/court.rda")  
 
 # missing evaluation
-court_miss <- court_0 %>% 
+court_miss <- court %>% 
   select(judge_id, frame_id, video_id, x_1) %>% 
   mutate(judge_id = as.factor(judge_id))
 
@@ -55,6 +55,50 @@ save(court, file = "data/court.rda")
 
 
 McKell %>% vis_dat()
+
+# missing plot 
+load("data/court.rda")
+
+videos <- list("Nauru_a", "Nauru_b", "McKell", "OKS", "Parkes","Rinehart_a", "Rinehart_b")
+names <- map(videos, ~court %>% filter(video_id == .x) %>% select(judge_id) %>% unique())
+
+missingplot <- map2(videos,names, function(videos,names){
+  court_video <- court %>% filter(video_id == videos)
+  map(names, function(names){
+    map(names, ~ court_video %>% 
+          filter(judge_id == .x) %>% select(x_1))})
+})
+
+names(missingplot) <- videos
+
+vis <- function(x,name){
+  x <- x[[1]]
+  df <- as.data.frame(x)
+  names(df) <- name[[1]]
+  df %>% vis_miss + 
+    coord_flip()
+}
+
+vis(missingplot[[3]], names[[3]])
+
+temp<- map2(missingplot,names,vis)
+names(temp) <- videos
+
+gridExtra::grid.arrange(grobs = temp, nrow = 4)
+
+  
+gridExtra::grid.arrange(arrangeGrob(temp[[1]], top = video[1]),
+                        arrangeGrob(temp[[2]], top = video[2]))
+
+
+gridExtra::grid.arrange(arrangeGrob(temp[[3]], top = video[3]),
+                        arrangeGrob(temp[[4]], top = video[4]),
+                        arrangeGrob(temp[[5]], top = video[5]))
+
+gridExtra::grid.arrange(arrangeGrob(temp[[6]], top = video[6]),
+                        arrangeGrob(temp[[7]], top = video[7]))
+
+save("missing.png", path = "images/")
 
 
 # vis_dat: x: t y: judge, 7 plots for 7 videos 

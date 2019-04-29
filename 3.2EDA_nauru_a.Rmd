@@ -341,18 +341,7 @@ https://imotions.com/blog/facial-action-coding-system/
 # # 2, 14, 20
 # # 2, 14, 25
 
-# paper reading
-Tutton, J., Mack, K., & Roach Anleu, S. (2018). Judicial Demeanor: Oral Argument in the High Court of Australia. Justice System Journal, 39(3), 273-299.
 
-- using AV in a observational manner
-
-- by video, such as where a judge looked (down at his or her desk, forward at the speaking barrister, across to another judge, or elsewhere in the courtroom), his or her posture (leaning forward, sitting upright, or leaning back), head or body movements (shaking or nodding the head, shrugging shoulders, or swiveling), hand movements (touching books, papers, a tablet, or parts of the face, leaning on a fist, writing, or crossing his or her arms), and interacting with other judges or an associate; 
-
-- In the observed interactions, the judges depart from their usual appearance of detachment by: (a) displaying a helpful or supportive tone toward counsel; (b) displaying emotion; (c) using judicial humor; or (d) laughing or evoking laughter. Although these behaviors may be characterized as departures from strict norms of judicial conduct, this does not mean that they are improper or evidence of any bias. 
-
-- Of the five occasions where emotion appeared to be clearly displayed, the most apparent judicial emotion was frustration, apparently in response to a barrister making a submission the judge appeared to regard as irrelevant.
-
-- This judicial concern for getting to what the judge regards as the point can lead to a display of apparent frustration, especially when a barrister makes submissions on a point perceived to be irrelevant or quotes at length from material that is not thought to be relevant or helpful.
 
 
 # Task week 5

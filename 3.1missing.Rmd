@@ -3,6 +3,8 @@ title: "3.0.1missing"
 author: "Huize Zhang"
 date: "15/04/2019"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
@@ -11,10 +13,8 @@ knitr::opts_chunk$set(echo = TRUE)
 library(purrr)
 library(tidyverse)
 library(ggplot2)
-library(GGally)
-library(gganimate)
-library(naniar)
 library(visdat)
+library(gridExtra)
 ```
 
 
@@ -32,7 +32,9 @@ save(court, file = "data/court.rda")
 ```
 
 ```{r}
-court_miss <- court_0 %>% 
+load("data/court.rda")
+
+court_miss <- court %>% 
   select(judge_id, frame_id, video_id, x_1) %>% 
   mutate(judge_id = as.factor(judge_id))
   
@@ -54,22 +56,63 @@ judge_name <- c("Nettle", "Gageler", "Edelman",
 
 missing <- data.frame(missing) %>% mutate(name = judge_name)
 
-McKell2 <- McKell %>% filter(judge_id != "Bell")
-OKS2 <- OKS %>% filter(judge_id %in% c("Keane","Edelman"))
-Parkes2 <- Parkes %>% filter(judge_id =="Keane")
-Rinehart_a2 <- Rinehart_a %>% filter(judge_id %in% c("Gageler","Edelman"))
-Rinehart_b2 <- Rinehart_b %>% filter(judge_id %in% c("Gageler","Edelman"))
+# McKell2 <- McKell %>% filter(judge_id != "Bell")
+# OKS2 <- OKS %>% filter(judge_id %in% c("Keane","Edelman"))
+# Parkes2 <- Parkes %>% filter(judge_id =="Keane")
+# Rinehart_a2 <- Rinehart_a %>% filter(judge_id %in% c("Gageler","Edelman"))
+# Rinehart_b2 <- Rinehart_b %>% filter(judge_id %in% c("Gageler","Edelman"))
+# 
+# court <- rbind(nauru_a, nauru_b, McKell2, OKS2, Parkes2, Rinehart_a2, Rinehart_b2)  
+#
+#save(court, file = "data/court.rda")  
 
-court <- rbind(nauru_a, nauru_b, McKell2, OKS2, Parkes2, Rinehart_a2, Rinehart_b2)  
-
-save(court, file = "data/court.rda")  
-
-
-McKell %>% vis_dat()
 
 ```
+
 
 # vis_dat: x: t y: judge, 7 plots for 7 videos 
 predict based on the nubmer of interupt
 
 label with outcome: hold/ not hold
+
+```{r}
+videos <- list("Nauru_a", "Nauru_b", "McKell", "OKS", "Parkes","Rinehart_a", "Rinehart_b")
+names <- map(videos, ~court %>% filter(video_id == .x) %>% select(judge_id) %>% unique())
+
+missingplot <- map2(videos,names, function(videos,names){
+  court_video <- court %>% filter(video_id == videos)
+  map(names, function(names){
+    map(names, ~ court_video %>% 
+          filter(judge_id == .x) %>% select(x_1))})
+})
+
+names(missingplot) <- videos
+
+
+temp<- map2(missingplot,names, function(x,name){
+  x <- x[[1]]
+  df <- as.data.frame(x)
+  names(df) <- name[[1]]
+  df %>% vis_miss() + 
+    coord_flip() + 
+    scale_fill_brewer(name = "", labels =c("Present", "Missing"))
+})
+
+names(temp) <- videos
+
+```
+  
+```{r echo = FALSE}
+grid.arrange(arrangeGrob(temp[[1]], top = videos[[1]]),
+             arrangeGrob(temp[[2]], top = videos[[2]]))
+
+grid.arrange(arrangeGrob(temp[[6]], top = videos[[6]]),
+             arrangeGrob(temp[[7]], top = videos[[7]]))
+
+grid.arrange(arrangeGrob(temp[[3]], top = videos[[3]]),
+             arrangeGrob(temp[[4]], top = videos[[4]]))
+
+grid.arrange(arrangeGrob(temp[[5]], top = videos[[5]]), nrow =2)
+
+```
+
