@@ -40,6 +40,7 @@ litigants, ... ,in the ability, the integrity, the impartiality and the independ
 
 
     The Council of Chief Justices of Australia and New Zealand.2017.Guide to Judicial Conduct. 3rd ed. Melbourne: Austral-asian Institute of Judicial Administration.
+    
 -"maintain a standard of behaviour in court that ... does not diminish the confidence of litigants, ... ,in the ability, the integrity, the impartiality and the independence of the judge""    
     
     Tutton, J., Mack, K., & Roach Anleu, S. (2018). Judicial Demeanor: Oral Argument in the High Court of Australia. Justice System Journal, 39(3), 273-299.
@@ -257,10 +258,13 @@ Reference useful for text analysis
     Rajesh, K. M., & Naveenkumar, M. (2016, December). A robust method for face recognition and face emotion detection system using support vector machines. In 2016 International Conference on Electrical, Electronics, Communication, Computer and Optimization Techniques (ICEECCOT) (pp. 1-5). IEEE.
 - support vector machine
 
+[deepface/ facenet and the resulting openface]
 
+    Schroff, F., Kalenichenko, D., & Philbin, J. (2015). Facenet: A unified embedding for face recognition and clustering. In Proceedings of the IEEE conference on computer vision and pattern recognition (pp. 815-823).
+- google 
 
-
-
+    Taigman, Y., Yang, M., Ranzato, M. A., & Wolf, L. (2014). Deepface: Closing the gap to human-level performance in face verification. In Proceedings of the IEEE conference on computer vision and pattern recognition (pp. 1701-1708).
+- facebook
 
 
 
