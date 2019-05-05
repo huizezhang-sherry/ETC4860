@@ -10,7 +10,7 @@ dim(paint)
 paint[1,]
 
 # Scraping the data, Sam's code
-paintings <- html("http://www.saleoilpaintings.com/paintings/bob-ross/bob-ross-sale-3_1.html") 
+paintings <- read_html("http://www.saleoilpaintings.com/paintings/bob-ross/bob-ross-sale-3_1.html") 
 images <- paintings %>% html_nodes("img") %>% html_attr("src")
 remove <- which(images == "/image/buy-art.gif") #logo for website repeated over and over 
 paintings2 <- images[-remove] #get rid of logo
