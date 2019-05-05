@@ -2,9 +2,7 @@
 
 cd dt
 
-batch create folders
 cat list.txt | xargs mkdir
-
 
 ffmpeg -i Nauru-a.mp4 -r 1/60 ../dt/Nauru-a/nauru-a_%3d.png
 ffmpeg -i Nauru-b.mp4 -r 1/60 ../dt/Nauru-b/nauru-b_%3d.png
