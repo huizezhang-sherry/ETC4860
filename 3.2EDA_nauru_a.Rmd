@@ -41,9 +41,10 @@ Our judge: Justice Nettle, Justice Gageler, Justice Edelman
 - Insights2: we may only want to use the observation with high confidence (may want to confirm the threshold)
 
 ```{r}
-ggplot(nauru_a, aes(x= confidence)) +
+ggplot(nauru_a, aes(x= confidence, col = judge_id, fill = judge_id)) +
   geom_histogram(binwidth = 0.1) + 
   facet_wrap(~judge_id)
+ggsave("confidence.png", path = "images/")
 
 ggplot(subset(court, video_id %in% c("nauru-a", "nauru-b")), aes(x = confidence)) + 
   geom_histogram(binwidth = 0.1) + 
@@ -87,7 +88,7 @@ p1_statics <- ggplot(nauru_a,
   geom_point() + 
   facet_wrap(~judge_id, nrow = 3) + 
   theme(legend.position = "none")
-
+ggsave("gaze.png", path = "images/")
 p2_statics <- ggplot(nauru_a, 
              aes(x=gaze_1_x, y=gaze_1_y, colour=judge_id)) + 
   geom_point() +
@@ -176,11 +177,10 @@ temp1 <- nauru_a %>%
 
 pose <- ggplot(temp1) + 
   geom_point(aes(pose_Tx, y = pose_Ty, col = judge_id)) + 
-  geom_point(data = subset(nauru_a, confidence > 0.9), 
-             aes(x=pose_Tx, y=pose_Ty, colour=judge_id), col = "black") +
-  facet_wrap(~judge_id, nrow = 3)
+  facet_wrap(~judge_id, nrow = 3) 
 
 pose
+
   
 pose +
   transition_reveal(frame_id) + 
@@ -192,6 +192,24 @@ ggsave("position.png", path = "images/")
 # face landmarking
 
 - play around more with the animation for best visual result 
+
+```{r}
+face <- nauru_a %>% select(judge_id, frame_id, starts_with("x_"), starts_with("y_"))
+face2 <- face %>% gather(metrics, value, -c(judge_id, frame_id)) %>% 
+  separate(metrics, c("cord", "label")) %>% 
+  spread(key = cord, value = value) %>%
+  mutate(y = -y) %>% 
+  filter(frame_id == 3)
+
+ggplot(subset(face2, judge_id == "Edelman"), aes(x= x, y = y)) +
+  geom_point()
+
+ggplot(subset(face2, judge_id == "Nettle"), aes(x= x, y = y)) +
+  geom_point()
+
+```
+
+
 
 ```{r eyebrow}
 eyebrow <- nauru_a %>% 
@@ -208,7 +226,7 @@ ggplot(subset(eyebrow2, frame_id == 3)) +
   
 
 #, group = interaction(label, judge_id)
-g1<- ggplot(subset(eyebrow2, frame_id > 2)) + 
+g1 <- ggplot(subset(eyebrow2, frame_id > 2)) + 
   geom_point(aes(x = x, y = -y, group = label)) + 
   facet_wrap(~judge_id) + 
   transition_reveal(frame_id)

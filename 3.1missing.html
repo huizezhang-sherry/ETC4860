@@ -381,16 +381,16 @@ $(document).ready(function () {
 </div>
 
 
-<pre class="r"><code>load(&quot;data/nauru_a.rda&quot;)
-load(&quot;data/nauru_b.rda&quot;)
-load(&quot;data/McKell.rda&quot;)
-load(&quot;data/OKS.rda&quot;)
-load(&quot;data/Parkes.rda&quot;)
-load(&quot;data/Rinehart_a.rda&quot;)
-load(&quot;data/Rinehart_b.rda&quot;)
-
-court &lt;- rbind(nauru_a, nauru_b, McKell, OKS, Parkes, Rinehart_a, Rinehart_b)
-save(court, file = &quot;data/court.rda&quot;)  </code></pre>
+<pre class="r"><code># load(&quot;data/nauru_a.rda&quot;)
+# load(&quot;data/nauru_b.rda&quot;)
+# load(&quot;data/McKell.rda&quot;)
+# load(&quot;data/OKS.rda&quot;)
+# load(&quot;data/Parkes.rda&quot;)
+# load(&quot;data/Rinehart_a.rda&quot;)
+# load(&quot;data/Rinehart_b.rda&quot;)
+# 
+# court &lt;- rbind(nauru_a, nauru_b, McKell, OKS, Parkes, Rinehart_a, Rinehart_b)
+# save(court, file = &quot;data/court.rda&quot;)  </code></pre>
 <pre class="r"><code>load(&quot;data/court.rda&quot;)
 
 court_miss &lt;- court %&gt;% 
