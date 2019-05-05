@@ -19,16 +19,16 @@ library(gridExtra)
 
 
 ```{r eval = FALSE}
-load("data/nauru_a.rda")
-load("data/nauru_b.rda")
-load("data/McKell.rda")
-load("data/OKS.rda")
-load("data/Parkes.rda")
-load("data/Rinehart_a.rda")
-load("data/Rinehart_b.rda")
-
-court <- rbind(nauru_a, nauru_b, McKell, OKS, Parkes, Rinehart_a, Rinehart_b)
-save(court, file = "data/court.rda")  
+# load("data/nauru_a.rda")
+# load("data/nauru_b.rda")
+# load("data/McKell.rda")
+# load("data/OKS.rda")
+# load("data/Parkes.rda")
+# load("data/Rinehart_a.rda")
+# load("data/Rinehart_b.rda")
+# 
+# court <- rbind(nauru_a, nauru_b, McKell, OKS, Parkes, Rinehart_a, Rinehart_b)
+# save(court, file = "data/court.rda")  
 ```
 
 ```{r}
@@ -48,11 +48,11 @@ missing <- court_miss %>%
 #kiefel: key-fall
 judge_name <- c("Nettle", "Gageler", "Edelman", 
                 "Nettle", "Gageler", "Edelman", 
-                "left-1", "Gageler", "Bell", "Keane", "Edelman",
-                "left-1", "Keane", "Bell", "Gageler", "Edelman",
-                "left-1", "Bell", "Kiefel", "Keane", "Edelman",
-                "left-1", "Gageler", "Kiefel", "Nettle", "Edelman",
-                "left-1", "Gageler", "Kiefel", "Nettle", "Edelman")
+                "Gordon", "Gageler", "Bell", "Keane", "Edelman",
+                "Gordon", "Keane", "Bell", "Gageler", "Edelman",
+                "Gordon", "Bell", "Kiefel", "Keane", "Edelman",
+                "Gordon", "Gageler", "Kiefel", "Nettle", "Edelman",
+                "Gordon", "Gageler", "Kiefel", "Nettle", "Edelman")
 
 missing <- data.frame(missing) %>% mutate(name = judge_name)
 
