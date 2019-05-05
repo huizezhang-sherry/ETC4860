@@ -7,6 +7,12 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(magick)
+library(stringr)
+library(purrr)
+library(tibble)
+library(tidyverse)
+library(imager)
 ```
 
 # Meeting 4
@@ -33,103 +39,159 @@ The xy cordinate of the ideal faces is in taipan-export-2019-03-31. We can use c
 xy_cord <- read_csv("taipan-export-2019-03-31.csv")
 cord <- xy_cord %>% 
   mutate(geom = paste0((xmax - xmin), "x",(ymax- ymin) , "+", xmin, "+", ymin)) %>% 
-  separate(image_name, into = c("date", "suffix"), sep = "-") %>% 
+  mutate(xrange = xmax-xmin) %>% 
+  mutate(yrange = ymax - ymin) %>% 
+  separate(image_name, into = c("video", "suffix"), sep = "_") %>% 
   select(-suffix)
 # after the re-download this should work 
+```
 
+```{r}
+videos <- list("Nauru-a", "Nauru-b", "McKell", "OKS", "Parkes","Rinehart-a", "Rinehart-b")
+
+names <- map(videos, ~paste0("data/", .x))
+filenames <- map(names, list.files, pattern = "*.png")
+geom <- cord %>% select(xrange,yrange, xmin, ymin, geom) %>% 
+  mutate(line = row_number())
+
+match <- map(filenames, function(x){
+  map(x, function(x){
+    y = strsplit(x, split = "\\_")[[1]][[1]]
+    map(y, function(y){
+      which(cord$video %in% y)
+      })
+  })
+})
+
+filenames_full <- map(names, list.files, pattern = "*.png", full.names = TRUE)
+images <- map(filenames_full, image_read)
+
+
+crop <- map(sample_image, sample_match, function(sample_image, sample_match){
+  map(sample_match, function(sample_match){
+    map(geom[unlist(sample_match),],image_crop(image = sample_image))
+  })
+})
+
+
+
+geom[unlist(sample_match[[1]][[1]]),]
+
+
+
+a <- c(geom[3,])
+a <- image_read(filenames_full[[1]][[3]])
+
+map(a, image_crop, c(geom[match[[1]][[1]]]))
+image_crop(a, c(geom[match[[1]][[1]]]))
+map(geom$geom[match[[1]][[1]]], ~image_crop(geom = .x, image=a))
+
+image_crop(a, geom$geom[1:3])
+map(subset(geom$geom, 
+           geom$line %in% unlist(match[[1]][[1]])), ~image_crop(geom= .x, image = a))
+
+crop = sample_image
+
+
+
+sample_geom <- map(sample_match, 
+                   ~subset(geom$geom, subset =eval(parse(text = "geom$line == .x"))))
+sample <- list(filenames_full[[1]][1:5])
+sample_files <- c(filenames[[1]][1:5])
+sample_image <- map(sample, image_read)
+sample_match <- unlist(c(match[[1]][1]))
+
+sample_path <- map(c(1,2,3), function(folder){
+  map(sample_files, function(file){
+    map(file,function(file){
+       y = strsplit(file, split = "\\_")[[1]][[1]]
+       paste0("cropped/", y, "/",folder, "/",file)
+    })
+  })
+})
+
+path = unlist(sample_path)
+
+for (image in sample_image){
+  map2(sample_geom,sample_path, function(geom, path){
+    image_crop(geom =geom, image= image) %>% 
+      image_write(path)
+  })
+}
+
+
+map(fils, ~{
+  curr_fil <- .x
+  image_read(curr_fil) %>%
+    image_crop("100x16+161+68") %>%
+    image_resize("2000") %>%
+    save_image(curr_fil, "/tmp/backup") %>% 
+    image_convert() %>%      
+    image_trim() %>%
+    image_ocr()
+}) -> ocr_result
+
+map(sample, ~{
+  img <- .x
+  image_read(img) %>% 
+    image_crop(sample_geom[1]) %>% 
+    save_image(img, "cropped/nauru-a/1/") 
+})
+
+
+save_image <- function(img, img_name, output_dir) {
+  image_write(img, file.path(output_dir, basename(img_name)))
+  img
+}
+save_image(sample_image[1], path[1], path[1])
+
+map(crop[1], ~save.image(.x), path = path[1:5])
+image_write(image[1], path = path[1])
+save.image(crop[1], path = path[1:5])
+
+
+```
+
+```{r}
 cmd = numeric()
-
-
-for(j in seq_along(1:nrow(cord))){
-  system("cd ")
-}  
+cropping_nauru <- function(video){
+  start_position <- match(video, cord$video)-1
   
-```
+  for (j in seq(1,3,1)){
+    cmd[j] = paste0("cd data/", video,"; magick mogrify -crop ", cord$geom[j + start_position], " -path ../cropped/", video, "/", j, " *.png")
+    }
 
-```{r nauru-a, eval = FALSE}
-
-cmd = c()
-for (j in seq(1,3,1)){
-  cmd[j] = paste0("cd data/nauru-a; magick mogrify -crop ", cord$geom[j + 25], " -path ../cropped/nauru-a", "/", j, " *.png")
-}
-
-for (i in 1:length(cmd)){
-  system(cmd[i])
-}
-
-# nauru-b
-cmd = c()
-for (j in seq(1,3,1)){
-  cmd[j] = paste0("cd data/nauru-b; magick mogrify -crop ", cord$geom[j + 28], " -path ../cropped/nauru-b", "/", j, " *.png")
-}
-
-for (i in 1:length(cmd)){
-  system(cmd[i])
-}
-
-#11-18-14a
-cmd = c()
-for (j in seq(1,5,1)){
-  cmd[j] = paste0("cd data/18-11-14a; magick mogrify -crop ", cord$geom[j], " -path ../cropped/18-11-14a", "/", j, " *.png")
-}
-
-for (i in 1:length(cmd)){
-  system(cmd[i])
-}
-
-#18-11-14b
-cmd = c()
-for (j in seq(1,5,1)){
-  cmd[j] = paste0("cd data/18-11-14b; magick mogrify -crop ", cord$geom[j + 10], " -path ../cropped/18-11-14b", "/", j, " *.png")
-}
-
-for (i in 1:length(cmd)){
-  system(cmd[i])
-}
-
-cmd = c()
-for (j in seq(1,5,1)){
-  cmd[j] = paste0("cd data/18-11-13; magick mogrify -crop ", cord$geom[j + 5], " -path ../cropped/18-11-13", "/", j, " *.png")
-}
-
-for (i in 1:length(cmd)){
-  system(cmd[i])
-}
-
-#18-12-07
-cmd = c()
-for (j in seq(1,5,1)){
-  cmd[j] = paste0("cd data/18-12-07; magick mogrify -crop ", cord$geom[j + 15], " -path ../cropped/18-12-07", "/", j, " *.png")
-}
-
-for (i in 1:length(cmd)){
-  system(cmd[i])
-}
-
-#19-02-14
-cmd = c()
-for (j in seq(1,5,1)){
-  cmd[j] = paste0("cd data/19-02-14; magick mogrify -crop ", cord$geom[j + 20], " -path ../cropped/19-02-14", "/", j, " *.png")
-}
-
-for (i in 1:length(cmd)){
-  system(cmd[i])
-}
-```
-
-```{r eval = FALSE}
-
-for (i in nauru){
-  for (j in seq(26, 31, 1)){
-    cmd[i] = paste0("cd data/", i, "; magick mogrify -crop ", cord$geom[j], " -path ../cropped/", i, " *.png")
+  for (i in 1:length(cmd)){
+    system(cmd[i])
   }
 }
 
-system(cmd)
-which("nauru-a" == substr(cord$image_name, 1,7))
-
-j = seq(26, 31, 1)
+video = c("nauru-a", "nauru-b")
+map(nauru_video, cropping_nauru)
 ```
+
+
+```{r}
+cmd = numeric()
+cropping_more <- function(video){
+  
+  start_position <- match(video, cord$video)-1
+  
+  for (j in seq(1,5,1)){
+    cmd[j] = paste0("cd data/", video,"; magick mogrify -crop ", cord$geom[j + start_position], " -path ../cropped/", video, "/", j, " *.png")
+    }
+
+  for (i in 1:length(cmd)){
+    system(cmd[i])
+  }
+}
+
+videos_more = c("McKell", "OKS", "Parkes","Rinehart-a", "Rinehart-b")
+map(videos_more,cropping_more)
+
+```
+
+
 
 # Step 4: OpenFace
 
