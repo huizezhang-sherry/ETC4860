@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Exploration of Facial Expression in Videos and Transcripts of Legal Proceedings</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Huize Zhang" />
+    <meta name="author" content="supervised by Di Cook and Russell Smyth" />
+    <meta name="date" content="2019-05-07" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Exploration of Facial Expression in Videos and Transcripts of Legal Proceedings
+### Huize Zhang
+### supervised by Di Cook and Russell Smyth
+### 2019-05-07
+
+---
+
+
+class: inverse, center, middle
+
+# Background
+
+---
+# Legal study from a behaviour perspective
+
+### Existing literature in the U.S. studied the court outcome through: 
+
+- language and word used by the Justices (do i need reference????)
+
+- vocal and facial characteristics of the Justices
+
+--
+
+### Australia study: Tutton et al (2018): 
+
+- using the transcript and AV recordings 
+
+- visually inspect the video and compare with the transcript
+
+---
+# Face Recognition
+
+- **Paul Ekman** studied Facial Action, which lead to Facial Action Coding System (FACS)
+
+--
+
+- Study emotion based on the decomposed facial muscles
+
+--
+
+.pull-left[
+
+Example: AU_2
+
+![](images/AU2-right-only.gif)&lt;!-- --&gt;
+]
+
+--
+
+.pull-right[
+
+Example: AU_15
+
+![](images/AU15.gif)&lt;!-- --&gt;
+]
+
+--
+
+- Kovalchik &amp; Reid (2018) utilise OpenFace to study the emotion of professional tennis players in the grand slam matches
+
+---
+class: inverse, center, middle
+
+# Aim
+
+---
+class: center, middle
+# Employ the facial recognition technology to detect judicial thinking and thus their decisions
+
+---
+
+class: inverse, center, middle
+
+# Results
+
+---
+
+## Data Processing
+
+![](workflow.png)
+
+---
+class: center, middle
+
+## 4601 CSVs and 711 variables!
+
+---
+## Let's explore some interesting ones
+## Confidence
+
+How confident OpenFace is in current landmark detection estimate?
+
+![](Presentation_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
+
+---
+
+
+.pull-left[
+confidence = 0.925?
+
+&lt;img src="data/cropped/nauru-a/1/nauru-a_003.png" width="229" height="250" /&gt;
+
+confidence = 0.775?
+
+&lt;img src="data/cropped/nauru-a/1/nauru-a_095.png" width="229" height="250" /&gt;
+]
+
+--
+
+.pull-right[
+confidence = 0.425?
+
+&lt;img src="data/cropped/nauru-a/1/nauru-a_101.png" width="229" height="250" /&gt;
+
+confidence = 0.025?
+
+&lt;img src="data/cropped/nauru-a/1/nauru-a_016.png" width="229" height="250" /&gt;
+]
+
+---
+
+## Facial landmarking
+
+&lt;img src="images/landmarking.png" width="587" height="500" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+
+
+&lt;img src="Presentation_files/figure-html/AU_Gageler-1.png" style="display: block; margin: auto;" /&gt;
+
+
+--
+
+&lt;img src="images/nauru-a_004.png" width="1300" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+&lt;img src="Presentation_files/figure-html/AU_Nettle-1.png" style="display: block; margin: auto;" /&gt;
+
+&lt;img src="images/nauru-a_004.png" width="1300" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+
+## Transcript Analysis: Interruptions
+
+&lt;img src="images/transcript.png" width="901" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Transcript Analysis: Justices
+
+&lt;img src="Presentation_files/figure-html/chief_j-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+## Transcript Analysis: Appellant &amp; respondent
+
+&lt;img src="Presentation_files/figure-html/r_a-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: center, middle
+
+# Questions?
+
+Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -1,0 +1,245 @@
+---
+title: "Exploration of Facial Expression in Videos and Transcripts of Legal Proceedings"
+author: 
+- "Huize Zhang"
+- "supervised by Di Cook and Russell Smyth"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+class: inverse, center, middle
+
+# Background
+
+---
+# Legal study from a behaviour perspective
+
+### Existing literature in the U.S. studied the court outcome through: 
+
+- language and word used by the Justices (do i need reference????)
+
+- vocal and facial characteristics of the Justices
+
+--
+
+### Australia study: Tutton et al (2018): 
+
+- using the transcript and AV recordings 
+
+- visually inspect the video and compare with the transcript
+
+---
+# Face Recognition
+
+- **Paul Ekman** studied Facial Action, which lead to Facial Action Coding System (FACS)
+
+--
+
+- Study emotion based on the decomposed facial muscles
+
+--
+
+.pull-left[
+
+Example: AU_2
+
+```{r echo = FALSE}
+library(knitr)
+include_graphics("images/AU2-right-only.gif")
+```
+]
+
+--
+
+.pull-right[
+
+Example: AU_15
+
+```{r echo = FALSE}
+library(knitr)
+include_graphics("images/AU15.gif")
+```
+]
+
+--
+
+- Kovalchik & Reid (2018) utilise OpenFace to study the emotion of professional tennis players in the grand slam matches
+
+---
+class: inverse, center, middle
+
+# Aim
+
+---
+class: center, middle
+# Employ the facial recognition technology to detect judicial thinking and thus their decisions
+
+---
+
+class: inverse, center, middle
+
+# Results
+
+---
+
+## Data Processing
+
+![](workflow.png)
+
+---
+class: center, middle
+
+## 4601 CSVs and 711 variables!
+
+---
+## Let's explore some interesting ones
+## Confidence
+
+How confident OpenFace is in current landmark detection estimate?
+
+```{r echo = FALSE, warning = FALSE, fig.height=6, fig.width=12}
+library(ggplot2)
+load("data/nauru_a.rda")
+ggplot(nauru_a, aes(x= confidence, col = judge_id, fill = judge_id)) +
+  geom_histogram(binwidth = 0.1) + 
+  facet_wrap(~judge_id)
+```
+
+---
+
+
+.pull-left[
+confidence = 0.925?
+
+```{r echo = FALSE, warning=  FALSE, out.height=250}
+library(knitr)
+include_graphics("data/cropped/nauru-a/1/nauru-a_003.png")
+
+```
+
+confidence = 0.775?
+
+```{r echo = FALSE, warning=  FALSE, out.height=250}
+include_graphics("data/cropped/nauru-a/1/nauru-a_095.png")
+```
+]
+
+--
+
+.pull-right[
+confidence = 0.425?
+
+```{r echo = FALSE, warning=  FALSE, out.height=250}
+include_graphics("data/cropped/nauru-a/1/nauru-a_101.png")
+```
+
+confidence = 0.025?
+
+```{r echo = FALSE, warning=FALSE, out.height=250}
+include_graphics("data/cropped/nauru-a/1/nauru-a_016.png")
+```
+]
+
+---
+
+## Facial landmarking
+
+```{r echo = FALSE, warning=  FALSE, fig.align="center",out.height=500}
+include_graphics("images/landmarking.png")
+```
+
+---
+
+```{r echo = FALSE, warning = FALSE, message = FALSE}
+library(tidyverse)
+face <- nauru_a %>% select(judge_id, frame_id, starts_with("x_"), starts_with("y_"))
+face2 <- face %>% gather(metrics, value, -c(judge_id, frame_id)) %>% 
+  separate(metrics, c("cord", "label")) %>% 
+  spread(key = cord, value = value) %>%
+  mutate(y = -y) %>% 
+  filter(frame_id == 4)
+```
+
+
+```{r AU_Gageler, echo = FALSE, warning = FALSE, message = FALSE, fig.align="center",fig.height = 5.5, fig.width = 5.5}
+ggplot(subset(face2, judge_id == "Gageler"), aes(x= x, y = y)) +
+  geom_point()
+
+```
+
+
+--
+
+```{r echo = FALSE, warning = FALSE, message = FALSE, fig.align = "center", fig.height = 5, fig.width = 7}
+include_graphics("images/nauru-a_004.png")
+```
+
+
+---
+
+```{r AU_Nettle, echo = FALSE, warning = FALSE, message = FALSE, fig.align = "center", fig.height = 5.5, fig.width = 5.5}
+ggplot(subset(face2, judge_id == "Nettle"), aes(x= x, y = y)) +
+  geom_point() 
+```
+
+```{r echo = FALSE, warning = FALSE, message = FALSE, fig.align = "center", fig.height = 5, fig.width = 7}
+include_graphics("images/nauru-a_004.png")
+```
+
+
+
+---
+
+## Transcript Analysis: Interruptions
+
+```{r echo = FALSE, fig.align ="center"}
+include_graphics("images/transcript.png")
+```
+
+---
+
+## Transcript Analysis: Justices
+
+```{r chief_j, echo = FALSE, fig.align ="center", fig.width=10, fig.height=7}
+load("data/people_frequency.rda")
+
+# get insights from people's frequency
+ggplot(subset(people_frequency, role %in% c("Chief Justice","Justice")), 
+       aes(x = people, y = percent, col = role, fill = role)) +
+  geom_bar(stat = "identity") + 
+  facet_wrap(~case, nrow = 1) + 
+  coord_flip() + 
+  xlab("People") + ylab("Percent") 
+
+```
+
+
+---
+
+## Transcript Analysis: Appellant & respondent
+
+```{r r_a, echo = FALSE,  fig.align ="center", fig.width=10, fig.height=7}
+ggplot(subset(people_frequency, role %in% c("Respondent", "Appellant") & outcome != "unknown"), 
+       aes(x = role, y = count, col = outcome, fill = outcome)) +
+  geom_bar(stat = "identity") + 
+  facet_wrap(~case, nrow = 1, scales = "free_x") + 
+  xlab("Role") + ylab("Count")
+
+## change the y label to appellant and respondent 
+```
+
+---
+
+class: center, middle
+
+# Questions?
+
+Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
+
+
