@@ -208,7 +208,7 @@ include_graphics("images/transcript.png")
 
 ```{r chief_j, echo = FALSE, fig.align ="center", fig.width=10, fig.height=7}
 load("data/people_frequency.rda")
-
+# dark2 to change the color
 # get insights from people's frequency
 ggplot(subset(people_frequency, role %in% c("Chief Justice","Justice")), 
        aes(x = people, y = percent, col = role, fill = role)) +
@@ -224,14 +224,19 @@ ggplot(subset(people_frequency, role %in% c("Chief Justice","Justice")),
 
 ## Transcript Analysis: Appellant & respondent
 
-```{r r_a, echo = FALSE,  fig.align ="center", fig.width=10, fig.height=7}
-ggplot(subset(people_frequency, role %in% c("Respondent", "Appellant") & outcome != "unknown"), 
-       aes(x = role, y = count, col = outcome, fill = outcome)) +
-  geom_bar(stat = "identity") + 
-  facet_wrap(~case, nrow = 1, scales = "free_x") + 
-  xlab("Role") + ylab("Count")
+Hypothesis: less time of speaking indicates winning?
 
-## change the y label to appellant and respondent 
+```{r r_a, echo = FALSE,  fig.align ="center", fig.width=10, fig.height=6}
+temp <- people_frequency %>% 
+  filter(role %in% c("Respondent", "Appellant")) %>% 
+  ungroup(case) %>% 
+  mutate(case = factor(case, levels = c("McKell", "Nauru_b","OKS", "Nauru_a", "Parkes", "Rinehart")))
+
+ggplot(temp) +
+  geom_bar(aes(x = role, y = count), alpha = 0.5, stat = "identity") + 
+  geom_text(data = temp %>% filter(outcome == "win"), aes(x = role, y = count,label = outcome),vjust = -1, color = "red") +
+  facet_wrap(~case, nrow = 1, scales = "free_y") + 
+  xlab("Role") + ylab("Count")
 ```
 
 ---

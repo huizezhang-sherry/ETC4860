@@ -8,6 +8,8 @@ output:
     toc_depth: 2
 bibliography: 0.reference.bib
 csl: apa.csl
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
@@ -306,10 +308,23 @@ ggplot(subset(people_frequency, role %in% c("Chief Justice","Justice")),
 ```
 
 ```{r r_a, echo = FALSE, fig.height=4, fig.width=7, fig.cap="The number of time appellent and respondent speak for each trial.\\label{fig:r_a}"}
+
+library(forcats)
 ggplot(subset(people_frequency, role %in% c("Respondent", "Appellant") & outcome != "unknown"), 
-       aes(x = role, y = count, col = outcome, fill = outcome)) +
+       aes(x = role, y = count)) +
   geom_bar(stat = "identity") + 
   facet_wrap(~case, nrow = 1, scales = "free_x") + 
+  xlab("Role") + ylab("Count")
+
+temp <- people_frequency %>% 
+  filter(role %in% c("Respondent", "Appellant")) %>% 
+  ungroup(case) %>% 
+  mutate(case = factor(case, levels = c("McKell", "Nauru_b","OKS", "Nauru_a", "Parkes", "Rinehart")))
+
+ggplot(temp) +
+  geom_bar(aes(x = role, y = count), alpha = 0.5, stat = "identity") + 
+  geom_text(data = temp %>% filter(outcome == "win"), aes(x = role, y = count,label = outcome),vjust = -1, color = "red") +
+  facet_wrap(~case, nrow = 1, scales = "free_y") + 
   xlab("Role") + ylab("Count")
 
 ## change the y label to appellant and respondent 
