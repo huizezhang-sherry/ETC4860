@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="author" content="Huize Zhang" />
     <meta name="author" content="supervised by Di Cook and Russell Smyth" />
-    <meta name="date" content="2019-05-08" />
+    <meta name="date" content="2019-05-10" />
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
   </head>
@@ -16,11 +16,18 @@ class: center, middle, inverse, title-slide
 # Exploration of Facial Expression in Videos and Transcripts of Legal Proceedings
 ### Huize Zhang
 ### supervised by Di Cook and Russell Smyth
-### 2019-05-08
+### 2019-05-10
 
 ---
 
 
+# Can we predict outcome of appeal based on facial pattern of the Justices?
+
+
+[![A video for fun](data/nauru-a/nauru-a_003.png)](https://www.youtube.com/watch?v=Ae7uKzin0GA)
+
+
+---
 class: inverse, center, middle
 
 # Background
@@ -28,30 +35,30 @@ class: inverse, center, middle
 ---
 # Legal study from a behaviour perspective
 
-### Existing literature in the U.S. studied the court outcome through: 
+Speakers themselves can be unaware of some facial and vocal expressions 
 
-- language and word used by the Justices (do i need reference????)
+- Justices' decision through gender, number of questions asked
 
-- vocal and facial characteristics of the Justices
+- Chan (2018): 
+  
+ - uses video and audio to predict the court outcome using the Supreme Court data from the United States 
+ 
+ - image processing technology but is not specific to the face 
 
---
+- Tutton et al. (2018): 
 
-### Australia study: Tutton et al (2018): 
-
-- using the transcript and AV recordings 
-
-- visually inspect the video and compare with the transcript
+  - using the transcript and AV recordings 
+  
+  - visually inspect the video and compare with the transcript
 
 ---
 # Face Recognition
 
-- **Paul Ekman** studied Facial Action, which lead to Facial Action Coding System (FACS)
+- **Paul Ekman** studied facial actions and expressions, which led to the Facial Action Coding System (FACS)
 
---
 
-- Study emotion based on the decomposed facial muscles
+- Decomposition of facial muscles
 
---
 
 .pull-left[
 
@@ -60,7 +67,6 @@ Example: AU_2
 ![](images/AU2-right-only.gif)&lt;!-- --&gt;
 ]
 
---
 
 .pull-right[
 
@@ -69,74 +75,65 @@ Example: AU_15
 ![](images/AU15.gif)&lt;!-- --&gt;
 ]
 
---
-
-- Kovalchik &amp; Reid (2018) utilise OpenFace to study the emotion of professional tennis players in the grand slam matches
-
----
-class: inverse, center, middle
-
-# Aim
-
----
-class: center, middle
-# Employ the facial recognition technology to detect judicial thinking and thus their decisions
+- Kovalchik &amp; Reid (2018) utilise OpenFace to study the emotion of professional tennis players in the Australian Open grand slam matches
 
 ---
 
 class: inverse, center, middle
 
-# Results
+# Data Collection
 
 ---
 
-## Data Processing
+## Video Processing
 
 ![](workflow.png)
 
+## 4601 CSVs and 711 facial variables!
 ---
-class: center, middle
+class: middle, center
 
-## 4601 CSVs and 711 variables!
-
----
-## Let's explore some interesting ones
-## Confidence
-
-How confident OpenFace is in current landmark detection estimate?
-
-![](Presentation_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
+![](images/dataframe.png)&lt;!-- --&gt;
 
 ---
+class: inverse, center, middle
+## Preliminary results
 
+---
 
 .pull-left[
-confidence = 0.925?
+confidence = 0.925
 
-&lt;img src="data/cropped/nauru-a/1/nauru-a_003.png" width="229" height="250" /&gt;
+&lt;img src="data/cropped/nauru-a/1/nauru-a_003.png" height="250" /&gt;
 
-confidence = 0.775?
+confidence = 0.775
 
-&lt;img src="data/cropped/nauru-a/1/nauru-a_095.png" width="229" height="250" /&gt;
+&lt;img src="data/cropped/nauru-a/1/nauru-a_095.png" height="250" /&gt;
 ]
 
---
-
 .pull-right[
-confidence = 0.425?
+confidence = 0.425
 
-&lt;img src="data/cropped/nauru-a/1/nauru-a_101.png" width="229" height="250" /&gt;
+&lt;img src="data/cropped/nauru-a/1/nauru-a_101.png" height="250" /&gt;
 
-confidence = 0.025?
+confidence = 0.025
 
-&lt;img src="data/cropped/nauru-a/1/nauru-a_016.png" width="229" height="250" /&gt;
+&lt;img src="data/cropped/nauru-a/1/nauru-a_016.png" height="250" /&gt;
 ]
 
 ---
+
+## How confident OpenFace is in current landmark detection estimate?
+
+![](Presentation_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
+
+Low confident results are still useful information, indicating a justice is looking away
+
+---
+class: inverse, center, middle
 
 ## Facial landmarking
 
-&lt;img src="images/landmarking.png" width="587" height="500" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -148,14 +145,14 @@ confidence = 0.025?
 
 --
 
-&lt;img src="images/nauru-a_004.png" width="1300" style="display: block; margin: auto;" /&gt;
+&lt;img src="images/nauru-a_004.png" style="display: block; margin: auto;" /&gt;
 
 
 ---
 
 &lt;img src="Presentation_files/figure-html/AU_Nettle-1.png" style="display: block; margin: auto;" /&gt;
 
-&lt;img src="images/nauru-a_004.png" width="1300" style="display: block; margin: auto;" /&gt;
+&lt;img src="images/nauru-a_004.png" style="display: block; margin: auto;" /&gt;
 
 
 
@@ -163,28 +160,52 @@ confidence = 0.025?
 
 ## Transcript Analysis: Interruptions
 
-&lt;img src="images/transcript.png" width="901" style="display: block; margin: auto;" /&gt;
+&lt;img src="images/transcript_final.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
-## Transcript Analysis: Justices
+## Transcript analysis: Justices
 
 &lt;img src="Presentation_files/figure-html/chief_j-1.png" style="display: block; margin: auto;" /&gt;
 
+--
+
+Chief Justices tend to interrupt the counsel more than other Justices
 
 ---
 
-## Transcript Analysis: Appellant &amp; respondent
+## Transcript analysis: the counsel
 
-Hypothesis: less time of speaking -&gt; winning?
+Interrupted by the judges has a negative implication on the odd of winning the case (Johnson et al., 2009)
 
 &lt;img src="Presentation_files/figure-html/r_a-1.png" style="display: block; margin: auto;" /&gt;
+
+--
+
+Our data is consistent with previous literature!
+
+---
+# Plan 
+
+- Data: 6 observations (videos), 700 variables (facial characteristics and meta information),  7 groups (judges)
+
+- Variable reduction: Examine Justices facial expressions 
+
+  - across the appeal, to determine normal characteristics for each judge.
+  
+  - when respondent or appellant speaks
+
+- Face detection when more judges present generates missings, related to image resolution: Need to determine a solution to impute 
+
+- Model associations between outcomes and reduced variable set
 
 ---
 
 class: center, middle
 
-# Questions?
+# Acknowledgement
+
+I would like to express my gratitude to Di Cook, Russell Symth and Staphanie Kobakian for helping me throughout the project.
 
 Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
     </textarea>

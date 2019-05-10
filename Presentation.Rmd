@@ -11,8 +11,17 @@ output:
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
+editor_options: 
+  chunk_output_type: console
 ---
 
+# Can we predict outcome of appeal based on facial pattern of the Justices?
+
+
+[![A video for fun](data/nauru-a/nauru-a_003.png)](https://www.youtube.com/watch?v=Ae7uKzin0GA)
+
+
+---
 class: inverse, center, middle
 
 # Background
@@ -20,126 +29,104 @@ class: inverse, center, middle
 ---
 # Legal study from a behaviour perspective
 
-### Existing literature in the U.S. studied the court outcome through: 
+Speakers themselves can be unaware of some facial and vocal expressions 
 
-- language and word used by the Justices (do i need reference????)
+- Justices' decision through gender, number of questions asked
 
-- vocal and facial characteristics of the Justices
+- Chan (2018): 
+  
+ - uses video and audio to predict the court outcome using the Supreme Court data from the United States 
+ 
+ - image processing technology but is not specific to the face 
 
---
+- Tutton et al. (2018): 
 
-### Australia study: Tutton et al (2018): 
-
-- using the transcript and AV recordings 
-
-- visually inspect the video and compare with the transcript
+  - using the transcript and AV recordings 
+  
+  - visually inspect the video and compare with the transcript
 
 ---
 # Face Recognition
 
-- **Paul Ekman** studied Facial Action, which lead to Facial Action Coding System (FACS)
+- **Paul Ekman** studied facial actions and expressions, which led to the Facial Action Coding System (FACS)
 
---
 
-- Study emotion based on the decomposed facial muscles
+- Decomposition of facial muscles
 
---
 
 .pull-left[
 
 Example: AU_2
 
-```{r echo = FALSE}
+```{r echo = FALSE, message = FALSE, warning = FALSE}
 library(knitr)
+library(ggplot2)
 include_graphics("images/AU2-right-only.gif")
 ```
 ]
 
---
 
 .pull-right[
 
 Example: AU_15
 
 ```{r echo = FALSE}
-library(knitr)
 include_graphics("images/AU15.gif")
 ```
 ]
 
---
-
-- Kovalchik & Reid (2018) utilise OpenFace to study the emotion of professional tennis players in the grand slam matches
-
----
-class: inverse, center, middle
-
-# Aim
-
----
-class: center, middle
-# Employ the facial recognition technology to detect judicial thinking and thus their decisions
+- Kovalchik & Reid (2018) utilise OpenFace to study the emotion of professional tennis players in the Australian Open grand slam matches
 
 ---
 
 class: inverse, center, middle
 
-# Results
+# Data Collection
 
 ---
 
-## Data Processing
+## Video Processing
 
 ![](workflow.png)
 
+## 4601 CSVs and 711 facial variables!
 ---
-class: center, middle
+class: middle, center
 
-## 4601 CSVs and 711 variables!
+```{r echo = FALSE, warning=  FALSE}
+include_graphics("images/dataframe.png")
 
----
-## Let's explore some interesting ones
-## Confidence
-
-How confident OpenFace is in current landmark detection estimate?
-
-```{r echo = FALSE, warning = FALSE, fig.height=6, fig.width=12}
-library(ggplot2)
-load("data/nauru_a.rda")
-ggplot(nauru_a, aes(x= confidence, col = judge_id, fill = judge_id)) +
-  geom_histogram(binwidth = 0.1) + 
-  facet_wrap(~judge_id)
 ```
 
 ---
+class: inverse, center, middle
+## Preliminary results
 
+---
 
 .pull-left[
-confidence = 0.925?
+confidence = 0.925
 
 ```{r echo = FALSE, warning=  FALSE, out.height=250}
-library(knitr)
 include_graphics("data/cropped/nauru-a/1/nauru-a_003.png")
 
 ```
 
-confidence = 0.775?
+confidence = 0.775
 
 ```{r echo = FALSE, warning=  FALSE, out.height=250}
 include_graphics("data/cropped/nauru-a/1/nauru-a_095.png")
 ```
 ]
 
---
-
 .pull-right[
-confidence = 0.425?
+confidence = 0.425
 
 ```{r echo = FALSE, warning=  FALSE, out.height=250}
 include_graphics("data/cropped/nauru-a/1/nauru-a_101.png")
 ```
 
-confidence = 0.025?
+confidence = 0.025
 
 ```{r echo = FALSE, warning=FALSE, out.height=250}
 include_graphics("data/cropped/nauru-a/1/nauru-a_016.png")
@@ -148,11 +135,22 @@ include_graphics("data/cropped/nauru-a/1/nauru-a_016.png")
 
 ---
 
+## How confident OpenFace is in current landmark detection estimate?
+
+```{r echo = FALSE, warning = FALSE, fig.height=6, fig.width=12}
+load("data/nauru_a.rda")
+ggplot(nauru_a, aes(x= confidence, col = judge_id, fill = judge_id)) +
+  geom_histogram(binwidth = 0.1) + 
+  facet_wrap(~judge_id)
+```
+
+Low confident results are still useful information, indicating a justice is looking away
+
+---
+class: inverse, center, middle
+
 ## Facial landmarking
 
-```{r echo = FALSE, warning=  FALSE, fig.align="center",out.height=500}
-include_graphics("images/landmarking.png")
-```
 
 ---
 
@@ -199,51 +197,77 @@ include_graphics("images/nauru-a_004.png")
 ## Transcript Analysis: Interruptions
 
 ```{r echo = FALSE, fig.align ="center"}
-include_graphics("images/transcript.png")
+include_graphics("images/transcript_final.png")
 ```
 
 ---
 
-## Transcript Analysis: Justices
+## Transcript analysis: Justices
 
-```{r chief_j, echo = FALSE, fig.align ="center", fig.width=10, fig.height=7}
+```{r chief_j, echo = FALSE, fig.align ="center", fig.width=10, fig.height=6}
 load("data/people_frequency.rda")
 # dark2 to change the color
 # get insights from people's frequency
 ggplot(subset(people_frequency, role %in% c("Chief Justice","Justice")), 
-       aes(x = people, y = percent, col = role, fill = role)) +
+       aes(x = people, y = percent, fill = role)) +
   geom_bar(stat = "identity") + 
   facet_wrap(~case, nrow = 1) + 
   coord_flip() + 
+  scale_fill_brewer(palette = "Dark2") + 
   xlab("People") + ylab("Percent") 
 
 ```
 
+--
+
+Chief Justices tend to interrupt the counsel more than other Justices
 
 ---
 
-## Transcript Analysis: Appellant & respondent
+## Transcript analysis: the counsel
 
-Hypothesis: less time of speaking indicates winning?
+Interrupted by the judges has a negative implication on the odd of winning the case (Johnson et al., 2009)
 
-```{r r_a, echo = FALSE,  fig.align ="center", fig.width=10, fig.height=6}
+```{r r_a, echo = FALSE,  fig.align ="center", fig.width=10, fig.height=5}
 temp <- people_frequency %>% 
   filter(role %in% c("Respondent", "Appellant")) %>% 
   ungroup(case) %>% 
   mutate(case = factor(case, levels = c("McKell", "Nauru_b","OKS", "Nauru_a", "Parkes", "Rinehart")))
 
 ggplot(temp) +
-  geom_bar(aes(x = role, y = count), alpha = 0.5, stat = "identity") + 
+  geom_bar(aes(x = role, y = count),alpha = 0.5,  stat = "identity") + 
   geom_text(data = temp %>% filter(outcome == "win"), aes(x = role, y = count,label = outcome),vjust = -1, color = "red") +
+  scale_fill_brewer(palette = "Dark2") + 
   facet_wrap(~case, nrow = 1, scales = "free_y") + 
   xlab("Role") + ylab("Count")
 ```
+
+--
+
+Our data is consistent with previous literature!
+
+---
+# Plan 
+
+- Data: 6 observations (videos), 700 variables (facial characteristics and meta information),  7 groups (judges)
+
+- Variable reduction: Examine Justices facial expressions 
+
+  - across the appeal, to determine normal characteristics for each judge.
+  
+  - when respondent or appellant speaks
+
+- Face detection when more judges present generates missings, related to image resolution: Need to determine a solution to impute 
+
+- Model associations between outcomes and reduced variable set
 
 ---
 
 class: center, middle
 
-# Questions?
+# Acknowledgement
+
+I would like to express my gratitude to Di Cook, Russell Symth and Staphanie Kobakian for helping me throughout the project.
 
 Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
 
