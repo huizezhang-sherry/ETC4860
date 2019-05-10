@@ -45,7 +45,7 @@ filenames_n <- map(names,
 
 names(filenames) <- judges
 
-temp_nauru_a_1 <- temp_nauru_a %>% select(-c(X_0 : Z_67, eye_lmk_x_0:eye_lmk_Z_55, p_scale:p_33))
+temp_nauru_a_1 <- temp_nauru_a 
 
 missing_files <- setdiff(unlist(filenames_n),  unlist(filenames))
 
