@@ -30,31 +30,31 @@ load("data/people_frequency.rda")
 
 # Statement of the topic
 
-Decisions by courtroom Justices have been discussed broadly in the legal literature. Gender, political views, religious background of both the Justices and parties in the case are at issue in influencing decisions. This paper will explore the facial behaviour of the Justices during hearings with a purpose being to assess them in relation to outcomes. Audio Visual(AV) recordings and case transcripts will be computationally processed and analysed to examine the decisions of each Justice. 
+Decisions by courtroom Justices have been discussed broadly in the legal literature. Gender, political views and religious background of both the Justices and counsel in the case potentially influence the decisions. This paper will explore the facial behaviour of the Justices during hearings with the objective of being to assess whether it can help to predict outcomes. Audio Visual(AV) recordings and case transcripts will be computationally processed and analysed to examine the decisions of each Justice. 
 
 # Motivation
 
-@tutton2018judicial attemped to utilize the AV technology, which is made available online by the High Court of Australia [@highcourtau]. They visually inspect of the videos to highlight when Justices depart from the expected norms of the judicial conduct. To better understand the emotion status and therefore the departure of the emotional behaviour, more advanced technologies could be applied. An example is to use OpenFace [-@baltrusaitis2018openface] technology, which provides information on emotions exhibited by the Justices. This technique has been applied by @kovalchik2018going on professional tennis players during the Grand Slam matches. It demonstrated the potential to predict the outcome of the trials based on Justices' demeanour utilising contemporary tools and emotion tagging techniques. 
+@tutton2018judicial attemped to utilize the AV technology, which is made available online by the High Court of Australia [@highcourtau]. They visually inspect of the videos to highlight when Justices depart from the expected norms of judicial conduct. To better understand the emotion status and therefore the departure of the emotional behaviour, more advanced technologies could be applied. An example is to use OpenFace [-@baltrusaitis2018openface] technology, which provides information on emotions exhibited by the Justices. This technique has been applied by @kovalchik2018going on professional tennis players during Grand Slam matches. That study demonstrated the potential to predict the outcome of High Court appeals based on Justices' demeanour utilising contemporary tools and emotion tagging techniques. 
  
 
 
 # Literature review
 
-The literature sumary is divided into two parts: (1) current work in legal studies to understand the behaviour of the Justices and (2) the existing facial recognition and emotion tagging technology.  
+The literature sumary is divided into two parts: (1) current work in legal studies to understand the behaviour of the Justices and (2) existing facial recognition and emotion tagging technology.  
 
 ## Legal study from a behaviour perspective 
 
-People have attempted to predict the decisions of the Justices for centuries. @judicalguid presents the following in a code of conduct:
+People have attempted to predict the decisions of the Justices for centuries. @judicalguid present the following code of conduct:
 
 >It is important for judges to maintain a standard of behaviour in court that is consistent with the status of judicial office and does not diminish the confidence of litigants in particular, and the public in general, in the ability, the integrity, the impartiality and the independence of the judge. 
 
-This impartiality should be clear in the judicial demeanour [@tutton2018judicial; @goffman1956nature]. Paul Ekman [@ekman1991invited] suggests that from a behavioural perspective, some facial and vocal inflections are often unbeknown to the speakers themselves . Many scholars have exploited this, studying the court outcomes through the language and words used by the Justices in the court [@Shullman2004illusion] and vocal and facial characteristics of the Justices [@chen2018justice]. 
+This impartiality should be clear in judicial demeanour [@tutton2018judicial; @goffman1956nature]. Paul Ekman [@ekman1991invited] suggests that from a behavioural perspective, some facial and vocal inflections are often unbeknown to the speakers themselves . Many scholars have exploited this in studying the court outcomes through the language and words used by the Justices in the court [@Shullman2004illusion] and vocal and facial characteristics of the Justices [@chen2018justice]. 
 
-There are also existing works to understand the emotion of the Justices from a linguistic perspective and suggest some factors that could be useful to indicate the Justices' vote and thus the court outcome. These factors include the use of pleasant and unpleasant language by @black2011emotions, the frequency and content of Justices' questions by @Shullman2004illusion and @johnson2009inquiring. @epstein2010inferring use a regression analysis with the number of questions asked by the Justices used to infer the winning party in the court. 
+There are also existing works to understand the emotion of the Justices from a linguistic perspective and suggest some factors that could be useful to indicate how the Justices' vote and thus the court outcome. These factors include the use of pleasant and unpleasant language by @black2011emotions, the frequency and content of Justices' questions by @Shullman2004illusion and @johnson2009inquiring. @epstein2010inferring use a regression analysis with the number of questions asked by the Justices used to infer the winning party in a case. 
 
-Other scholars [@chen2016perceived; @chen2017covering and @schubert1992observing] have studied the emotion of the Justices from vocal characteristics and suggest that these vocal characteristics, especially the perceived masculinity is strongly correlated with the court outcomes. @dietrich2019emotional uses a multilevel logistic model with random effects to suggest subconscious vocal inflections contain information that is not available from text. 
+Other scholars [@chen2016perceived; @chen2017covering; @schubert1992observing] have studied the emotion of the Justices from vocal characteristics and suggest that these vocal characteristics, especially perceived masculinity is strongly correlated with the court outcomes. @dietrich2019emotional uses a multilevel logistic model with random effects to suggest that subconscious vocal inflections contain information that is not available from text. 
 
-Chen [-@chen2018justice] employed both vocal and facial characteristics to predict the court votes using the Supreme Court data from 1946-2014. The audio clips are first preprocessed to get the Mel-frequency  Cepstral  Coefficients (MFCC) and then applied to a random forest model. The image features are extracted using a Histogram of Oriented Gradients (HOG) method. More specific facial recognition software is readily available to extract human facial features and these facial recognition technologies have not yet been applied to the legal proceedings. 
+Chen [-@chen2018justice] employed both vocal and facial characteristics to predict the court votes using Supreme Court data from 1946-2014. The audio clips are first preprocessed to get the Mel-frequency  Cepstral  Coefficients (MFCC) and then applied to a random forest model. The image features are extracted using a Histogram of Oriented Gradients (HOG) method. More specific facial recognition software is readily available to extract human facial features and these facial recognition technologies have not yet been applied to the legal proceedings. 
 
 Most of the literature is conducted using the U.S. Supreme Court Database and less studies have been conducted using Australian High Court data. @tutton2018judicial have used an ethnographic approach to study the transcript and AV recordings in the High Court of Australia but the study is conducted in an observational manner via matching the Justices' distinct behaviour with the transcript.
 
@@ -62,17 +62,17 @@ Most of the literature is conducted using the U.S. Supreme Court Database and le
 
 An anatomical analysis of facial action [@ekman1976measuring] led to the Facial Action Code (FAC) [@ekman1978] and has been further revised by @ekman2002facial. This decomposition of facial muscles is widely used in scientific research. It was applied in competitive sports, specifically tennis by @kovalchik2018going who found that the emotion of professional tennis players will have an impact on their performance.
 
-There have been many algorithms created for facial detection and the analysis of their performance when applied to images was the focus of events like Audio/Visual Emotion Challenge [@schuller2012avec; @schuller2011avec] and Emotion Recognition In The Wild Challenge and Workshop [@dhall2013emotion; @kahou2013combining]. 
+There have been many algorithms created for facial detection and the analysis of their performance when applied to images have been the focus of events like the Audio/Visual Emotion Challenge [@schuller2012avec; @schuller2011avec] and Emotion Recognition In The Wild Challenge and Workshop [@dhall2013emotion; @kahou2013combining]. 
 
 Facial recognition software has also been implemented by DeepFace [@taigman2014deepface] from Facebook, and FaceNet [@schroff2015facenet] from Google. OpenFace [@baltrusaitis2018openface] is the first open-sourced face recognition software that provides facial expression detection, including facial landmarking, head pose estimation, eye gaze tracking and facial action unit detection. Along with its previous version (@baltruvsaitis2016openface), the OpenFace toolkit has been used in different social research studies including depression classification (@yang2016decision and @nasir2016multimodal).  
 
 # Aim 
-The aim of this study is to explore the possibility of using facial recognition technology to detect judicial thinking and thus their decisions. There are four specific objectives: 
+The aim of this study is to use facial recognition technology to detect judicial thinking and thus their decisions. There are four specific objectives: 
 
 - Read in video streams and convert into a numerical data format.
 - Perform data quality checks to investigate video and data quality.
 - Exploratory data analysis of the facial expression, trascript variables and outcomes. 
-- Explore models to predict the trial outcomes based on facial expression and text analysis. 
+- Explore models to predict the appeal outcomes based on facial expression and text analysis. 
 
 # Research Plan 
 
@@ -124,23 +124,23 @@ The resulting outputs from OpenFace are individual comma-separated values (csv) 
 
 A sketch of the dataset is provided in the following table.
 
-|Video_id|Frame_id|justice_id|Confidence|Gaze|Eye_lmk|Pose|Face_lmk|Action Unit|
-|----|----|----|-----|--|---|---|--|----|
-|Nauru_a|1|justice1|||||||
-|Nauru_a|2|justice1|||||||
-|Nauru_a|3|justice1|||||||
-|...|...|...|||||||
-|Nauru_a|151|justice1||||||
-|Nauru_a|1|justice2|||||||
-|Nauru_a|2|justice2|||||||
-|Nauru_a|3|justice2|||||||
-|...|...|...|||||||
-|Nauru_a|151|justice2|||||||
-|Nauru_a|1|justice3|||||||
-|Nauru_a|2|justice3|||||||
-|Nauru_a|3|justice3|||||||
-|...|...|...|||||||
-|Nauru_a|151|justice3|||||||
+|Video_id|Frame_id|Justice_id|Facial Variables|Speaker|Outcome|
+|----|----|----|-----|---|---|
+|Nauru_a|1|Justice1||Appellent|Appellent
+|Nauru_a|2|Justice1||Appellent|Appellent
+|Nauru_a|3|Justice1||Appellent|Appellent
+|...|...|...|||
+|Nauru_a|151|Justice1||Respondent|Appellent
+|Nauru_a|1|Justice2||Appellent|Appellent
+|Nauru_a|2|Justice2||Appellent|Appellent
+|Nauru_a|3|Justice2||Appellent|Appellent
+|...|...|...|||
+|Nauru_a|151|Justice2||Respondent|Appellent
+|Nauru_a|1|Justice3||Appellent|Appellent
+|Nauru_a|2|Justice3||Appellent|Appellent
+|Nauru_a|3|Justice3||Appellent|Appellent
+|...|...|...|||
+|Nauru_a|151|Justice3||Respondent|Appellent
 
 
 Table: Data Format
@@ -307,14 +307,9 @@ ggplot(subset(people_frequency, role %in% c("Chief Justice","Justice")),
 
 ```
 
-```{r r_a, echo = FALSE, fig.height=4, fig.width=7, fig.cap="The number of time appellent and respondent speak for each trial.\\label{fig:r_a}"}
+```{r r_a, echo = FALSE, fig.height=4, fig.width=7, fig.cap="The number of time appellent and respondent speak for each trial. \\label{fig:r_a}"}
 
 library(forcats)
-ggplot(subset(people_frequency, role %in% c("Respondent", "Appellant") & outcome != "unknown"), 
-       aes(x = role, y = count)) +
-  geom_bar(stat = "identity") + 
-  facet_wrap(~case, nrow = 1, scales = "free_x") + 
-  xlab("Role") + ylab("Count")
 
 temp <- people_frequency %>% 
   filter(role %in% c("Respondent", "Appellant")) %>% 
@@ -323,9 +318,10 @@ temp <- people_frequency %>%
 
 ggplot(temp) +
   geom_bar(aes(x = role, y = count), alpha = 0.5, stat = "identity") + 
-  geom_text(data = temp %>% filter(outcome == "win"), aes(x = role, y = count,label = outcome),vjust = -1, color = "red") +
+  geom_text(data = temp %>% filter(outcome == "win"), aes(x = role, y = count,label = outcome),vjust = -0.5, color = "red") +
   facet_wrap(~case, nrow = 1, scales = "free_y") + 
-  xlab("Role") + ylab("Count")
+  xlab("Role") + ylab("Count") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 ## change the y label to appellant and respondent 
 ```
