@@ -252,7 +252,7 @@ Our data is consistent with this.
 
 Completed:
 
-- Data: 6 observations (videos), 700 variables (facial characteristics and meta information),  7 groups (judges).
+- Data: 6 observations (cases), 700 variables (facial characteristics and meta information),  7 groups (judges)
 
 - Exploratory analysis of one video's data.
 
