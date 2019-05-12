@@ -6,6 +6,7 @@ author:
 date: "`r Sys.Date()`"
 output:
   xaringan::moon_reader:
+    css: ["presdefault.css"]
     lib_dir: libs
     nature:
       highlightStyle: github
@@ -15,8 +16,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-# Can we predict the outcome of an appeal based on facial expression of the Justices?
-
+### Can we predict the outcome of an appeal based on facial expressions on the Justices?
 
 [![A video for fun](images/video_photo.png)](https://www.youtube.com/watch?v=Ae7uKzin0GA)
 
@@ -27,19 +27,19 @@ class: inverse, center, middle
 # Background
 
 ---
-# Existing legal studies on judicial behaviour
+# Recent legal studies on judicial behaviour
 
 Judges are expected to be neutral in the courtroom, but they can be unaware they are making facial expressions. 
 
 - Chan (2018): 
   
- - used video and audio recordings to predict the court outcome on the Supreme Court in the United States 
+ - from video and audio recordings on the United States Supreme Court
  
  - used general image processing methods, but not face recognition
 
 - Tutton et al. (2018): 
 
-  - uses transcript and AV recordings 
+  - from transcript and audiovisual recordings on Australian High Court
   
   - manually recorded Judicial expressions from videos and the corresponding transcript.
 
@@ -83,13 +83,15 @@ class: inverse, center, middle
 
 ---
 
-## Video Processing
+## Video Processing (I have done this)
 
 ![](images/workflow.png)
 
-## 4601 faces and 711 facial variables!
+### 4601 faces and 711 facial variables!
 ---
 class: middle, center
+
+### Collected Data
 
 ```{r echo = FALSE, warning=  FALSE}
 include_graphics("images/dataframe.png")
@@ -98,7 +100,8 @@ include_graphics("images/dataframe.png")
 
 ---
 class: inverse, center, middle
-## Preliminary results
+
+# Preliminary results
 
 ---
 
@@ -133,7 +136,7 @@ include_graphics("images/conf-4.png")
 
 ---
 
-## How confident OpenFace is in current landmark detection estimate?
+## Confidence of facial detection - one video
 
 ```{r echo = FALSE, warning = FALSE, fig.height=6, fig.width=12}
 load("data/nauru_a.rda")
@@ -142,12 +145,12 @@ ggplot(nauru_a, aes(x= confidence, col = judge_id, fill = judge_id)) +
   facet_wrap(~judge_id)
 ```
 
-Low confident results are still useful information, indicating a justice is looking away
+Low confidence could also be informative, indicating justice gaze is elsewhere
 
 ---
 class: inverse, center, middle
 
-## Facial landmarking
+# Facial landmarking
 
 
 ---
@@ -192,7 +195,7 @@ include_graphics("images/nauru-a_004.png")
 
 ---
 
-## Transcript Analysis: Interruptions
+## Transcript data 
 
 ```{r echo = FALSE, fig.align ="center"}
 include_graphics("images/transcript_final.png")
@@ -200,7 +203,7 @@ include_graphics("images/transcript_final.png")
 
 ---
 
-## Transcript analysis: Justices
+## Justices speaking percentage
 
 ```{r chief_j, echo = FALSE, fig.align ="center", fig.width=10, fig.height=6}
 load("data/people_frequency.rda")
@@ -222,32 +225,38 @@ Chief Justices tend to interrupt the counsel more than other Justices
 
 ---
 
-## Transcript analysis: the counsel
+## The counsel speaking time
 
-Interrupted by the judges has a negative implication on the odd of winning the case (Johnson et al., 2009)
+Less speaking time (from more interruptions by the judges) is related to higher odds of winning the case (Johnson et al., 2009). 
 
-```{r r_a, echo = FALSE,  fig.align ="center", fig.width=10, fig.height=5}
+```{r r_a, echo = FALSE,  fig.align ="center", out.width="100%", fig.width=10, fig.height=5}
 temp <- people_frequency %>% 
   filter(role %in% c("Respondent", "Appellant")) %>% 
   ungroup(case) %>% 
   mutate(case = factor(case, levels = c("McKell", "Nauru_b","OKS", "Nauru_a", "Parkes", "Rinehart")))
 
 ggplot(temp) +
-  geom_bar(aes(x = role, y = count),alpha = 0.5,  stat = "identity") + 
-  geom_text(data = temp %>% filter(outcome == "win"), aes(x = role, y = count,label = outcome),vjust = -1, color = "red") +
+  geom_bar(aes(x = role, y = count), alpha = 0.5,  stat = "identity") + 
+  geom_text(data = temp %>% filter(outcome == "win"), aes(x = role, y = 0, label = outcome), vjust = -1, color = "red", size=6) +
   scale_fill_brewer(palette = "Dark2") + 
   facet_wrap(~case, nrow = 1, scales = "free_y") + 
-  xlab("Role") + ylab("Count")
+  xlab("") + ylab("Count")
 ```
 
 --
 
-Our data is consistent with previous literature!
+Our data is consistent with this.
 
 ---
 # Plan 
 
-- Data: 6 observations (videos), 700 variables (facial characteristics and meta information),  7 groups (judges)
+Completed:
+
+- Data: 6 observations (videos), 700 variables (facial characteristics and meta information),  7 groups (judges).
+
+- Exploratory analysis of one video's data.
+
+To do: 
 
 - Variable reduction: Examine Justices facial expressions 
 
@@ -257,7 +266,7 @@ Our data is consistent with previous literature!
 
 - Face detection when more judges present generates missings, related to image resolution: Need to determine a solution to impute 
 
-- Model associations between outcomes and reduced variable set
+- Model associations between outcomes and much reduced variable set, to find potential indicators of outcome by individual judges expressions.
 
 ---
 
