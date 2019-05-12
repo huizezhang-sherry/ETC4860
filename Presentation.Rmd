@@ -106,14 +106,14 @@ class: inverse, center, middle
 confidence = 0.925
 
 ```{r echo = FALSE, warning=  FALSE, out.height=250}
-include_graphics("data/cropped/nauru-a/1/nauru-a_003.png")
+include_graphics("images/conf-1.png")
 
 ```
 
 confidence = 0.775
 
 ```{r echo = FALSE, warning=  FALSE, out.height=250}
-include_graphics("data/cropped/nauru-a/1/nauru-a_095.png")
+include_graphics("images/conf-2.png")
 ```
 ]
 
@@ -121,13 +121,13 @@ include_graphics("data/cropped/nauru-a/1/nauru-a_095.png")
 confidence = 0.425
 
 ```{r echo = FALSE, warning=  FALSE, out.height=250}
-include_graphics("data/cropped/nauru-a/1/nauru-a_101.png")
+include_graphics("images/conf-3.png")
 ```
 
 confidence = 0.025
 
 ```{r echo = FALSE, warning=FALSE, out.height=250}
-include_graphics("data/cropped/nauru-a/1/nauru-a_016.png")
+include_graphics("images/conf-4.png")
 ```
 ]
 
