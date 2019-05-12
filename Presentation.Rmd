@@ -85,7 +85,7 @@ class: inverse, center, middle
 
 ## Video Processing
 
-![](workflow.png)
+![](images/workflow.png)
 
 ## 4601 faces and 711 facial variables!
 ---
