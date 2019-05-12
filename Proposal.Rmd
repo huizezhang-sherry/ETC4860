@@ -216,16 +216,16 @@ ggplot(nauru_a, aes(x= confidence, col = judge_id, fill = judge_id)) +
 ```
 
 
-![Face with confidence = 0.925.](data/cropped/nauru-a/1/nauru-a_003.png){#fig:confidence0.925} 
+![Face with confidence = 0.925.](images/conf-1.png){#fig:confidence0.925} 
 
 
-![Face with confidence = 0.775.](data/cropped/nauru-a/1/nauru-a_095.png){#fig:confidence0.775} 
+![Face with confidence = 0.775.](images/conf-2.png){#fig:confidence0.775} 
 
 
-![Face with confidence = 0.425.](data/cropped/nauru-a/1/nauru-a_101.png){#fig:confidence0.425} 
+![Face with confidence = 0.425.](images/conf-3.png){#fig:confidence0.425} 
 
 
-![Face with confidence = 0.025.](data/cropped/nauru-a/1/nauru-a_016.png){#fig:confidence0.025}
+![Face with confidence = 0.025.](images/conf-4.png){#fig:confidence0.025}
 
 
 
@@ -249,7 +249,7 @@ face2 <- face %>% gather(metrics, value, -c(judge_id, frame_id)) %>%
   separate(metrics, c("cord", "label")) %>% 
   spread(key = cord, value = value) %>%
   mutate(y = -y) %>% 
-  filter(frame_id == 3)
+  filter(frame_id == 4)
 
 ggplot(subset(face2, judge_id == "Gageler"), aes(x= x, y = y)) +
   geom_point() 
@@ -262,7 +262,7 @@ ggplot(subset(face2, judge_id == "Nettle"), aes(x= x, y = y)) +
 ```
 
 
-![Original image from the Nauru-a video.](data/nauru-a/nauru-a_003.png){#fig:origin_image}
+![Original image from the Nauru-a video.](images/nauru-a_004.png){#fig:origin_image}
 
 
 
@@ -296,10 +296,11 @@ au_present %>%
 ```{r chief_j, echo = FALSE, fig.height=4, fig.width=7, fig.cap="The number of time each justice speaks in each trial. Some trials have only three justices and some have as many as five. \\label{fig:chief_j}"}
 # get insights from people's frequency
 ggplot(subset(people_frequency, role %in% c("Chief Justice","Justice")), 
-       aes(x = people, y = percent, col = role, fill = role)) +
+       aes(x = people, y = percent,  fill = role)) +
   geom_bar(stat = "identity") + 
   facet_wrap(~case, nrow = 1) + 
   coord_flip() + 
+  scale_fill_brewer(palette = "Dark2") + 
   xlab("People") + ylab("Percent") 
 
 
@@ -317,12 +318,11 @@ temp <- people_frequency %>%
   mutate(case = factor(case, levels = c("McKell", "Nauru_b","OKS", "Nauru_a", "Parkes", "Rinehart")))
 
 ggplot(temp) +
-  geom_bar(aes(x = role, y = count), alpha = 0.5, stat = "identity") + 
-  geom_text(data = temp %>% filter(outcome == "win"), aes(x = role, y = count,label = outcome),vjust = -0.5, color = "red") +
+  geom_bar(aes(x = role, y = count), alpha = 0.5,  stat = "identity") + 
+  geom_text(data = temp %>% filter(outcome == "win"), aes(x = role, y = 0, label = outcome), vjust = -1, color = "red", size=6) +
+  scale_fill_brewer(palette = "Dark2") + 
   facet_wrap(~case, nrow = 1, scales = "free_y") + 
-  xlab("Role") + ylab("Count") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
+  xlab("") + ylab("Count")
 ## change the y label to appellant and respondent 
 ```
 
