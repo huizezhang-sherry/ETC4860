@@ -1,5 +1,5 @@
 ---
-title: "Exploration of Facial Expression in Videos and Transcripts of Legal Proceedings"
+title: "Exploration of Judicial Facial Expression in Videos and Transcripts of Legal Proceedings"
 author: "Huize Zhang"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: 
