@@ -18,7 +18,7 @@ editor_options:
 # Can we predict outcome of appeal based on facial pattern of the Justices?
 
 
-[![A video for fun](data/nauru-a/nauru-a_003.png)](https://www.youtube.com/watch?v=Ae7uKzin0GA)
+[![A video for fun](images/video_photo.png)](https://www.youtube.com/watch?v=Ae7uKzin0GA)
 
 
 ---
