@@ -7,7 +7,6 @@ Research_habit.html
 Research_habit.Rmd
 ETC4860.Rproj
 POST using httr.Rmd
-data/
 google-cloud-sdk/
 google_api_key
 opencv/
@@ -26,4 +25,4 @@ missing_rate.csv
 paintings.R
 videos
 workflow.png
-libs
+
