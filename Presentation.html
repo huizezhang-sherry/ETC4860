@@ -33,7 +33,7 @@ class: inverse, center, middle
 ---
 # Recent legal studies on judicial behaviour
 
-Judges are expected to be neutral in the courtroom, but they can be unaware they are making facial expressions. 
+Justices are expected to be neutral in the courtroom, but they can be unaware they are making facial expressions. 
 
 - Chan (2018): 
   
@@ -83,9 +83,10 @@ class: inverse, center, middle
 
 ## Video Processing (I have done this)
 
-![](images/workflow.png)
+&lt;img src="images/workflow.png" style="display: block; margin: auto;" /&gt;
 
 ### 4601 faces and 711 facial variables!
+
 ---
 class: middle, center
 
@@ -99,32 +100,33 @@ class: inverse, center, middle
 # Preliminary results
 
 ---
+class: center, middle
 
 .pull-left[
 confidence = 0.925
 
-&lt;img src="images/conf-1.png" height="250" /&gt;
+&lt;img src="images/conf-1.png" height="250" style="display: block; margin: auto;" /&gt;
 
 confidence = 0.775
 
-&lt;img src="images/conf-2.png" height="250" /&gt;
+&lt;img src="images/conf-2.png" height="250" style="display: block; margin: auto;" /&gt;
 ]
 
 .pull-right[
 confidence = 0.425
 
-&lt;img src="images/conf-3.png" height="250" /&gt;
+&lt;img src="images/conf-3.png" height="250" style="display: block; margin: auto;" /&gt;
 
 confidence = 0.025
 
-&lt;img src="images/conf-4.png" height="250" /&gt;
+&lt;img src="images/conf-4.png" height="250" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
 
 ## Confidence of facial detection - one video
 
-![](Presentation_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
+&lt;img src="Presentation_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
 
 Low confidence could also be informative, indicating justice gaze is elsewhere
 
@@ -167,28 +169,24 @@ class: inverse, center, middle
 
 &lt;img src="Presentation_files/figure-html/chief_j-1.png" style="display: block; margin: auto;" /&gt;
 
---
-
 Chief Justices tend to interrupt the counsel more than other Justices
 
 ---
 
-## The counsel speaking time
+## Interruption experienced by the counsel
 
-Less speaking time (from more interruptions by the judges) is related to higher odds of winning the case (Johnson et al., 2009). 
+Being interrupted less by the Justices is related to higher odds of winning the case (Johnson et al., 2009). 
 
 &lt;img src="Presentation_files/figure-html/r_a-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
---
-
-Our data is consistent with this.
+Our data is mostly consistent with this.
 
 ---
 # Plan 
 
 Completed:
 
-- Data: 6 observations (cases), 700 variables (facial characteristics and meta information),  7 groups (judges)
+- Data: 6 observations (cases), 700 variables (facial characteristics and meta information),  7 groups (Justices)
 
 - Exploratory analysis of one video's data.
 
@@ -200,9 +198,9 @@ To do:
   
   - when respondent or appellant speaks
 
-- Face detection when more judges present generates missings, related to image resolution: Need to determine a solution to impute 
+- Face detection when more Justices present generates missings, related to image resolution: Need to determine a solution to impute 
 
-- Model associations between outcomes and much reduced variable set, to find potential indicators of outcome by individual judges expressions.
+- Model associations between outcomes and much reduced variable set, to find potential indicators of outcome by individual Justices expressions.
 
 ---
 
