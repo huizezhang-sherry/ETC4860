@@ -275,7 +275,7 @@ class: center, middle
 
 # Acknowledgement
 
-I would like to express my gratitude to Di Cook, Russell Symth and Staphanie Kobakian for helping me throughout the project.
+I would like to express my gratitude to Di Cook, Russell Symth and Stephanie Kobakian for helping me throughout the project.
 
 Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
 
