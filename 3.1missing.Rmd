@@ -88,14 +88,16 @@ missingplot <- map2(videos,names, function(videos,names){
 
 names(missingplot) <- videos
 
-
-temp<- map2(missingplot,names, function(x,name){
+suppressMessages({
+ temp<- map2(missingplot,names, function(x,name){
   x <- x[[1]]
   df <- as.data.frame(x)
   names(df) <- name[[1]]
   df %>% vis_miss() + 
     coord_flip() + 
     scale_fill_brewer(name = "", labels =c("Present", "Missing"))
+})
+ 
 })
 
 names(temp) <- videos
@@ -114,5 +116,9 @@ grid.arrange(arrangeGrob(temp[[3]], top = videos[[3]]),
 
 grid.arrange(arrangeGrob(temp[[5]], top = videos[[5]]), nrow =2)
 
+
+
+library(cowplot)
+cowplot:plot_grid(p1, p2, labels = c("",""))
 ```
 
