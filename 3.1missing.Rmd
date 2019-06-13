@@ -19,16 +19,16 @@ library(gridExtra)
 
 
 ```{r eval = FALSE}
-# load("data/nauru_a.rda")
-# load("data/nauru_b.rda")
-# load("data/McKell.rda")
-# load("data/OKS.rda")
-# load("data/Parkes.rda")
-# load("data/Rinehart_a.rda")
-# load("data/Rinehart_b.rda")
-# 
-# court <- rbind(nauru_a, nauru_b, McKell, OKS, Parkes, Rinehart_a, Rinehart_b)
-# save(court, file = "data/court.rda")  
+load("raw_data/nauru_a.rda")
+load("raw_data/nauru_b.rda")
+load("raw_data/McKell.rda")
+load("raw_data/OKS.rda")
+load("raw_data/Parkes.rda")
+load("raw_data/Rinehart_a.rda")
+load("raw_data/Rinehart_b.rda")
+
+court <- rbind(nauru_a, nauru_b, McKell, OKS, Parkes, Rinehart_a, Rinehart_b)
+save(court, file = "data/court.rda")
 ```
 
 ```{r}

@@ -32,7 +32,7 @@ filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
 # 
 # save(temp_nauru_a,file = "data/temp_nauru_a.rda")
 
-load("data/temp_nauru_a.rda")
+load("raw_data/temp_nauru_a.rda")
 
 judges <- c("1","2","3")
 names <- map(judges, ~paste0("data/csv/nauru-a/face",.x, "/processed"))
@@ -67,7 +67,7 @@ nauru_a <- dt %>%
   mutate(speaker = ifelse(frame_id < 90, "Appellent", "Respondent")) %>% 
   select(-c("dt", "csv", "nauru_a", "processed", "csv"))
 
-save(nauru_a,file = "data/nauru_a.rda")
+save(nauru_a,file = "raw_data/nauru_a.rda")
 
 load("data/nauru_a.rda")
 ```
@@ -85,7 +85,7 @@ load("data/nauru_a.rda")
 # 
 # save(temp_nauru_b,file = "data/temp_nauru_b.rda")
 
-load("data/temp_nauru_b.rda")
+load("raw_data/temp_nauru_b.rda")
 
 filenames_n <- map(names,
                    ~paste0(.x,"/nauru-b_" ,
@@ -94,7 +94,7 @@ filenames_n <- map(names,
 
 names(filenames) <- judges
 
-temp_nauru_b_1 <- temp_nauru_b %>% select(-c(X_0 : Z_67, eye_lmk_x_0:eye_lmk_Z_55, p_scale:p_33))
+temp_nauru_b_1 <- temp_nauru_b 
 
 # missing_files <- setdiff( unlist(filenames),unlist(filenames_n))
 # dt <- temp_nauru_b_1 %>% add_row(info = missing_files)
@@ -114,9 +114,9 @@ nauru_b <- temp_nauru_b_1 %>%
   mutate(speaker = ifelse(frame_id < 90, "Appellent", "Respondent")) %>% 
   select(-c("dt", "csv", "nauru-b", "csv"))
 
-save(nauru_b,file = "data/nauru_b.rda")
+save(nauru_b,file = "raw_data/nauru_b.rda")
 
-load("data/nauru_b.rda")
+load("raw_data/nauru_b.rda")
 
 ```
 
@@ -133,7 +133,7 @@ load("data/nauru_b.rda")
 # 
 # save(temp_McKell,file = "data/temp_McKell.rda")
 
-load("data/temp_McKell.rda")
+load("raw_data/temp_McKell.rda")
 judges <- c("1","2","3", "4", "5")
 names <- map(judges, ~paste0("data/csv/McKell/",.x))
 filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
@@ -144,7 +144,7 @@ filenames_n <- map(names,
 
 names(filenames) <- judges
 
-temp_McKell_1 <- temp_McKell %>% select(-c(X_0 : Z_67, eye_lmk_x_0:eye_lmk_Z_55, p_scale:p_33))
+temp_McKell_1 <- temp_McKell 
 
 missing_files <- setdiff(unlist(filenames_n),  unlist(filenames))
 
@@ -167,9 +167,9 @@ McKell <- dt %>%
   mutate(speaker = ifelse(frame_id < 90, "Appellent", "Respondent")) %>% 
   select(-c("dt", "csv", "McKell", "csv"))
 
-save(McKell,file = "data/McKell.rda")
+save(McKell,file = "raw_data/McKell.rda")
 
-load("data/McKell.rda")
+load("raw_data/McKell.rda")
 
 ```
 
@@ -186,7 +186,7 @@ load("data/McKell.rda")
 # 
 # save(temp_OKS,file = "data/temp_OKS.rda")
 
-load("data/temp_OKS.rda")
+load("raw_data/temp_OKS.rda")
 judges <- c("1","2","3", "4", "5")
 names <- map(judges, ~paste0("data/csv/OKS/",.x))
 filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
@@ -198,7 +198,7 @@ filenames_n <- map(names,
 
 names(filenames) <- judges
 
-temp_OKS_1 <- temp_OKS %>% select(-c(X_0 : Z_67, eye_lmk_x_0:eye_lmk_Z_55, p_scale:p_33))
+temp_OKS_1 <- temp_OKS 
 
 missing_files <- setdiff(unlist(filenames_n),  unlist(filenames))
 
@@ -222,7 +222,7 @@ OKS <- dt %>%
   select(-c("dt", "csv", "OKS", "csv"))
 
 
-save(OKS,file = "data/OKS.rda")
+save(OKS,file = "raw_data/OKS.rda")
 
 load("data/OKS.rda")
 ```
@@ -240,7 +240,7 @@ load("data/OKS.rda")
 # 
 # save(temp_Parkes,file = "data/temp_Parkes.rda")
 
-load("data/temp_Parkes.rda")
+load("raw_data/temp_Parkes.rda")
 judges <- c("1","2","3", "4", "5")
 names <- map(judges, ~paste0("data/csv/Parkes/",.x))
 filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
@@ -251,7 +251,7 @@ filenames_n <- map(names,
 
 names(filenames) <- judges
 
-temp_Parkes_1 <- temp_Parkes %>% select(-c(X_0 : Z_67, eye_lmk_x_0:eye_lmk_Z_55, p_scale:p_33))
+temp_Parkes_1 <- temp_Parkes 
 
 missing_files <- setdiff(unlist(filenames_n),  unlist(filenames))
 
@@ -276,9 +276,9 @@ Parkes <- dt %>%
 
 
 
-save(Parkes,file = "data/Parkes.rda")
+save(Parkes,file = "raw_data/Parkes.rda")
 
-load("data/Parkes.rda")
+load("raw_data/Parkes.rda")
 ```
 
 ```{r Rinehart-a}
@@ -295,7 +295,7 @@ load("data/Parkes.rda")
 # 
 # save(temp_Rinehart_a,file = "data/temp_Rinehart_a.rda")
 
-load("data/temp_Rinehart_a.rda")
+load("raw_data/temp_Rinehart_a.rda")
 judges <- c("1","2","3", "4", "5")
 names <- map(judges, ~paste0("data/csv/Rinehart-a/",.x))
 filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
@@ -307,7 +307,7 @@ filenames_n <- map(names,
 
 names(filenames) <- judges
 
-temp_Rinehart_a_1 <- temp_Rinehart_a %>% select(-c(X_0 : Z_67, eye_lmk_x_0:eye_lmk_Z_55, p_scale:p_33))
+temp_Rinehart_a_1 <- temp_Rinehart_a 
 
 missing_files <- setdiff(unlist(filenames_n), unlist(filenames))
 dt <- temp_Rinehart_a_1 %>% add_row(info = missing_files)
@@ -332,9 +332,9 @@ Rinehart_a <- dt %>%
 
 
 
-save(Rinehart_a,file = "data/Rinehart_a.rda")
+save(Rinehart_a,file = "raw_data/Rinehart_a.rda")
 
-load("data/Rinehart_a.rda")
+load("raw_data/Rinehart_a.rda")
 ```
 
 ```{r Rinehart-b}
@@ -351,9 +351,9 @@ load("data/Rinehart_a.rda")
 # 
 # save(temp_Rinehart_b,file = "data/temp_Rinehart_b.rda")
 
-load("data/temp_Rinehart_b.rda")
+load("raw_data/temp_Rinehart_b.rda")
 judges <- c("1","2","3", "4", "5")
-names <- map(judges, ~paste0("data/csv/Rinehart-b/",.x))
+names <- map(judges, ~paste0("raw_data/csv/Rinehart-b/",.x))
 filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
 
 filenames_n <- map(names,
@@ -363,7 +363,7 @@ filenames_n <- map(names,
 
 names(filenames_n) <- judges
 
-temp_Rinehart_b_1 <- temp_Rinehart_b %>% select(-c(X_0 : Z_67, eye_lmk_x_0:eye_lmk_Z_55, p_scale:p_33))
+temp_Rinehart_b_1 <- temp_Rinehart_b 
 
 missing_files <- setdiff(unlist(filenames_n), unlist(filenames))
 
@@ -383,12 +383,12 @@ Rinehart_b <- dt %>%
                                          ifelse(judge_id ==4, "Nettle", "Edelman"))))) %>%
   mutate(frame_id = as.numeric(frame_id)) %>%
   mutate(video_id = as.factor("Rinehart_b")) %>%
-  mutate(speaker = ifelse(frame_id < 120, "Appellent", "Respondent")) %>%
+  mutate(speaker = ifelse(frame_id < 25, "Appellent", "Respondent")) %>%
   select(-c("dt", "csv", "Rinehart_b"))
 
-save(Rinehart_b,file = "data/Rinehart_b.rda")
+save(Rinehart_b,file = "raw_data/Rinehart_b.rda")
 
-load("data/Rinehart_b.rda")
+load("raw_data/Rinehart_b.rda")
 ```
 
 
