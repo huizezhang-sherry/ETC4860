@@ -1,0 +1,268 @@
+---
+title: "4.1AU"
+author: "Huize Zhang"
+date: "13/06/2019"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Judge Characterisation 
+library(tidyverse)
+library(naniar)
+library(purrr)
+load("data/court.rda")
+```
+
+```{r}
+au <- court %>% select(confidence, AU01_r:speaker)
+# AU##_r measures the intensity of the 17 AUs 
+# AU##_c measures the present of the 17 AUs
+
+# Missing proportion re-visit
+missing <- court %>% 
+  select(judge_id, frame_id, video_id, x_1) %>% 
+  mutate(judge_id = as.factor(judge_id)) %>% 
+  group_by(video_id, judge_id) %>% 
+  summarise(na_count = sum(is.na(x_1)), 
+            count = n(),
+            na_prop = na_count/count, 
+            data_prop = 1-na_prop)
+
+justices <- split(missing, missing$judge_id)
+
+```
+
+This part checks that at least part of the AU is present with certain intensity
+```{r}
+# bell2_mod <- au %>% 
+#   mutate(AU_c_sum = select(., AU01_c: AU45_c) %>% rowSums(na.rm = TRUE)) %>% 
+#   mutate(AU_r_sum = select(., AU01_r: AU45_r) %>% rowSums(na.rm = TRUE)) 
+# bell2_mod %>% ggplot(aes(x = frame_id, y = AU_c_sum)) + 
+#   geom_point() + 
+#   facet_wrap(vars(video_id))
+# bell2_mod$AU_r_sum
+```
+
+# Count_video_sample
+
+From count_video_sample, we can know the number of sample we have for appellent and respondent. 
+
+We can see that the number of sample is different for appellent and respondent in each case, which then motivates us to use a percentage instead of count for number that each Action Unit appears. 
+```{r}
+count_video_sample <- function(dt){
+  dt %>% 
+    filter(confidence != "NA") %>%
+    select(frame_id, video_id, speaker) %>% 
+    group_by(video_id, speaker) %>% 
+    summarise(count = n()) %>% 
+    spread(speaker, count) %>% 
+    rowwise() %>% 
+    mutate(Total = sum(Appellent + Respondent))
+}
+
+# example: overall - for all cases
+count_video_sample(au)
+
+# example: extract one particular judge's appellent/respondent count information 
+judge_id = list("Bell","Keane","Kiefel","Gageler","Nettle","Gordon","Edelman")
+
+df <- map(judge_id, function(judge){
+  df <- au %>% filter(judge_id == judge) %>% count_video_sample()})
+names(df) <- judge_id
+
+df$Bell
+```
+
+
+# The most common action units for each judges
+
+The following allows us to see the percentage of each Action Unit appears given a specific judge, which provides as a baseline normal expression for each judge This normal expression will be compared with the result from `ActionUnitbySpeaker` to identify the case-specific expression for the judges. 
+
+|Judge|The most common Action Units|
+|-----|-------------------|
+|Bell|AU02, AU09, AU15, AU20, AU25|
+|Keane|AU02, AU15, AU20|
+|Kiefel|AU02, AU20, AU25, AU45|
+|Gageler|AU02, (AU05, AU14, AU15, AU20, AU25)|
+|Nettle|(AU01), AU02, (AU07), AU15, AU20|
+|Gordon|AU02, AU20|
+|Edelman|AU02, (AU20)|
+
+  - AU02: raise of eye brow 
+  - AU15: downward U-shape lip 
+  - AU20: lips part 
+
+The presence of a single action unit is not sufficient enough to indicate emotion. We need a combination of upper and lower fact AU to define emotion.
+
+```{r}
+# Because each judge has different numbers of frame available, mean is a better way ,than sum/ count,  to discribe the frequency of occurence. 
+
+au %>% 
+ group_by(judge_id) %>% 
+ dplyr::summarize_at(vars(AU01_c:AU45_c), mean, na.rm = TRUE) %>%
+ gather(AU_label, value, -judge_id) %>% 
+ separate(AU_label, c("AU", "suffix"), by = "_") %>%
+ select(-suffix) %>% 
+ ggplot(aes(x = AU, y = value, col = value, fill = value)) + 
+ geom_bar(stat = "identity") + 
+ coord_flip() +
+ facet_wrap(vars(judge_id))
+ 
+```
+
+# Who has the most intense facial expression?
+
+In general, most of the action unit are not intense, so I select the ones with intensity greater than one and I find that Nettle has largest porportion of "intense" facial expression. 
+
+```{r}
+au %>% 
+  select(AU02_c, AU02_r, judge_id: speaker) %>% 
+  group_by(judge_id) %>% 
+  filter(judge_id == "Nettle") %>% 
+  dplyr::summarize_at(vars(AU02_r), mean, na.rm = TRUE)
+  
+au_intensity_all <- au %>% select(AU01_r: AU45_r, judge_id : speaker) %>% 
+  gather(AU, intensity, -(judge_id: speaker)) %>% 
+  filter(intensity != "NA") 
+
+# most of the action unit has very low intensity 
+au_intensity_all %>% 
+  ggplot(aes(x = video_id, y = intensity)) + 
+  geom_boxplot() + 
+  facet_wrap(vars(judge_id))
+
+# only 10% of the action unit that being recorded has intensity greater than 1
+au_intensity <- au_intensity_all %>% filter(intensity > 1)
+
+count <- au_intensity %>% 
+  group_by(judge_id) %>% 
+  summarise(count = n()) 
+
+total <- au_intensity_all %>% 
+  group_by(judge_id) %>% 
+  summarise(total = n())
+
+count %>% left_join(total) %>% 
+  mutate(proportion = count/total*100)
+```
+
+# Action Unit by frame(time) - not much findings
+
+```{r}
+aubyframe <- function(judge, video){
+  au %>% 
+  select(AU01_c:AU45_c, judge_id : speaker) %>% 
+  gather(AU, value, -(judge_id: speaker)) %>% 
+  filter(value == 1, 
+         judge_id == judge, 
+         video_id == video, 
+         AU %in% c("AU01_c","AU02_c", 
+                   "AU05_c","AU07_c",
+                   "AU14_c","AU15_c",
+                   "AU20_c","AU25_c")) %>% 
+  ggplot(aes(x = frame_id, y = value, col =speaker)) +
+  geom_point() + 
+  facet_wrap(vars(AU))
+}
+
+aubyframe("Nettle", "Nauru_a")
+
+
+```
+
+
+
+# Does it make any difference when the speaking party is different?
+
+This function plot the percentage of each Action Unit appears by case and speakers. It is helpful to compare the difference in the expression of a specific judge between appellent and respondent's speaking time. 
+
+<!-- In case McKell, when respondent is speaking, more frequent appearance of AU20, less frequent appearance of AU25, AU05, AU04 and AU02. These AUs indicate the movement of lips(AU25) and eyebrow(AU02, 04, 05) and we can say Justices Bell has more emotions when the appellent is speaking.  -->
+
+<!-- However, notice that the data we have for appellent are towards the end of the appellent talking time while for respondent it is the beginnning of respondent talking time, thus this could be due to the difference between statement/ Q&A period.  -->
+
+<!-- More: we know that Justices Bell is the Chief Justices in McKell and she has asked way more questions than other three justices. If we would be able to get the time when Justices Bell is asking questions from the transcript, we can see if the emtions she displayed during the appellent speaking period is because of the fact that she is more engaging in the conversation via asking questions.  -->
+
+
+
+```{r}
+ActionUnitbySpeaker <- function(dt, judge, case = case_list){
+  case_list <- c("Nauru_a", "Nauru_b", "McKell", "OKS", "Parkes","Rinehart_a", "Rinehart_b")
+  case_cand <- intersect(case_list, case)
+  
+  sample <- dt %>% 
+    filter(judge_id == judge) %>%
+    count_video_sample() %>% 
+    filter(Total > 10) 
+  
+  if (sum(case_cand %in% sample$video_id) == 0){
+    case <- case
+  }else{
+    case <- intersect(case_cand, sample$video_id)
+  }
+  
+  
+  dt %>% 
+    filter(AU01_c != "NA", judge_id == judge, video_id %in% case) %>% 
+    group_by(speaker, video_id) %>% 
+    dplyr::summarize_at(vars(AU01_c:AU45_c), mean, na.rm = TRUE) %>% 
+    gather(AU_label, value, -c(speaker, video_id)) %>% 
+    separate(AU_label, c("AU", "suffix"), by = "_") %>%
+    select(-suffix) %>%
+    ggplot(aes(x = AU, y = value, col = value, fill = value)) +
+    geom_bar(stat = "identity") +
+    facet_grid(speaker ~ video_id, scales = "free_x")+
+    ylab("Count") +
+    scale_y_continuous(breaks = c(0, 0.2, 0.4, 0.6, 0.8, 1)) +
+    coord_flip() +
+    ggtitle(sprintf("The percentage of each Action Unit appears in the face of Justices %s", judge))
+
+}
+
+ActionUnitbySpeaker(au, "Keane")
+# ActionUnitbySpeaker(au, "Kiefel", case = c("Parkes", "Rinehart_a"))
+# ActionUnitbySpeaker(au, "Bell", case = c("OKS", "McKell"))
+# ActionUnitbySpeaker(au, "Gageler")
+# ActionUnitbySpeaker(au, "Nettle")
+# ActionUnitbySpeaker(au, "Gordon", case = c("McKell", "Rinehart_a"))
+# ActionUnitbySpeaker(au, "Edelman")
+
+```
+
+
+Some judges have stronger emotion display in some cases while others i.e. Justices Keane, Kiefel, Gordon and Bell present neutral faces in all the cases collected. Justices Nettle has greater discrepency in his facial expression when the speaking party is difference. Particularly,  in case Nauru_b, he has more emotion displayed when the respondent is speaking and this also happens in case Rinehart_b for Justices Gagele. 
+
+```{r}
+case_list <- c("Nauru_a", "Nauru_b", "McKell", "OKS", "Parkes","Rinehart_a", "Rinehart_b")
+
+count <- au %>% 
+  filter(AU01_c != "NA", video_id %in% case_list) %>% 
+  group_by(judge_id,video_id) %>% 
+  dplyr::summarise(count = n()) %>% 
+  filter(count > 10)
+  
+au %>% 
+  filter(AU01_c != "NA", video_id %in% case_list) %>% 
+  group_by(judge_id,speaker, video_id) %>%
+  semi_join(count) %>% 
+  dplyr::summarize_at(vars(AU01_c:AU45_c), mean, na.rm = TRUE) %>% 
+  gather(AU, value, -speaker, -video_id, -judge_id) %>% 
+  spread(speaker, value) %>% 
+  rowwise() %>% 
+  mutate(diff = Appellent - Respondent) %>% 
+  ungroup() %>% 
+  mutate(presence = as.factor(ifelse(abs(diff)>0.2, 
+                                     ifelse(diff > 0, "Appellent",
+                                            "Respondent"), "NA"))) %>% 
+  ggplot(aes(x = video_id, y = AU)) + 
+  geom_tile(aes(fill = presence)) + 
+  facet_wrap(vars(judge_id),scale = "free") + 
+  scale_fill_manual(values = c("Appellent" = "#E69F00", 
+                               "Respondent" = "#5aae61", 
+                               "NA" = "grey"))
+
+```
+
