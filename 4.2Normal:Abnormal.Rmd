@@ -85,6 +85,8 @@ count <- au  %>%
 ```
 
 ```{r}
+# For majority: simulate from a binomial distribution - for Bell and Gordon, because the number of sample for each vidoe is too small so we do bootstrap interval seperately 
+
 sim_norm <- function(count, mean_true, M = 1000){
   mean <- numeric(length = M)
   for (i in seq_len(M)){
@@ -100,38 +102,23 @@ sim_norm <- function(count, mean_true, M = 1000){
               sim_ci_high = sim_ci_high))
 }
 
-au_sim <- au_aggregate %>% 
-  left_join(count)
+au_sim_majority <- au_aggregate %>% 
+  left_join(count) %>% 
+  filter(judge_id != "Bell", judge_id != "Gordon")
 
-temp <- map2_df(.x = au_sim$count, .y = au_sim$mean_agg, 
+temp <- map2_df(.x = au_sim_majority$count, .y = au_sim_majority$mean_agg, 
      function(x, y) sim_norm(x, y))
 
-au_sim2 <- au_sim %>% 
+au_sim2_majority <- au_sim_majority %>% 
   bind_cols(temp) %>% 
   left_join(au_video, by = c("judge_id", "AU")) %>% 
   ungroup() %>% 
   mutate(outliners = as.factor(ifelse(mean_ind > sim_ci_low, 
                                       ifelse(mean_ind < sim_ci_high, 0, 1), 1)))
 
-au_sim2 %>%
-  ggplot(aes(mean_agg, AU)) + 
-  geom_errorbarh(aes(xmin = sim_ci_low, xmax = sim_ci_high), col = "gray") + 
-  facet_wrap(vars(judge_id)) + 
-  geom_point(aes(x = mean_ind, y = AU, col = outliners))
-
 ```
 
-```{r}
-outliners <- au_sim2 %>% 
-  filter(outliners == 1, mean_ind > 0.05) 
 
-outliners %>% 
-  ggplot(aes(x = mean_ind, y  =AU)) + 
-  geom_point(aes(col = video_id)) + 
-  facet_wrap(vars(judge_id), scales = "free_y") + 
-  geom_errorbarh(aes(xmin = sim_ci_low, xmax = sim_ci_high), col = "gray")
-
-```
 
 - Need bootstraping for Bell and Gordon because of sample size 
 - a lot of the action units are out of the simulation bound - what to do with them
@@ -143,7 +130,6 @@ notes:
 
 ```{r}
 set.seed(10000)
-
 
 mean.fun <- function(data,index){
     val <-  data$value[index] 
@@ -163,11 +149,11 @@ boot_sim <- function(judge){
   })
   
   # was trying to use broom package but doesnt seem to work 
-  boot_mean <- map_df(sim,function(x,y){
+  sim_mean <- map_df(sim,function(x,y){
            t <- x$t
            sim_mean <- mean(t)
          }) %>% 
-    gather(AU, boot_mean)
+    gather(AU, sim_mean)
   
   sim_ci_low <- map_df(sim,function(x,y){
            t <- sort(x$t)
@@ -181,16 +167,49 @@ boot_sim <- function(judge){
          }) %>% 
     gather(AU, sim_ci_high)
   
-  boot_result <- left_join(boot_mean, sim_ci_low, by = "AU")
+  boot_result <- left_join(sim_mean, sim_ci_low, by = "AU")
   boot_result <- left_join(boot_result, sim_ci_high, by = "AU")
  
   return(boot_result)
 }
 
-au_sim_bell <- boot_sim("Bell")
-au_sim_gordon <- boot_sim("Gordon")
+au_sim_bell <- boot_sim("Bell") %>% 
+  mutate(judge_id = "Bell")
+au_sim_gordon <- boot_sim("Gordon") %>% 
+  mutate(judge_id ="Gordon")
+au_sim_bind <- bind_rows(au_sim_bell, au_sim_gordon)
+
+au_sim_both <- au_aggregate %>% 
+  left_join(count) %>% 
+  filter(judge_id == "Bell"| judge_id == "Gordon")
 
 
+au_sim2_both <- au_sim_both %>% 
+  left_join(au_sim_bind, by = c("judge_id", "AU")) %>%
+  left_join(au_video, by = c("judge_id", "AU")) %>% 
+  ungroup() %>% 
+  mutate(outliners = as.factor(ifelse(mean_ind > sim_ci_low, 
+                                      ifelse(mean_ind < sim_ci_high, 0, 1), 1)))
+
+au_sim2 <- bind_rows(au_sim2_majority, au_sim2_both)
+
+
+au_sim2 %>%
+  ggplot(aes(mean_agg, AU)) + 
+  geom_errorbarh(aes(xmin = sim_ci_low, xmax = sim_ci_high), col = "gray") + 
+  facet_wrap(vars(judge_id)) + 
+  geom_point(aes(x = mean_ind, y = AU, col = outliners))
+```
+
+```{r}
+outliners <- au_sim2 %>% 
+  filter(outliners == 1, mean_ind > 0.05) 
+
+outliners %>% 
+  ggplot(aes(x = mean_ind, y  =AU)) + 
+  geom_point(aes(col = video_id)) + 
+  facet_wrap(vars(judge_id), scales = "free_y") + 
+  geom_errorbarh(aes(xmin = sim_ci_low, xmax = sim_ci_high), col = "gray")
 
 ```
 
