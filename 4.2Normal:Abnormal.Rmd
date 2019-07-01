@@ -1,0 +1,199 @@
+---
+title: "4.2Normal/Abnormal"
+author: "Huize Zhang"
+date: "27/06/2019"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+simulation for 
+
+- each au as a bernouilli 
+- compute the mean from the data (aggregate at all level)
+- simulate n = 1000 to get the variation 
+- plot errorbarplot 
+- find the points outside the error bar for each judge see outliners
+
+
+```{r}
+library(tidyverse)
+library(purrr)
+library(ggplot2)
+library(boot)
+library(broom)
+load("data/court.rda")
+```
+
+```{r}
+count_video_sample <- function(dt, ){
+  dt %>% 
+    filter(confidence != "NA") %>%
+    select(frame_id, video_id, speaker) %>% 
+    group_by(video_id, speaker) %>% 
+    summarise(count = n()) %>% 
+    spread(speaker, count) %>% 
+    rowwise() %>% 
+    mutate(Total = sum(Appellent + Respondent))
+}
+
+judge_id = list("Bell","Keane","Kiefel","Gageler","Nettle","Gordon","Edelman")
+
+df <- map(judge_id, function(judge){
+  df <- au %>% filter(judge_id == judge) %>% count_video_sample() %>% filter(Total > 10)
+  })
+
+names(df) <- judge_id
+
+sample_size <- bind_rows(df,.id = "id") %>% 
+  as_tibble() %>% 
+  rename(judge_id = id)
+
+```
+
+
+
+```{r}
+au <- court %>% select(AU01_c:speaker)
+
+au_aggregate <- au %>% 
+  filter(AU01_c != "NA") %>% 
+  group_by(judge_id) %>% 
+  right_join(sample_size) %>% 
+  summarise_at(vars(AU01_c: AU45_c), .funs = mean) %>% 
+  gather(AU, mean_agg, -judge_id) 
+  
+  
+au_video <- au %>% 
+  filter(AU01_c != "NA") %>% 
+  select(AU01_c: AU45_c, judge_id: speaker) %>% 
+  group_by(judge_id, video_id) %>% 
+  summarise_at(vars(AU01_c: AU45_c), mean) %>%
+  gather(AU, mean_ind, -judge_id, -video_id) %>% 
+  right_join(sample_size)
+
+count <- au  %>% 
+  select(AU01_c: AU45_c, judge_id: speaker) %>% 
+  group_by(judge_id) %>% 
+  right_join(sample_size) %>%
+  summarise(count = n())
+
+```
+
+```{r}
+sim_norm <- function(count, mean_true, M = 1000){
+  mean <- numeric(length = M)
+  for (i in seq_len(M)){
+    sim <- rbinom(count, 1, mean_true)
+    mean[i] <- mean(sim)
+  }
+  mean_sorted <- sort(mean)
+  sim_mean <- mean_sorted[500] # maybe try to use qnorm()
+  sim_ci_low <- mean_sorted[25]
+  sim_ci_high <- mean_sorted[975]
+  return(list(sim_mean = sim_mean,
+              sim_ci_low = sim_ci_low,
+              sim_ci_high = sim_ci_high))
+}
+
+au_sim <- au_aggregate %>% 
+  left_join(count)
+
+temp <- map2_df(.x = au_sim$count, .y = au_sim$mean_agg, 
+     function(x, y) sim_norm(x, y))
+
+au_sim2 <- au_sim %>% 
+  bind_cols(temp) %>% 
+  left_join(au_video, by = c("judge_id", "AU")) %>% 
+  ungroup() %>% 
+  mutate(outliners = as.factor(ifelse(mean_ind > sim_ci_low, 
+                                      ifelse(mean_ind < sim_ci_high, 0, 1), 1)))
+
+au_sim2 %>%
+  ggplot(aes(mean_agg, AU)) + 
+  geom_errorbarh(aes(xmin = sim_ci_low, xmax = sim_ci_high), col = "gray") + 
+  facet_wrap(vars(judge_id)) + 
+  geom_point(aes(x = mean_ind, y = AU, col = outliners))
+
+```
+
+```{r}
+outliners <- au_sim2 %>% 
+  filter(outliners == 1, mean_ind > 0.05) 
+
+outliners %>% 
+  ggplot(aes(x = mean_ind, y  =AU)) + 
+  geom_point(aes(col = video_id)) + 
+  facet_wrap(vars(judge_id), scales = "free_y") + 
+  geom_errorbarh(aes(xmin = sim_ci_low, xmax = sim_ci_high), col = "gray")
+
+```
+
+- Need bootstraping for Bell and Gordon because of sample size 
+- a lot of the action units are out of the simulation bound - what to do with them
+
+
+notes: 
+- simulation result doesnt differentiate from M = 100, 1000, 10000
+- first filtered out the video with small sample - would that be a problem for bootstrapping? 
+
+```{r}
+set.seed(10000)
+
+
+mean.fun <- function(data,index){
+    val <-  data$value[index] 
+    return(mean(val))
+  }
+
+boot_sim <- function(judge){
+  
+  dt <- au %>% 
+    filter(judge_id ==judge, AU01_r != "NA") %>% 
+    select(AU01_c : speaker) %>% 
+    gather(AU, value, -c(judge_id: speaker)) %>% 
+    group_by(AU) 
+    
+  sim <- map(split(dt,dt$AU), function(x){
+    boot(x, mean.fun, R = 1000)
+  })
+  
+  # was trying to use broom package but doesnt seem to work 
+  boot_mean <- map_df(sim,function(x,y){
+           t <- x$t
+           sim_mean <- mean(t)
+         }) %>% 
+    gather(AU, boot_mean)
+  
+  sim_ci_low <- map_df(sim,function(x,y){
+           t <- sort(x$t)
+           sim_ci_low <- t[25]
+         }) %>% 
+    gather(AU, sim_ci_low)
+  
+  sim_ci_high <- map_df(sim,function(x,y){
+           t <- sort(x$t)
+           sim_ci_low <- t[975]
+         }) %>% 
+    gather(AU, sim_ci_high)
+  
+  boot_result <- left_join(boot_mean, sim_ci_low, by = "AU")
+  boot_result <- left_join(boot_result, sim_ci_high, by = "AU")
+ 
+  return(boot_result)
+}
+
+au_sim_bell <- boot_sim("Bell")
+au_sim_gordon <- boot_sim("Gordon")
+
+
+
+```
+
+- get this bootstrap done TICK
+- understand more about Di's thinking of modelling to deal with structural break 
+
