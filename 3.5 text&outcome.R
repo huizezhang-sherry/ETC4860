@@ -30,34 +30,34 @@ case = vector(length = 45)
 
 people[1:5] <- c("GAGELER", "NETTLE","EDELMAN", "KENNETT", "MERKEL")
 role[1:5] <- c("Chief Justice","Justice","Justice", "Respondent","Appellant")
-outcome[1:5] <- c("NA", "NA","NA", "lose", "win")
+outcome[1:5] <- c("Appellant", "Appellant","Appellant", "lose", "win")
 case[1:5] <- "Nauru_a"
 
 people[6:10] <- list("GAGELER", "NETTLE","EDELMAN", "KENNETT", "GILBERT")
 role[6:10] <- c("Chief Justice","Justice","Justice", "Respondent","Appellant")
-outcome[6:10] <- c("NA", "NA","NA", "lose", "win")
+outcome[6:10] <- c("Respondent", "Respondent","Respondent", "win", "lose")
 case[6:10] <- "Nauru_b"
 
 people[11:17] <-c("BELL", "GAGELER", "KEANE", "GORDON", "EDELMAN", "JORDAN","ABRAHAM") 
 role[11:17] <- c("Chief Justice","Justice","Justice", "Justice","Justice", "Respondent","Appellant")
-outcome[11:17] <- c("NA", "NA","NA", "NA","NA", "lose", "win")
+outcome[11:17] <- c("Appellant", "Appellant","Appellant", "Appellant","Appellant", "lose", "win")
 case[11:17] <- "McKell"
 
 
 people[18:24] <-c("BELL", "KEANE", "NETTLE", "GORDON", "EDELMAN", "VANDONGEN","FORRESTER") 
 role[18:24] <- c("Chief Justice","Justice","Justice", "Justice","Justice", "Respondent","Appellant")
-outcome[18:24] <-  c("NA", "NA","NA", "NA","NA", "win", "lose")
+outcome[18:24] <-  c("Appellant", "Appellant","Appellant", "Appellant","Appellant", "lose", "win")
 case[18:24] <- "OKS"
 
 people[25:31] <-c("KIEFEL", "BELL","KEANE", "GORDON", "EDELMAN", "WILLIAMS","GLEESON") 
 role[25:31] <- c("Chief Justice","Justice","Justice", "Justice","Justice", "Respondent","Appellant")
-outcome[25:31] <-  c("NA", "NA","NA", "NA","NA", "unknown", "unknown")
+outcome[25:31] <-  c("Respondent", "Respondent","Respondent", "Respondent","Respondent", "win", "lose")
 case[25:31] <- "Parkes"
 
 
 people[32:38] <-c("KIEFEL", "GAGELER","NETTLE", "GORDON", "EDELMAN", "WALKER","HUTLEY") 
 role[32:38] <- c("Chief Justice","Justice","Justice", "Justice","Justice", "Respondent","Appellant")
-outcome[32:38] <-  c("NA", "NA","NA", "NA","NA", "unknown", "unknown")
+outcome[32:38] <-  c("Respondent", "Respondent","Respondent", "Respondent","Appellent", "win", "lose")
 case[32:38] <- "Rinehart_a"
 
 people[39:45] <-c("KIEFEL", "GAGELER","NETTLE", "GORDON", "EDELMAN", "NG","HUTLEY") 
