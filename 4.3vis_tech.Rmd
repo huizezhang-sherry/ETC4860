@@ -1,0 +1,70 @@
+---
+title: "4.3vis_tech"
+author: "Huize Zhang"
+date: "08/07/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(forcats)
+load("raw_data/ci_count.rda")
+
+```
+
+Task 1: Distribution by Judge
+```{r}
+# need a better fct_reorder way to order Action Unit 
+ci_count %>% 
+  ggplot(aes(x = mean_agg, y = fct_reorder(AU, mean_agg, mean))) + 
+  geom_point() + 
+  geom_errorbarh(aes(xmin = sim_low, xmax = sim_high), col = "gray") + 
+  facet_wrap(vars(judge_id), scales = "free_y")
+```
+
+Task 2:  Comparison of judges
+```{r}
+# need a better fct_reorder way to order Action Unit 
+ci_count %>% 
+  ggplot(aes(x = mean_agg, 
+             y = fct_reorder(judge_id, sim_mean), col = judge_id)) + 
+  geom_point() + 
+  geom_errorbarh(aes(xmin = sim_low, xmax = sim_high), col = "gray") + 
+  facet_wrap(vars(AU), scales = "free_y")
+```
+
+Task 3. Incorporating Time dimension 
+```{r}
+
+# need to figure out how to arrange the graph
+load("raw_data/ci_intensity.rda")
+au_sim_frame <- au %>% 
+  select(AU01_r: AU45_r, judge_id :speaker) %>% 
+  gather(AU, value, -(judge_id: speaker))%>% 
+  left_join(ci_intensity) %>% 
+  mutate(significant = as.factor(ifelse(value > sim_high, 1, 0)))
+
+
+temp <- au_sim_frame %>% 
+  filter(value != "NA", 
+         AU %in% c("AU01_r","AU02_r", 
+                   "AU05_r","AU07_r",
+                   "AU14_r","AU15_r",
+                   "AU20_r","AU25_r")) %>% 
+  ggplot(aes(x = frame_id, y = value,col = significant)) +
+  geom_point() + 
+  facet_grid(judge_id ~ video_id*AU, scales = "free") + 
+  geom_hline(aes(yintercept= sim_high), col = "gray")
+
+temp
+
+ggsave("task3.png")
+
+
+```
+
