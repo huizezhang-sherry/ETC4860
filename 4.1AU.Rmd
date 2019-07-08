@@ -74,7 +74,7 @@ df <- map(judge_id, function(judge){
   df <- au %>% filter(judge_id == judge) %>% count_video_sample()})
 names(df) <- judge_id
 
-df$Bell
+df$Gordon
 ```
 
 
@@ -107,11 +107,12 @@ au %>%
  gather(AU_label, value, -judge_id) %>% 
  separate(AU_label, c("AU", "suffix"), by = "_") %>%
  select(-suffix) %>% 
- ggplot(aes(x = AU, y = value, col = value, fill = value)) + 
+ ggplot(aes(x = fct_reorder(AU, value), y = value,fill = value)) + 
  geom_bar(stat = "identity") + 
  coord_flip() +
  facet_wrap(vars(judge_id))
  
+  # categorical color !!!
 ```
 
 # Who has the most intense facial expression?
@@ -155,30 +156,40 @@ count %>% left_join(total) %>%
 ```{r}
 aubyframe <- function(judge, video){
   au %>% 
-  select(AU01_c:AU45_c, judge_id : speaker) %>% 
+  select(AU01_r:AU45_r, judge_id : speaker) %>% 
   gather(AU, value, -(judge_id: speaker)) %>% 
-  filter(value == 1, 
+  filter( 
          judge_id == judge, 
          video_id == video, 
-         AU %in% c("AU01_c","AU02_c", 
-                   "AU05_c","AU07_c",
-                   "AU14_c","AU15_c",
-                   "AU20_c","AU25_c")) %>% 
-  ggplot(aes(x = frame_id, y = value, col =speaker)) +
+         AU %in% c("AU01_r","AU02_r", 
+                   "AU05_r","AU07_r",
+                   "AU14_r","AU15_r",
+                   "AU20_r","AU25_r")) %>% 
+  ggplot(aes(x = frame_id, y = value)) +
+    geom_vline(xintercept = 80) +  # suppose to be a separate for speakers
   geom_point() + 
-  facet_wrap(vars(AU))
+    geom_smooth(span = 0.1, se = FALSE) + 
+  facet_wrap(vars(AU)) 
 }
 
 aubyframe("Nettle", "Nauru_a")
 
 
+
 ```
 
-
+Empirical Bayes
+  - gene: generally small, a small increase
+  - each time is a gene: test if it is normal, sig high 
+  - but in this case, we lose time dependence - need to think about it: jump detection/ structural break
 
 # Does it make any difference when the speaking party is different?
 
 This function plot the percentage of each Action Unit appears by case and speakers. It is helpful to compare the difference in the expression of a specific judge between appellent and respondent's speaking time. 
+
+oddstream: Dilini - has a paper 
+- we need a method to pull out those structural break
+
 
 <!-- In case McKell, when respondent is speaking, more frequent appearance of AU20, less frequent appearance of AU25, AU05, AU04 and AU02. These AUs indicate the movement of lips(AU25) and eyebrow(AU02, 04, 05) and we can say Justices Bell has more emotions when the appellent is speaking.  -->
 
@@ -190,6 +201,7 @@ This function plot the percentage of each Action Unit appears by case and speake
 
 ```{r}
 ActionUnitbySpeaker <- function(dt, judge, case = case_list){
+ 
   case_list <- c("Nauru_a", "Nauru_b", "McKell", "OKS", "Parkes","Rinehart_a", "Rinehart_b")
   case_cand <- intersect(case_list, case)
   
@@ -198,21 +210,33 @@ ActionUnitbySpeaker <- function(dt, judge, case = case_list){
     count_video_sample() %>% 
     filter(Total > 10) 
   
-  if (sum(case_cand %in% sample$video_id) == 0){
-    case <- case
+  if (all(case_cand %in% sample$video_id)){
+    case <- case_cand
   }else{
-    case <- intersect(case_cand, sample$video_id)
+    case <- case_cand[which(case_cand %in% sample$video_id)]
+  }
+  
+  #browser()
+  
+  diff <- setdiff(case_cand, sample$video_id) 
+  if (length(diff) > 0){
+    warning(sprintf("%s has less than 10 frames, so it is dropped", diff))
   }
   
   
+  
+  
   dt %>% 
-    filter(AU01_c != "NA", judge_id == judge, video_id %in% case) %>% 
+    filter(AU01_c != "NA", judge_id == judge, 
+           video_id %in% case) %>% 
     group_by(speaker, video_id) %>% 
-    dplyr::summarize_at(vars(AU01_c:AU45_c), mean, na.rm = TRUE) %>% 
+    dplyr::summarize_at(vars(AU01_c:AU45_c), 
+                        mean, na.rm = TRUE) %>% 
     gather(AU_label, value, -c(speaker, video_id)) %>% 
     separate(AU_label, c("AU", "suffix"), by = "_") %>%
     select(-suffix) %>%
-    ggplot(aes(x = AU, y = value, col = value, fill = value)) +
+    ggplot(aes(x = fct_reorder(AU, value), 
+               y = value, col = value, fill = value)) +
     geom_bar(stat = "identity") +
     facet_grid(speaker ~ video_id, scales = "free_x")+
     ylab("Count") +
@@ -223,12 +247,12 @@ ActionUnitbySpeaker <- function(dt, judge, case = case_list){
 }
 
 ActionUnitbySpeaker(au, "Keane")
-# ActionUnitbySpeaker(au, "Kiefel", case = c("Parkes", "Rinehart_a"))
-# ActionUnitbySpeaker(au, "Bell", case = c("OKS", "McKell"))
-# ActionUnitbySpeaker(au, "Gageler")
-# ActionUnitbySpeaker(au, "Nettle")
-# ActionUnitbySpeaker(au, "Gordon", case = c("McKell", "Rinehart_a"))
-# ActionUnitbySpeaker(au, "Edelman")
+ActionUnitbySpeaker(au, "Kiefel", case = c("Parkes", "Rinehart_a"))
+ActionUnitbySpeaker(au, "Bell", case = c("OKS", "McKell"))
+ActionUnitbySpeaker(au, "Gageler")
+ActionUnitbySpeaker(au, "Nettle")
+ActionUnitbySpeaker(au, "Gordon", case = c("McKell", "Rinehart_a"))
+ActionUnitbySpeaker(au, "Edelman")
 
 ```
 
@@ -257,12 +281,21 @@ au %>%
   mutate(presence = as.factor(ifelse(abs(diff)>0.2, 
                                      ifelse(diff > 0, "Appellent",
                                             "Respondent"), "NA"))) %>% 
-  ggplot(aes(x = video_id, y = AU)) + 
-  geom_tile(aes(fill = presence)) + 
-  facet_wrap(vars(judge_id),scale = "free") + 
-  scale_fill_manual(values = c("Appellent" = "#E69F00", 
-                               "Respondent" = "#5aae61", 
+  ggplot(aes(x = video_id, y = AU)) +
+  geom_tile(aes(fill = presence)) +
+  facet_wrap(vars(judge_id),scale = "free") +
+  scale_fill_manual(values = c("Appellent" = "#E69F00",
+                               "Respondent" = "#5aae61",
                                "NA" = "grey"))
 
+  # ggplot(aes(x = AU, y = diff)) + 
+  # geom_bar(stat = "identity", position = "identity", aes(fill = diff, group = video_id)) +
+  # facet_wrap(vars(judge_id, scale = "free")) +
+  # coord_flip()
+
+
 ```
+
+
+
 
