@@ -25,12 +25,13 @@ library(tidyverse)
 library(purrr)
 library(ggplot2)
 library(boot)
-library(broom)
+library(forcats)
+
 load("data/court.rda")
 ```
 
 ```{r}
-count_video_sample <- function(dt, ){
+count_video_sample <- function(dt){
   dt %>% 
     filter(confidence != "NA") %>%
     select(frame_id, video_id, speaker) %>% 
@@ -137,46 +138,32 @@ mean.fun <- function(data,index){
   }
 
 boot_sim <- function(judge){
-  
   dt <- au %>% 
     filter(judge_id ==judge, AU01_r != "NA") %>% 
     select(AU01_c : speaker) %>% 
     gather(AU, value, -c(judge_id: speaker)) %>% 
     group_by(AU) 
-    
+  
   sim <- map(split(dt,dt$AU), function(x){
-    boot(x, mean.fun, R = 1000)
+    boot.obj <- boot(x, mean.fun, R = 1000)
+    ci <- boot.ci(boot.obj, conf = c(0, 0.95), type = "perc")
   })
   
-  # was trying to use broom package but doesnt seem to work 
-  sim_mean <- map_df(sim,function(x,y){
-           t <- x$t
-           sim_mean <- mean(t)
-         }) %>% 
-    gather(AU, sim_mean)
+  temp <- map_df(sim, function(x) x$percent)
   
-  sim_ci_low <- map_df(sim,function(x,y){
-           t <- sort(x$t)
-           sim_ci_low <- t[25]
-         }) %>% 
-    gather(AU, sim_ci_low)
+  sim_result <- temp[8, ] %>% 
+    gather(AU, sim_low) %>% 
+    left_join(temp[9, ] %>% gather(AU, sim_mean)) %>% 
+    left_join(temp[10, ] %>% gather(AU, sim_high)) 
   
-  sim_ci_high <- map_df(sim,function(x,y){
-           t <- sort(x$t)
-           sim_ci_low <- t[975]
-         }) %>% 
-    gather(AU, sim_ci_high)
-  
-  boot_result <- left_join(sim_mean, sim_ci_low, by = "AU")
-  boot_result <- left_join(boot_result, sim_ci_high, by = "AU")
  
-  return(boot_result)
+  return(sim_result)
 }
 
-au_sim_bell <- boot_sim("Bell") %>% 
-  mutate(judge_id = "Bell")
-au_sim_gordon <- boot_sim("Gordon") %>% 
-  mutate(judge_id ="Gordon")
+
+# half binomial and half bootstrapping 
+au_sim_bell <- boot_sim("Bell") 
+au_sim_gordon <- boot_sim("Gordon") 
 au_sim_bind <- bind_rows(au_sim_bell, au_sim_gordon)
 
 au_sim_both <- au_aggregate %>% 
@@ -193,23 +180,59 @@ au_sim2_both <- au_sim_both %>%
 
 au_sim2 <- bind_rows(au_sim2_majority, au_sim2_both)
 
+# nto sure why fct_reorder doesnt work 
+# au_sim2 %>%
+#   mutate(AU = as.factor(AU)) %>% 
+#   ggplot(aes(mean_agg, fct_reorder(AU, value))) + 
+#   geom_errorbarh(aes(xmin = sim_ci_low, xmax = sim_ci_high), col = "gray") + 
+#   facet_wrap(vars(judge_id)) + 
+#   geom_point(aes(x = mean_ind, y = AU, col = outliners))
 
-au_sim2 %>%
-  ggplot(aes(mean_agg, AU)) + 
+p1 <- au_sim2 %>%
+  mutate(AU = as.factor(AU)) %>% 
+  ggplot(aes(mean_agg, AU, value)) + 
   geom_errorbarh(aes(xmin = sim_ci_low, xmax = sim_ci_high), col = "gray") + 
   facet_wrap(vars(judge_id)) + 
   geom_point(aes(x = mean_ind, y = AU, col = outliners))
 ```
 
+
+
 ```{r}
-outliners <- au_sim2 %>% 
+# method 2: all using bootstrap
+sim_result<- map_df(.x = judge_id, 
+                    ~boot_sim(.x) %>% mutate(judge_id = .x))
+
+ci_count <- au_aggregate %>% 
+  left_join(count) %>% 
+  left_join(sim_result, by = c("judge_id", "AU")) %>%
+  left_join(au_video, by = c("judge_id", "AU")) %>% 
+  ungroup() %>% 
+  mutate(outliners = as.factor(ifelse(mean_ind > sim_low, 
+                                      ifelse(mean_ind < sim_high, 0, 1), 1)))
+
+save(ci_count,file = "raw_data/ci_count.rda")
+
+ci_count %>%
+  mutate(AU = as.factor(AU)) %>% 
+  ggplot(aes(mean_agg, fct_reorder(AU,mean_ind, median))) + 
+  geom_errorbarh(aes(xmin = sim_low, xmax = sim_high), col = "gray") + 
+  facet_wrap(vars(judge_id)) + 
+  geom_point(aes(x = mean_ind, y = AU, col = outliners))
+
+gridExtra::grid.arrange(p1, p2, nrow = 1)
+#bootstrap interval is indeed wider than those simulated from binomial 
+```
+
+```{r}
+outliners <- ci_count %>% 
   filter(outliners == 1, mean_ind > 0.05) 
 
 outliners %>% 
   ggplot(aes(x = mean_ind, y  =AU)) + 
   geom_point(aes(col = video_id)) + 
   facet_wrap(vars(judge_id), scales = "free_y") + 
-  geom_errorbarh(aes(xmin = sim_ci_low, xmax = sim_ci_high), col = "gray")
+  geom_errorbarh(aes(xmin = sim_low, xmax = sim_high), col = "gray")
 
 ```
 
