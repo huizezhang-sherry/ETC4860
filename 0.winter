@@ -1,0 +1,84 @@
+Thesis structure 
+
+PART A: DATA STRUCTURE 
+
+\begin{align}
+Y_{ijtk} = [expression to fill in]
+
+\text{where}
+
+i \text{is the judge_id index and } i = 1, 2, \cdots, I
+j \text{is the video_id index and } j = 1, 2, \cdots, J
+t \text{is the time index and } t = 1, 2, \cdots, T_J
+k \text{is the index for the available action unit in this project and } k = 1, 2, \cdots, K
+
+\end{align}
+
+[Progression]
+  - more work on how to handle missing value
+  - Generate more data from video at a rate of 10 second a frame  
+  - write in matrix notation 
+
+ 
+PART B: CONFIDENCE INTERVAL 
+
+We use a simulation study to find the 95% confidence interval for each of the Action Unit available for each judge to find the normal behaviour for each individual judge. 
+
+Notice that we would expect each judge to have their own individual characteristics that are different from each other, the normal behaviour and thus the simulation experiment is conducted separately for each individual judge. 
+
+[Progression]
+  - code is refined
+  
+  - Todo: package the code
+
+
+
+PART C: VISUAL TECHNIQUES 
+
+In this section we use visualisation technqiues to outline the difference of facial behaviour between judges as long as the variation of each individual judges across time. 
+  
+Task 1. Distribution by judges
+For each judge, display the frequency each Action Unit appears
+  - ggplot(aes(x = percent, y = AU)) + facet_wrap(vars(judge_id))
+
+
+Task 2. Comparison of judges
+For the same Action Unit, does each judge have different behaviour pattern? 
+   - ggplot(aes(x = percent, y = juge_id)) + facet_wrap(vars(AU))
+   
+   
+Task 3. Incorporating Time dimension 
+[need to phase this]
+  - ggplot(aes(x = time, y = percent)) +
+      geom_hline(yintercept = [upper_bound]) + 
+      geom_hline(yintercept = [lower_bound]) + 
+      facet_grid(judge_id ~ video_id*AU)
+  - Expect to be very large matrix of graphs 
+  
+Notes:
+- Task 3 is performed on AU_intensity rather than the AU_percentage since count is recorded as 0/1 so the dots will be on the horizontal line of 0 and 1 if plotted against time.
+  
+[Progression]:
+  - Plots are available 
+  
+  - Interpret to result 
+  - Task1/ Task2: need a better fct_reorder way to order Action Unit 
+  - Task3: need to figure out how to arrange the graph
+  
+
+SOMETHING MORE: 
+
+
+we expect one judge to have consistent behaviour across all the videos 
+
+normal behavioural bcharacteristics of jduge - the 95% band across frame_id. 
+
+mean_ind is the mean summarisation of one particular judge in one particular video and now we want to expand it across time 
+
+
+1. comparison between judges
+facet by AU
+
+2. judges reaction 
+facet_grid(judge(col) ~ video1/au_1(horizontal))
+whether events are happening at the same time 
