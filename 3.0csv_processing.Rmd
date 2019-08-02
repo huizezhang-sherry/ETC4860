@@ -446,3 +446,22 @@ Rinehart_b %>% glimpse()
 aaa %>% glimpse()
 ```
 
+
+```{r eval = FALSE}
+load("raw_data/nauru_a.rda")
+load("raw_data/nauru_b.rda")
+load("raw_data/McKell.rda")
+load("raw_data/OKS.rda")
+load("raw_data/Parkes.rda")
+load("raw_data/Rinehart_a.rda")
+load("raw_data/Rinehart_b.rda")
+
+court <- rbind(nauru_a, nauru_b, McKell, OKS, Parkes, Rinehart_a, Rinehart_b)
+save(court, file = "raw_data/court.rda")
+
+au <- court %>% select(AU01_r:speaker)
+save(au, file = "raw_data/au.rda")
+
+```
+```
+
