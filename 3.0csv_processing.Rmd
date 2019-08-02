@@ -35,7 +35,7 @@ filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
 load("raw_data/temp_nauru_a.rda")
 
 judges <- c("1","2","3")
-names <- map(judges, ~paste0("data/csv/nauru-a/face",.x, "/processed"))
+names <- map(judges, ~paste0("raw_data/csv/nauru-a/face",.x, "/processed"))
 filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
 
 filenames_n <- map(names,
@@ -69,7 +69,7 @@ nauru_a <- dt %>%
 
 save(nauru_a,file = "raw_data/nauru_a.rda")
 
-load("data/nauru_a.rda")
+load("raw_data/nauru_a.rda")
 ```
 
 ```{r nauru-b}
@@ -135,7 +135,7 @@ load("raw_data/nauru_b.rda")
 
 load("raw_data/temp_McKell.rda")
 judges <- c("1","2","3", "4", "5")
-names <- map(judges, ~paste0("data/csv/McKell/",.x))
+names <- map(judges, ~paste0("raw_data/csv/McKell/",.x))
 filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
 filenames_n <- map(names,
                    ~paste0(.x,"/McKell_" ,
@@ -188,7 +188,7 @@ load("raw_data/McKell.rda")
 
 load("raw_data/temp_OKS.rda")
 judges <- c("1","2","3", "4", "5")
-names <- map(judges, ~paste0("data/csv/OKS/",.x))
+names <- map(judges, ~paste0("raw_data/csv/OKS/",.x))
 filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
 
 filenames_n <- map(names,
