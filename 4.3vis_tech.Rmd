@@ -14,14 +14,25 @@ library(tidyverse)
 library(ggplot2)
 library(forcats)
 load("raw_data/ci_count.rda")
-
+load("raw_data/court.rda")
+load("raw_data/au.rda")
+load("raw_data/sim_result.rda")
+load("raw_data/au_aggregate.rda")
 ```
 
 Task 1: Distribution by Judge
+
+fct_reorder(AU, mean_agg, mean)
 ```{r}
 # need a better fct_reorder way to order Action Unit 
-ci_count %>% 
-  ggplot(aes(x = mean_agg, y = fct_reorder(AU, mean_agg, mean))) + 
+au_aggregate %>% 
+  left_join(sim_result, by = c("judge_id", "AU")) %>% 
+  arrange(judge_id, mean_agg) %>% 
+  group_by(judge_id) %>% 
+  top_n(10, wt = mean_agg) %>% 
+  ggplot(aes(x = mean_agg, 
+             y = tidytext::reorder_within(AU, by = mean_agg, within = judge_id), 
+             col = AU)) + 
   geom_point() + 
   geom_errorbarh(aes(xmin = sim_low, xmax = sim_high), col = "gray") + 
   facet_wrap(vars(judge_id), scales = "free_y")
