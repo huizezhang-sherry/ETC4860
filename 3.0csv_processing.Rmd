@@ -242,7 +242,7 @@ load("data/OKS.rda")
 
 load("raw_data/temp_Parkes.rda")
 judges <- c("1","2","3", "4", "5")
-names <- map(judges, ~paste0("data/csv/Parkes/",.x))
+names <- map(judges, ~paste0("raw_data/csv/Parkes/",.x))
 filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
 filenames_n <- map(names,
                    ~paste0(.x,"/Parkes_" ,
@@ -297,7 +297,7 @@ load("raw_data/Parkes.rda")
 
 load("raw_data/temp_Rinehart_a.rda")
 judges <- c("1","2","3", "4", "5")
-names <- map(judges, ~paste0("data/csv/Rinehart-a/",.x))
+names <- map(judges, ~paste0("raw_data/csv/Rinehart-a/",.x))
 filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
 
 filenames_n <- map(names,
