@@ -2,6 +2,13 @@ Thesis structure
 
 PART A: DATA STRUCTURE 
 
+The data structure we are dealing with is time series with multiple indices, which is a tsibble in a hierachical structure. `Index` is `frame_id` and `Key` is a combination of `judge_id` and `video_id`.  
+
+|frame_id | video_id| judge_id | Var_1 | Var_2| ...|
+|---------|---------|---------|---------|---------|----|
+
+
+#### MAY NOT ACTUALLY NEED AN EQUATION? 
 \begin{align}
 Y_{ijtk} = [expression to fill in]
 
@@ -15,9 +22,9 @@ k \text{is the index for the available action unit in this project and } k = 1, 
 \end{align}
 
 [Progression]
-  - more work on how to handle missing value
-  - Generate more data from video at a rate of 10 second a frame  
-  - write in matrix notation 
+  - more work on how to handle missing value: now the missings are simply removed 
+  - Generate more data from video at a rate of 10 second a frame [action after having more storage in the computer]
+  - write in matrix notation [tick]
 
  
 PART B: CONFIDENCE INTERVAL 
@@ -28,8 +35,7 @@ Notice that we would expect each judge to have their own individual characterist
 
 [Progression]
   - code is refined
-  
-  - Todo: package the code
+  - Todo: package the code [tick]
 
 
 
