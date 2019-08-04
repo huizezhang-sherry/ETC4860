@@ -8,17 +8,17 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 
 # Judge Characterisation 
 library(tidyverse)
 library(naniar)
-library(purrr)
-load("data/court.rda")
+
+load("raw_data/court.rda")
+load("raw_data/au.rda")
 ```
 
 ```{r}
-au <- court %>% select(confidence, AU01_r:speaker)
 # AU##_r measures the intensity of the 17 AUs 
 # AU##_c measures the present of the 17 AUs
 
@@ -55,7 +55,6 @@ We can see that the number of sample is different for appellent and respondent i
 ```{r}
 count_video_sample <- function(dt){
   dt %>% 
-    filter(confidence != "NA") %>%
     select(frame_id, video_id, speaker) %>% 
     group_by(video_id, speaker) %>% 
     summarise(count = n()) %>% 
