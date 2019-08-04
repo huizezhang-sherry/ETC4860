@@ -17,22 +17,8 @@ library(visdat)
 library(gridExtra)
 ```
 
-
-```{r eval = FALSE}
-load("raw_data/nauru_a.rda")
-load("raw_data/nauru_b.rda")
-load("raw_data/McKell.rda")
-load("raw_data/OKS.rda")
-load("raw_data/Parkes.rda")
-load("raw_data/Rinehart_a.rda")
-load("raw_data/Rinehart_b.rda")
-
-court <- rbind(nauru_a, nauru_b, McKell, OKS, Parkes, Rinehart_a, Rinehart_b)
-save(court, file = "data/court.rda")
-```
-
 ```{r}
-load("data/court.rda")
+load("raw_data/court.rda")
 
 court_miss <- court %>% 
   select(judge_id, frame_id, video_id, x_1) %>% 
