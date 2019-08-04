@@ -6,13 +6,11 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
 ```{r}
 library(tidyverse)
-library(ggplot2)
-library(forcats)
 load("raw_data/ci_count.rda")
 load("raw_data/court.rda")
 load("raw_data/au.rda")
@@ -20,36 +18,148 @@ load("raw_data/sim_result.rda")
 load("raw_data/au_aggregate.rda")
 ```
 
-Task 1: Distribution by Judge
+# Task 1: Distribution by Judge: 
+## Does the judge behave consistently across the videos? 
 
-fct_reorder(AU, mean_agg, mean)
+Since we only have a few cases for each judge, simulation study is more suitable here. 
+```{r}
+
+```
+
+
+# Task 2:  Comparison of judges
+## Does the judge behave the same or different from one to another? 
+
+We have a couple of cases for each judge while have way more action unit variables to learn the question, thus it is high-dimension problem 
+
+The first plot shows the action unit displayed by each judge during and their average occurence in percentage term across time along with simulated interval. 
+
+What are the most commonly detected action unit among all? - Look at the second plot! AU02, AU15, AU20, AU14 are the pretty common across all the judges. However, are these  the most influential ones that makes one judge differentiate from another? Probably not:  It is like everyone sitting here has a bachelor degree making holding a bachelor degree less useful to evaluate everyone's ability. 
+
+Thus we perform PCA to find the most influential and thus the most "animated" judge. 
+
 ```{r}
 # need a better fct_reorder way to order Action Unit 
-au_aggregate %>% 
+by_judge <- au_aggregate %>% 
   left_join(sim_result, by = c("judge_id", "AU")) %>% 
   arrange(judge_id, mean_agg) %>% 
-  group_by(judge_id) %>% 
-  top_n(10, wt = mean_agg) %>% 
+  group_by(judge_id) 
+  
+by_judge %>% 
+  group_by(judge_id)%>% 
+  mutate(mean_judge = mean(mean_agg)) %>% 
   ggplot(aes(x = mean_agg, 
-             y = tidytext::reorder_within(AU, by = mean_agg, within = judge_id), 
+             y = tidytext::reorder_within(AU, by = mean_agg, 
+                                          within = judge_id, sep = "_"), 
              col = AU)) + 
-  geom_point() + 
-  geom_errorbarh(aes(xmin = sim_low, xmax = sim_high), col = "gray") + 
-  facet_wrap(vars(judge_id), scales = "free_y")
+  geom_point() +
+  facet_wrap(vars(fct_reorder(judge_id, mean_judge, .desc = TRUE)), scales = "free_y") + 
+  ylab("Action Unit") + 
+  scale_y_discrete(labels = function(x) word(x, start = 1, sep = "_"))
+
+# top 5 action unit by judge
+by_judge %>% 
+  top_n(5, wt = mean_agg) %>%
+  group_by(AU) %>% 
+  summarise(count = n()) %>% 
+  mutate(AU = str_sub(AU, end = 4)) %>% 
+  ggplot(aes(x = fct_reorder(AU, count, .desc = TRUE), 
+             y = count, col = count, fill = count)) + 
+  geom_bar(stat = "identity") + 
+  scale_fill_continuous(high = "#132B43", low = "#56B1F7") + 
+  scale_color_continuous(high = "#132B43", low = "#56B1F7") + #reverse the color scale
+  xlab("Action Units") + 
+  ggtitle("Most commonly detected action unit")
+  
 ```
 
-Task 2:  Comparison of judges
+Who is the most animated judge? 
+
+The top 10 PCs explains 94.5% of the variance and we have plotted the first two PCs and can see that some judges' behaviour are quite different from others i.e. Bell, Gageler, Kiefel. We also plot to see the most influential variables and find that this time, AU45, AU09, AU06, AU17 and AU04 are the most influential ones! 
+
+Question to answer: Who is the most animated judge? 
+Since PCs are linear combination of the original variables, we take the absolute value of fitted PCs and add them up to create an index. The larger the index is, the more animated the judge is (the influencial action units are presented more often in these judges). 
+
+Our results tells us our female judges: Bell, Kiefel and Gordon are more animated than their male counterpart. The newest appointed judge Edelman is the least animated one. 
+
 ```{r}
-# need a better fct_reorder way to order Action Unit 
-ci_count %>% 
-  ggplot(aes(x = mean_agg, 
-             y = fct_reorder(judge_id, sim_mean), col = judge_id)) + 
-  geom_point() + 
-  geom_errorbarh(aes(xmin = sim_low, xmax = sim_high), col = "gray") + 
-  facet_wrap(vars(AU), scales = "free_y")
+library(broom)
+# PCA doesnt allow for judge_id and video_id, so save a copy of them, compute pca and then add the two indices back 
+summarised_mean <- au %>% 
+  select(-speaker, -frame_id) %>% 
+  group_by(judge_id, video_id) %>% 
+  summarise_all(mean, na.rm = TRUE) %>% 
+  filter(AU01_c != "NaN") # four combination have na_prop = 1
+  
+pca_data <- summarised_mean %>%   
+  ungroup() %>%
+  select(-judge_id, -video_id)
+
+pca_model <- pca_data %>%
+  nest() %>% 
+  mutate(model = map(data, ~prcomp(.x)))
+
+# vis: variance explained: top 10 PCs explains 94.5% of the variance - happy with that
+pca_model$model %>%
+  map_df(~tidy(.x, data = .y, "pcs")) %>%
+  ggplot(aes(x = PC, y = cumulative)) + 
+  geom_line() + 
+  geom_point() # 9 or 10 principal component is fine 
+
+pca_aug <- pca_model %>% 
+  mutate(pca_aug = map2(model, data, ~augment(.x, data = .y))) %>%
+  unnest(pca_aug) %>% 
+  bind_cols(summarised_mean[, 1:2]) 
+
+# PCA vis
+pca_aug %>% 
+  ggplot(aes(x = .fittedPC1, y = .fittedPC2, col = judge_id)) + 
+  geom_point()
+
+# Most important variables
+library(factoextra)
+fviz_pca_var(prcomp(pca_data),
+             col.var = "contrib", # Color by contributions to the PC
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE     # Avoid text overlapping
+             )
+pca_model$model[[1]]$rotation %>% 
+  as_tibble() %>% 
+  bind_cols(AU = colnames(pca_data)) %>% 
+  arrange(PC1, PC2) %>% 
+  select(AU, PC1, PC2)
+
+# Most animated judge
+most_animated_judge <- pca_aug %>% 
+  select(.fittedPC1: .fittedPC10) %>% 
+  as.matrix() %>% 
+  abs() %>% 
+  as.data.frame() %>% 
+  bind_cols(judge_id = pca_aug$judge_id, 
+            video_id = pca_aug$video_id) %>% 
+  group_by(judge_id) %>% 
+  summarise_all(mean) %>% # summarise into one judge per row (from one judge*video per row)
+  ungroup() %>% 
+  mutate(index = select(., .fittedPC1: .fittedPC10) %>% rowSums()) %>% 
+  select(judge_id, index) %>% 
+  arrange(desc(index))
+
+most_animated_judge
+
+most_animated_judge %>% 
+  ggplot(aes(x = fct_reorder(judge_id, desc(index)), 
+             y = index, col = index, fill = index)) + 
+  geom_bar(stat = "identity") + 
+  xlab("judge") + 
+  ggtitle("Who is the most animated judge?")
 ```
 
-Task 3. Incorporating Time dimension 
+
+
+
+
+
+# Task 3. Incorporating Time dimension 
 ```{r}
 
 # need to figure out how to arrange the graph
