@@ -33,7 +33,7 @@ mean.fun <- function(data,index){
 
 boot_sim_intensity <- function(judge){
   dt <- au %>% 
-    filter(judge_id =="Bell", AU01_r != "NA") %>% 
+    filter(judge_id ==judge, AU01_r != "NA") %>% 
     select(AU01_r: AU45_r,  judge_id : speaker) %>% 
     gather(AU, value, -c(judge_id: speaker)) %>% 
     group_by(AU) 
@@ -54,7 +54,8 @@ boot_sim_intensity <- function(judge){
   return(sim_result)
 }
 
-au_sim_bell <- boot_sim_intensity("Bell") 
+au_sim_bell <- boot_sim_intensity("Bell")
+au_sim_gordon <- boot_sim_intensity("Gordon") 
 au_sim_gordon <- boot_sim("Gordon") 
 
 
