@@ -224,21 +224,24 @@ ActionUnitbySpeaker <- function(dt, judge, case = case_list){
   
   
   
-  
+
   dt %>% 
     filter(AU01_c != "NA", judge_id == judge, 
            video_id %in% case) %>% 
     group_by(speaker, video_id) %>% 
-    dplyr::summarize_at(vars(AU01_c:AU45_c), 
+    dplyr::summarize_at(vars(
+                             AU45_c, AU09_c, AU06_c, AU17_c, AU04_c), 
                         mean, na.rm = TRUE) %>% 
     gather(AU_label, value, -c(speaker, video_id)) %>% 
     separate(AU_label, c("AU", "suffix"), by = "_") %>%
     select(-suffix) %>%
-    ggplot(aes(x = fct_reorder(AU, value), 
+    ggplot(aes(x = tidytext::reorder_within(AU, by = value,
+                                            within = video_id*speaker), 
                y = value, col = value, fill = value)) +
     geom_bar(stat = "identity") +
-    facet_grid(speaker ~ video_id, scales = "free_x")+
+    facet_grid(speaker ~ video_id, scales = "free")+
     ylab("Count") +
+    scale_x_discrete(labels = function(x) word(x, start = 1, sep = "_")) + 
     scale_y_continuous(breaks = c(0, 0.2, 0.4, 0.6, 0.8, 1)) +
     coord_flip() +
     ggtitle(sprintf("The percentage of each Action Unit appears in the face of Justices %s", judge))
