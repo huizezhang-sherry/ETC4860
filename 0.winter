@@ -8,6 +8,9 @@ The data structure we are dealing with is time series with multiple indices, whi
 |---------|---------|---------|---------|---------|----|
 
 
+fill in the matrix - it will be like the analysis of variance 
+
+
 #### MAY NOT ACTUALLY NEED AN EQUATION? 
 \begin{align}
 Y_{ijtk} = [expression to fill in]
@@ -22,7 +25,7 @@ k \text{is the index for the available action unit in this project and } k = 1, 
 \end{align}
 
 [Progression]
-  - more work on how to handle missing value: now the missings are simply removed 
+  - more work on how to handle missing value: now the missings are simply removed[MOOOOOORE WORK HERE] 
   - Generate more data from video at a rate of 10 second a frame [action after having more storage in the computer]
   - write in matrix notation [tick]
 
@@ -35,7 +38,11 @@ Notice that we would expect each judge to have their own individual characterist
 
 [Progression]
   - code is refined
-  - Todo: package the code [tick]
+  - Todo: package the code
+
+simulation result currently got is not very sucessful - the number of obs is even too small for bootstrap to work. 
+
+May try to work on the intensity data without aggregate on time, to see if there are some point where the intensity is abnormal. 
 
 
 
