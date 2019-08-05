@@ -19,12 +19,10 @@ load("raw_data/au_aggregate.rda")
 ```
 
 # Task 1: Distribution by Judge: 
-## Does the judge behave consistently across the videos? 
+## Does the judge behave consistently across the videos?
+## sAre there any abnormal moment during one video for a particular judge?
 
 Since we only have a few cases for each judge, simulation study is more suitable here. 
-```{r}
-
-```
 
 
 # Task 2:  Comparison of judges
@@ -140,7 +138,7 @@ most_animated_judge <- pca_aug %>%
   group_by(judge_id) %>% 
   summarise_all(mean) %>% # summarise into one judge per row (from one judge*video per row)
   ungroup() %>% 
-  mutate(index = select(., .fittedPC1: .fittedPC10) %>% rowSums()) %>% 
+  mutate(index = select(., .fittedPC1: .fittedPC2) %>% rowSums()) %>% 
   select(judge_id, index) %>% 
   arrange(desc(index))
 
@@ -154,9 +152,7 @@ most_animated_judge %>%
   ggtitle("Who is the most animated judge?")
 ```
 
-
-
-
+Penalsd LDA/ LASSO maybe in class variable
 
 
 # Task 3. Incorporating Time dimension 
@@ -173,13 +169,11 @@ au_sim_frame <- au %>%
 
 temp <- au_sim_frame %>% 
   filter(value != "NA", 
-         AU %in% c("AU01_r","AU02_r", 
-                   "AU05_r","AU07_r",
-                   "AU14_r","AU15_r",
-                   "AU20_r","AU25_r")) %>% 
+         AU %in% c("AU45_r", "AU09_r", "AU06_r", "AU17_r", "AU04_r"), 
+         judge_id == "Keane") %>% 
   ggplot(aes(x = frame_id, y = value,col = significant)) +
   geom_point() + 
-  facet_grid(judge_id ~ video_id*AU, scales = "free") + 
+  facet_grid(video_id~AU, scales = "free") + 
   geom_hline(aes(yintercept= sim_high), col = "gray")
 
 temp
