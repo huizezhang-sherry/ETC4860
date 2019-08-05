@@ -9,6 +9,11 @@ editor_options:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(boot)
+
+load("raw_data/au.rda")
 ```
 
 simulation for 
@@ -19,21 +24,10 @@ simulation for
 - plot errorbarplot 
 - find the points outside the error bar for each judge see outliners
 
-
-```{r}
-library(tidyverse)
-library(purrr)
-library(ggplot2)
-library(boot)
-library(forcats)
-
-load("data/court.rda")
-```
-
-```{r}
+```{r sample_size}
 count_video_sample <- function(dt){
   dt %>% 
-    filter(confidence != "NA") %>%
+    filter(AU01_r != "NA") %>%
     select(frame_id, video_id, speaker) %>% 
     group_by(video_id, speaker) %>% 
     summarise(count = n()) %>% 
@@ -45,7 +39,10 @@ count_video_sample <- function(dt){
 judge_id = list("Bell","Keane","Kiefel","Gageler","Nettle","Gordon","Edelman")
 
 df <- map(judge_id, function(judge){
-  df <- au %>% filter(judge_id == judge) %>% count_video_sample() %>% filter(Total > 10)
+  df <- au %>% 
+    filter(judge_id == judge) %>% 
+    count_video_sample() %>% 
+    filter(Total > 10)
   })
 
 names(df) <- judge_id
@@ -56,152 +53,170 @@ sample_size <- bind_rows(df,.id = "id") %>%
 
 ```
 
-
+# Simulation study 
+This markdown file contains information on the simulation study for the presence of an action unit. see `4.2.2CI_intensity` for the study on the intensity of the action unit. 
 
 ```{r}
-au <- court %>% select(AU01_c:speaker)
+# average time an action unit appears for a judge 
+au_aggregate <- au %>%
+ filter(AU01_c != "NA") %>%
+ group_by(judge_id) %>%
+ right_join(sample_size) %>%
+ summarise_at(vars(AU01_c: AU45_c), .funs = mean) %>%
+ gather(AU, mean_agg, -judge_id)
 
-au_aggregate <- au %>% 
-  filter(AU01_c != "NA") %>% 
-  group_by(judge_id) %>% 
-  right_join(sample_size) %>% 
-  summarise_at(vars(AU01_c: AU45_c), .funs = mean) %>% 
-  gather(AU, mean_agg, -judge_id) 
-  
-  
-au_video <- au %>% 
-  filter(AU01_c != "NA") %>% 
-  select(AU01_c: AU45_c, judge_id: speaker) %>% 
-  group_by(judge_id, video_id) %>% 
-  summarise_at(vars(AU01_c: AU45_c), mean) %>%
-  gather(AU, mean_ind, -judge_id, -video_id) %>% 
-  right_join(sample_size)
+save(au_aggregate, file = "raw_data/au_aggregate.rda")
 
-count <- au  %>% 
-  select(AU01_c: AU45_c, judge_id: speaker) %>% 
-  group_by(judge_id) %>% 
-  right_join(sample_size) %>%
-  summarise(count = n())
+# au_video provides more information on the average appearance of an action unit on the video level
+au_video <- au %>%
+ filter(AU01_c != "NA") %>%
+ select(AU01_c: AU45_c, judge_id: speaker) %>%
+ group_by(judge_id, video_id) %>%
+ summarise_at(vars(AU01_c: AU45_c), mean) %>%
+ gather(AU, mean_ind, -judge_id, -video_id) %>%
+ right_join(sample_size)
 
+save(au_video, file = "raw_data/au_video.rda")
+
+count <- au  %>%
+ select(AU01_c: AU45_c, judge_id: speaker) %>%
+ group_by(judge_id) %>%
+ right_join(sample_size) %>%
+ summarise(count = n())
 ```
 
+## simulation function using binomial distribution
 ```{r}
-# For majority: simulate from a binomial distribution - for Bell and Gordon, because the number of sample for each vidoe is too small so we do bootstrap interval seperately 
-
 sim_norm <- function(count, mean_true, M = 1000){
-  mean <- numeric(length = M)
-  for (i in seq_len(M)){
-    sim <- rbinom(count, 1, mean_true)
-    mean[i] <- mean(sim)
-  }
-  mean_sorted <- sort(mean)
-  sim_mean <- mean_sorted[500] # maybe try to use qnorm()
-  sim_ci_low <- mean_sorted[25]
-  sim_ci_high <- mean_sorted[975]
-  return(list(sim_mean = sim_mean,
-              sim_ci_low = sim_ci_low,
-              sim_ci_high = sim_ci_high))
+ mean <- numeric(length = M)
+ for (i in seq_len(M)){
+   sim <- rbinom(count, 1, mean_true)
+   mean[i] <- mean(sim)
+ }
+ mean_sorted <- sort(mean)
+ sim_mean <- mean_sorted[500] # maybe try to use qnorm()
+ sim_ci_low <- mean_sorted[25]
+ sim_ci_high <- mean_sorted[975]
+ return(list(sim_mean = sim_mean,
+             sim_ci_low = sim_ci_low,
+             sim_ci_high = sim_ci_high))
 }
-
-au_sim_majority <- au_aggregate %>% 
-  left_join(count) %>% 
-  filter(judge_id != "Bell", judge_id != "Gordon")
-
-temp <- map2_df(.x = au_sim_majority$count, .y = au_sim_majority$mean_agg, 
-     function(x, y) sim_norm(x, y))
-
-au_sim2_majority <- au_sim_majority %>% 
-  bind_cols(temp) %>% 
-  left_join(au_video, by = c("judge_id", "AU")) %>% 
-  ungroup() %>% 
-  mutate(outliners = as.factor(ifelse(mean_ind > sim_ci_low, 
-                                      ifelse(mean_ind < sim_ci_high, 0, 1), 1)))
-
 ```
 
-
-
-- Need bootstraping for Bell and Gordon because of sample size 
-- a lot of the action units are out of the simulation bound - what to do with them
-
-
-notes: 
-- simulation result doesnt differentiate from M = 100, 1000, 10000
-- first filtered out the video with small sample - would that be a problem for bootstrapping? 
-
+## simulation function via bootstraping 
 ```{r}
 set.seed(10000)
-
-mean.fun <- function(data,index){
-    val <-  data$value[index] 
-    return(mean(val))
+mean.fun <- function(data, index){
+  val <- data$mean_ind[index]
+  return(mean(val))
   }
 
 boot_sim <- function(judge){
-  dt <- au %>% 
-    filter(judge_id ==judge, AU01_r != "NA") %>% 
-    select(AU01_c : speaker) %>% 
-    gather(AU, value, -c(judge_id: speaker)) %>% 
-    group_by(AU) 
-  
-  sim <- map(split(dt,dt$AU), function(x){
-    boot.obj <- boot(x, mean.fun, R = 1000)
-    ci <- boot.ci(boot.obj, conf = c(0, 0.95), type = "perc")
-  })
-  
-  temp <- map_df(sim, function(x) x$percent)
-  
-  sim_result <- temp[8, ] %>% 
-    gather(AU, sim_low) %>% 
-    left_join(temp[9, ] %>% gather(AU, sim_mean)) %>% 
-    left_join(temp[10, ] %>% gather(AU, sim_high)) 
-  
  
-  return(sim_result)
+  dt <- au %>%
+   filter(judge_id == judge, AU01_r != "NA") %>%
+   select(AU01_c : speaker) %>%
+   gather(AU, value, -c(judge_id: speaker)) %>%
+   group_by(AU)
+    
+ sim <- map(split(dt,dt$AU), function(x){
+   boot_obj <- boot(x, mean.fun, R = 1000)
+   ci <- boot.ci(boot_obj, conf = c(0, 0.95), type = "perc")
+ })
+ 
+ temp <- map_df(sim, function(x) x$percent)
+ 
+ sim_result <- temp[8, ] %>% gather(AU, sim_low) %>%
+   left_join(temp[9, ] %>% gather(AU, sim_mean)) %>%
+   left_join(temp[10, ] %>% gather(AU, sim_high))
+ 
+ return(sim_result)
 }
 
 
-# half binomial and half bootstrapping 
-au_sim_bell <- boot_sim("Bell") 
-au_sim_gordon <- boot_sim("Gordon") 
-au_sim_bind <- bind_rows(au_sim_bell, au_sim_gordon)
+# nobody looks like an outliner before aggregated by time 
+abnormal_detection <- function(data,index){
+   val <-  data$mean_ind[index]
+   t = mean(val)
+   val_sub <- val[-which.max(val)]
+   tm = mean(val_sub)
+   return(t-tm)
+ }
+x <- au_video %>% filter( AU == "AU01_c", judge_id == "Keane")
+boot_obj <- boot(x, abnormal_detection, R = 1000)
+a <- boot_obj$t %>% as_tibble()
+a %>% ggplot(aes(x = V1)) + 
+  geom_histogram()
+boot_obj$t %>% hist()
 
-au_sim_both <- au_aggregate %>% 
-  left_join(count) %>% 
-  filter(judge_id == "Bell"| judge_id == "Gordon")
-
-
-au_sim2_both <- au_sim_both %>% 
-  left_join(au_sim_bind, by = c("judge_id", "AU")) %>%
-  left_join(au_video, by = c("judge_id", "AU")) %>% 
-  ungroup() %>% 
-  mutate(outliners = as.factor(ifelse(mean_ind > sim_ci_low, 
-                                      ifelse(mean_ind < sim_ci_high, 0, 1), 1)))
-
-au_sim2 <- bind_rows(au_sim2_majority, au_sim2_both)
-
-# nto sure why fct_reorder doesnt work 
-# au_sim2 %>%
-#   mutate(AU = as.factor(AU)) %>% 
-#   ggplot(aes(mean_agg, fct_reorder(AU, value))) + 
-#   geom_errorbarh(aes(xmin = sim_ci_low, xmax = sim_ci_high), col = "gray") + 
-#   facet_wrap(vars(judge_id)) + 
-#   geom_point(aes(x = mean_ind, y = AU, col = outliners))
-
-p1 <- au_sim2 %>%
-  mutate(AU = as.factor(AU)) %>% 
-  ggplot(aes(mean_agg, AU, value)) + 
-  geom_errorbarh(aes(xmin = sim_ci_low, xmax = sim_ci_high), col = "gray") + 
-  facet_wrap(vars(judge_id)) + 
-  geom_point(aes(x = mean_ind, y = AU, col = outliners))
 ```
 
 
 
+
+### simulation using a combination of binomial distribution and bootstraping
+
+It seems that the simulation from the two methods are not consistent - bootstraping has much wider confidence interval 
+```{r eval = FALSE}
+# For majority: simulate from a binomial distribution - for Bell and Gordon, because e number of sample for each vidoe is too small so we do bootstrap interval seperately
+
+au_sim_majority <- au_aggregate %>%
+ left_join(count) %>%
+ filter(judge_id != "Bell", judge_id != "Gordon")
+
+temp <- map2_df(.x = au_sim_majority$count, .y = au_sim_majority$mean_agg,
+    function(x, y) sim_norm(x, y))
+
+au_sim2_majority <- au_sim_majority %>%
+ bind_cols(temp) %>%
+ left_join(au_video, by = c("judge_id", "AU")) %>%
+ ungroup() %>%
+ mutate(outliners = as.factor(ifelse(mean_ind > sim_ci_low,
+                                     ifelse(mean_ind < sim_ci_high, 0, 1), 1)))
+# half binomial and half bootstrapping
+au_sim_bell <- boot_sim("Bell")
+au_sim_gordon <- boot_sim("Gordon")
+au_sim_bind <- bind_rows(au_sim_bell, au_sim_gordon)
+au_sim_both <- au_aggregate %>%
+ left_join(count) %>%
+ filter(judge_id == "Bell"| judge_id == "Gordon")
+au_sim2_both <- au_sim_both %>%
+ left_join(au_sim_bind, by = c("judge_id", "AU")) %>%
+ left_join(au_video, by = c("judge_id", "AU")) %>%
+ ungroup() %>%
+ mutate(outliners = as.factor(ifelse(mean_ind > sim_ci_low,
+                                     ifelse(mean_ind < sim_ci_high, 0, 1), 1)))
+au_sim2 <- bind_rows(au_sim2_majority, au_sim2_both)
+# nto sure why fct_reorder doesnt work
+# au_sim2 %>%
+#   mutate(AU = as.factor(AU)) %>%
+#   ggplot(aes(mean_agg, fct_reorder(AU, value))) +
+#   geom_errorbarh(aes(xmin = sim_ci_low, xmax = sim_ci_high), col = "gray") +
+#   facet_wrap(vars(judge_id)) +
+#   geom_point(aes(x = mean_ind, y = AU, col = outliners))
+p1 <- au_sim2 %>%
+ mutate(AU = as.factor(AU)) %>%
+ ggplot(aes(mean_agg, AU, value)) +
+ geom_errorbarh(aes(xmin = sim_ci_low, xmax = sim_ci_high), col = "gray") +
+ facet_wrap(vars(judge_id)) +
+ geom_point(aes(x = mean_ind, y = AU, col = outliners))
+
+```
+
+- Need bootstraping for Bell and Gordon because of sample size
+- a lot of the action units are out of the simulation bound - what to do with them
+notes:
+- simulation result doesnt differentiate from M = 100, 1000, 10000
+- first filtered out the video with small sample - would that be a problem for otstrapping?
+
+# Simulation all using bootstrap
+
+
 ```{r}
-# method 2: all using bootstrap
 sim_result<- map_df(.x = judge_id, 
                     ~boot_sim(.x) %>% mutate(judge_id = .x))
+
+save(sim_result, file = "raw_data/sim_result.rda")
 
 ci_count <- au_aggregate %>% 
   left_join(count) %>% 
@@ -213,9 +228,11 @@ ci_count <- au_aggregate %>%
 
 save(ci_count,file = "raw_data/ci_count.rda")
 
-ci_count %>%
+load("raw_data/ci_count.rda")
+
+p2 <- ci_count %>%
   mutate(AU = as.factor(AU)) %>% 
-  ggplot(aes(mean_agg, fct_reorder(AU,mean_ind, median))) + 
+  ggplot(aes(mean_agg, AU)) + 
   geom_errorbarh(aes(xmin = sim_low, xmax = sim_high), col = "gray") + 
   facet_wrap(vars(judge_id)) + 
   geom_point(aes(x = mean_ind, y = AU, col = outliners))
@@ -238,4 +255,54 @@ outliners %>%
 
 - get this bootstrap done TICK
 - understand more about Di's thinking of modelling to deal with structural break 
+
+
+
+# Outlinear detection - Anomaly detection 
+
+```{r}
+library(broom)
+
+by_index <- au %>%
+ filter(AU01_c != "NA") %>%
+ select(AU01_c: AU45_c, judge_id: speaker) %>%
+ group_by(judge_id, video_id) %>%
+ summarise_at(vars(AU01_c: AU45_c), mean) %>% 
+ gather(AU, mean_ind, -judge_id, -video_id) %>%
+  group_by(judge_id, AU) %>% 
+  nest()
+  
+anomaly_detection <- function(data,index){
+   val <-  data$mean_ind[index]
+   t = mean(val)
+   val_sub <- val[-which.max(val)]
+   tm = mean(val_sub)
+   return(t-tm)
+ }
+  
+model <- by_index %>% 
+  mutate(bootstrap = map(data, ~boot(.x, anomaly_detection, R= 10000))) %>% 
+  mutate(t = map(bootstrap, ~.x$t))
+  
+anomaly_result <- data.frame(matrix(unlist(model$t), nrow=length(model$t), byrow=T)) %>% 
+  mutate(AU = by_index$AU, judge_id = by_index$judge_id) %>% 
+  gather(t_n, value, -c(AU, judge_id))
+
+Keane <- anomaly_result %>% 
+  filter(judge_id == "Keane") %>% 
+  ggplot(aes(x = value)) +
+  geom_density() + # bins = 3 works
+  facet_wrap(vars(AU), scales = "free")
+
+Keane
+
+
+a <- anomaly_result %>% filter(judge_id == "Keane", t_n == "X1") 
+a$value %>% hist()
+```
+
+
+
+
+
 
