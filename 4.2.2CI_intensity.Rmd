@@ -18,7 +18,8 @@ library(ggplot2)
 library(boot)
 library(forcats)
 
-load("data/court.rda")
+load("raw_data/court.rda")
+load("raw_data/au.rda")
 ```
 
 
@@ -56,7 +57,7 @@ boot_sim_intensity <- function(judge){
 
 au_sim_bell <- boot_sim_intensity("Bell")
 au_sim_gordon <- boot_sim_intensity("Gordon") 
-au_sim_gordon <- boot_sim("Gordon") 
+au_sim_gordon <- boot_sim_intensity("Gordon") 
 
 
 judge_id = list("Bell","Keane","Kiefel","Gageler","Nettle","Gordon","Edelman")
@@ -103,7 +104,51 @@ ci_intensity <- au_aggregate_int %>%
 
 save(ci_intensity, file = "raw_data/ci_intensity.rda")
 
+ci_count %>%
+  mutate(AU = as.factor(AU)) %>% 
+  ggplot(aes(mean_agg, AU)) + 
+  geom_errorbarh(aes(xmin = sim_low, xmax = sim_high), col = "gray") + 
+  facet_wrap(vars(judge_id)) + 
+  geom_point(aes(x = mean_ind, y = AU, col = outliners))
+
 ```
 
+```{r}
+
+by_index <- au %>%
+ filter(AU01_r != "NA") %>%
+ select(AU01_r: AU45_r, judge_id: speaker) %>%
+ gather(AU, value, -judge_id, -video_id) %>%
+  group_by(judge_id, AU, video_id) %>% 
+  nest()
+  
+anomaly_detection <- function(data,index){
+   val <-  data$value[index]
+   t = mean(val)
+   val_sub <- val[-which.max(val)]
+   tm = mean(val_sub)
+   return(t-tm)
+ }
+  
+model <- by_index %>% 
+  mutate(bootstrap = map(data, ~boot(.x, anomaly_detection, R= 100))) %>% 
+  mutate(t = map(bootstrap, ~.x$t))
+  
+anomaly_result <- data.frame(matrix(unlist(model$t), nrow=length(model$t), byrow=T)) %>% 
+  mutate(AU = by_index$AU, judge_id = by_index$judge_id) %>% 
+  gather(t_n, value, -c(AU, judge_id))
+
+Keane <- anomaly_result %>% 
+  filter(judge_id == "Keane") %>% 
+  ggplot(aes(x = value)) +
+  geom_density() + # bins = 3 works
+  facet_wrap(vars(AU), scales = "free")
+
+Keane
+
+
+a <- anomaly_result %>% filter(judge_id == "Keane", t_n == "X1") 
+a$value %>% hist()
+```
 
 
