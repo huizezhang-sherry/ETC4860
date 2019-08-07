@@ -23,7 +23,7 @@ load("raw_data/au.rda")
 
 
 # Data structure
-jhkhkjh 
+
 
 <!-- \begin{align} -->
 <!-- Y_{ijtk} &= \mu + \alpha_i + \beta_j + \gamma_t + \delta_k + CP_2(\alpha_i, \beta_j, \gamma_t, \delta_k) + CP_3(\alpha_i, \beta_j, \gamma_t, \delta_k) \\ -->
@@ -34,15 +34,14 @@ jhkhkjh
 <!-- k &\text{ is the index for the available action unit in this project and } k = 1, 2, \cdots, K \\ -->
 <!-- CP_2 & \text{ is the all possible interaction of the two variables}\\ -->
 <!-- CP_3 & \text{ is the all possible interaction of the three variables} -->
-
 <!-- \end{align} -->
 
-thisithis i
 
 
-# Action Unit across judge
 
-Apart from understand how each judge behave consistently or not across all the video, we are also interested in comparing *across* all the judges to study who would appear more animated than others. In this piece of analysis we perform a principle component analysis (PCA) on the whole dataset with the time index being aggregated for each judge and video pair. Mathmetically, the data structure can be summarised as follows. 
+# Action Unit across the Justices
+
+Apart from understand how each Justice behaves consistently or not across all the videos, we are also interested in comparing *across* all the Justices to study who are more animated than others during the hearings. In this piece of analysis we perform a principle component analysis (PCA) on two set of variables. Variables in the form of `AU**_r` represents the intensity of each AU, which takes value from 0 to 5. The other set of variable: `AU**_c` represents the binary presence or not of each AU. Time index is averaged for each judge and video pair and mathmetically, it can be summarised as follows. 
 
 \begin{align}
 \begin{bmatrix}
@@ -57,18 +56,15 @@ x_{I,J,\bar{t},1} & x_{I,J,\bar{t},2} & \cdots & x_{I,J,\bar{t},K}
 \end{align}
 
 ## Result 
-The scree plot in Figure \ref{fig:pca_vis} shows that the cummulated variance explained by each prinicple component increase gradually, which suggests the data has a lot of noise. The variable plot in Figure \ref{fig:pca_impt} indicates some important variables that can be summarised into the following table. 
+The scree plot and variable plot are shown in Figure \ref{fig:pca_var_explained} and \ref{fig:pca_impt} repsectively. The variable plot presents the loading of each variable in the first two components. The important variables are the ones with large loadings in the absoluate value and have been summarised into the following table. Visualisation of the first two fitted PCs can be found in Figure \ref{fig:pca_vis}. It shows that the Justices Nettle and Kiefel has high projection on the first principle component and Justices Bell has high projection on the second principle component. 
 
-|PC#|Variables|
-|---|----------|
-|PC1|AU06, AU09, AU17, AU45, AU05|
-|PC2|AU04, AU05, AU06, AU09, AU17, AU25|
-
-
-Visualisation of the first two PCs can be found in Figure \ref{fig:pca_vis}. It shows that the Justices Nettle and Kiefel has high projection on the first principle component and Justices Bell has high projection on the second principle component. 
+|PC#| Presence  |Intensity|
+|---|----------|----------|
+|PC1|AU05_c, AU45_c|AU06_r, AU09_r,AU17_r, AU45_r|
+|PC2|AU05_c, AU09_c,AU25_c|AU04_r, AU06_r, AU09_r, AU17_r|
 
 ### Who is the most animated judge
-The PCA study can help us to answer the following question: Who is the most animated judge? Since PCs are linear combination of the original variables, @chao2017principal proposed to take the absolute value of the fitted PCs and add them up to create an index to measure [fill in here]. In this study, the first two PCs are added up to determine the most animated judge and find that [concluson]
+The PCA study can help us to answer the following question: Who is the most animated judge? Since PCs are linear combination of the original variables, @chao2017principal proposed to take the absolute value of the fitted PCs and compute the sum to create an index. In this study, the first two fitted PCs are summed to determine the most animated judge and I find that Justices Bell is the most animated, then followed by the Chief Justices Kiefel and Justices Nettle. Edelman and Keane are the most nutural Justices. 
 
 \newpage
 
@@ -90,7 +86,7 @@ pca_model <- pca_data %>%
   mutate(model = map(data, ~prcomp(.x)))
 ```
 
-```{r pca_scree, echo = FALSE, fig.height=4, fig.width=5, fig.align="center", fig.cap="Scree plot for cummulative variance explained by the PCs.\\label{fig:pca_vis}"}
+```{r pca_scree, echo = FALSE, fig.height=4, fig.width=5, fig.align="center", fig.cap="Scree plot for cummulative variance explained by the PCs.\\label{fig:pca_var_explained}"}
 # vis: variance explained: top 10 PCs explains 94.5% of the variance - happy with that
 pca_model$model %>%
   map_df(~tidy(.x, data = .y, "pcs")) %>%
@@ -104,7 +100,7 @@ pca_aug <- pca_model %>%
   bind_cols(summarised_mean[, 1:2]) 
 ```
 
-```{r pca_impt, echo = FALSE, fig.height = 4, fig.width=5, fig.align="center", fig.cap = "Visualisation of the variable importance in the first two PCs.\\label{fig: pca_impt}"}
+```{r pca_impt, echo = FALSE, fig.height = 4, fig.width=5, fig.align="center", fig.cap = "Visualisation of the variable importance in the first two PCs.\\label{fig:pca_impt}"}
 # Most important variables
 library(factoextra)
 fviz_pca_var(prcomp(pca_data),
