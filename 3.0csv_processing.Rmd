@@ -459,7 +459,9 @@ load("raw_data/Rinehart_b.rda")
 court <- rbind(nauru_a, nauru_b, McKell, OKS, Parkes, Rinehart_a, Rinehart_b)
 save(court, file = "raw_data/court.rda")
 
-au <- court %>% select(AU01_r:speaker)
+au <- court %>% 
+  select(AU01_r:speaker)%>% 
+  as_tsibble(index = frame_id, key = c(judge_id, video_id))
 save(au, file = "raw_data/au.rda")
 
 ```
