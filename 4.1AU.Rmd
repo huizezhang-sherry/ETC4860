@@ -19,36 +19,42 @@ load("raw_data/au.rda")
 
 ```
 
-Missingness that depends on unobserved predictors. 
 
-The missings in our case depends on other unobserved variables. For example, the missingness could be due to the fact that a judge is reading the materials on the desk or simply because some faces are not detectable due to the given resolution of the video stream. 
+# Missing treatment
 
-
-<!-- Because the frames are taken once per minute, we could assume independence among observations, that is, the last observation won't affect the current observation as opposed to the case where the frames are taken once every three seconds.  -->
-
-
-I think we still have dependences in our data or we will be able to switch between observation from observation - although the autocorrelation of the series is low because we take frame once per minute. 
+The missing mechanism in our case is a unit-level missing. It depends on other unobserved variables. For example, the missingness could be due to the fact that a judge is reading the materials on the desk so the face is not captured for a particular frame or simply because some faces are not detectable for the given resolution of the video stream. However, since that data is in time series structure, simply drop the missing observation will cause the time interval to be irregular and complicate further analysis. Thus proper imputation method is needed. Because there is no obvious trend or seasonality in each action unit series, imputation method using time series model will not be suitable in our case. Therefore, we choose the linear interpolation from forecast package to impute the missing value for each action unit. Notice that `na.interp` requires at least two non-NA points in a series, we drop 4 video-judge pairs that have `na_proportion =1`, namely (OKS, Gordon), (Parkes, Gordon), (Rinehart_b, Gordon) and (Rinehart_b, Kiefel). 
 
 ```{r}
-vis_miss(au)
-
-library(tsibble)
-
-au %>% filter(video_id %in% c("McKell", "OKS", "Parkes")) %>% 
-  mutate(AU01_c = ifelse(is.na(AU01_c), 5, AU01_c)) %>% 
-  autoplot(AU01_r) + 
-  facet_grid(judge_id~ video_id)
-
 au %>% 
-  mutate(AU01_r = ifelse(is.na(AU01_r), 5, AU01_r)) %>% 
-  autoplot(AU01_r) +
-  facet_grid(judge_id~ video_id, scales = "free") + 
-  theme(legend.position = "none")
+  as_tibble() %>% 
+  select(judge_id, frame_id, video_id, AU01_r) %>% 
+  mutate(judge_id = as.factor(judge_id)) %>% 
+  group_by(video_id, judge_id) %>% 
+  summarise(na_count = sum(is.na(AU01_r)), 
+            count = n(),
+            na_prop = na_count/count, 
+            data_prop = 1-na_prop) %>% 
+  arrange(-na_prop) # some cases have na_prop ==1 - can't perform linear interp
 
-au_subset <- au %>% 
-  filter(judge_id == "Keane", video_id == "McKell") 
+library(forecast)
+au_imputed <- au %>% 
+  filter(judge_id %in% c("Keane", "Nettle", "Edelman", "Gageler", "Bell")|
+           (judge_id == "Kiefel" & video_id != "Rinehart_b")) %>% 
+  select(-speaker) %>% 
+  gather(AU, value, -c(judge_id: video_id)) %>% 
+  group_by(judge_id, video_id, AU) %>% 
+  nest() %>% 
+  mutate(interp = map(data, 
+                      ~.x %>% pull(value) %>% na.interp)) %>% 
+  select(-data) %>% 
+  unnest() %>% 
+  group_by(AU) %>% 
+  mutate(frame_id = row_number()) %>% 
+  spread(AU, interp)
 
-forecast::na.interp(au_subset$AU01_r) %>% 
+save(au_imputed, file = "raw_data/au_imputed.rda")  
+
+
 
 ```
 
