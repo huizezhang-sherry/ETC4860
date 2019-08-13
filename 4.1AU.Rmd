@@ -24,10 +24,12 @@ load("raw_data/au.rda")
 
 The missing mechanism in our case is a unit-level missing as the missingness depends on other unobservables. For example, the missingness could be due to the fact that a judge is reading the materials on the desk so the face is not captured for a particular frame or simply because some faces are not detectable for the given resolution of the video stream. However, since that data is in time series structure, simply drop the missing observation will cause the time interval to be irregular and complicate further analysis. Thus proper imputation method is needed. Because there is no obvious trend or seasonality in each action unit series, imputation methods using time series models will not be suitable in our case. Therefore, we choose the linear interpolation(`na.interp`) from the `forecast` package to impute the missing value for each action unit. Notice that the funtion requires at least two non-NA points in a series, we drop 4 video-judge pairs where no data is available for a particular judge in a particular case, namely (OKS, Gordon), (Parkes, Gordon), (Rinehart_b, Gordon) and (Rinehart_b, Kiefel). 
 
+We simply drop Judge Gordon - only one video case. 
+
 ```{r}
 au %>% 
   as_tibble() %>% 
-  select(judge_id, frame_id, video_id, AU01_r) %>% 
+  select(judge_id, frame_id, video_id, speaker, AU01_r) %>% 
   mutate(judge_id = as.factor(judge_id)) %>% 
   group_by(video_id, judge_id) %>% 
   summarise(na_count = sum(is.na(AU01_r)), 
@@ -40,17 +42,17 @@ library(forecast)
 au_imputed <- au %>% 
   filter(judge_id %in% c("Keane", "Nettle", "Edelman", "Gageler", "Bell")|
            (judge_id == "Kiefel" & video_id != "Rinehart_b")) %>% 
-  select(-speaker) %>% 
-  gather(AU, value, -c(judge_id: video_id)) %>% 
+  gather(AU, value, -c(judge_id: speaker)) %>% 
   group_by(judge_id, video_id, AU) %>% 
   nest() %>% 
   mutate(interp = map(data, 
                       ~.x %>% pull(value) %>% na.interp)) %>% 
-  select(-data) %>% 
+  select(judge_id, video_id, AU, interp) %>% 
   unnest() %>% 
-  group_by(AU) %>% 
-  mutate(frame_id = row_number()) %>% 
-  spread(AU, interp)
+  group_by(judge_id, video_id, AU) %>%
+  mutate(frame_id = row_number()) %>% # add back frame_id as index
+  spread(AU, interp) %>% 
+  left_join(au %>% select(judge_id: speaker)) # add back speaker column
 
 save(au_imputed, file = "raw_data/au_imputed.rda")  
 
