@@ -10,101 +10,93 @@ editor_options:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
-library(purrr)
 library(tidyverse)
-library(ggplot2)
 library(visdat)
 library(gridExtra)
+
+load("raw_data/court.rda")
+load("raw_data/au.rda")
 ```
 
-```{r}
-load("raw_data/court.rda")
-
-court_miss <- court %>% 
+```{r missing_summary}
+missing <- court %>% 
   select(judge_id, frame_id, video_id, x_1) %>% 
-  mutate(judge_id = as.factor(judge_id))
-  
-missing <- court_miss %>% 
+  mutate(judge_id = as.factor(judge_id)) %>% 
   group_by(video_id, judge_id) %>% 
   summarise(na_count = sum(is.na(x_1)), 
             count = n(),
             na_prop = na_count/count, 
             data_prop = 1-na_prop)
 
-#kiefel: key-fall
-judge_name <- c("Nettle", "Gageler", "Edelman", 
-                "Nettle", "Gageler", "Edelman", 
-                "Gordon", "Gageler", "Bell", "Keane", "Edelman",
-                "Gordon", "Keane", "Bell", "Gageler", "Edelman",
-                "Gordon", "Bell", "Kiefel", "Keane", "Edelman",
-                "Gordon", "Gageler", "Kiefel", "Nettle", "Edelman",
-                "Gordon", "Gageler", "Kiefel", "Nettle", "Edelman")
-
-missing <- data.frame(missing) %>% mutate(name = judge_name)
-
-# McKell2 <- McKell %>% filter(judge_id != "Bell")
-# OKS2 <- OKS %>% filter(judge_id %in% c("Keane","Edelman"))
-# Parkes2 <- Parkes %>% filter(judge_id =="Keane")
-# Rinehart_a2 <- Rinehart_a %>% filter(judge_id %in% c("Gageler","Edelman"))
-# Rinehart_b2 <- Rinehart_b %>% filter(judge_id %in% c("Gageler","Edelman"))
-# 
-# court <- rbind(nauru_a, nauru_b, McKell2, OKS2, Parkes2, Rinehart_a2, Rinehart_b2)  
-#
-#save(court, file = "data/court.rda")  
-
-
+# Missing proportion table
+missing
 ```
 
-
-# vis_dat: x: t y: judge, 7 plots for 7 videos 
-predict based on the nubmer of interupt
-
-label with outcome: hold/ not hold
-
 ```{r}
-videos <- list("Nauru_a", "Nauru_b", "McKell", "OKS", "Parkes","Rinehart_a", "Rinehart_b")
-names <- map(videos, ~court %>% filter(video_id == .x) %>% select(judge_id) %>% unique())
-
-missingplot <- map2(videos,names, function(videos,names){
-  court_video <- court %>% filter(video_id == videos)
-  map(names, function(names){
-    map(names, ~ court_video %>% 
-          filter(judge_id == .x) %>% select(x_1))})
-})
-
-names(missingplot) <- videos
-
-suppressMessages({
- temp<- map2(missingplot,names, function(x,name){
-  x <- x[[1]]
-  df <- as.data.frame(x)
-  names(df) <- name[[1]]
-  df %>% vis_miss() + 
-    coord_flip() + 
-    scale_fill_brewer(name = "", labels =c("Present", "Missing"))
-})
- 
-})
-
-names(temp) <- videos
+# videos <- list("Nauru_a", "Nauru_b", "McKell", "OKS", "Parkes","Rinehart_a", "Rinehart_b")
+# names <- map(videos, ~court %>% filter(video_id == .x) %>% select(judge_id) %>% unique())
+# 
+# missingplot <- map2(videos,names, function(videos,names){
+#   court_video <- court %>% filter(video_id == videos)
+#   map(names, function(names){
+#     map(names, ~ court_video %>% 
+#           filter(judge_id == .x) %>% select(x_1))})
+# })
+# 
+# names(missingplot) <- videos
+# 
+# suppressMessages({
+#  temp<- map2(missingplot,names, function(x,name){
+#   x <- x[[1]]
+#   df <- as.data.frame(x)
+#   names(df) <- name[[1]]
+#   df %>% vis_miss() + 
+#     coord_flip() + 
+#     scale_fill_brewer(name = "", labels =c("Present", "Missing"))
+# })
+#  
+# })
+# 
+# names(temp) <- videos
+# 
+# grid.arrange(arrangeGrob(temp[[1]], top = videos[[1]]),
+#              arrangeGrob(temp[[2]], top = videos[[2]]))
+# 
+# grid.arrange(arrangeGrob(temp[[6]], top = videos[[6]]),
+#              arrangeGrob(temp[[7]], top = videos[[7]]))
+# 
+# grid.arrange(arrangeGrob(temp[[3]], top = videos[[3]]),
+#              arrangeGrob(temp[[4]], top = videos[[4]]))
+# 
+# grid.arrange(arrangeGrob(temp[[5]], top = videos[[5]]), nrow =2)
 
 ```
   
-```{r echo = FALSE}
-grid.arrange(arrangeGrob(temp[[1]], top = videos[[1]]),
-             arrangeGrob(temp[[2]], top = videos[[2]]))
+# Missing Imputation
 
-grid.arrange(arrangeGrob(temp[[6]], top = videos[[6]]),
-             arrangeGrob(temp[[7]], top = videos[[7]]))
+The missing mechanism in our case is a unit-level missing as the missingness depends on other unobservables. For example, the missingness could be due to the fact that a judge is reading the materials on the desk so the face is not captured for a particular frame or simply because some faces are not detectable for the given resolution of the video stream. However, since that data is in time series structure, simply drop the missing observation will cause the time interval to be irregular and complicate further analysis. Thus proper imputation method is needed. Because there is no obvious trend or seasonality in each action unit series, imputation methods using time series models will not be suitable in our case. Therefore, we choose the linear interpolation(`na.interp`) from the `forecast` package to impute the missing value for each action unit. Notice that the funtion requires at least two non-NA points in a series, we drop 4 video-judge pairs where no data is available for a particular judge in a particular case, namely (OKS, Gordon), (Parkes, Gordon), (Rinehart_b, Gordon) and (Rinehart_b, Kiefel). 
 
-grid.arrange(arrangeGrob(temp[[3]], top = videos[[3]]),
-             arrangeGrob(temp[[4]], top = videos[[4]]))
+We simply drop Judge Gordon - only one video case. 
 
-grid.arrange(arrangeGrob(temp[[5]], top = videos[[5]]), nrow =2)
+```{r missing_imputation}
+au_imputed <- au %>% 
+  filter(judge_id %in% c("Keane", "Nettle", "Edelman", "Gageler", "Bell")|
+           (judge_id == "Kiefel" & video_id != "Rinehart_b")) %>% 
+  gather(AU, value, -c(judge_id: speaker)) %>% 
+  group_by(judge_id, video_id, AU) %>% 
+  nest() %>% 
+  mutate(interp = map(data, 
+                      ~.x %>% pull(value) %>% na.interp)) %>% 
+  select(judge_id, video_id, AU, interp) %>% 
+  unnest() %>% 
+  group_by(judge_id, video_id, AU) %>%
+  mutate(frame_id = row_number()) %>% # add back frame_id as index
+  spread(AU, interp) %>% 
+  left_join(au %>% select(judge_id: speaker)) # add back speaker column
 
+save(au_imputed, file = "raw_data/au_imputed.rda")  
 
-
-library(cowplot)
-cowplot:plot_grid(p1, p2, labels = c("",""))
 ```
+
+
 
