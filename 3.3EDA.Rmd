@@ -9,31 +9,27 @@ editor_options:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(purrr)
+
 library(tidyverse)
-library(ggplot2)
 library(GGally)
 library(gganimate)
 ```
 
 # Loading data
 ```{r}
-load("data/court.rda")
+load("raw_data/court.rda")
 ```
 
 # Confidence 
 ```{r}
-ggplot(subset(court, video_id %in% c("nauru-a", "nauru-b")), 
+ggplot(subset(court, video_id %in% c("Nauru_a", "Nauru_b")), 
        aes(x = confidence)) + 
   geom_histogram(binwidth = 0.1) + 
   facet_grid(judge_id~video_id)
-ggsave("conf_nauru.png", path = "images/")
-
 
 ggplot(court, aes(x = confidence)) + 
   geom_histogram(binwidth = 0.1) + 
   facet_grid(judge_id~video_id)
-ggsave("conf_all.png", path = "images/")
 ```
 
 # Gaze
@@ -62,7 +58,7 @@ save("gaze_all.png", device = "png", path = "images/")
 comparing with their normal - deviation 
 invidual difference: Edelman - ususally - deviation from usual - facet by appellant/respondent 
 
-nubmer of questions asked by the judge
+number of questions asked by the judge
 the change hand fo appellant/ respondent 
 
 paper: PNAS: they make decision based on if it is before lunch 
