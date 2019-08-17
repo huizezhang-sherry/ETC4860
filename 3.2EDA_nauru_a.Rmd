@@ -10,9 +10,7 @@ editor_options:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
-library(purrr)
 library(tidyverse)
-library(ggplot2)
 library(GGally)
 library(gganimate)
 library(naniar)
@@ -24,7 +22,8 @@ library(visdat)
 - combined multiple csvs into one and add entries for missing record (1, 2, 64)
 
 ```{r eval = FALSE}
-load("data/nauru_a.rda")
+load("raw_data/nauru_a.rda")
+load("raw_data/court.rda")
 ```
 
 # EDA
@@ -43,19 +42,15 @@ Our judge: Justice Nettle, Justice Gageler, Justice Edelman
 ```{r}
 ggplot(nauru_a, aes(x= confidence, col = judge_id, fill = judge_id)) +
   geom_histogram(binwidth = 0.1) + 
-  facet_wrap(~judge_id)
-ggsave("confidence.png", path = "images/")
+  facet_wrap(vars(judge_id))
 
-ggplot(subset(court, video_id %in% c("nauru-a", "nauru-b")), aes(x = confidence)) + 
+ggplot(subset(court, video_id %in% c("Nauru_a", "Nauru_b")), aes(x = confidence)) + 
   geom_histogram(binwidth = 0.1) + 
   facet_grid(judge_id~video_id)
-ggsave()
-
 
 ggplot(court, aes(x = confidence)) + 
   geom_histogram(binwidth = 0.1) + 
   facet_grid(judge_id~video_id)
-ggsave()
 
 nauru_a %>% filter(confidence >=0.9) %>% group_by(judge_id) %>% summarise(
   count = n(), 
@@ -70,8 +65,6 @@ ggplot(nauru_a) +
   geom_line(aes(x = frame_id, y = confidence)) + 
   facet_wrap(~judge_id, ncol = 1) + 
   scale_x_continuous(limits = c(0, 150), breaks = seq(0, 150, 10))
-
-
 ```
 
 Very wiggly at around frame 20-35, frame 85-90, frame 115-120, frame 140-150. May want to read the transcript to see if there's any pattern for this concentrated ups-and-downs. 
@@ -79,7 +72,7 @@ Very wiggly at around frame 20-35, frame 85-90, frame 115-120, frame 140-150. Ma
 ## Gaze variables 
 
 - Gaze tracking: the vector from your pupil to corneal reflection. A bit of physio: When the light comes into your eye, you will have an relection from your outer and inner surface of your corneal and len. THe corneal relection used for gaze tracking is the reflection from the outer surface of the corneal.  
-- `gaze_0_*` are for left eyes and `gaze_1_*` are for the right eyess
+- `gaze_0_*` are for left eyes and `gaze_1_*` are for the right eyes
 
 ```{r eval =FALSE}
 # statics 
@@ -88,7 +81,7 @@ p1_statics <- ggplot(nauru_a,
   geom_point() + 
   facet_wrap(~judge_id, nrow = 3) + 
   theme(legend.position = "none")
-ggsave("gaze.png", path = "images/")
+
 p2_statics <- ggplot(nauru_a, 
              aes(x=gaze_1_x, y=gaze_1_y, colour=judge_id)) + 
   geom_point() +
@@ -164,7 +157,7 @@ There's also not much different for the more confident and less confident points
 
 - Reflection: animation could be a good way to visualise data, especially for related high-dimensional data
 
-- very similar to the result from 
+- very similar to the result from gaze
 ```{r}
 scatmat(high_conf, columns = 3:5)
 
@@ -181,15 +174,13 @@ pose <- ggplot(temp1) +
 
 pose
 
-  
 pose +
   transition_reveal(frame_id) + 
   shadow_wake(wake_length = 0.5)
 
-ggsave("position.png", path = "images/")  
 ```
 
-# face landmarking
+# Face landmarking
 
 - play around more with the animation for best visual result 
 
@@ -208,8 +199,6 @@ ggplot(subset(face2, judge_id == "Nettle"), aes(x= x, y = y)) +
   geom_point()
 
 ```
-
-
 
 ```{r eyebrow}
 eyebrow <- nauru_a %>% 
@@ -240,11 +229,7 @@ ggplot(eyebrow2) +
   transition_components(as.numeric(label)) + 
   shadow_wake(wake_length = 0.5)
 
-anim_save("eyebrow.mp4", path = "animation/")
 ```
-
-
-
 
 ```{r lip}
 lips <- nauru_a %>% 
@@ -269,11 +254,11 @@ ggplot(lip2) +
   geom_point(aes(x = x, y= y)) + 
   facet_wrap(~judge_id) +
   transition_states(frame_id)
-
-anim_save("lip.mp4", path = "animation/")  
 ```
 
 ```{r}
+load("raw_data/Rinehart_b_video.rda")
+
 rb <- rinehart_b_video %>% select(timestamp, X_17: X_26,Y_17: Y_26)
 temp <- rb %>% gather(metrics, value, -c(timestamp)) %>% 
   separate(metrics, c("cord", "label")) %>% 
@@ -303,9 +288,6 @@ g <- ggplot(subset(b, between(label, 17, 26))) +
   geom_point(aes(x= X, y =-Y, group = label)) +
   transition_components(id)
 gganimate::animate(g)
-ggsave("g.mp4")
-
-
 ```
 
 # Action Unit (Presence + Intensity)
@@ -318,7 +300,7 @@ au <- nauru_a %>%
 
 # Intensity 
 au_r <- au %>% select(frame_id, AU01_r:AU45_r)
-au_list_r <- split(au_r, au_present$judge_id)
+au_list_r <- split(au_r, au$judge_id)
 
 temp <- au_list_r[[1]]
 temp %>% gather(AU, value, -c(frame_id)) %>% filter(value > 3)
