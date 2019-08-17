@@ -13,6 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(visdat)
 library(gridExtra)
+library(forecast)
 
 load("raw_data/court.rda")
 load("raw_data/au.rda")
