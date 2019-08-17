@@ -8,4 +8,4 @@ The source data of the proeject are videos from the high court of Australia (htt
 
 ![Image](workflow.png)
 
-The revelent R code can be found in ![Rmd file](https://github.com/huizezhang-sherry/ETC4860/blob/master/2.Magick%20%26%20OpenFace.Rmd) and ![Rmd file](https://github.com/huizezhang-sherry/ETC4860/blob/master/2.ffmpeg.Rmd)
+The revelent R code can be found in ![2.Magick & OpenFace.Rmd](https://github.com/huizezhang-sherry/ETC4860/blob/master/2.Magick%20%26%20OpenFace.Rmd) and ![2.ffmpeg.Rmd](https://github.com/huizezhang-sherry/ETC4860/blob/master/2.ffmpeg.Rmd)
