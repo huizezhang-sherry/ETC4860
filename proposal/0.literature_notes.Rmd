@@ -1,0 +1,345 @@
+---
+title: "Exploration of Facial Expression in Legal Proceedings"
+author: "Huize Zhang"
+date: "15/04/2019"
+output: html_document
+bibliography: 0.reference.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(bookdown)
+```
+
+
+# Topic statement
+a statement of the topic.
+
+
+# Background
+background material that provides motivation for the topic, including a brief review of key literature.
+
+## What has been done to predict outcomes of court cases
+
+- audio
+-transripts
+-interruptions
+-how a judge votes before
+-av has been a recent development (cite examples of people who have used it)
+but this falls short of the potential of analysing judges facial expressions
+
+
+########################################################
+[What has been done so far]
+
+
+[starter]
+
+In @guidetojudicalconduct, A judge is expected to "maintain a standard of behaviour in court that ... does not diminish the confidence of
+litigants, ... ,in the ability, the integrity, the impartiality and the independence of the judge" and this is achieved through certain judical demeanor (@Tutton2018 and @Goffman1956). However, from a behaviour perspective, some facial and vocal inflections are often unbekown to the speakers (@ekamn1991) and thus many scholars are studying the court outcome through the language and words used by the judges in the court(@Shullman2004illusion) and their vocal and facial characteristics (@Chen2018blind). 
+
+
+    The Council of Chief Justices of Australia and New Zealand.2017.Guide to Judicial Conduct. 3rd ed. Melbourne: Austral-asian Institute of Judicial Administration.
+    
+-"maintain a standard of behaviour in court that ... does not diminish the confidence of litigants, ... ,in the ability, the integrity, the impartiality and the independence of the judge""    
+    
+    Tutton, J., Mack, K., & Roach Anleu, S. (2018). Judicial Demeanor: Oral Argument in the High Court of Australia. Justice System Journal, 39(3), 273-299.
+    
+    Goffman, Erving.1956.“The Nature of Deference and Demeanor.”American Anthropologist58 (3): 473– 502. doi:10.1525/aa.1956.58.3.02a00070.
+
+    Ekman, Paul, Maureen O’Sullivan, Wallace V. Friesen, and Klaus R. Scherer. 1991. Invited article: Face, voice, and body in detecting deceit. Journal of Nonverbal Behavior 15(2):125–135.
+- changes in vocal inflections, like pitch, often occur unbeknownst to the speaker: some behavioral/micro expression may be unbekown to the speaker, which may reveal the Justices' personal opinion
+
+
+[linguistic perspective: context]
+
+There's existing literature to understand the emotion of the Justices from a linguistic perspective and suggest some factors that could be useful to indicate the justices' vote and thus the court outcome. These factors includes the use of pleasant and unpleasant language by @black2011emotions, the freqency and content of Justices' questions by @Shullman2004illusion and @johnson2009inquiring. A statistical method is used by @epstein2010Inferring to include a regression analysis to the number of quetsions aksed by the Justices to infer the winning party in the court.
+
+    Black, R. C., Treul, S. A., Johnson, T. R., & Goldman, J. (2011). Emotions, oral arguments, and Supreme Court decision making. The Journal of Politics, 73(2), 572-581.
+- From a linguistic perspective, the use of an unpleasant language towards the attorney representing the Justices emotion and thus the individual justices' votes and the overall case outcome    
+    
+    Shullman, S. L. (2004). The illusion of devil's advocacy: How the justices of the supreme court foreshadow their decisions during oral argument. J. App. Prac. & Process, 6, 271.
+- arguing that the frequency and content of Justices’ questions to counsel during oral arguments could be predictors 
+- based on Justces' questions, the authors think it is possible to predict the court outcome 
+   
+    Johnson, T. R., Black, R. C., Goldman, J., & Treul, S. A. (2009). Inquiring minds want to know: Do justices tip their hands with questions at oral argument in the US supreme court. Wash. UJL & Pol'y, 29, 241.
+- [Number of questions asked] Justices ask more questions to the side with which they disagree
+
+    Epstein, L., Landes, W. M., & Posner, R. A. (2010). Inferring the winning party in the Supreme Court from the pattern of questioning at oral argument. The Journal of Legal Studies, 39(2), 433-467.
+- the number of word per question asked
+- regression analysis 
+
+[Vocal]
+    
+Other scholars have studied the emotion of the Justices from vocal characteristics and suggesting that these vacal characterstics espcially the percieved masculinity is strongly correlationed with the court outcomes @chen2016Perceived, @chen2017covering, @schubert1992observing. @Dietrich2019 uses a multilevel logistic model with random effect to suggest subconscious vocal inflections contains information that are not available from textual information. 
+    
+    Chen, D., Halberstam, Y., & Alan, C. L. (2016). Perceived masculinity predicts us supreme court outcomes. PloS one, 11(10), e0164324.
+- strong correlation between vocal characteristics and court outcomes. The correlation is specific to the percieved masculinity 
+- However, the vocal cue is solely examined through the introductory statement "Mister Chief Justice, (and) may it please the court?" to eliminate the effect of different lexical content.
+
+    Chen, D., Halberstam, Y., & Yu, A. (2017). Covering: Mutable characteristics and perceptions of voice in the US Supreme Court. Review of Economic Studies invited to resubmit, TSE Working Paper, (16-680).
+- similar issue
+
+    Schubert, James N., Steven A. Peterson, Glendon Schubert, and Stephen Wasby. 1992. Observing supreme court oral argument: A biosocial approach. Politics and the Life Sciences 11(1):35–51.
+- similar issue    
+    
+     Dietrich, B., Enos, R., & Sen, M. (2019). Emotional Arousal Predicts Voting on the U.S. Supreme Court. Political Analysis, 27(2), 237-243. doi:10.1017/pan.2018.47
+- multilevel logistic with random effect to analyse the vocal pitch 
+
+
+
+[Facial & Vocal]
+    
+@Chen2018blind's work in 2018 employed both vocal and facial characteristics to predict the court votes using the Supreme Court datafrom 1946-2014. The audio clips is first preprocessed to get the Mel-frequency  Cepstral  Coefficients (MFCC) and then applied to a random forest model while the image features are extracted using Histrogram of Oriented Gradients (HOG). However, this approach on image feature extraction is a general method for image analysis and more specific facial recognition software is readily available to  extract human facial features. We have yet to see these facial recognition technology being applied to the legal study 
+    
+    Chen, D. L., Kumar, M., Motwani, V., & Yeres, P. (2018). Is Justice Really Blind? And Is It Also Deaf. Technical report.
+
+- Daniel (2018) shows that facial and voice characteristics improve the prediction of court votes using the Supreme Court data in the United States from 1946-2014. 
+- The image features are extracted using Histrogram of Oriented Gradients (HOG) and audio clips are processed to get the Mel-frequency  Cepstral  Coefficients (MFCC). 
+- Daniel vectorises the audio clips through power cepstrum in mel scale to get the Mel-frequency  Cepstral  Coefficients (MFCC) and then use random forest to predict the trait in the audio clips. 
+
+
+[- Australia high court context]
+
+Also, most of the paper above are conducted using the U.S. Supreme Court Database and less studies have conducted using Australia High Court data. @Tutton2018 has used an ethnographic apporach to study the transcript and audio visual recordings in the High Court of Australia but the study is conducted in an observational manner to match the Justices' body movement and appearance with the transcript. Therefore, there's a gap of employing a statistical analysis to the Justices' facial images in the context of the High Court of Australia and this will be the focus of my thesis.
+
+    Tutton, J., Mack, K., & Roach Anleu, S. (2018). Judicial Demeanor: Oral Argument in the High Court of Australia. Justice System Journal, 39(3), 273-299.
+
+- Australia high court context
+- use transcript and audio visual recordings (observational manner)
+- using an ethnographic approach 
+- Impersonal and detached demeanor, which is consistent with the expectation of a formal judicial role.
+- There's slight departure suggest there's still some human display of individual behaviours 
+
+
+- by video, such as where a judge looked (down at his or her desk, forward at the speaking barrister, across to another judge, or elsewhere in the courtroom), his or her posture (leaning forward, sitting upright, or leaning back), head or body movements (shaking or nodding the head, shrugging shoulders, or swiveling), hand movements (touching books, papers, a tablet, or parts of the face, leaning on a fist, writing, or crossing his or her arms), and interacting with other judges or an associate; 
+
+- In the observed interactions, the judges depart from their usual appearance of detachment by: (a) displaying a helpful or supportive tone toward counsel; (b) displaying emotion; (c) using judicial humor; or (d) laughing or evoking laughter. Although these behaviors may be characterized as departures from strict norms of judicial conduct, this does not mean that they are improper or evidence of any bias. 
+
+- Of the five occasions where emotion appeared to be clearly displayed, the most apparent judicial emotion was frustration, apparently in response to a barrister making a submission the judge appeared to regard as irrelevant.
+
+- This judicial concern for getting to what the judge regards as the point can lead to a display of apparent frustration, especially when a barrister makes submissions on a point perceived to be irrelevant or quotes at length from material that is not thought to be relevant or helpful.
+
+
+
+########################################################
+
+[existing machine learning being applied to legal study] MAYBE IF HAVE TIME
+
+
+    Katz, Daniel Martin, Michael James Bommarito, and Josh Blackman. 2014. Predicting the behavior of the supreme court of the United States: A general approach. Available at SSRN:https://ssrn.com/abstract=2463244
+
+    
+[analyze the emotive content displayed at oral argument]
+
+
+    
+    1) Wrightsman, L. (2008). Oral arguments before the Supreme Court: An empirical approach. Oxford University Press.
+    2) Black, R. C., Treul, S. A., Johnson, T. R., & Goldman, J. (2011). Emotions, oral arguments, and Supreme Court decision making. The Journal of Politics, 73(2), 572-581.
+- From a linguistic perspective, the use of an unpleasant language towards the attorney representing the Justices emotion and thus the individual justices' votes and the overall case outcome    
+    
+    3) Lindom, T., Gregory, C., & Johnson, T. R. (2017). Gender Dynamics and Supreme Court Oral Arguments. Mich. St. L. Rev., 1033.
+    4) Shullman, S. L. (2004). The illusion of devil's advocacy: How the justices of the supreme court foreshadow their decisions during oral argument. J. App. Prac. & Process, 6, 271.
+- arguing that the frequency and content of Justices’ questions to counsel during oral arguments could be predictors 
+- based on Justces' questions, the authors think it is possible to predict the court outcome 
+
+
+
+[Gender issue]
+-  (we would be interested to see if the similar gender difference happens in terms of male and female Justics in Australia High Court)    
+    
+    Lindom, T., Gregory, C., & Johnson, T. R. (2017). Gender Dynamics and Supreme Court Oral Arguments. Mich. St. L. Rev., 1033.
+
+- US Supreme Court
+- use OLS and Tobit model to prove Female attorneys are treated differently[interrupted moer often, for longer periods -thus speak less/ receive less positive emotion content] comparing to their male counterparts by the Justics in the oral argument.
+- [knowledge] being interrupted less often is usually a benefit of winning in the court.
+
+
+########################################################
+[Predictiability - through words and facial expression]
+
+    Mendelberg, T., & Karpowitz, C. F. (2016). Power, gender, and group discussion. Political Psychology, 37, 23-60.
+- Ultimately, understanding emotions is important; by systematically analyzing people’s words—and thus their desires and intentions—it is possible to predict their actions. 
+
+    Shullman, S. L. (2004). The illusion of devil's advocacy: How the justices of the supreme court foreshadow their decisions during oral argument. J. App. Prac. & Process, 6, 271.
+- arguing that the frequency and content of Justices’ questions to counsel during oral arguments could be predictors 
+
+
+########################################################
+Reference useful for text analysis 
+
+[Number of questions asked]
+
+    Johnson, T. R., Black, R. C., Goldman, J., & Treul, S. A. (2009). Inquiring minds want to know: Do justices tip their hands with questions at oral argument in the US supreme court. Wash. UJL & Pol'y, 29, 241.
+- Justices ask more questions to the side with which they disagree
+
+
+
+[Interruptions]
+
+[Interruptions has been studied a lot by interactional sociolinguistics]
+
+    1) Friedrich, Paul. 1972. “Social Context and Semantic Feature: The Russion Pronominal Useage.” In Directions in Sociolinguistics: The Ethnography of Communication, eds. John J. Gumperz, and Dell Hymes. New York: Holt, Rinehart, Winston.
+    2) Kennedy, Carol W., and Carl Camden. 1983. “Interruptions and Nonverbal Gender Differences.” Journal of Nonverbal Behavior 8(2): 91–108.
+    3) Konakahara, Mayu. 2015. “An Analysis of Overlapping Questions in Causual ELF Conversation: Cooperative or Competitive Contribution.” Journal of Pragmatics 84: 37–53.
+
+
+    Smith-Lovin, L., & Brody, C. (1989). Interruptions in group discussions: The effects of gender and group composition. American Sociological Review, 424-435.
+- if a person wants to move a discussion toward issues he  or she  prefers to discuss, interrupting another participant is often an effective strategy.
+
+    Lindom, T., Gregory, C., & Johnson, T. R. (2017). Gender Dynamics and Supreme Court Oral Arguments. Mich. St. L. Rev., 1033.
+- interruptions are meant to alter the topic or overall dynamic of the conversation
+
+
+########################################################
+
+
+
+## The idea of facial expression
+
+[origin: Paul Ekman]
+
+    Ekman, Paul, Maureen O’Sullivan, Wallace V. Friesen, and Klaus R. Scherer. 1991. Invited article: Face, voice, and body in detecting deceit. Journal of Nonverbal Behavior 15(2):125–135.
+    
+    Ekman, P., & Friesen, W.V. (1976). Measuring facial movement. Environmental Psychology and Nonverbal Behavior, 1, 56-75.
+
+    Ekman, P., & Friesen, W. V. (1978). Facial action coding system. Palo Alto, CA: Consulting Psychologists Press. 
+    
+    Ekman, P., Friesen, W. V., & Hager, J. C. (2002). Facial action coding system: The manual on CD ROM. A Human Face, Salt Lake City, 77-254.
+- changes in vocal inflections, like pitch, often occur unbeknownst to the speaker
+
+
+[face & emotion in sports]
+
+    Kovalchik, S., and Reid, M. (2018). Going inside the inner game: Predicting the emotions of professional tennis players from match broadcasts. Presented at the MIT Sloan Sports Analytics Conference. Accessible at http://www.sloansportsconference.com/wp-content/uploads/2018/02/2005.pdf
+- In the domain of competitive sports i.e. tennis, the emotion of players can have an impact on their performance (also:Lazarus,	Richard	S.	"How	emotions	influence	performance	in	competitive	sports." The	sport	psychologist 14.3	(2000):	229-252.)
+
+- lack of quantitative measures
+
+[Machine Learning]
+
+    Sariyanidi, E., Gunes, H., & Cavallaro, A. (2015). Automatic analysis of facial affect: A survey of registration, representation, and recognition. IEEE transactions on pattern analysis and machine intelligence, 37(6), 1113-1133.
+- using	machine	learning to perform a	variety	of facial recognition	tasks	with	video	and	image	data	
+
+- detect genuine and posed behaviour
+
+- facial registration: Rigid registration is generally performed by detecting facial landmarks 
+
+- a technical paper on the existing automatic facial analysis 
+
+
+[affection model]
+    
+    H. Gunes and B. Schuller, “Categorical and dimensional affect analysis in continuous input: Current trends and future directions,” Image Vis. Comput., vol. 31, no. 2, pp. 120–136, 2013.
+- most of the time, basic emotion can be of limited use to represent everyday emotion, a continuous approach is used to perfom dimensional affect analysis, which has been applied in hospital pain detection(Lucey et al.: P. Lucey, J.F. Cohn, I. Matthews, S. Lucey, S. Sridharan, J. Howlett, K.M. Prkachin Automatically detecting pain in video through facial action units IEEE Trans. Syst. Man Cybern. Part B Cybern., 41 (3) (2011), pp. 664-674)
+
+
+[Audio-Visual Emotion recognition Challenge and workshop (AVEC 2012): audio/video analysis to emotion detection]
+    
+    B. Schuller, M. Valstar, R. Cowie, and M. Pantic, “AVEC 2012— The continuous audio/visual emotion challenge,” in Proc. ACM Int. Conf. Multimodal Interaction, 2012, pp. 361–362.
+    
+     B. Schuller, M. Valstar, F. Eyben, G. McKeown, R. Cowie, anz M. Pantic, “AVEC 2011—The first international audio/visual emotion challenge,” in Proc. Int. Conf. Affective Comput. Intell. Interaction, 2011, pp. 415–424.
+
+
+[Emotion Recognition in the wild challenge 2013]
+
+    Dhall, A., Goecke, R., Joshi, J., Wagner, M., & Gedeon, T. (2013, December). Emotion recognition in the wild challenge 2013. In Proceedings of the 15th ACM on International conference on multimodal interaction (pp. 509-516). ACM.
+- similar paper
+
+    Kahou, S. E., Pal, C., Bouthillier, X., Froumenty, P., Gülçehre, Ç., Memisevic, R., ... & Mirza, M. (2013, December). Combining modality specific deep neural networks for emotion recognition in video. In Proceedings of the 15th ACM on International conference on multimodal interaction (pp. 543-550). ACM.
+- deep neural networks for emotion recognition in video
+
+
+    Khorrami, P., Paine, T., & Huang, T. (2015). Do deep neural networks learn facial action units when doing expression recognition?. In Proceedings of the IEEE International Conference on Computer Vision Workshops (pp. 19-27).
+- similar paper
+
+- AU based method (Ekman) or appearance based 
+
+    Rajesh, K. M., & Naveenkumar, M. (2016, December). A robust method for face recognition and face emotion detection system using support vector machines. In 2016 International Conference on Electrical, Electronics, Communication, Computer and Optimization Techniques (ICEECCOT) (pp. 1-5). IEEE.
+- support vector machine
+
+[deepface/ facenet and the resulting openface]
+
+    Schroff, F., Kalenichenko, D., & Philbin, J. (2015). Facenet: A unified embedding for face recognition and clustering. In Proceedings of the IEEE conference on computer vision and pattern recognition (pp. 815-823).
+- google 
+
+    Taigman, Y., Yang, M., Ranzato, M. A., & Wolf, L. (2014). Deepface: Closing the gap to human-level performance in face verification. In Proceedings of the IEEE conference on computer vision and pattern recognition (pp. 1701-1708).
+- facebook
+
+
+
+
+
+
+
+[openface implements these ideas]
+
+OpenFace @Baltrusaitis2018 provides a state-of-art implementation of facial expression detection including facial landmarking, eye gaze tracking and facial action unit detection. Along with its previous version (@Baltrusaitis2016), the OpenFace toolkit has been used in different social researches including depression classificaiton(@yang2016 and @Nasir2016) and social signal precessing (@Schneider2019)
+
+    Baltrusaitis, T., Zadeh, A., Lim, Y. C., & Morency, L. P. (2018, May). Openface 2.0: Facial behavior analysis toolkit. In 2018 13th IEEE International Conference on Automatic Face & Gesture Recognition (FG 2018) (pp. 59-66). IEEE.
+- FeatureExtraction: image/ video with one face only 
+- FaceLandmarkVidMulti: image/ video with multiple faces
+- FaceLandmarkImg: sequence of images 
+
+    Baltrušaitis, T., Robinson, P., & Morency, L. P. (2016, March). Openface: an open source facial behavior analysis toolkit. In 2016 IEEE Winter Conference on Applications of Computer Vision (WACV) (pp. 1-10). IEEE.
+- previous version
+
+[other examples of people using openface for research]
+
+    Yang, L., Jiang, D., He, L., Pei, E., Oveneke, M. C., & Sahli, H. (2016, October). Decision tree based depression classification from audio video and language information. In Proceedings of the 6th International Workshop on Audio/Visual Emotion Challenge (pp. 89-96). ACM.
+- depression classificiation
+
+    Nasir, M., Jati, A., Shivakumar, P. G., Nallan Chakravarthula, S., & Georgiou, P. (2016, October). Multimodal and multiresolution depression detection from speech and facial landmark features. In Proceedings of the 6th International Workshop on Audio/Visual Emotion Challenge (pp. 43-50). ACM.
+-similar paper
+
+    Schneider, S. (2019). Socially Assistive Robots for Exercising Scenarios. Studies on group effects, feedback, embodiment and adaption.
+- understand social signal processing 
+
+
+
+
+# Data 
+We have chosen to derive faces from video by using screenshots, this has been done for tennis (cite steph). 
+- Stephs open face 
+   Steph's paper (Department - comparing four API for face recognition)
+
+what we will do with data:
+
+
+# Aims
+apply techniques in facial expression analysis to explore court proceedings
+
+An outline of the aims of your research.
+- can we understand more about a judge
+
+can we understand how they respond to apellant or respondent
+
+understand how expressions change during a case, or are diferent between cases
+
+more coudl be put here - the tasks every week 
+
+
+
+
+
+# Plan  
+A statement of your research plan
+Timeline: Completed:
+
+what data you will use if conducting empirical research; 
+- use court videos, crop individual faces 
+
+what econometric techniques you intend to apply;
+
+
+Timeline: Intended
+
+what theoretical results you intend to derive;
+
+
+
+what techniques you will use to evaluate your results/methods and to compare them with other comparable results/methods in the
+literature; and so on).
+
+
+# Reference
