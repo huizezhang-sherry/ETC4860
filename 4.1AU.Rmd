@@ -15,51 +15,9 @@ library(tidyverse)
 library(naniar)
 
 load("raw_data/court.rda")
-load("raw_data/au.rda")
+load("raw_data/au_imputed.rda")
 
 ```
-
-
-# Missing treatment
-
-The missing mechanism in our case is a unit-level missing as the missingness depends on other unobservables. For example, the missingness could be due to the fact that a judge is reading the materials on the desk so the face is not captured for a particular frame or simply because some faces are not detectable for the given resolution of the video stream. However, since that data is in time series structure, simply drop the missing observation will cause the time interval to be irregular and complicate further analysis. Thus proper imputation method is needed. Because there is no obvious trend or seasonality in each action unit series, imputation methods using time series models will not be suitable in our case. Therefore, we choose the linear interpolation(`na.interp`) from the `forecast` package to impute the missing value for each action unit. Notice that the funtion requires at least two non-NA points in a series, we drop 4 video-judge pairs where no data is available for a particular judge in a particular case, namely (OKS, Gordon), (Parkes, Gordon), (Rinehart_b, Gordon) and (Rinehart_b, Kiefel). 
-
-We simply drop Judge Gordon - only one video case. 
-
-```{r}
-au %>% 
-  as_tibble() %>% 
-  select(judge_id, frame_id, video_id, speaker, AU01_r) %>% 
-  mutate(judge_id = as.factor(judge_id)) %>% 
-  group_by(video_id, judge_id) %>% 
-  summarise(na_count = sum(is.na(AU01_r)), 
-            count = n(),
-            na_prop = na_count/count, 
-            data_prop = 1-na_prop) %>% 
-  arrange(-na_prop) # some cases have na_prop ==1 - can't perform linear interp
-
-library(forecast)
-au_imputed <- au %>% 
-  filter(judge_id %in% c("Keane", "Nettle", "Edelman", "Gageler", "Bell")|
-           (judge_id == "Kiefel" & video_id != "Rinehart_b")) %>% 
-  gather(AU, value, -c(judge_id: speaker)) %>% 
-  group_by(judge_id, video_id, AU) %>% 
-  nest() %>% 
-  mutate(interp = map(data, 
-                      ~.x %>% pull(value) %>% na.interp)) %>% 
-  select(judge_id, video_id, AU, interp) %>% 
-  unnest() %>% 
-  group_by(judge_id, video_id, AU) %>%
-  mutate(frame_id = row_number()) %>% # add back frame_id as index
-  spread(AU, interp) %>% 
-  left_join(au %>% select(judge_id: speaker)) # add back speaker column
-
-save(au_imputed, file = "raw_data/au_imputed.rda")  
-
-
-
-```
-
 
 
 ```{r}
@@ -108,16 +66,16 @@ count_video_sample <- function(dt){
 }
 
 # example: overall - for all cases
-count_video_sample(au)
+count_video_sample(au_imputed)
 
 # example: extract one particular judge's appellent/respondent count information 
-judge_id = list("Bell","Keane","Kiefel","Gageler","Nettle","Gordon","Edelman")
+judge_id = list("Bell","Keane","Kiefel","Gageler","Nettle","Edelman")
 
 df <- map(judge_id, function(judge){
-  df <- au %>% filter(judge_id == judge) %>% count_video_sample()})
+  df <- au_imputed %>% filter(judge_id == judge) %>% count_video_sample})
 names(df) <- judge_id
 
-df$Gordon
+df$Edelman
 ```
 
 
@@ -144,7 +102,7 @@ The presence of a single action unit is not sufficient enough to indicate emotio
 ```{r}
 # Because each judge has different numbers of frame available, mean is a better way ,than sum/ count,  to discribe the frequency of occurence. 
 
-au %>% 
+au_imputed %>% 
  group_by(judge_id) %>% 
  dplyr::summarize_at(vars(AU01_c:AU45_c), mean, na.rm = TRUE) %>%
  gather(AU_label, value, -judge_id) %>% 
@@ -163,23 +121,22 @@ au %>%
 In general, most of the action unit are not intense, so I select the ones with intensity greater than one and I find that Nettle has largest porportion of "intense" facial expression. 
 
 ```{r}
-au %>% 
+au_imputed %>% 
   select(AU02_c, AU02_r, judge_id: speaker) %>% 
   group_by(judge_id) %>% 
   filter(judge_id == "Nettle") %>% 
   dplyr::summarize_at(vars(AU02_r), mean, na.rm = TRUE)
   
-au_intensity_all <- au %>% select(AU01_r: AU45_r, judge_id : speaker) %>% 
+au_intensity_all <- au_imputed %>% select(AU01_r: AU45_r, judge_id : speaker) %>% 
   gather(AU, intensity, -(judge_id: speaker)) %>% 
   filter(intensity != "NA") 
 
 # most of the action unit has very low intensity 
 au_intensity_all %>% 
-  ggplot(aes(x = video_id, y = intensity)) + 
-  geom_boxplot() + 
-  facet_wrap(vars(judge_id))
+  ggplot(aes(x = judge_id, y = intensity, col = judge_id)) + 
+  geom_boxplot() 
 
-# only 10% of the action unit that being recorded has intensity greater than 1
+# compute the proportion of action unit that has intensity greater than 1
 au_intensity <- au_intensity_all %>% filter(intensity > 1)
 
 count <- au_intensity %>% 
@@ -265,12 +222,9 @@ ActionUnitbySpeaker <- function(dt, judge, case = case_list){
   if (length(diff) > 0){
     warning(sprintf("%s has less than 10 frames, so it is dropped", diff))
   }
-  
-  
-  
 
   dt %>% 
-    filter(AU01_c != "NA", judge_id == judge, 
+    filter(judge_id == judge, 
            video_id %in% case) %>% 
     group_by(speaker, video_id) %>% 
     dplyr::summarize_at(vars(
@@ -292,13 +246,12 @@ ActionUnitbySpeaker <- function(dt, judge, case = case_list){
 
 }
 
-ActionUnitbySpeaker(au, "Keane")
-ActionUnitbySpeaker(au, "Kiefel", case = c("Parkes", "Rinehart_a"))
-ActionUnitbySpeaker(au, "Bell", case = c("OKS", "McKell"))
-ActionUnitbySpeaker(au, "Gageler")
-ActionUnitbySpeaker(au, "Nettle")
-ActionUnitbySpeaker(au, "Gordon", case = c("McKell", "Rinehart_a"))
-ActionUnitbySpeaker(au, "Edelman")
+ActionUnitbySpeaker(au_imputed, "Keane")
+ActionUnitbySpeaker(au_imputed, "Kiefel", case = c("Parkes", "Rinehart_a"))
+ActionUnitbySpeaker(au_imputed, "Bell", case = c("OKS", "McKell"))
+ActionUnitbySpeaker(au_imputed, "Gageler")
+ActionUnitbySpeaker(au_imputed, "Nettle")
+ActionUnitbySpeaker(au_imputed, "Edelman")
 
 ```
 
@@ -308,14 +261,14 @@ Some judges have stronger emotion display in some cases while others i.e. Justic
 ```{r}
 case_list <- c("Nauru_a", "Nauru_b", "McKell", "OKS", "Parkes","Rinehart_a", "Rinehart_b")
 
-count <- au %>% 
-  filter(AU01_c != "NA", video_id %in% case_list) %>% 
+count <- au_imputed %>% 
+  filter(video_id %in% case_list) %>% 
   group_by(judge_id,video_id) %>% 
   dplyr::summarise(count = n()) %>% 
   filter(count > 10)
   
-au %>% 
-  filter(AU01_c != "NA", video_id %in% case_list) %>% 
+by_speaker <- au_imputed %>% 
+  filter(video_id %in% case_list) %>% 
   group_by(judge_id,speaker, video_id) %>%
   semi_join(count) %>% 
   dplyr::summarize_at(vars(AU01_c:AU45_c), mean, na.rm = TRUE) %>% 
@@ -326,7 +279,9 @@ au %>%
   ungroup() %>% 
   mutate(presence = as.factor(ifelse(abs(diff)>0.2, 
                                      ifelse(diff > 0, "Appellent",
-                                            "Respondent"), "NA"))) %>% 
+                                            "Respondent"), "NA"))) 
+
+by_speaker %>% 
   ggplot(aes(x = video_id, y = AU)) +
   geom_tile(aes(fill = presence)) +
   facet_wrap(vars(judge_id),scale = "free") +
@@ -334,10 +289,11 @@ au %>%
                                "Respondent" = "#5aae61",
                                "NA" = "grey"))
 
-  # ggplot(aes(x = AU, y = diff)) + 
-  # geom_bar(stat = "identity", position = "identity", aes(fill = diff, group = video_id)) +
-  # facet_wrap(vars(judge_id, scale = "free")) +
-  # coord_flip()
+# by_speaker %>% 
+#   ggplot(aes(x = AU, y = diff)) +
+#   geom_bar(stat = "identity", position = "identity", aes(fill = diff, group = video_id)) +
+#   facet_wrap(vars(judge_id, scale = "free")) +
+#   coord_flip()
 
 
 ```
