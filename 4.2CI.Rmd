@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(boot)
 
-load("raw_data/au.rda")
+load("raw_data/au_imputed.rda")
 ```
 
 simulation for 
@@ -27,7 +27,6 @@ simulation for
 ```{r sample_size}
 count_video_sample <- function(dt){
   dt %>% 
-    filter(AU01_r != "NA") %>%
     select(frame_id, video_id, speaker) %>% 
     group_by(video_id, speaker) %>% 
     summarise(count = n()) %>% 
@@ -36,10 +35,10 @@ count_video_sample <- function(dt){
     mutate(Total = sum(Appellent + Respondent))
 }
 
-judge_id = list("Bell","Keane","Kiefel","Gageler","Nettle","Gordon","Edelman")
+judge_id = list("Bell","Keane","Kiefel","Gageler","Nettle","Edelman")
 
 df <- map(judge_id, function(judge){
-  df <- au %>% 
+  a <- au_imputed %>% 
     filter(judge_id == judge) %>% 
     count_video_sample() %>% 
     filter(Total > 10)
@@ -58,8 +57,7 @@ This markdown file contains information on the simulation study for the presence
 
 ```{r}
 # average time an action unit appears for a judge 
-au_aggregate <- au %>%
- filter(AU01_c != "NA") %>%
+au_aggregate <- au_imputed %>% 
  group_by(judge_id) %>%
  right_join(sample_size) %>%
  summarise_at(vars(AU01_c: AU45_c), .funs = mean) %>%
@@ -68,8 +66,7 @@ au_aggregate <- au %>%
 save(au_aggregate, file = "raw_data/au_aggregate.rda")
 
 # au_video provides more information on the average appearance of an action unit on the video level
-au_video <- au %>%
- filter(AU01_c != "NA") %>%
+au_video <- au_imputed %>%
  select(AU01_c: AU45_c, judge_id: speaker) %>%
  group_by(judge_id, video_id) %>%
  summarise_at(vars(AU01_c: AU45_c), mean) %>%
@@ -78,11 +75,13 @@ au_video <- au %>%
 
 save(au_video, file = "raw_data/au_video.rda")
 
-count <- au  %>%
+count <- au_imputed  %>%
  select(AU01_c: AU45_c, judge_id: speaker) %>%
  group_by(judge_id) %>%
  right_join(sample_size) %>%
  summarise(count = n())
+
+save(count, file = "raw_data/count.rda")
 ```
 
 ## simulation function using binomial distribution
@@ -105,22 +104,21 @@ sim_norm <- function(count, mean_true, M = 1000){
 
 ## simulation function via bootstraping 
 ```{r}
-set.seed(10000)
+set.seed(377)
 mean.fun <- function(data, index){
-  val <- data$mean_ind[index]
+  val <- data$value[index]
   return(mean(val))
   }
 
 boot_sim <- function(judge){
- 
-  dt <- au %>%
-   filter(judge_id == judge, AU01_r != "NA") %>%
-   select(AU01_c : speaker) %>%
+  dt <- au_imputed %>%
+   filter(judge_id == judge) %>%
+   select(frame_id, speaker, ends_with("c")) %>%
    gather(AU, value, -c(judge_id: speaker)) %>%
    group_by(AU)
     
  sim <- map(split(dt,dt$AU), function(x){
-   boot_obj <- boot(x, mean.fun, R = 1000)
+   boot_obj <- boot(x, mean.fun, R = 10000)
    ci <- boot.ci(boot_obj, conf = c(0, 0.95), type = "perc")
  })
  
@@ -209,9 +207,8 @@ notes:
 - simulation result doesnt differentiate from M = 100, 1000, 10000
 - first filtered out the video with small sample - would that be a problem for otstrapping?
 
+
 # Simulation all using bootstrap
-
-
 ```{r}
 sim_result<- map_df(.x = judge_id, 
                     ~boot_sim(.x) %>% mutate(judge_id = .x))
@@ -220,7 +217,7 @@ save(sim_result, file = "raw_data/sim_result.rda")
 
 ci_count <- au_aggregate %>% 
   left_join(count) %>% 
-  left_join(sim_result, by = c("judge_id", "AU")) %>%
+  right_join(sim_result, by = c("judge_id", "AU")) %>%
   left_join(au_video, by = c("judge_id", "AU")) %>% 
   ungroup() %>% 
   mutate(outliners = as.factor(ifelse(mean_ind > sim_low, 
@@ -228,18 +225,21 @@ ci_count <- au_aggregate %>%
 
 save(ci_count,file = "raw_data/ci_count.rda")
 
-load("raw_data/ci_count.rda")
-
-p2 <- ci_count %>%
+ci_count %>%
   mutate(AU = as.factor(AU)) %>% 
-  ggplot(aes(mean_agg, AU)) + 
+  ggplot(aes(x = mean_agg, 
+             y = tidytext::reorder_within(AU, by = sim_mean, 
+                                      within = judge_id, sep = "_"))) + 
   geom_errorbarh(aes(xmin = sim_low, xmax = sim_high), col = "gray") + 
-  facet_wrap(vars(judge_id)) + 
-  geom_point(aes(x = mean_ind, y = AU, col = outliners))
+  facet_wrap(vars(judge_id), scales = "free") + 
+  geom_point(aes(x = mean_ind, col = outliners)) + 
+  scale_y_discrete(labels = function(x) word(x, start = 1, sep = "_")) + 
+  ylab("AU")
 
-gridExtra::grid.arrange(p1, p2, nrow = 1)
 #bootstrap interval is indeed wider than those simulated from binomial 
 ```
+
+
 
 ```{r}
 outliners <- ci_count %>% 
