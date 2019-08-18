@@ -57,26 +57,25 @@ We can see that most of the action units have low intensity (the upper bounds of
 
 I first use simulation method to find the "normal" percentage of appearance of each AU for each Justices. The simulated mean percentage is then compared with the mean percentage appearance of each inidividual video to determine if an action unit appears considerably more or less than the "normal" level for each justices. The simulation and comparison procesure can be summarised as follows 
 
-- step 1: Compute the simulated mean percentage ![\mu_{i,k}](https://latex.codecogs.com/gif.latex?%5Cmu_%7Bi%2Ck%7D)from all the videos for each Justices 
+- step 1: Compute the simulated mean percentage ![\mu_{i,k}](https://latex.codecogs.com/gif.latex?%5Cmu_%7Bi%2Ck%7D) from all the videos for each Justices 
 
-\begin{align*} 
+![\begin{align*} 
 \mu_{i,k} = f(&x_{i,1,1,k}, x_{i,1,2,k}, \cdots, x_{i,1,T,k}\\
 &x_{i,2,1,k},x_{i,2,2,k},\cdots ,x_{i,2,T,k} ... \\
 &x_{i,J,1,k}, x_{i,J,2,k}, \cdots,x_{i,J,T,k} \\)
-\end{align*}
+\end{align*}](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20%5Cmu_%7Bi%2Ck%7D%20%3D%20f%28%26x_%7Bi%2C1%2C1%2Ck%7D%2C%20x_%7Bi%2C1%2C2%2Ck%7D%2C%20%5Ccdots%2C%20x_%7Bi%2C1%2CT%2Ck%7D%5C%5C%20%26x_%7Bi%2C2%2C1%2Ck%7D%2Cx_%7Bi%2C2%2C2%2Ck%7D%2C%5Ccdots%20%2Cx_%7Bi%2C2%2CT%2Ck%7D%20...%20%5C%5C%20%26x_%7Bi%2CJ%2C1%2Ck%7D%2C%20x_%7Bi%2CJ%2C2%2Ck%7D%2C%20%5Ccdots%2Cx_%7Bi%2CJ%2CT%2Ck%7D%20%29%20%5Cend%7Balign*%7D)
 
-where $f()$ is the function to compute the simulation. 
+where ![$f(.)$](https://latex.codecogs.com/gif.latex?f%28.%29) is the function to compute the simulation. 
 
-\begin{bmatrix}
+![\begin{bmatrix}
 \mu_{1,1} & \mu_{1,2} & \cdots & \mu_{1,k} \\
 \mu_{2,1} & \mu_{2,2} & \cdots & \mu_{2,k} \\
 \vdots & \vdots && \vdots \\
 \mu_{6,1} & \mu_{6,2} & \cdots & \mu_{6,k} \\
-
-\end{bmatrix}
+\end{bmatrix}](https://latex.codecogs.com/gif.latex?%5Cbegin%7Bbmatrix%7D%20%5Cmu_%7B1%2C1%7D%20%26%20%5Cmu_%7B1%2C2%7D%20%26%20%5Ccdots%20%26%20%5Cmu_%7B1%2Ck%7D%20%5C%5C%20%5Cmu_%7B2%2C1%7D%20%26%20%5Cmu_%7B2%2C2%7D%20%26%20%5Ccdots%20%26%20%5Cmu_%7B2%2Ck%7D%20%5C%5C%20%5Cvdots%20%26%20%5Cvdots%20%26%26%20%5Cvdots%20%5C%5C%20%5Cmu_%7B6%2C1%7D%20%26%20%5Cmu_%7B6%2C2%7D%20%26%20%5Ccdots%20%26%20%5Cmu_%7B6%2Ck%7D%20%5C%5C%20%5Cend%7Bbmatrix%7D)
 
 - step 2: Compute the mean percentage appearance of each individual video as 
-$$\frac{1}{T} \sum_{t = 1}^T x_{i,j,t,k} $$ for each combination of $(i, j, k)$
+![$$\frac{1}{T} \sum_{t = 1}^T x_{i,j,t,k} $$](https://latex.codecogs.com/gif.latex?%24%24%5Cfrac%7B1%7D%7BT%7D%20%5Csum_%7Bt%20%3D%201%7D%5ET%20x_%7Bi%2Cj%2Ct%2Ck%7D%20%24%24) for each combination of ![$(i, j, k)$](https://latex.codecogs.com/gif.latex?%24%28i%2C%20j%2C%20k%29%24)
 
 
 
