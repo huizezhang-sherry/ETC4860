@@ -29,8 +29,12 @@ missing <- court %>%
             na_prop = na_count/count, 
             data_prop = 1-na_prop)
 
-# Missing proportion table
-missing
+# data related to judge Gordon is removed because four out of five cases with Gordon has missing proportion greater than 99% 
+
+missing %>% filter(judge_id == "Gordon")
+
+# One cases from Kiefel is also removed because of na_prop ==1
+missing %>% filter(na_prop ==1)
 ```
 
 ```{r}
@@ -80,10 +84,11 @@ The missing mechanism in our case is a unit-level missing as the missingness dep
 We simply drop Judge Gordon - only one video case. 
 
 ```{r missing_imputation}
-au_imputed <- au %>% 
+au_intensity <- au %>% 
   filter(judge_id %in% c("Keane", "Nettle", "Edelman", "Gageler", "Bell")|
            (judge_id == "Kiefel" & video_id != "Rinehart_b")) %>% 
-  gather(AU, value, -c(judge_id: speaker)) %>% 
+  select(frame_id, judge_id, video_id, ends_with("_r")) %>% 
+  gather(AU, value, -c(frame_id: video_id)) %>% 
   group_by(judge_id, video_id, AU) %>% 
   nest() %>% 
   mutate(interp = map(data, 
@@ -94,6 +99,82 @@ au_imputed <- au %>%
   mutate(frame_id = row_number()) %>% # add back frame_id as index
   spread(AU, interp) %>% 
   left_join(au %>% select(judge_id: speaker)) # add back speaker column
+```
+
+Binomial imputation function 
+```{r}
+binomial_imputation <- function(x){
+  
+  # calculate the probability of 1 and 0 and count of NA 
+  percent <- x %>% 
+    add_count(value) %>% 
+    mutate(percent = n/length(value)) %>% 
+    distinct(value,n,percent) %>% 
+    gather(measure, num, c(n, percent)) %>% 
+    spread(value, num)
+  
+# sample from binomial distribution  
+  if("<NA>" %in% colnames(percent)){
+     if ("1" %in% colnames(percent)){
+       if("0" %in% colnames(percent)){
+        percent <- percent %>% as.matrix()
+        imputation <- sample(c(0,1), percent[1,4], prob = percent[2,2:3], replace = TRUE)
+        }else{
+          # if no col is 0, all the value is 1, impute 1
+          percent <- percent %>% as.matrix()
+          imputation <- rep(1, percent[1,3])
+        }
+      }else{
+        # if no col is 1, all the value is 0, impute 0
+        percent <- percent %>% as.matrix()
+        imputation <- rep(0, percent[1,3])
+      }
+  }else{
+      imputation = NULL
+    }
+  
+  if(sum(is.na(x$value)) ==0){
+    impute <- x %>% 
+      as_tibble() %>% 
+      select(value)
+    
+    return(impute)
+    
+  }else{
+      impute <- x %>% 
+        filter(is.na(value)) %>% 
+        mutate(impute = imputation) %>% 
+        select(-value) %>% 
+        right_join(x, by = "frame_id") %>% 
+        mutate(value = ifelse(is.na(impute), value, impute)) %>% 
+        as_tibble() %>% 
+        select(value)
+      
+      return(impute)
+  }
+}
+
+```
+
+```{r}
+# imputation from a binomial distribution
+au_presence <- au %>% 
+  filter(judge_id %in% c("Keane", "Nettle", "Edelman", "Gageler", "Bell")|
+           (judge_id == "Kiefel" & video_id != "Rinehart_b")) %>% 
+  select(frame_id, judge_id, video_id, ends_with("_c")) %>% 
+  gather(AU, value, -c(frame_id: video_id)) %>% 
+  group_by(judge_id, video_id, AU) %>%
+  nest() %>% 
+  mutate(impute = map(data, binomial_imputation)) %>% 
+  select(judge_id, video_id, AU, impute) %>% 
+  unnest() %>% 
+  group_by(judge_id, video_id, AU) %>% 
+  mutate(frame_id = row_number()) %>% # add back frame_id as index
+  spread(AU, value) %>% 
+  left_join(au %>% select(judge_id: speaker)) # add back speaker column
+
+au_imputed <- au_intensity %>% 
+  left_join(au_presence, by = c("judge_id", "video_id", "frame_id", "speaker"))
 
 save(au_imputed, file = "raw_data/au_imputed.rda")  
 
