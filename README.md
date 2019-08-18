@@ -12,7 +12,7 @@ The revelent R code can be found in [2.Magick & OpenFace.Rmd](https://github.com
 
 ### Missing value imputation 
 
-The missingness in the dataset could be due to the fact that a judge is reading the materials on the desk so the face is not captured for a particular frame or simply because some faces are not detectable for the given resolution of the video stream. However, since that data is in time series structure, simply drop the missing observation will cause the time interval to be irregular and complicate further analysis. There are two different sets of variables that need imputation: the ones end with `_c`, which is binary and the ones end with `_r`, which is a float number. Linear interpolation from `forecast` package is suitable to impute the variables end with `_r` and I sample from binomial distribution toimpute the variables end with `_c`. More details in [3.1missing.Rmd](https://github.com/huizezhang-sherry/ETC4860/blob/master/3.1missing.Rmd). 
+The missingness in the dataset could be due to the fact that a judge is reading the materials on the desk so the face is not captured for a particular frame or simply because some faces are not detectable for the given resolution of the video stream. However, since that data is in time series structure, simply drop the missing observation will cause the time interval to be irregular and complicate further analysis. There are two different sets of variables that need imputation: the ones end with `_c`, which is binary and the ones end with `_r`, which is a float number. Linear interpolation from `forecast` package is suitable to impute the variables end with `_r` and I sample from binomial distribution to impute the variables end with `_c`. More details in [3.1missing.Rmd](https://github.com/huizezhang-sherry/ETC4860/blob/master/3.1missing.Rmd). 
 
 
 
@@ -45,14 +45,38 @@ We answer the following few questions related to action unit
 **What are the most common action units for each judges?**
 ![most common action units](images/most_common_au.png)
 
-**How does the intensity of action units looks like? **
-![](images/intensity_boxplot_au.png)
+**How does the intensity of action units looks like?**
+![intensity_boxplot](images/intensity_boxplot_au.png)
 
 We can see that most of the action units have low intensity (the upper bounds of the box are at about one). 
 
 
+**Does each Justice behave consistently in different trails or not?**
 
- 
- 
+#### AU presence 
+
+I first use simulation method to find the "normal" percentage of appearance of each AU for each Justices. The simulated mean percentage is then compared with the mean percentage appearance of each inidividual video to determine if an action unit appears considerably more or less than the "normal" level for each justices. The simulation and comparison procesure can be summarised as follows 
+
+- step 1: Compute the simulated mean percentage $\mu_{i,k}$ from all the videos for each Justices 
+
+\begin{align} 
+\mu_{i,k} = f(&x_{i,1,1,k}, x_{i,1,2,k}, \cdots, x_{i,1,T,k}\\
+&x_{i,2,1,k},x_{i,2,2,k},\cdots ,x_{i,2,T,k} ... \\
+&x_{i,J,1,k}, x_{i,J,2,k}, \cdots,x_{i,J,T,k} \\)
+\end{align}
+
+where $f()$ is the function to compute the simulation. 
+
+\begin{bmatrix}
+\mu_{1,1} & \mu_{1,2} & \cdots & \mu_{1,k} \\
+\mu_{2,1} & \mu_{2,2} & \cdots & \mu_{2,k} \\
+\vdots & \vdots && \vdots \\
+\mu_{6,1} & \mu_{6,2} & \cdots & \mu_{6,k} \\
+
+\end{bmatrix}
+
+- step 2: Compute the mean percentage appearance of each individual video as 
+$$\frac{1}{T} \sum_{t = 1}^T x_{i,j,t,k} $$ for each combination of $(i, j, k)$
+
 
 
