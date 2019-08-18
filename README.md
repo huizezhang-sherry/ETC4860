@@ -38,23 +38,32 @@ Text analysis conducted using the transcript strapped from the high court of Aus
  
 ## Stage 3: Action unit 
 
-Todo: 
- - add a section about data structure
+### Data Structure
+
+The rest of the project focuses on the action unit related variables. If we write all the information in the matrix notation, every element will have four indices: `i` for `judge_id`; `j` for `video_id`; `t` for `frame_id` and `k` for `au_id`. Using the tidy principle, the data is in a tsibble format with `index = frame_id` and `key = c("judge_id, video_id)`. Different measurements on the presence and intensity of each action units are the variables. 
+
+Assuming all the information can be summarised as a `Y` variable with multiple indices `(i,j,t,k)`. We can summarise the information via a linear combination of variables as [may need to refine this part ]
+
+[more math here]
+
+
 
 
 We answer the following few questions related to action unit 
 
-**What are the most common action units for each judges?**
+ - **What are the most common action units for each judges?**
 ![most common action units](images/most_common_au.png)
 
-**How does the intensity of action units looks like?**
+ - **How does the intensity of action units looks like?**
 ![intensity_boxplot](images/intensity_boxplot_au.png)
 
 We can see that most of the action units have low intensity (the upper bounds of the box are at about one). 
 
 ## Stage 4: Action unit within judge 
 
-In this section, I use bootstrap simulation to answer the question *Does each Justice behave consistently in different trails or not?*
+In this section, I use bootstrap simulation to answer the question 
+
+- ***Does each Justice behave consistently in different trails or not?***
 
 ### AU presence 
 
@@ -81,6 +90,7 @@ The simulation result is presented here ![au_presence_sim](images/sim_ci_result.
 
 Todo: 
 - maybe more interpretation on the result
+- think about the strengh and weakness of the method
 
 ### AU Intensity
 
@@ -89,4 +99,11 @@ Todo:
 
 ## Stage 5: Action unit between Judge 
 
-In this section, I use principle component analysis to answer the question *Does the judges behave the same or different from one to another?*
+In this section, I use principle component analysis (PCA) to answer the question 
+
+- ***Does the judges behave the same or different from one to another?***
+
+The data is first pre-processed before being supplied into the PCA algorithm. For each judge-video-au pair, an average value across time `t` is first calculated. 
+
+
+
