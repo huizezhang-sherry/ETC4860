@@ -14,8 +14,6 @@ The revelent R code can be found in [2.Magick & OpenFace.Rmd](https://github.com
 
 The missingness in the dataset could be due to the fact that a judge is reading the materials on the desk so the face is not captured for a particular frame or simply because some faces are not detectable for the given resolution of the video stream. However, since that data is in time series structure, simply drop the missing observation will cause the time interval to be irregular and complicate further analysis. There are two different sets of variables that need imputation: the ones end with `_c`, which is binary and the ones end with `_r`, which is a float number. Linear interpolation from `forecast` package is suitable to impute the variables end with `_r` and I sample from binomial distribution to impute the variables end with `_c`. More details in [3.1missing.Rmd](https://github.com/huizezhang-sherry/ETC4860/blob/master/3.1missing.Rmd). 
 
-
-
 ### Exploratory data analysis
 
 The obtained dataset has more than 700 variables for each of the 31 video-judge pairs. This outlines the difficulty of this project: no existing models will present accurate prediction and inference using 700+ variables - how can we incorporate these information to say about the facial expressions of the Justices during the hearings? 
@@ -40,6 +38,10 @@ Text analysis conducted using the transcript strapped from the high court of Aus
  
 ## Stage 3: Action unit 
 
+Todo: 
+ - add a section about data structure
+
+
 We answer the following few questions related to action unit 
 
 **What are the most common action units for each judges?**
@@ -50,31 +52,41 @@ We answer the following few questions related to action unit
 
 We can see that most of the action units have low intensity (the upper bounds of the box are at about one). 
 
+## Stage 4: Action unit within judge 
 
-**Does each Justice behave consistently in different trails or not?**
+In this section, I use bootstrap simulation to answer the question *Does each Justice behave consistently in different trails or not?*
 
-#### AU presence 
+### AU presence 
 
 I first use simulation method to find the "normal" percentage of appearance of each AU for each Justices. The simulated mean percentage is then compared with the mean percentage appearance of each inidividual video to determine if an action unit appears considerably more or less than the "normal" level for each justices. The simulation and comparison procesure can be summarised as follows 
 
-- step 1: Compute the simulated mean percentage ![\mu_{i,k}](https://latex.codecogs.com/gif.latex?%5Cmu_%7Bi%2Ck%7D) from all the videos for each Justices 
+- Step 1: Compute the simulated mean percentage ![\mu_{(i,k)}](https://latex.codecogs.com/gif.latex?%5Cmu_%7B%28i%2Ck%29%7D) for each pair of ![(i,k)](https://latex.codecogs.com/gif.latex?%28i%2Ck%29) using bootstrapping. Below is an illustration of how bootstrap simulation is applied for *one particular* Justices-AU pair ![(i,k)](https://latex.codecogs.com/gif.latex?%28i%2Ck%29).
 
-![\begin{align*} 
-\mu_{i,k} = f(&x_{i,1,1,k}, \cdots, x_{i,1,T,k}, x_{i,2,1,k},\cdots ,x_{i,2,T,k}, ...,x_{i,J,1,k},  \cdots,x_{i,J,T,k} \\)
-\end{align*}](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20%5Cmu_%7Bi%2Ck%7D%20%3D%20f%28%26x_%7Bi%2C1%2C1%2Ck%7D%2C%20%5Ccdots%2C%20x_%7Bi%2C1%2CT%2Ck%7D%2C%20x_%7Bi%2C2%2C1%2Ck%7D%2C%5Ccdots%20%2Cx_%7Bi%2C2%2CT%2Ck%7D%2C%20...%2Cx_%7Bi%2CJ%2C1%2Ck%7D%2C%20%5Ccdots%2Cx_%7Bi%2CJ%2CT%2Ck%7D%29%20%5Cend%7Balign*%7D)
+  - The replicates ![(r_1, r_2, \cdots, r_n)](https://latex.codecogs.com/gif.latex?%28r_1%2C%20r_2%2C%20%5Ccdots%2C%20r_n%29) for bootstrap simulation are drawn from ![x_{(i,1,1,k)}, x_{(i,1,2,k)}, \cdots, x_{(i,1,T,k)},\cdots, x_{(i,J,1,k)},x_{(i,J,2,k)},  \cdots,x_{(i,J,T,k)} ](https://latex.codecogs.com/gif.latex?x_%7B%28i%2C1%2C1%2Ck%29%7D%2C%20x_%7B%28i%2C1%2C2%2Ck%29%7D%2C%20%5Ccdots%2C%20x_%7B%28i%2C1%2CT%2Ck%29%7D%2C%5Ccdots%2C%20x_%7B%28i%2CJ%2C1%2Ck%29%7D%2Cx_%7B%28i%2CJ%2C2%2Ck%29%7D%2C%20%5Ccdots%2Cx_%7B%28i%2CJ%2CT%2Ck%29%7D)
+  
+  - The statistics to compute is the mean percentage: ![\mu_{(i,k)} = \frac{1}{n}\sum_{i = 1}^n r_i](https://latex.codecogs.com/gif.latex?%5Cfrac%7B1%7D%7Bn%7D%5Csum_%7Bi%20%3D%201%7D%5En%20r_i)
 
-where ![$f(.)$](https://latex.codecogs.com/gif.latex?f%28.%29) is the function to compute the simulation. 
+  - Simulation result for all Justices-AU pair can be written in the matrix notation as 
 
 ![\begin{bmatrix}
-\mu_{1,1} & \mu_{1,2} & \cdots & \mu_{1,k} \\
-\mu_{2,1} & \mu_{2,2} & \cdots & \mu_{2,k} \\
-\vdots & \vdots && \vdots \\
-\mu_{6,1} & \mu_{6,2} & \cdots & \mu_{6,k} \\
-\end{bmatrix}](https://latex.codecogs.com/gif.latex?%5Cbegin%7Bbmatrix%7D%20%5Cmu_%7B1%2C1%7D%20%26%20%5Cmu_%7B1%2C2%7D%20%26%20%5Ccdots%20%26%20%5Cmu_%7B1%2Ck%7D%20%5C%5C%20%5Cmu_%7B2%2C1%7D%20%26%20%5Cmu_%7B2%2C2%7D%20%26%20%5Ccdots%20%26%20%5Cmu_%7B2%2Ck%7D%20%5C%5C%20%5Cvdots%20%26%20%5Cvdots%20%26%26%20%5Cvdots%20%5C%5C%20%5Cmu_%7B6%2C1%7D%20%26%20%5Cmu_%7B6%2C2%7D%20%26%20%5Ccdots%20%26%20%5Cmu_%7B6%2Ck%7D%20%5C%5C%20%5Cend%7Bbmatrix%7D)
+\mu_{(1,1)} & \cdots & \mu_{(1,k)} \\
+\mu_{(2,1)} & \cdots & \mu_{(2,k)} \\
+\vdots  && \vdots \\
+\mu_{(6,1)}  & \cdots & \mu_{(6,k)} \\
+\end{bmatrix}](https://latex.codecogs.com/gif.latex?%5Cbegin%7Bbmatrix%7D%20%5Cmu_%7B%281%2C1%29%7D%20%26%20%5Ccdots%20%26%20%5Cmu_%7B%281%2Ck%29%7D%20%5C%5C%20%5Cmu_%7B%282%2C1%29%7D%20%26%20%5Ccdots%20%26%20%5Cmu_%7B%282%2Ck%29%7D%20%5C%5C%20%5Cvdots%20%26%26%20%5Cvdots%20%5C%5C%20%5Cmu_%7B%286%2C1%29%7D%20%26%20%5Ccdots%20%26%20%5Cmu_%7B%286%2Ck%29%7D%20%5C%5C%20%5Cend%7Bbmatrix%7D)
 
-- step 2: Compute the mean percentage appearance of each individual video for each combination of ![$(i, j, k)$](https://latex.codecogs.com/gif.latex?%24%28i%2C%20j%2C%20k%29%24)
+- Step 2: Compute the mean percentage appearance of each individual video ![\frac{1}{T} \sum_{t = 1}^T x_{(i,j,t,k)}](hhttps://latex.codecogs.com/gif.latex?%5Cfrac%7B1%7D%7BT%7D%20%5Csum_%7Bt%20%3D%201%7D%5ET%20x_%7B%28i%2Cj%2Ct%2Ck%29%7D) for each combination of ![$(i, j, k)$](https://latex.codecogs.com/gif.latex?%24%28i%2C%20j%2C%20k%29%24)
 
-![$$\frac{1}{T} \sum_{t = 1}^T x_{i,j,t,k} $$](https://latex.codecogs.com/gif.latex?%24%24%5Cfrac%7B1%7D%7BT%7D%20%5Csum_%7Bt%20%3D%201%7D%5ET%20x_%7Bi%2Cj%2Ct%2Ck%7D%20%24%24) 
+The simulation result is presented here ![au_presence_sim](images/sim_ci_result.png)
 
+Todo: 
+- maybe more interpretation on the result
 
+### AU Intensity
 
+Todo: 
+ - fill in this part 
+
+## Stage 5: Action unit between Judge 
+
+In this section, I use principle component analysis to answer the question *Does the judges behave the same or different from one to another?*
