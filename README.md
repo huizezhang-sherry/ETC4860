@@ -57,7 +57,7 @@ We can see that most of the action units have low intensity (the upper bounds of
 
 I first use simulation method to find the "normal" percentage of appearance of each AU for each Justices. The simulated mean percentage is then compared with the mean percentage appearance of each inidividual video to determine if an action unit appears considerably more or less than the "normal" level for each justices. The simulation and comparison procesure can be summarised as follows 
 
-- step 1: Compute the simulated mean percentage $\mu_{i,k}$ from all the videos for each Justices 
+- step 1: Compute the simulated mean percentage ![\mu_{i,k}](https://latex.codecogs.com/gif.latex?%5Cmu_%7Bi%2Ck%7D)from all the videos for each Justices 
 
 \begin{align*} 
 \mu_{i,k} = f(&x_{i,1,1,k}, x_{i,1,2,k}, \cdots, x_{i,1,T,k}\\
