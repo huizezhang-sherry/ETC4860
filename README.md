@@ -60,10 +60,8 @@ I first use simulation method to find the "normal" percentage of appearance of e
 - step 1: Compute the simulated mean percentage ![\mu_{i,k}](https://latex.codecogs.com/gif.latex?%5Cmu_%7Bi%2Ck%7D) from all the videos for each Justices 
 
 ![\begin{align*} 
-\mu_{i,k} = f(&x_{i,1,1,k}, x_{i,1,2,k}, \cdots, x_{i,1,T,k}\\
-&x_{i,2,1,k},x_{i,2,2,k},\cdots ,x_{i,2,T,k} ... \\
-&x_{i,J,1,k}, x_{i,J,2,k}, \cdots,x_{i,J,T,k} \\)
-\end{align*}](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20%5Cmu_%7Bi%2Ck%7D%20%3D%20f%28%26x_%7Bi%2C1%2C1%2Ck%7D%2C%20x_%7Bi%2C1%2C2%2Ck%7D%2C%20%5Ccdots%2C%20x_%7Bi%2C1%2CT%2Ck%7D%5C%5C%20%26x_%7Bi%2C2%2C1%2Ck%7D%2Cx_%7Bi%2C2%2C2%2Ck%7D%2C%5Ccdots%20%2Cx_%7Bi%2C2%2CT%2Ck%7D%20...%20%5C%5C%20%26x_%7Bi%2CJ%2C1%2Ck%7D%2C%20x_%7Bi%2CJ%2C2%2Ck%7D%2C%20%5Ccdots%2Cx_%7Bi%2CJ%2CT%2Ck%7D%20%29%20%5Cend%7Balign*%7D)
+\mu_{i,k} = f(&x_{i,1,1,k}, \cdots, x_{i,1,T,k}, x_{i,2,1,k},\cdots ,x_{i,2,T,k}, ...,x_{i,J,1,k},  \cdots,x_{i,J,T,k} \\)
+\end{align*}](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20%5Cmu_%7Bi%2Ck%7D%20%3D%20f%28%26x_%7Bi%2C1%2C1%2Ck%7D%2C%20%5Ccdots%2C%20x_%7Bi%2C1%2CT%2Ck%7D%2C%20x_%7Bi%2C2%2C1%2Ck%7D%2C%5Ccdots%20%2Cx_%7Bi%2C2%2CT%2Ck%7D%2C%20...%2Cx_%7Bi%2CJ%2C1%2Ck%7D%2C%20%5Ccdots%2Cx_%7Bi%2CJ%2CT%2Ck%7D%29%20%5Cend%7Balign*%7D)
 
 where ![$f(.)$](https://latex.codecogs.com/gif.latex?f%28.%29) is the function to compute the simulation. 
 
