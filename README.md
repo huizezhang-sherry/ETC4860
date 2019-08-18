@@ -74,8 +74,9 @@ where ![$f(.)$](https://latex.codecogs.com/gif.latex?f%28.%29) is the function t
 \mu_{6,1} & \mu_{6,2} & \cdots & \mu_{6,k} \\
 \end{bmatrix}](https://latex.codecogs.com/gif.latex?%5Cbegin%7Bbmatrix%7D%20%5Cmu_%7B1%2C1%7D%20%26%20%5Cmu_%7B1%2C2%7D%20%26%20%5Ccdots%20%26%20%5Cmu_%7B1%2Ck%7D%20%5C%5C%20%5Cmu_%7B2%2C1%7D%20%26%20%5Cmu_%7B2%2C2%7D%20%26%20%5Ccdots%20%26%20%5Cmu_%7B2%2Ck%7D%20%5C%5C%20%5Cvdots%20%26%20%5Cvdots%20%26%26%20%5Cvdots%20%5C%5C%20%5Cmu_%7B6%2C1%7D%20%26%20%5Cmu_%7B6%2C2%7D%20%26%20%5Ccdots%20%26%20%5Cmu_%7B6%2Ck%7D%20%5C%5C%20%5Cend%7Bbmatrix%7D)
 
-- step 2: Compute the mean percentage appearance of each individual video as 
-![$$\frac{1}{T} \sum_{t = 1}^T x_{i,j,t,k} $$](https://latex.codecogs.com/gif.latex?%24%24%5Cfrac%7B1%7D%7BT%7D%20%5Csum_%7Bt%20%3D%201%7D%5ET%20x_%7Bi%2Cj%2Ct%2Ck%7D%20%24%24) for each combination of ![$(i, j, k)$](https://latex.codecogs.com/gif.latex?%24%28i%2C%20j%2C%20k%29%24)
+- step 2: Compute the mean percentage appearance of each individual video for each combination of ![$(i, j, k)$](https://latex.codecogs.com/gif.latex?%24%28i%2C%20j%2C%20k%29%24)
+
+![$$\frac{1}{T} \sum_{t = 1}^T x_{i,j,t,k} $$](https://latex.codecogs.com/gif.latex?%24%24%5Cfrac%7B1%7D%7BT%7D%20%5Csum_%7Bt%20%3D%201%7D%5ET%20x_%7Bi%2Cj%2Ct%2Ck%7D%20%24%24) 
 
 
 
