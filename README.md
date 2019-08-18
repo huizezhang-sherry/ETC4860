@@ -59,11 +59,11 @@ I first use simulation method to find the "normal" percentage of appearance of e
 
 - step 1: Compute the simulated mean percentage $\mu_{i,k}$ from all the videos for each Justices 
 
-\begin{align} 
+\begin{align*} 
 \mu_{i,k} = f(&x_{i,1,1,k}, x_{i,1,2,k}, \cdots, x_{i,1,T,k}\\
 &x_{i,2,1,k},x_{i,2,2,k},\cdots ,x_{i,2,T,k} ... \\
 &x_{i,J,1,k}, x_{i,J,2,k}, \cdots,x_{i,J,T,k} \\)
-\end{align}
+\end{align*}
 
 where $f()$ is the function to compute the simulation. 
 
