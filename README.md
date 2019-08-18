@@ -48,8 +48,7 @@ Assuming all the information can be summarised as a `Y` variable with multiple i
 
 
 
-
-We answer the following few questions related to action unit 
+### What can we learn from the action unit data 
 
  - **What are the most common action units for each judges?**
 ![most common action units](images/most_common_au.png)
