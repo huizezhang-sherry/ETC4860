@@ -12,9 +12,9 @@ The revelent R code can be found in [2.Magick & OpenFace.Rmd](https://github.com
 
 ### Missing value imputation 
 
-The missingness in the dataset could be due to the fact that a judge is reading the materials on the desk so the face is not captured for a particular frame or simply because some faces are not detectable for the given resolution of the video stream. However, since that data is in time series structure, simply drop the missing observation will cause the time interval to be irregular and complicate further analysis. I use linear interpolation from `forecast` package to impute the missing value for each action unit. More details in [3.1missing.Rmd](https://github.com/huizezhang-sherry/ETC4860/blob/master/3.1missing.Rmd). 
+The missingness in the dataset could be due to the fact that a judge is reading the materials on the desk so the face is not captured for a particular frame or simply because some faces are not detectable for the given resolution of the video stream. However, since that data is in time series structure, simply drop the missing observation will cause the time interval to be irregular and complicate further analysis. There are two different sets of variables that need imputation: the ones end with `_c`, which is binary and the ones end with `_r`, which is a float number. Linear interpolation from `forecast` package is suitable to impute the variables end with `_r` and I sample from binomial distribution toimpute the variables end with `_c`. More details in [3.1missing.Rmd](https://github.com/huizezhang-sherry/ETC4860/blob/master/3.1missing.Rmd). 
 
-***More work need to be done to ensure the imputation of the AU occurrence is binary***
+
 
 ### Exploratory data analysis
 
@@ -36,9 +36,21 @@ I conduct some exploratory data analysis on one video: `Nauru_a` and find the 70
  
 ### Text Analysis 
 
-Text analysis conducted using the transcript strapped from the high court of Australia to study the interruptions by the justices. This is used as a benchmark to compare if facial information could help to understand more about Justices' decisions. 
+Text analysis conducted using the transcript strapped from the high court of Australia to study the interruptions by the justices. This is used as a benchmark to compare if facial information could help to understand more about Justices' decisions. See [3.5text&outcome.R](https://github.com/huizezhang-sherry/ETC4860/blob/master/3.5%20text%26outcome.R) for more details. 
  
 ## Stage 3: Action unit 
+
+We answer the following few questions related to action unit 
+
+**What are the most common action units for each judges?**
+![most common action units](images/most_common_au.png)
+
+**How does the intensity of action units looks like? **
+![](images/intensity_boxplot_au.png)
+
+We can see that most of the action units have low intensity (the upper bounds of the box are at about one). 
+
+
 
  
  
