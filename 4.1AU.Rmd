@@ -33,9 +33,6 @@ missing <- court %>%
             count = n(),
             na_prop = na_count/count, 
             data_prop = 1-na_prop)
-
-justices <- split(missing, missing$judge_id)
-
 ```
 
 This part checks that at least part of the AU is present with certain intensity
@@ -102,18 +99,33 @@ The presence of a single action unit is not sufficient enough to indicate emotio
 ```{r}
 # Because each judge has different numbers of frame available, mean is a better way ,than sum/ count,  to discribe the frequency of occurence. 
 
-au_imputed %>% 
- group_by(judge_id) %>% 
- dplyr::summarize_at(vars(AU01_c:AU45_c), mean, na.rm = TRUE) %>%
- gather(AU_label, value, -judge_id) %>% 
- separate(AU_label, c("AU", "suffix"), by = "_") %>%
- select(-suffix) %>% 
- ggplot(aes(x = fct_reorder(AU, value), y = value,fill = value)) + 
- geom_bar(stat = "identity") + 
- coord_flip() +
- facet_wrap(vars(judge_id))
+most_common <- au_imputed %>% 
+   group_by(judge_id) %>% 
+   dplyr::summarize_at(vars(ends_with("_c")), mean, na.rm = TRUE) %>%
+   gather(AU_label, value, -judge_id) %>% 
+   separate(AU_label, c("AU", "suffix"), by = "_") %>%
+   select(-suffix) %>% 
+  group_by(judge_id) %>% 
+  arrange(-value) %>% 
+  mutate(common = row_number()) %>% 
+  mutate(most_common = as_factor(ifelse(common <=5, 1, 0)))
+
+most_common %>% 
+ ggplot(aes(x =  fct_reorder(AU, value), y = value, 
+            fill = most_common, col = most_common)) + 
+  geom_col() +
+  xlab("AU") + 
+  facet_wrap(vars(judge_id)) + 
+  coord_flip()
  
-  # categorical color !!!
+ggsave(filename = "images/most_common_au.png")
+ 
+most_common %>% 
+  filter(most_common ==1) %>% 
+  select(-c(common, most_common, value)) %>% 
+  mutate(index = row_number()) %>% 
+  spread(judge_id, AU) 
+
 ```
 
 # Who has the most intense facial expression?
@@ -121,34 +133,38 @@ au_imputed %>%
 In general, most of the action unit are not intense, so I select the ones with intensity greater than one and I find that Nettle has largest porportion of "intense" facial expression. 
 
 ```{r}
-au_imputed %>% 
-  select(AU02_c, AU02_r, judge_id: speaker) %>% 
-  group_by(judge_id) %>% 
-  filter(judge_id == "Nettle") %>% 
-  dplyr::summarize_at(vars(AU02_r), mean, na.rm = TRUE)
-  
-au_intensity_all <- au_imputed %>% select(AU01_r: AU45_r, judge_id : speaker) %>% 
+au_intensity_all <- au_imputed %>% 
+  select(AU01_r: AU45_r, judge_id : speaker) %>% 
   gather(AU, intensity, -(judge_id: speaker)) %>% 
-  filter(intensity != "NA") 
+  mutate(is_intense = ifelse(intensity >= 2, 1, 0))  
+  
 
 # most of the action unit has very low intensity 
 au_intensity_all %>% 
-  ggplot(aes(x = judge_id, y = intensity, col = judge_id)) + 
-  geom_boxplot() 
+  ggplot(aes(x = judge_id, y = intensity, fill = video_id)) + 
+  geom_boxplot() + 
+  facet_wrap(vars(judge_id), scales = "free_x")
+ggsave("images/intensity_boxplot_au.png")
+
+au_intensity_all %>% filter(is_intense ==1) %>% 
+  ggplot(aes(x = frame_id, y = intensity, col = speaker)) + 
+  geom_point() +
+  facet_wrap(vars(judge_id))
+ggsave("images/is_intense.png")  
 
 # compute the proportion of action unit that has intensity greater than 1
-au_intensity <- au_intensity_all %>% filter(intensity > 1)
-
-count <- au_intensity %>% 
-  group_by(judge_id) %>% 
-  summarise(count = n()) 
-
-total <- au_intensity_all %>% 
-  group_by(judge_id) %>% 
-  summarise(total = n())
-
-count %>% left_join(total) %>% 
-  mutate(proportion = count/total*100)
+# au_intensity <- au_intensity_all %>% filter(intensity > 1)
+# 
+# count <- au_intensity %>% 
+#   group_by(judge_id) %>% 
+#   summarise(count = n()) 
+# 
+# total <- au_intensity_all %>% 
+#   group_by(judge_id) %>% 
+#   summarise(total = n())
+# 
+# count %>% left_join(total) %>% 
+#   mutate(proportion = count/total*100)
 ```
 
 # Action Unit by frame(time) - not much findings
@@ -167,7 +183,7 @@ aubyframe <- function(judge, video){
                    "AU20_r","AU25_r")) %>% 
   ggplot(aes(x = frame_id, y = value)) +
     geom_vline(xintercept = 80) +  # suppose to be a separate for speakers
-  geom_point() + 
+  geom_line() + 
     geom_smooth(span = 0.1, se = FALSE) + 
   facet_wrap(vars(AU)) 
 }
@@ -220,7 +236,7 @@ ActionUnitbySpeaker <- function(dt, judge, case = case_list){
   
   diff <- setdiff(case_cand, sample$video_id) 
   if (length(diff) > 0){
-    warning(sprintf("%s has less than 10 frames, so it is dropped", diff))
+    warning(sprintf("\n %s has less than 10 frames, so it is dropped", diff))
   }
 
   dt %>% 
@@ -233,8 +249,7 @@ ActionUnitbySpeaker <- function(dt, judge, case = case_list){
     gather(AU_label, value, -c(speaker, video_id)) %>% 
     separate(AU_label, c("AU", "suffix"), by = "_") %>%
     select(-suffix) %>%
-    ggplot(aes(x = tidytext::reorder_within(AU, by = value,
-                                            within = video_id*speaker), 
+    ggplot(aes(x = fct_reorder(AU, value), 
                y = value, col = value, fill = value)) +
     geom_bar(stat = "identity") +
     facet_grid(speaker ~ video_id, scales = "free")+
@@ -252,6 +267,20 @@ ActionUnitbySpeaker(au_imputed, "Bell", case = c("OKS", "McKell"))
 ActionUnitbySpeaker(au_imputed, "Gageler")
 ActionUnitbySpeaker(au_imputed, "Nettle")
 ActionUnitbySpeaker(au_imputed, "Edelman")
+
+au_imputed %>% 
+  group_by(judge_id, speaker, video_id) %>% 
+  dplyr::summarize_at(vars(ends_with("c")), mean, na.rm = TRUE) %>% 
+  gather(AU_label, value, -c(speaker, video_id)) %>% 
+  separate(AU_label, c("AU", "suffix"), by = "_") %>%
+  select(-suffix) %>%
+  ggplot(aes(x = fct_reorder(AU, value), 
+             y = value, col = value, fill = value)) +
+  geom_bar(stat = "identity") +
+  facet_grid(speaker ~ video_id, scales = "free")+
+  ylab("Count") +
+  coord_flip()
+    
 
 ```
 
