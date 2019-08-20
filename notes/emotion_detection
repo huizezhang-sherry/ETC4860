@@ -1,0 +1,11 @@
+Emotions determination (recognition process) is often performed in 3 basic phases: face detection, facial features extraction, and last stage - expression classification
+  - face detection & feature extraction: OpenFace
+  - expression classification: what we are doing 
+
+six universal emotion identified by Ekman: anger, disgust, fear, happiness, sadness, surprise
+  - everyone express these six emotions based on the same subset of muscles - even the blind that never see other people! 
+  - Apart from Ekman's model, there are other emotion classificatio ntheories i.e. Russell's Circumplex model; Plutchik's model...
+
+In Steph's paper, they manually label the images with 7 sports emotions and then train the supervised learning algorithms to predict the labelled emotions. Then profile of the big 4 is built based on the intensity of the sports emotions and see how that relates to the on-court performance(serving and winning the next point). s
+
+The problem in my proeject is more of an unsupervised learnig without labels - we can have labels being the decision
