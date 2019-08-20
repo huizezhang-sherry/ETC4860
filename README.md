@@ -40,12 +40,22 @@ Text analysis conducted using the transcript strapped from the high court of Aus
 
 ### Data Structure
 
-The rest of the project focuses on the action unit related variables. If we write all the information in the matrix notation, every element will have four indices: `i` for `judge_id`; `j` for `video_id`; `t` for `frame_id` and `k` for `au_id`. Using the tidy principle, the data is in a tsibble format with `index = frame_id` and `key = c("judge_id, video_id)`. Different measurements on the presence and intensity of each action units are the variables. 
+The rest of the project focuses on the action unit related variables. If we write all the information in the matrix notation, every element will have four indices: 
 
-Assuming all the information can be summarised as a `Y` variable with multiple indices `(i,j,t,k)`. We can summarise the information via a linear combination of variables as [may need to refine this part ]
+- `i` for `judge_id`; 
+- `j` for `video_id`; 
+- `t` for `frame_id` and 
+- `k` for `au_id`. 
 
-[more math here]
+Using the tidy principle, the data is in a tsibble format with `index = frame_id` and `key = c("judge_id, video_id)`. Different measurements on the presence and intensity of each action units are the variables. 
 
+Assuming all the facial information can be summarised as a `Y` variable with multiple indices `(i,j,t,k)`. We can summarise the information via a linear combination of variables as 
+
+![Y_{ijtk} = \mu + \alpha_i + \beta_j + \gamma_t + \delta_k + CP_2(\alpha_i, \beta_j, \gamma_t, \delta_k) + CP_3(\alpha_i, \beta_j, \gamma_t, \delta_k)](https://latex.codecogs.com/gif.latex?Y_%7Bijtk%7D%20%3D%20%5Cmu%20&plus;%20%5Calpha_i%20&plus;%20%5Cbeta_j%20&plus;%20%5Cgamma_t%20&plus;%20%5Cdelta_k%20&plus;%20CP_2%28%5Calpha_i%2C%20%5Cbeta_j%2C%20%5Cgamma_t%2C%20%5Cdelta_k%29%20&plus;%20CP_3%28%5Calpha_i%2C%20%5Cbeta_j%2C%20%5Cgamma_t%2C%20%5Cdelta_k%29)
+
+where 
+- CP_2 is the all possible interaction of the two variables
+- CP_3 is the all possible interaction of the three variables
 
 
 ### What can we learn from the action unit data 
@@ -63,23 +73,18 @@ Rank by judge_id:
 |    4 |AU02 | AU14  | AU14 | AU14 | AU45 |AU01  |
 |    5 |AU20 | AU15  | AU20 | AU45 | AU14 |AU14  |
 
-It can be seen that AU02(outer eyebrow raise) and AU20(lip stretcher) are both common for all the judges. 
+It can be seen that AU02(outer eyebrow raise) and AU20(lip stretcher) are both common for all the judges. AU15 and AU14 are also commonly detected for five out of the six judges. Other commonly displayed action units include: AU01, AU09, AU20, AU25 and AU45. 
+
+[I have problems here to relate AUs to emtions]
+
 
  - **How does the intensity of action units looks like?**
 ![intensity_boxplot](images/intensity_boxplot_au.png)
 
-We can see that most of the action units have low intensity (the upper bounds of the box are at about one). 
+In Ekman's 20002 FACS manual, the intensity of Action unit is defined based on five classes: Trace(1), Slight(2), Marked or pronounced(3), Severe or extreme(4) and Maximum(5).  From the plot, most of the action units have low intensity (the upper bounds of the box are at about one) and this is expected because usually in the court room judges are expected to behave neural. 
 
-
-notes:
-
-There are predefined score for intensity 
-A Trace
-B Slight
-C Marked or pronounced
-D Severe or extreme
-E Maximum
-
+![intense_point](images/is_intense.png)
+The points in the second plot are the one with intensity greater than 2. These are the points where the action units are slightly detected as per Ekman. It tells us that Edelman, Gageler and Nettle are the judges have stronger emotion that can be detected (since they have more points with intensity greater than 2). Different judges also have different time where they display stronger emotions. For example, Justice Nettle are more likely to have stronger emotion throughout the time when the appellent is speaking but only at the beginning and ending periold when the respondent is speaking. 
 
 ## Stage 4: Action unit within judge 
 
