@@ -53,10 +53,33 @@ Assuming all the information can be summarised as a `Y` variable with multiple i
  - **What are the most common action units for each judges?**
 ![most common action units](images/most_common_au.png)
 
+Rank by judge_id: 
+
+|index |Bell | Edelman| Gageler| Keane| Kiefel |Nettle|
+|------|-----|-------|------|------|------|------|
+|    1 |AU09 | AU02  | AU02 | AU20 | AU02 |AU02  |
+|    2 |AU15 | AU20  | AU05 | AU15 | AU25 |AU15  |
+|    3 |AU25 | AU01  | AU15 | AU02 | AU20 |AU20  |
+|    4 |AU02 | AU14  | AU14 | AU14 | AU45 |AU01  |
+|    5 |AU20 | AU15  | AU20 | AU45 | AU14 |AU14  |
+
+It can be seen that AU02(outer eyebrow raise) and AU20(lip stretcher) are both common for all the judges. 
+
  - **How does the intensity of action units looks like?**
 ![intensity_boxplot](images/intensity_boxplot_au.png)
 
 We can see that most of the action units have low intensity (the upper bounds of the box are at about one). 
+
+
+notes:
+
+There are predefined score for intensity 
+A Trace
+B Slight
+C Marked or pronounced
+D Severe or extreme
+E Maximum
+
 
 ## Stage 4: Action unit within judge 
 
