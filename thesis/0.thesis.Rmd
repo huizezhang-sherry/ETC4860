@@ -13,29 +13,38 @@ csl: apa.csl
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, cache = TRUE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+
 library(tidyverse)
 library(boot)
 library(broom)
 
-load("raw_data/au.rda")
+load("../raw_data/au_imputed.rda")
 ```
 
 
 # Data structure
 
+The rest of the project focuses on the action unit related variables. If we write all the information in the matrix notation, every element will have four indices: 
 
-<!-- \begin{align} -->
-<!-- Y_{ijtk} &= \mu + \alpha_i + \beta_j + \gamma_t + \delta_k + CP_2(\alpha_i, \beta_j, \gamma_t, \delta_k) + CP_3(\alpha_i, \beta_j, \gamma_t, \delta_k) \\ -->
-<!-- \text{where} \\ -->
-<!-- i &\text{ is the judge_id index and } i = 1, 2, \cdots, I \\ -->
-<!-- j &\text{ is the video_id index and } j = 1, 2, \cdots, J \\ -->
-<!-- t &\text{ is the time index and } t = 1, 2, \cdots, T_J \\ -->
-<!-- k &\text{ is the index for the available action unit in this project and } k = 1, 2, \cdots, K \\ -->
-<!-- CP_2 & \text{ is the all possible interaction of the two variables}\\ -->
-<!-- CP_3 & \text{ is the all possible interaction of the three variables} -->
-<!-- \end{align} -->
+- $i$ for `judge_id`; 
+- $j$ for `video_id`; 
+- $t$ for `frame_id` and 
+- $k$ for `au_id`. 
 
+Using the tidy principle, the data is in a tsibble format with `index = frame_id` and `key = c("judge_id, video_id)`. Different measurements on the presence and intensity of each action units are the variables. Assuming all the facial information can be summarised as a `Y` variable with multiple indices `(i,j,t,k)`. We can summarise the information via a linear combination of variables as 
+
+
+$$Y_{ijtk} = \mu + \alpha_i + \beta_j + \gamma_t + \delta_k + CP_2(\alpha_i, \beta_j, \gamma_t, \delta_k) + CP_3(\alpha_i, \beta_j, \gamma_t, \delta_k)$$
+
+where
+
+- $i$ is the judge_id index and $i = 1, 2, \cdots, I$
+- $j$ is the video_id index and $j = 1, 2, \cdots, J$
+- $t$ is the time index and $t = 1, 2, \cdots, T_J$
+- $k$ is the index for the available action unit in this project and $k = 1, 2, \cdots, K$
+- $CP_2$ is the all possible interaction of the two variables
+- $CP_3$ is the all possible interaction of the three variables
 
 
 
@@ -71,11 +80,11 @@ The PCA study can help us to answer the following question: Who is the most anim
 # Appendix 
 
 ```{r echo = FALSE}
-summarised_mean <- au %>% 
+summarised_mean <- au_imputed %>% 
   select(-speaker, -frame_id) %>% 
   group_by(judge_id, video_id) %>% 
   summarise_all(mean, na.rm = TRUE) %>% 
-  filter(AU01_c != "NaN") # four combination have na_prop = 1
+  filter(AU01_c != "NaN") # filter out possible judge-video combination
   
 pca_data <- summarised_mean %>%   
   ungroup() %>%
