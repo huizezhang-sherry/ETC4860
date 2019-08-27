@@ -82,7 +82,7 @@ save(au_video, file = "raw_data/au_video.rda")
 save(count, file = "raw_data/count.rda")
 ```
 
-## simulation function using binomial distribution
+## simulation function: binomial distribution
 ```{r}
 sim_norm <- function(count, mean_true, M = 1000){
  mean <- numeric(length = M)
@@ -105,6 +105,7 @@ sim_norm <- function(count, mean_true, M = 1000){
 
 ### simulation using binomial distribution 
 
+- doesnt work for Bell because of sample size
 - The interval is quite small: a lot of the action units are out of the simulation bound - what to do with them?
 - It seems that the simulation from the two methods are not consistent - bootstraping has much wider confidence interval 
 
@@ -129,15 +130,16 @@ au_sim2_majority <- au_sim_majority %>%
  mutate(outliers = as.factor(ifelse(mean_ind > sim_ci_low,
                                      ifelse(mean_ind < sim_ci_high, 0, 1), 1)))
 
-au_sim2_majority %>%
+sim_bino_vis <- au_sim2_majority %>%
  mutate(AU = as.factor(AU)) %>%
  ggplot(aes(x = mean_agg, 
             y = fct_reorder(AU, mean_agg))) +
   geom_errorbarh(aes(xmin = sim_ci_low, xmax = sim_ci_high), col = "gray") +
   facet_wrap(vars(judge_id)) +
   geom_point(aes(x = mean_ind, col = outliers)) + 
-  ylab("AU")
-  
+  ylab("AU") + 
+  ggtitle("Mean percentage appearance - Binomial distribution")
+   
 ggsave("images/sim_bino_appearance.png")
 
 # half binomial and half bootstrapping
@@ -229,16 +231,19 @@ ci_count <- au_aggregate %>%
 
 save(ci_count,file = "raw_data/ci_count.rda")
 
-ci_count %>%
+sim_boot_vis <- ci_count %>%
   mutate(AU = as.factor(AU)) %>% 
   ggplot(aes(x = mean_agg, 
              y = fct_reorder(AU, sim_mean))) + 
   geom_errorbarh(aes(xmin = sim_low, xmax = sim_high), col = "gray") + 
-  facet_wrap(vars(judge_id)) + 
+  facet_wrap(vars(fct_relevel(judge_id, levels = c("Edelman", "Gageler", "Keane", "Kiefel", "Nettle", "Bell")))) + 
   geom_point(aes(x = mean_ind, col = outliers)) + 
-  ylab("AU")
+  ylab("AU") + 
+  ggtitle("Mean percentage appearance - bootstapping")
 
-ggsave("images/sim_boot_appearance.png")
+gridExtra::grid.arrange(sim_boot_vis, sim_bino_vis, nrow = 1)
+
+ggsave("images/sim_result_vis.png")
 # bootstrap interval is indeed wider than those simulated from binomial 
 ```
 
