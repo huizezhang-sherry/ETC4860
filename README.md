@@ -109,9 +109,9 @@ I first use simulation method to find the "normal" percentage of appearance of e
 \mu_{(6,1)}  & \cdots & \mu_{(6,k)} \\
 \end{bmatrix}](https://latex.codecogs.com/gif.latex?%5Cbegin%7Bbmatrix%7D%20%5Cmu_%7B%281%2C1%29%7D%20%26%20%5Ccdots%20%26%20%5Cmu_%7B%281%2Ck%29%7D%20%5C%5C%20%5Cmu_%7B%282%2C1%29%7D%20%26%20%5Ccdots%20%26%20%5Cmu_%7B%282%2Ck%29%7D%20%5C%5C%20%5Cvdots%20%26%26%20%5Cvdots%20%5C%5C%20%5Cmu_%7B%286%2C1%29%7D%20%26%20%5Ccdots%20%26%20%5Cmu_%7B%286%2Ck%29%7D%20%5C%5C%20%5Cend%7Bbmatrix%7D)
 
-- Step 2: Compute the mean percentage appearance of each individual video ![\frac{1}{T} \sum_{t = 1}^T x_{(i,j,t,k)}](hhttps://latex.codecogs.com/gif.latex?%5Cfrac%7B1%7D%7BT%7D%20%5Csum_%7Bt%20%3D%201%7D%5ET%20x_%7B%28i%2Cj%2Ct%2Ck%29%7D) for each combination of ![$(i, j, k)$](https://latex.codecogs.com/gif.latex?%24%28i%2C%20j%2C%20k%29%24)
+- Step 2: Compute the mean percentage appearance of each individual video ![\frac{1}{T} \sum_{t = 1}^T x_{(i,j,t,k)}](https://latex.codecogs.com/gif.latex?%5Cfrac%7B1%7D%7BT%7D%20%5Csum_%7Bt%20%3D%201%7D%5ET%20x_%7B%28i%2Cj%2Ct%2Ck%29%7D) for each combination of ![$(i, j, k)$](https://latex.codecogs.com/gif.latex?%24%28i%2C%20j%2C%20k%29%24)
 
-The simulation result is presented here ![au_presence_sim](images/sim_bino_appearance.png.png) and ![au_presence_sim](images/sim_boot_appearance.png.png)
+The simulation result is presented here ![au_presence_sim](images/sim_bino_appearance.png) and ![au_presence_sim](images/sim_boot_appearance.png)
 
 Todo: 
 - maybe more interpretation on the result
