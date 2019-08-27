@@ -13,14 +13,14 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 library(tidyverse)
 load("raw_data/ci_count.rda")
 load("raw_data/court.rda")
-load("raw_data/au.rda")
+load("raw_data/au_imputed.rda")
 load("raw_data/sim_result.rda")
 load("raw_data/au_aggregate.rda")
 ```
 
 # Task 1: Distribution by Judge: 
 ## Does the judge behave consistently across the videos?
-## sAre there any abnormal moment during one video for a particular judge?
+## Are there any abnormal moment during one video for a particular judge?
 
 Since we only have a few cases for each judge, simulation study is more suitable here. 
 
@@ -47,13 +47,11 @@ by_judge %>%
   group_by(judge_id)%>% 
   mutate(mean_judge = mean(mean_agg)) %>% 
   ggplot(aes(x = mean_agg, 
-             y = tidytext::reorder_within(AU, by = mean_agg, 
-                                          within = judge_id, sep = "_"), 
+             y = fct_reorder(AU, mean_agg), 
              col = AU)) + 
   geom_point() +
-  facet_wrap(vars(fct_reorder(judge_id, mean_judge, .desc = TRUE)), scales = "free_y") + 
-  ylab("Action Unit") + 
-  scale_y_discrete(labels = function(x) word(x, start = 1, sep = "_"))
+  facet_wrap(vars(fct_reorder(judge_id, mean_judge, .desc = TRUE))) + 
+  ylab("Action Unit") 
 
 # top 5 action unit by judge
 by_judge %>% 
@@ -83,11 +81,11 @@ Our results tells us our female judges: Bell, Kiefel and Gordon are more animate
 ```{r}
 library(broom)
 # PCA doesnt allow for judge_id and video_id, so save a copy of them, compute pca and then add the two indices back 
-summarised_mean <- au %>% 
+summarised_mean <- au_imputed %>% 
   select(-speaker, -frame_id) %>% 
   group_by(judge_id, video_id) %>% 
   summarise_all(mean, na.rm = TRUE) %>% 
-  filter(AU01_c != "NaN") # four combination have na_prop = 1
+  filter(AU01_c != "NaN") 
   
 pca_data <- summarised_mean %>%   
   ungroup() %>%
@@ -98,7 +96,7 @@ pca_model <- pca_data %>%
   mutate(model = map(data, ~prcomp(.x)))
 
 # vis: variance explained: top 10 PCs explains 94.5% of the variance - happy with that
-pca_model$model %>%
+p1 <- pca_model$model %>%
   map_df(~tidy(.x, data = .y, "pcs")) %>%
   ggplot(aes(x = PC, y = cumulative)) + 
   geom_line() + 
@@ -110,17 +108,24 @@ pca_aug <- pca_model %>%
   bind_cols(summarised_mean[, 1:2]) 
 
 # PCA vis
-pca_aug %>% 
+p2 <- pca_aug %>% 
   ggplot(aes(x = .fittedPC1, y = .fittedPC2, col = judge_id)) + 
   geom_point()
 
+# seems that there's an "outliner" in the data for Bell: this is in video OKS
+pca_aug %>% select(.fittedPC1, .fittedPC2, judge_id, video_id) %>% filter(judge_id == "Bell")
+
+
 # Most important variables
 library(factoextra)
-fviz_pca_var(prcomp(pca_data),
+pca_subset <- prcomp(pca_data)
+
+p3 <- fviz_pca_var(pca_subset,
              col.var = "contrib", # Color by contributions to the PC
              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
              repel = TRUE     # Avoid text overlapping
              )
+
 pca_model$model[[1]]$rotation %>% 
   as_tibble() %>% 
   bind_cols(AU = colnames(pca_data)) %>% 
@@ -140,16 +145,23 @@ most_animated_judge <- pca_aug %>%
   ungroup() %>% 
   mutate(index = select(., .fittedPC1: .fittedPC2) %>% rowSums()) %>% 
   select(judge_id, index) %>% 
-  arrange(desc(index))
+  arrange(desc(index)) # ignore the warning message 
 
 most_animated_judge
 
-most_animated_judge %>% 
+p4 <- most_animated_judge %>% 
   ggplot(aes(x = fct_reorder(judge_id, desc(index)), 
              y = index, col = index, fill = index)) + 
   geom_bar(stat = "identity") + 
+  theme(axis.text.x = element_text(angle = 30, hjust = 1)) + 
   xlab("judge") + 
   ggtitle("Who is the most animated judge?")
+
+gridExtra::grid.arrange(p1, p2,p3,p4)
+g <- gridExtra::arrangeGrob(p1, p2,p3,p4) #generates g
+ggsave(file="images/pca.png", g)
+
+p3
 ```
 
 Penalsd LDA/ LASSO maybe in class variable
@@ -160,7 +172,7 @@ Penalsd LDA/ LASSO maybe in class variable
 
 # need to figure out how to arrange the graph
 load("raw_data/ci_intensity.rda")
-au_sim_frame <- au %>% 
+au_sim_frame <- au_imputed %>% 
   select(AU01_r: AU45_r, judge_id :speaker) %>% 
   gather(AU, value, -(judge_id: speaker))%>% 
   left_join(ci_intensity) %>% 
