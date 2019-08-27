@@ -142,7 +142,12 @@ x_{I,J,\bar{t},1} & x_{I,J,\bar{t},2} & \cdots & x_{I,J,\bar{t},K}
 
 The result of PCA can be summarised through the following visualisation. ![pca](images/pca.png)
 
+Since PCs are linear combination of the original variables, we take the absolute value of the fitted PCs and compute the sum to create an index. In this study, the first two fitted PCs are summed to determine the most animated judge and I find that Justices Bell is the most animated, then followed by the Chief Justices Kiefel and Justices Nettle. Edelman and Keane are the more nutural Justices. 
 
+The PCA exercise shows the most important linear combination of the action unit variables, which motivates us to find the most animated judge and thus help to build the judge profile. However, there are a few issues with the current PCA practice: 
+
+- The time index is averaged, thus can't see how variables evolving over time 
+- The cumulated variance plot increase quite smoothly indicating the data itself is not very correlated. 
 
 ## Stage 6: Emotion Profile 
 
@@ -151,14 +156,12 @@ In this section, I create emotion profile for each of the judge to summarise the
 
 |Judge |Charactieristics|
 |----|--------------------------------|
-|Nettle|More stronger emotion; at the beginning and ending periold when the respondent is speaking.
+|Nettle|More stronger emotion; at the beginning and ending periold when the respondent is speaking.|
 
-|
-|Gageler|More stronger emotion|
-|Edelman|More stronger emotion|
-|Keane||
-|Kiefel||
-|Bell||
-|||
+|Bell|Most animated judge (has most influential action unit in both appearance and intensity)|
+|Edelman|More stronger emotion but not influential|
+|Gageler|More stronger emotion, relatively neutural|
+|Keane|relatively neutural|
+|Kiefel|relatively neutural|
 
 
