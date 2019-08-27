@@ -8,7 +8,7 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, cache = TRUE, message = FALSE)
+knitr::opts_chunk$set(echo = TRUE,message = FALSE)
 
 library(tidyverse)
 library(boot)
@@ -126,17 +126,17 @@ au_sim2_majority <- au_sim_majority %>%
  bind_cols(temp) %>%
  left_join(au_video, by = c("judge_id", "AU")) %>%
  ungroup() %>%
- mutate(outliners = as.factor(ifelse(mean_ind > sim_ci_low,
+ mutate(outliers = as.factor(ifelse(mean_ind > sim_ci_low,
                                      ifelse(mean_ind < sim_ci_high, 0, 1), 1)))
 
 au_sim2_majority %>%
  mutate(AU = as.factor(AU)) %>%
- ggplot(aes(mean_agg, fct_reorder(AU, mean_agg), value)) +
+ ggplot(aes(x = mean_agg, 
+            y = fct_reorder(AU, mean_agg))) +
   geom_errorbarh(aes(xmin = sim_ci_low, xmax = sim_ci_high), col = "gray") +
   facet_wrap(vars(judge_id)) +
-  geom_point(aes(x = mean_ind, y = AU, col = outliners)) + 
-  ylab("AU") + 
-  ggtitle("Simulation of mean percentage appearance using binomial distribution")
+  geom_point(aes(x = mean_ind, col = outliers)) + 
+  ylab("AU")
   
 ggsave("images/sim_bino_appearance.png")
 
@@ -165,7 +165,7 @@ ggsave("images/sim_bino_appearance.png")
 
 ```
 
-## simulation function via bootstraping 
+## simulation function: bootstraping 
 ```{r}
 set.seed(377)
 mean.fun <- function(data, index){
@@ -212,7 +212,7 @@ boot_sim <- function(judge){
 
 ```
 
-# Simulation all using bootstrap
+### Simulation all using bootstrap
 ```{r}
 sim_result<- map_df(.x = judge_id, 
                     ~boot_sim(.x) %>% mutate(judge_id = .x))
@@ -224,7 +224,7 @@ ci_count <- au_aggregate %>%
   right_join(sim_result, by = c("judge_id", "AU")) %>%
   left_join(au_video, by = c("judge_id", "AU")) %>% 
   ungroup() %>% 
-  mutate(outliners = as.factor(ifelse(mean_ind > sim_low, 
+  mutate(outliers = as.factor(ifelse(mean_ind > sim_low, 
                                       ifelse(mean_ind < sim_high, 0, 1), 1)))
 
 save(ci_count,file = "raw_data/ci_count.rda")
@@ -235,7 +235,7 @@ ci_count %>%
              y = fct_reorder(AU, sim_mean))) + 
   geom_errorbarh(aes(xmin = sim_low, xmax = sim_high), col = "gray") + 
   facet_wrap(vars(judge_id)) + 
-  geom_point(aes(x = mean_ind, col = outliners)) + 
+  geom_point(aes(x = mean_ind, col = outliers)) + 
   ylab("AU")
 
 ggsave("images/sim_boot_appearance.png")
@@ -245,10 +245,10 @@ ggsave("images/sim_boot_appearance.png")
 
 
 ```{r}
-outliners <- ci_count %>% 
-  filter(outliners == 1, mean_ind > 0.05) 
+outliers <- ci_count %>% 
+  filter(outliers == 1, mean_ind > 0.05) 
 
-outliners %>% 
+outliers %>% 
   ggplot(aes(x = mean_ind, y  =AU)) + 
   geom_point(aes(col = video_id)) + 
   facet_wrap(vars(judge_id), scales = "free_y") + 
@@ -260,43 +260,43 @@ outliners %>%
 # Outlinear detection - Anomaly detection 
 
 ```{r}
-library(broom)
-
-by_index <- au_imputed %>%
- select(AU01_c: AU45_c, judge_id: speaker) %>%
- group_by(judge_id, video_id) %>%
- summarise_at(vars(AU01_c: AU45_c), mean) %>% 
- gather(AU, mean_ind, -judge_id, -video_id) %>%
-  group_by(judge_id, AU) %>% 
-  nest()
-  
-anomaly_detection <- function(data,index){
-   val <-  data$mean_ind[index]
-   t = mean(val)
-   val_sub <- val[-which.max(val)]
-   tm = mean(val_sub)
-   return(t-tm)
- }
-  
-model <- by_index %>% 
-  mutate(bootstrap = map(data, ~boot(.x, anomaly_detection, R= 10000))) %>% 
-  mutate(t = map(bootstrap, ~.x$t))
-  
-anomaly_result <- data.frame(matrix(unlist(model$t), nrow=length(model$t), byrow=T)) %>% 
-  mutate(AU = by_index$AU, judge_id = by_index$judge_id) %>% 
-  gather(t_n, value, -c(AU, judge_id))
-
-Keane <- anomaly_result %>% 
-  filter(judge_id == "Keane") %>% 
-  ggplot(aes(x = value)) +
-  geom_density() + # bins = 3 works
-  facet_wrap(vars(AU), scales = "free")
-
-Keane
-
-
-a <- anomaly_result %>% filter(judge_id == "Keane", t_n == "X1") 
-a$value %>% hist()
+# library(broom)
+# 
+# by_index <- au_imputed %>%
+#  select(AU01_c: AU45_c, judge_id: speaker) %>%
+#  group_by(judge_id, video_id) %>%
+#  summarise_at(vars(AU01_c: AU45_c), mean) %>% 
+#  gather(AU, mean_ind, -judge_id, -video_id) %>%
+#   group_by(judge_id, AU) %>% 
+#   nest()
+#   
+# anomaly_detection <- function(data,index){
+#    val <-  data$mean_ind[index]
+#    t = mean(val)
+#    val_sub <- val[-which.max(val)]
+#    tm = mean(val_sub)
+#    return(t-tm)
+#  }
+#   
+# model <- by_index %>% 
+#   mutate(bootstrap = map(data, ~boot(.x, anomaly_detection, R= 10000))) %>% 
+#   mutate(t = map(bootstrap, ~.x$t))
+#   
+# anomaly_result <- data.frame(matrix(unlist(model$t), nrow=length(model$t), byrow=T)) %>% 
+#   mutate(AU = by_index$AU, judge_id = by_index$judge_id) %>% 
+#   gather(t_n, value, -c(AU, judge_id))
+# 
+# Keane <- anomaly_result %>% 
+#   filter(judge_id == "Keane") %>% 
+#   ggplot(aes(x = value)) +
+#   geom_density() + # bins = 3 works
+#   facet_wrap(vars(AU), scales = "free")
+# 
+# Keane
+# 
+# 
+# a <- anomaly_result %>% filter(judge_id == "Keane", t_n == "X1") 
+# a$value %>% hist()
 ```
 
 
