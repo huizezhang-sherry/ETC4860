@@ -94,7 +94,7 @@ In this section, I use bootstrap simulation to answer the question
 
 I first use simulation method to find the "normal" percentage of appearance of each AU for each Justices. The simulated mean percentage is then compared with the mean percentage appearance of each inidividual video to determine if an action unit appears considerably more or less than the "normal" level for each justices. The simulation and comparison procesure can be summarised as follows 
 
-- Step 1: Compute the simulated mean percentage ![\mu_{(i,k)}](https://latex.codecogs.com/gif.latex?%5Cmu_%7B%28i%2Ck%29%7D) for each pair of ![(i,k)](https://latex.codecogs.com/gif.latex?%28i%2Ck%29) using bootstrapping. Below is an illustration of how bootstrap simulation is applied for *one particular* Justices-AU pair ![(i,k)](https://latex.codecogs.com/gif.latex?%28i%2Ck%29).
+- Step 1: Compute the simulated mean percentage appearance ![\mu_{(i,k)}](https://latex.codecogs.com/gif.latex?%5Cmu_%7B%28i%2Ck%29%7D) for each pair of ![(i,k)](https://latex.codecogs.com/gif.latex?%28i%2Ck%29) using bootstrapping and binomial distribution. Below is an illustration of how bootstrap simulation is applied for *one particular* Justices-AU pair ![(i,k)](https://latex.codecogs.com/gif.latex?%28i%2Ck%29).
 
   - The replicates ![(r_1, r_2, \cdots, r_n)](https://latex.codecogs.com/gif.latex?%28r_1%2C%20r_2%2C%20%5Ccdots%2C%20r_n%29) for bootstrap simulation are drawn from ![x_{(i,1,1,k)}, x_{(i,1,2,k)}, \cdots, x_{(i,1,T,k)},\cdots, x_{(i,J,1,k)},x_{(i,J,2,k)},  \cdots,x_{(i,J,T,k)} ](https://latex.codecogs.com/gif.latex?x_%7B%28i%2C1%2C1%2Ck%29%7D%2C%20x_%7B%28i%2C1%2C2%2Ck%29%7D%2C%20%5Ccdots%2C%20x_%7B%28i%2C1%2CT%2Ck%29%7D%2C%5Ccdots%2C%20x_%7B%28i%2CJ%2C1%2Ck%29%7D%2Cx_%7B%28i%2CJ%2C2%2Ck%29%7D%2C%20%5Ccdots%2Cx_%7B%28i%2CJ%2CT%2Ck%29%7D)
   
@@ -128,7 +128,20 @@ In this section, I use principle component analysis (PCA) to answer the question
 
 - ***Does the judges behave the same or different from one to another?***
 
-The data is first pre-processed before being supplied into the PCA algorithm. For each judge-video-au pair, an average value across time `t` is first calculated. 
+Apart from understand how each Justice behaves consistently or not across all the videos, we are also interested in comparing *across* all the Justices to study who are more animated than others during the hearings. Time index is averaged for each judge and video pair and mathmetically, the matrix supplied to the PCA algorithm can be represented as follows. ![\begin{align}
+\begin{bmatrix}
+x_{1,1,\bar{t},1} & x_{1,1,\bar{t},2} & \cdots & x_{1,1,\bar{t},K}\\
+x_{1,2,\bar{t},1} & x_{1,2,\bar{t},2} & \cdots & x_{1,2,\bar{t},K}\\
+\vdots & \vdots & &\vdots\\
+x_{1,J,\bar{t},1} & x_{1,J,\bar{t},2} & \cdots & x_{1,2,\bar{t},K}\\
+x_{2,1,\bar{t},1} & x_{2,1,\bar{t},2} & \cdots & x_{2,1,\bar{t},K}\\
+\vdots & \vdots & &\vdots\\
+x_{I,J,\bar{t},1} & x_{I,J,\bar{t},2} & \cdots & x_{I,J,\bar{t},K}
+\end{bmatrix}
+\end{align}](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign%7D%20%5Cbegin%7Bbmatrix%7D%20x_%7B1%2C1%2C%5Cbar%7Bt%7D%2C1%7D%20%26%20x_%7B1%2C1%2C%5Cbar%7Bt%7D%2C2%7D%20%26%20%5Ccdots%20%26%20x_%7B1%2C1%2C%5Cbar%7Bt%7D%2CK%7D%5C%5C%20x_%7B1%2C2%2C%5Cbar%7Bt%7D%2C1%7D%20%26%20x_%7B1%2C2%2C%5Cbar%7Bt%7D%2C2%7D%20%26%20%5Ccdots%20%26%20x_%7B1%2C2%2C%5Cbar%7Bt%7D%2CK%7D%5C%5C%20%5Cvdots%20%26%20%5Cvdots%20%26%20%26%5Cvdots%5C%5C%20x_%7B1%2CJ%2C%5Cbar%7Bt%7D%2C1%7D%20%26%20x_%7B1%2CJ%2C%5Cbar%7Bt%7D%2C2%7D%20%26%20%5Ccdots%20%26%20x_%7B1%2C2%2C%5Cbar%7Bt%7D%2CK%7D%5C%5C%20x_%7B2%2C1%2C%5Cbar%7Bt%7D%2C1%7D%20%26%20x_%7B2%2C1%2C%5Cbar%7Bt%7D%2C2%7D%20%26%20%5Ccdots%20%26%20x_%7B2%2C1%2C%5Cbar%7Bt%7D%2CK%7D%5C%5C%20%5Cvdots%20%26%20%5Cvdots%20%26%20%26%5Cvdots%5C%5C%20x_%7BI%2CJ%2C%5Cbar%7Bt%7D%2C1%7D%20%26%20x_%7BI%2CJ%2C%5Cbar%7Bt%7D%2C2%7D%20%26%20%5Ccdots%20%26%20x_%7BI%2CJ%2C%5Cbar%7Bt%7D%2CK%7D%20%5Cend%7Bbmatrix%7D%20%5Cend%7Balign%7D)
+
+The result of PCA can be summarised through the following visualisation. ![pca](images/pca.png)
+
 
 
 ## Stage 6: Emotion Profile 
