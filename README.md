@@ -75,8 +75,6 @@ Rank by judge_id:
 
 It can be seen that AU02(outer eyebrow raise) and AU20(lip stretcher) are both common for all the judges. AU15 and AU14 are also commonly detected for five out of the six judges. Other commonly displayed action units include: AU01, AU09, AU20, AU25 and AU45. 
 
-[I have problems here to relate AUs to emtions]
-
 
  - **How does the intensity of action units looks like?**
 ![intensity_boxplot](images/intensity_boxplot_au.png)
@@ -113,7 +111,7 @@ I first use simulation method to find the "normal" percentage of appearance of e
 
 - Step 2: Compute the mean percentage appearance of each individual video ![\frac{1}{T} \sum_{t = 1}^T x_{(i,j,t,k)}](hhttps://latex.codecogs.com/gif.latex?%5Cfrac%7B1%7D%7BT%7D%20%5Csum_%7Bt%20%3D%201%7D%5ET%20x_%7B%28i%2Cj%2Ct%2Ck%29%7D) for each combination of ![$(i, j, k)$](https://latex.codecogs.com/gif.latex?%24%28i%2C%20j%2C%20k%29%24)
 
-The simulation result is presented here ![au_presence_sim](images/sim_ci_result.png)
+The simulation result is presented here ![au_presence_sim](images/sim_bino_appearance.png.png) and ![au_presence_sim](images/sim_boot_appearance.png.png)
 
 Todo: 
 - maybe more interpretation on the result
@@ -132,5 +130,22 @@ In this section, I use principle component analysis (PCA) to answer the question
 
 The data is first pre-processed before being supplied into the PCA algorithm. For each judge-video-au pair, an average value across time `t` is first calculated. 
 
+
+## Stage 6: Emotion Profile 
+
+In this section, I create emotion profile for each of the judge to summarise their emotion characteristics in the hearing. 
+
+
+|Judge |Charactieristics|
+|----|--------------------------------|
+|Nettle|More stronger emotion; at the beginning and ending periold when the respondent is speaking.
+
+|
+|Gageler|More stronger emotion|
+|Edelman|More stronger emotion|
+|Keane||
+|Kiefel||
+|Bell||
+|||
 
 
