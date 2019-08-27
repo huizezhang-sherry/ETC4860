@@ -79,7 +79,7 @@ It can be seen that AU02(outer eyebrow raise) and AU20(lip stretcher) are both c
  - **How does the intensity of action units looks like?**
 ![intensity_boxplot](images/intensity_boxplot_au.png)
 
-In Ekman's 20002 FACS manual, the intensity of Action unit is defined based on five classes: Trace(1), Slight(2), Marked or pronounced(3), Severe or extreme(4) and Maximum(5).  From the plot, most of the action units have low intensity (the upper bounds of the box are at about one) and this is expected because usually in the court room judges are expected to behave neural. 
+In Ekman's 20002 FACS manual, the intensity of Action unit is defined based on five classes: Trace(1), Slight(2), Marked or pronounced(3), Severe or extreme(4) and Maximum(5).  From the plot, most of the action units have low intensity (the upper bounds of the box are at about one) and this is expected because usually in the court room judges are expected to behave neutral. 
 
 ![intense_point](images/is_intense.png)
 The points in the second plot are the one with intensity greater than 2. These are the points where the action units are slightly detected as per Ekman. It tells us that Edelman, Gageler and Nettle are the judges have stronger emotion that can be detected (since they have more points with intensity greater than 2). Different judges also have different time where they display stronger emotions. For example, Justice Nettle are more likely to have stronger emotion throughout the time when the appellent is speaking but only at the beginning and ending periold when the respondent is speaking. 
@@ -111,11 +111,10 @@ I first use simulation method to find the "normal" percentage of appearance of e
 
 - Step 2: Compute the mean percentage appearance of each individual video ![\frac{1}{T} \sum_{t = 1}^T x_{(i,j,t,k)}](https://latex.codecogs.com/gif.latex?%5Cfrac%7B1%7D%7BT%7D%20%5Csum_%7Bt%20%3D%201%7D%5ET%20x_%7B%28i%2Cj%2Ct%2Ck%29%7D) for each combination of ![$(i, j, k)$](https://latex.codecogs.com/gif.latex?%24%28i%2C%20j%2C%20k%29%24)
 
-The simulation result is presented here ![au_presence_sim](images/sim_result_vis.png) 
+The simulation result is presented below. We expect the simulated interval will be able to include most of the points and the very few outliers would indicate a judge is behaving abnormal in a particular trail. However, what we see here is most of the points are outside the interval. This means that judges behave very different from video to video and thus a simulated overall mean is not very representative of the each individual mean appearance. 
 
-Todo: 
-- maybe more interpretation on the result
-- think about the strengh and weakness of the method
+![au_presence_sim](images/sim_result_vis.png). 
+
 
 ### AU Intensity
 
