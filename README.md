@@ -111,7 +111,7 @@ I first use simulation method to find the "normal" percentage of appearance of e
 
 - Step 2: Compute the mean percentage appearance of each individual video ![\frac{1}{T} \sum_{t = 1}^T x_{(i,j,t,k)}](https://latex.codecogs.com/gif.latex?%5Cfrac%7B1%7D%7BT%7D%20%5Csum_%7Bt%20%3D%201%7D%5ET%20x_%7B%28i%2Cj%2Ct%2Ck%29%7D) for each combination of ![$(i, j, k)$](https://latex.codecogs.com/gif.latex?%24%28i%2C%20j%2C%20k%29%24)
 
-The simulation result is presented here ![au_presence_sim](images/sim_bino_appearance.png) and ![au_presence_sim](images/sim_boot_appearance.png)
+The simulation result is presented here ![au_presence_sim](images/sim_result_vis.png) 
 
 Todo: 
 - maybe more interpretation on the result
