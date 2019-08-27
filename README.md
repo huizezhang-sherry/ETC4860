@@ -157,11 +157,10 @@ In this section, I create emotion profile for each of the judge to summarise the
 |Judge |Charactieristics|
 |----|--------------------------------|
 |Nettle|More stronger emotion; at the beginning and ending periold when the respondent is speaking.|
-
-|Bell|Most animated judge (has most influential action unit in both appearance and intensity)|
-|Edelman|More stronger emotion but not influential|
-|Gageler|More stronger emotion, relatively neutural|
-|Keane|relatively neutural|
-|Kiefel|relatively neutural|
+|Bell|Most animated judge (has most influential action unit in both appearance and intensity).|
+|Edelman|More stronger emotion but not influential.|
+|Gageler|More stronger emotion, relatively neutural.|
+|Keane|relatively neutural.|
+|Kiefel|relatively neutural.|
 
 
