@@ -8,27 +8,17 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE, warning=  FALSE, message = FALSE)
 
 library(tidyverse)
 library(GGally)
 library(gganimate)
 library(naniar)
 library(visdat)
-```
 
-
-# Read in multiple csvs with image id and face id 
-- combined multiple csvs into one and add entries for missing record (1, 2, 64)
-
-```{r eval = FALSE}
 load("raw_data/nauru_a.rda")
 load("raw_data/court.rda")
 ```
-
-# EDA
-
-Our judge: Justice Nettle, Justice Gageler, Justice Edelman
 
 ## Confidence
 
@@ -40,7 +30,9 @@ Our judge: Justice Nettle, Justice Gageler, Justice Edelman
 - Insights2: we may only want to use the observation with high confidence (may want to confirm the threshold)
 
 ```{r}
-ggplot(nauru_a, aes(x= confidence, col = judge_id, fill = judge_id)) +
+# confidence as per judge in nauru_a
+nauru_a %>% 
+  ggplot(aes(x= confidence, col = judge_id, fill = judge_id)) +
   geom_histogram(binwidth = 0.1) + 
   facet_wrap(vars(judge_id))
 
@@ -48,14 +40,18 @@ ggplot(subset(court, video_id %in% c("Nauru_a", "Nauru_b")), aes(x = confidence)
   geom_histogram(binwidth = 0.1) + 
   facet_grid(judge_id~video_id)
 
+# overall picture of confidence in all the videos for all the judges
 ggplot(court, aes(x = confidence)) + 
   geom_histogram(binwidth = 0.1) + 
   facet_grid(judge_id~video_id)
 
-nauru_a %>% filter(confidence >=0.9) %>% group_by(judge_id) %>% summarise(
-  count = n(), 
-  freq = count/148
-)
+nauru_a %>% 
+  filter(confidence >=0.9) %>% 
+  group_by(judge_id) %>% 
+  summarise(
+    count = n(), 
+    freq = count/148
+    )
 
 high_conf <- nauru_a %>% 
   filter(confidence >= 0.9) %>% 
@@ -76,21 +72,22 @@ Very wiggly at around frame 20-35, frame 85-90, frame 115-120, frame 140-150. Ma
 
 ```{r eval =FALSE}
 # statics 
-p1_statics <- ggplot(nauru_a, 
-             aes(x=gaze_0_x, y=gaze_0_y, colour=judge_id)) + 
+p1_statics <- nauru_a %>% 
+  ggplot(aes(x=gaze_0_x, y=gaze_0_y, colour=judge_id)) + 
   geom_point() + 
   facet_wrap(~judge_id, nrow = 3) + 
   theme(legend.position = "none")
 
-p2_statics <- ggplot(nauru_a, 
-             aes(x=gaze_1_x, y=gaze_1_y, colour=judge_id)) + 
+p2_statics <- nauru_a %>% 
+  ggplot(aes(x=gaze_1_x, y=gaze_1_y, colour=judge_id)) + 
   geom_point() +
   facet_wrap(~judge_id, nrow = 3) +
   theme(legend.position = "none")
 
 gridExtra::grid.arrange(p1_statics, p2_statics, nrow = 1)
 
-temp <- nauru_a %>% select(judge_id,gaze_0_x, gaze_0_y,gaze_1_x, gaze_1_y) %>% 
+temp <- nauru_a %>% 
+  select(judge_id,gaze_0_x, gaze_0_y,gaze_1_x, gaze_1_y) %>% 
   mutate(x_diff = gaze_0_x - gaze_1_x,
          y_diff = gaze_0_y - gaze_1_y)
 
@@ -337,11 +334,6 @@ ggsave("presence_of_AU.png", path = "images/")
 
 https://imotions.com/blog/facial-action-coding-system/
 
-# # 2, 14, 25
-# # 2, 14, 20
-# # 2, 14, 25
-
-
 
 
 # Task week 5
@@ -352,7 +344,7 @@ https://imotions.com/blog/facial-action-coding-system/
 - Russell will come for next Monday's meeting 
 
 
-Meeting #6
+# Meeting #6
 
 - fix the record_id with frame_id[done]
 - obtain the whole dataset [done]
@@ -365,22 +357,23 @@ Meeting #6
 
 - action unit for video processed 
 
-animation: 
+Animation: 
+
 - play around with animation for better visual result
 - investigate the outliner from the animation 
 - investigate when the eyebrow has angle - what could be the reason 
 
 read_csv: 
+
 - investigate why 64 is missing[fine just leave it there]
 
 confidence: 
+
 - plot confidence against pose[done]
 - plot the line chart for confidence rather than the indication variable: investigate the "very wiggly": Action: read the transcript to see if there's an pattern[done]
 
+Bash file 
 
-
-## Bash file 
-
-Step 1: create a .txt file and give it a name, say bash_file.txt
-Step 2: command line run: chmod 700 bash_file.txt
-Step 3: run ./bash_file.txt
+- Step 1: create a .txt file and give it a name, say bash_file.txt
+- Step 2: command line run: chmod 700 bash_file.txt
+- Step 3: run ./bash_file.txt

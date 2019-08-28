@@ -7,25 +7,19 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r setup, include=FALSE, warning = FALSE, message = FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 
-
-```{r load_lib}
 library(jsonlite)
 library(rvest)
 
 library(imager)
 library(magick)
 
-library(purrr)
 library(tidyverse)
-library(ggplot2)
 library(GGally)
 library(gganimate)
 ```
-
 
 # OpenFace 
 - OpenFace(https://cmusatyalab.github.io/openface/) is a broad application to detect face  
@@ -40,14 +34,16 @@ library(gganimate)
 - CMU-Perceptual-Computing-Lab/openpose
 - https://github.com/CMU-Perceptual-Computing-Lab/openpose/blob/master/doc/standalone_face_or_hand_keypoint_detector.md
 
-## preliminary result wk 2
+## Preliminary result wk2
 - google can't really recognise face if it is the case of 7 judges because faces are too small and the video is only 720p
 - I manage to get the data from the faces that google recognised in a desiable format - see the chunk below
 - find that usually judges are looking down because the lawyer will guide them to look at certain pages of the book. Only when one or more of the judge is asking a question, most of the judge will look up to the camera. 
 
-# Google API
-```{r  goog_api, eval = FALSE}
+### Google API
 
+Facial variables from google API
+
+```{r  goog_api}
 dt <- jsonlite::fromJSON("goog_oks.json")
 
 landmark <- dt$faceAnnotations$landmarks
@@ -62,10 +58,9 @@ face <- data.frame(matrix(unlist(landmark2), nrow=length(landmark2),
 
 names(face) = landmark[[1]]$type
 face_oks <- face %>% mutate(ID = seq(1:nrow(face)))
-
 ```
 
-# Scraping the list of video
+## Scraping the high court videos
 ```{r scraping_video, eval = FALSE }
 url = "http://www.hcourt.gov.au/cases/recent-av-recordings"
 webpage = read_html(url)
@@ -76,36 +71,40 @@ names(recording) <- recording[1,]
 recording <- recording[-c(1,nrow(recording)),-c(4)]
 ```
 
-# week 3 Task
+# Week 3 Task
 using r script to take screenshot of the media 
+
 - ffemeg(looks doable):https://www.ffmpeg.org/ffprobe.html 
 - PhantomJS
 - R: webshot, takescreenshot
 
-#webshot() and takescreenshot()
-`webshot()` can take a screenshot of the website but only for static website. Don't think can do it for videos
+webshot and takescreenshot
 
-```{r webshot, eval = FALSE }
+- `webshot()` can take a screenshot of the website but only for static website. Don't think can do it for videos
+
+```{r webshot, eval = FALSE, include=FALSE}
 library(webshot)
 webshot("https://www.r-project.org/", "r.png")
 webshot("https://www.r-bloggers.com/take-screenshot-of-webpage-using-r/", "rblogger.png")
 webshot("https://www.r-bloggers.com/take-screenshot-of-webpage-using-r/", "rblogger.png", cliprect = "viewport")
 ```
 
-# Step 1: Youtube-dl 
+
+
+## Step 1: Youtube-dl 
 
 - "sorry, the video does not exist" 
 - seems to use scripting to find the video and execute downloads
 - youtube-dl --batch-file=download_list.txt
 
 
-# Step 2: FFepeg: video-processing 
+## Step 2: FFepeg: video-processing 
 
   - FFemeg is a collection of different project that handle multimedia files. The command line tool ffemeg(https://www.ffmpeg.org/ffmpeg.html) is the one I'm using to take screenshot of the video
   - A very comprehensive tutorial: http://keycorner.org/pub/text/doc/ffmpeg-tutorial.htm
   - commands: 
 
-## Extracting images from video: 
+### Extracting images from video: 
 
     ffmpeg -i inputfile.mp4 -r 1/60 image%3d.png
     
@@ -113,7 +112,7 @@ webshot("https://www.r-bloggers.com/take-screenshot-of-webpage-using-r/", "rblog
   2) image%2d.jpg: [name_of_image]_[numbering_system].jpg: 2d means 2 digits: 01, 02, 03... if 3d: 001, 002...
   3) ffmpeg -ss 00:03:00 -i nauru-a.mp4 -to 00:05:00 -c copy nauru-a_3to5.mp4
 
-## Crop video based on screen size:
+### Crop video based on screen size:
   
     ffmpeg -i Rinehart-b-300675578.mp4 -filter:v "crop=out_w:out_h:x:y" Rinehart=b_1.mp4
 
@@ -121,7 +120,7 @@ webshot("https://www.r-bloggers.com/take-screenshot-of-webpage-using-r/", "rblog
   2) out_h is the height of the output rectangle
   3) x and y specify the top left corner of the output rectangle
 
-## Crop video from time t1 to t2
+### Crop video from time t1 to t2
 
     ffmpeg -ss 00:01:00 -i Rinehart-b-300675578.mp4 -c copy Rinehart-b_from1min.mp4
 

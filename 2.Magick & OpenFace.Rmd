@@ -3,13 +3,13 @@ title: "2. collecting_data_2"
 author: "Huize Zhang"
 date: "13/04/2019"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 library(magick)
-library(stringr)
-library(purrr)
 library(tibble)
 library(tidyverse)
 library(imager)
@@ -34,9 +34,9 @@ library(imager)
 
 ## Magick: crop faces from frames
 The xy cordinate of the ideal faces is in taipan-export-2019-03-31. We can use command line tool magick to crop the whole image based on the cordinate supplied. The mogrify option allows for batch processing [may need to "mappify" the code]
-```{r eval = FALSE}
+```{r}
+xy_cord <- read_csv("raw_data/taipan-export-2019-03-31.csv")
 
-xy_cord <- read_csv("taipan-export-2019-03-31.csv")
 cord <- xy_cord %>% 
   mutate(geom = paste0((xmax - xmin), "x",(ymax- ymin) , "+", xmin, "+", ymin)) %>% 
   mutate(xrange = xmax-xmin) %>% 
@@ -51,7 +51,8 @@ videos <- list("Nauru-a", "Nauru-b", "McKell", "OKS", "Parkes","Rinehart-a", "Ri
 
 names <- map(videos, ~paste0("data/", .x))
 filenames <- map(names, list.files, pattern = "*.png")
-geom <- cord %>% select(xrange,yrange, xmin, ymin, geom) %>% 
+geom <- cord %>% 
+  select(xrange,yrange, xmin, ymin, geom) %>% 
   mutate(line = row_number())
 
 match <- map(filenames, function(x){
