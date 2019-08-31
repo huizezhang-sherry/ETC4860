@@ -8,12 +8,13 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 
 library(tidyverse)
 library(visdat)
 library(gridExtra)
 library(forecast)
+library(naniar)
 
 load("raw_data/court.rda")
 load("raw_data/au.rda")
@@ -38,45 +39,15 @@ missing %>% filter(na_prop ==1)
 ```
 
 ```{r}
-# videos <- list("Nauru_a", "Nauru_b", "McKell", "OKS", "Parkes","Rinehart_a", "Rinehart_b")
-# names <- map(videos, ~court %>% filter(video_id == .x) %>% select(judge_id) %>% unique())
-# 
-# missingplot <- map2(videos,names, function(videos,names){
-#   court_video <- court %>% filter(video_id == videos)
-#   map(names, function(names){
-#     map(names, ~ court_video %>% 
-#           filter(judge_id == .x) %>% select(x_1))})
-# })
-# 
-# names(missingplot) <- videos
-# 
-# suppressMessages({
-#  temp<- map2(missingplot,names, function(x,name){
-#   x <- x[[1]]
-#   df <- as.data.frame(x)
-#   names(df) <- name[[1]]
-#   df %>% vis_miss() + 
-#     coord_flip() + 
-#     scale_fill_brewer(name = "", labels =c("Present", "Missing"))
-# })
-#  
-# })
-# 
-# names(temp) <- videos
-# 
-# grid.arrange(arrangeGrob(temp[[1]], top = videos[[1]]),
-#              arrangeGrob(temp[[2]], top = videos[[2]]))
-# 
-# grid.arrange(arrangeGrob(temp[[6]], top = videos[[6]]),
-#              arrangeGrob(temp[[7]], top = videos[[7]]))
-# 
-# grid.arrange(arrangeGrob(temp[[3]], top = videos[[3]]),
-#              arrangeGrob(temp[[4]], top = videos[[4]]))
-# 
-# grid.arrange(arrangeGrob(temp[[5]], top = videos[[5]]), nrow =2)
+miss_var_table(au) # four variables don't have missings: judge_id, vido_id, frame_id, speakers, all others have missing
 
+miss_case_talbe(au) # 1768 cases don't have missings while the other 2833 cases all have 35 missings in the case. 
+
+# Thus the missing structure: An observation is either missing for all the variables or has non-missing
 ```
-  
+
+
+
 # Missing Imputation
 
 The missing mechanism in our case is a unit-level missing as the missingness depends on other unobservables. For example, the missingness could be due to the fact that a judge is reading the materials on the desk so the face is not captured for a particular frame or simply because some faces are not detectable for the given resolution of the video stream. However, since that data is in time series structure, simply drop the missing observation will cause the time interval to be irregular and complicate further analysis. Thus proper imputation method is needed. Because there is no obvious trend or seasonality in each action unit series, imputation methods using time series models will not be suitable in our case.  Therefore, we choose the linear interpolation(`na.interp`) from the `forecast` package to impute the missing value for each action unit. Notice that the funtion requires at least two non-NA points in a series, we drop 4 video-judge pairs where no data is available for a particular judge in a particular case, namely (OKS, Gordon), (Parkes, Gordon), (Rinehart_b, Gordon) and (Rinehart_b, Kiefel). 
