@@ -412,6 +412,29 @@ missing %&gt;% filter(na_prop ==1)</code></pre>
 ## 2 Parkes     Gordon        227   227       1         0
 ## 3 Rinehart_b Gordon         36    36       1         0
 ## 4 Rinehart_b Kiefel         36    36       1         0</code></pre>
+<pre class="r"><code>miss_var_table(au) # four variables don't have missings: judge_id, vido_id, frame_id, speakers, all others have missing</code></pre>
+<pre><code>## # A tibble: 2 x 3
+##   n_miss_in_var n_vars pct_vars
+##           &lt;int&gt;  &lt;int&gt;    &lt;dbl&gt;
+## 1             0      4     10.3
+## 2          2833     35     89.7</code></pre>
+<pre class="r"><code>miss_case_table(au) # 1768 cases don't have missings while the other 2833 cases all have 35 missings in the case. </code></pre>
+<pre><code>## # A tsibble: 628 x 4 [1]
+## # Key:       n_miss_in_case [2]
+##    n_miss_in_case frame_id n_cases pct_cases
+##             &lt;int&gt;    &lt;dbl&gt;   &lt;int&gt;     &lt;dbl&gt;
+##  1              0        1       3    0.0652
+##  2              0        2       3    0.0652
+##  3              0        3      13    0.283 
+##  4              0        4      11    0.239 
+##  5              0        5      14    0.304 
+##  6              0        6      13    0.283 
+##  7              0        7      14    0.304 
+##  8              0        8      15    0.326 
+##  9              0        9      15    0.326 
+## 10              0       10      16    0.348 
+## # … with 618 more rows</code></pre>
+<pre class="r"><code># Thus the missing structure: An observation is either missing for all the variables or has non-missing</code></pre>
 <div id="missing-imputation" class="section level1">
 <h1>Missing Imputation</h1>
 <p>The missing mechanism in our case is a unit-level missing as the missingness depends on other unobservables. For example, the missingness could be due to the fact that a judge is reading the materials on the desk so the face is not captured for a particular frame or simply because some faces are not detectable for the given resolution of the video stream. However, since that data is in time series structure, simply drop the missing observation will cause the time interval to be irregular and complicate further analysis. Thus proper imputation method is needed. Because there is no obvious trend or seasonality in each action unit series, imputation methods using time series models will not be suitable in our case. Therefore, we choose the linear interpolation(<code>na.interp</code>) from the <code>forecast</code> package to impute the missing value for each action unit. Notice that the funtion requires at least two non-NA points in a series, we drop 4 video-judge pairs where no data is available for a particular judge in a particular case, namely (OKS, Gordon), (Parkes, Gordon), (Rinehart_b, Gordon) and (Rinehart_b, Kiefel).</p>

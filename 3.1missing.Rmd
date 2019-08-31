@@ -41,7 +41,7 @@ missing %>% filter(na_prop ==1)
 ```{r}
 miss_var_table(au) # four variables don't have missings: judge_id, vido_id, frame_id, speakers, all others have missing
 
-miss_case_talbe(au) # 1768 cases don't have missings while the other 2833 cases all have 35 missings in the case. 
+miss_case_table(au) # 1768 cases don't have missings while the other 2833 cases all have 35 missings in the case. 
 
 # Thus the missing structure: An observation is either missing for all the variables or has non-missing
 ```
