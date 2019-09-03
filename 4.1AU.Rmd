@@ -8,9 +8,8 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE,message = FALSE, cache = TRUE)
 
-# Judge Characterisation 
 library(tidyverse)
 library(naniar)
 
@@ -20,10 +19,10 @@ load("raw_data/au_imputed.rda")
 ```
 
 
-```{r}
-# AU##_r measures the intensity of the 17 AUs 
-# AU##_c measures the present of the 17 AUs
+- `AU##_r` measures the intensity of the 17 AUs 
+- `AU##_c` measures the present of the 17 AUs
 
+```{r}
 # Missing proportion re-visit
 missing <- court %>% 
   select(judge_id, frame_id, video_id, x_1) %>% 
@@ -48,9 +47,10 @@ This part checks that at least part of the AU is present with certain intensity
 
 # Count_video_sample
 
-From count_video_sample, we can know the number of sample we have for appellent and respondent. 
+- From count_video_sample, we can know the number of sample we have for appellent and respondent. 
 
-We can see that the number of sample is different for appellent and respondent in each case, which then motivates us to use a percentage instead of count for number that each Action Unit appears. 
+- We can see that the number of sample is different for appellent and respondent in each case, which then motivates us to use a percentage instead of count for number that each Action Unit appears. 
+
 ```{r}
 count_video_sample <- function(dt){
   dt %>% 
@@ -100,11 +100,11 @@ The presence of a single action unit is not sufficient enough to indicate emotio
 # Because each judge has different numbers of frame available, mean is a better way ,than sum/ count,  to discribe the frequency of occurence. 
 
 most_common <- au_imputed %>% 
-   group_by(judge_id) %>% 
-   dplyr::summarize_at(vars(ends_with("_c")), mean, na.rm = TRUE) %>%
-   gather(AU_label, value, -judge_id) %>% 
-   separate(AU_label, c("AU", "suffix"), by = "_") %>%
-   select(-suffix) %>% 
+  group_by(judge_id) %>% 
+  dplyr::summarize_at(vars(ends_with("_c")), mean, na.rm = TRUE) %>%
+  gather(AU_label, value, -judge_id) %>% 
+  separate(AU_label, c("AU", "suffix")) %>%
+  select(-suffix) %>% 
   group_by(judge_id) %>% 
   arrange(-value) %>% 
   mutate(common = row_number()) %>% 
@@ -118,39 +118,47 @@ most_common %>%
   facet_wrap(vars(judge_id)) + 
   coord_flip()
  
-ggsave(filename = "images/most_common_au.png")
+#ggsave(filename = "images/most_common_au.png")
  
-most_common %>% 
+knitr::kable(most_common %>% 
   filter(most_common ==1) %>% 
   select(-c(common, most_common, value)) %>% 
   mutate(index = row_number()) %>% 
-  spread(judge_id, AU) 
+  spread(judge_id, AU))
 
 ```
 
-# Who has the most intense facial expression?
+# Who has the most intensive facial expression?
 
-In general, most of the action unit are not intense, so I select the ones with intensity greater than one and I find that Nettle has largest porportion of "intense" facial expression. 
+The plot gives an overview of the action unit intensity of all the judges across all the trails. Each bar-and-whisker represents the intensity of all the action units aggregated on time for a particular judge in a specific case. For example, the first bar-and-whisker in case Nauru_a is created using all the 17 action units of Edelman through out the elapsed time in Nauru_a case. 
 
-```{r}
+In Ekman's 20002 FACS manual, the intensity of Action unit is defined based on five classes: Trace(1), Slight(2), Marked or pronounced(3), Severe or extreme(4) and Maximum(5). From the plot, most of the action units have low intensity (almost zero average and lower than one upper bounds) and this is expected because usually in the court room, judges are expected to behave neutral.
+
+Looking carefully, we can find that Judge Nettle seems to have higher average in all the four cases he appears: Nauru_a&b, Rinehart_a &b and judge Bell doesn't seem to have many intensive expressions as we can see from the relatively small amount of dots in the whisker. 
+
+```{r fig.height=5, fig.width=7}
 au_intensity_all <- au_imputed %>% 
   select(AU01_r: AU45_r, judge_id : speaker) %>% 
   gather(AU, intensity, -(judge_id: speaker)) %>% 
   mutate(is_intense = ifelse(intensity >= 2, 1, 0))  
   
-
-# most of the action unit has very low intensity 
 au_intensity_all %>% 
-  ggplot(aes(x = judge_id, y = intensity, fill = video_id)) + 
+  ggplot(aes(x = judge_id, y = intensity, color = judge_id)) + 
   geom_boxplot() + 
-  facet_wrap(vars(judge_id), scales = "free_x")
-ggsave("images/intensity_boxplot_au.png")
+  facet_wrap(vars(video_id), scales = "free_x") + 
+  theme(axis.text.x = element_text(angle = 30, hjust = 1))
+#ggsave("images/intensity_boxplot_au.png")
 
+```
+
+This plot filters out the points have intensity greater than 2  (at least "slight" as per Ekman) in the previous plot and plot it against time and color by the speaker. It tells us that Edelman, Gageler and Nettle are the judges have stronger emotion that can be detected (since they have more points with intensity greater than 2). Different judges also have different time where they display stronger emotions. For example, Justice Nettle are more likely to have stronger emotion throughout the time when the appellent is speaking but only at the beginning and ending periold when the respondent is speaking.
+
+```{r fig.height=4, fig.width=7}
 au_intensity_all %>% filter(is_intense ==1) %>% 
   ggplot(aes(x = frame_id, y = intensity, col = speaker)) + 
   geom_point() +
   facet_wrap(vars(judge_id))
-ggsave("images/is_intense.png")  
+#ggsave("images/is_intense.png")  
 
 # compute the proportion of action unit that has intensity greater than 1
 # au_intensity <- au_intensity_all %>% filter(intensity > 1)
@@ -167,9 +175,10 @@ ggsave("images/is_intense.png")
 #   mutate(proportion = count/total*100)
 ```
 
+
 # Action Unit by frame(time) - not much findings
 
-```{r}
+```{r eval = FALSE}
 aubyframe <- function(judge, video){
   au %>% 
   select(AU01_r:AU45_r, judge_id : speaker) %>% 
@@ -247,14 +256,14 @@ ActionUnitbySpeaker <- function(dt, judge, case = case_list){
                              AU45_c, AU09_c, AU06_c, AU17_c, AU04_c), 
                         mean, na.rm = TRUE) %>% 
     gather(AU_label, value, -c(speaker, video_id)) %>% 
-    separate(AU_label, c("AU", "suffix"), by = "_") %>%
+    separate(AU_label, c("AU", "suffix")) %>%
     select(-suffix) %>%
     ggplot(aes(x = fct_reorder(AU, value), 
                y = value, col = value, fill = value)) +
     geom_bar(stat = "identity") +
     facet_grid(speaker ~ video_id, scales = "free")+
     ylab("Count") +
-    scale_x_discrete(labels = function(x) word(x, start = 1, sep = "_")) + 
+    #scale_x_discrete(labels = function(x) word(x, start = 1, sep = "_")) + 
     scale_y_continuous(breaks = c(0, 0.2, 0.4, 0.6, 0.8, 1)) +
     coord_flip() +
     ggtitle(sprintf("The percentage of each Action Unit appears in the face of Justices %s", judge))
@@ -272,7 +281,7 @@ au_imputed %>%
   group_by(judge_id, speaker, video_id) %>% 
   dplyr::summarize_at(vars(ends_with("c")), mean, na.rm = TRUE) %>% 
   gather(AU_label, value, -c(speaker, video_id)) %>% 
-  separate(AU_label, c("AU", "suffix"), by = "_") %>%
+  separate(AU_label, c("AU", "suffix")) %>%
   select(-suffix) %>%
   ggplot(aes(x = fct_reorder(AU, value), 
              y = value, col = value, fill = value)) +

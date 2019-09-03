@@ -77,12 +77,17 @@ It can be seen that AU02(outer eyebrow raise) and AU20(lip stretcher) are both c
 
 
  - **How does the intensity of action units looks like?**
+The plot gives an overview of the action unit intensity of all the judges across all the trails. Each bar-and-whisker represents the intensity of all the action units aggregated on time for a particular judge in a specific case. For example, the first bar-and-whisker in case Nauru_a is created using all the 17 action units of Edelman through out the elapsed time in Nauru_a case. 
+
+In Ekman's 20002 FACS manual, the intensity of Action unit is defined based on five classes: Trace(1), Slight(2), Marked or pronounced(3), Severe or extreme(4) and Maximum(5). From the plot, most of the action units have low intensity (almost zero average and lower than one upper bounds) and this is expected because usually in the court room, judges are expected to behave neutral.
+
+Looking carefully, we can find that Judge Nettle seems to have higher average in all the four cases he appears: Nauru_a&b, Rinehart_a &b and judge Bell doesn't seem to have many intensive expressions as we can see from the relatively small amount of dots in the whisker.  
+ 
 ![intensity_boxplot](images/intensity_boxplot_au.png)
 
-In Ekman's 20002 FACS manual, the intensity of Action unit is defined based on five classes: Trace(1), Slight(2), Marked or pronounced(3), Severe or extreme(4) and Maximum(5).  From the plot, most of the action units have low intensity (the upper bounds of the box are at about one) and this is expected because usually in the court room judges are expected to behave neutral. 
+The second plot filters out the points have intensity greater than 2  (at least "slight" as per Ekman) in the previous plot and plot it against time and color by the speaker. It tells us that Edelman, Gageler and Nettle are the judges have stronger emotion that can be detected (since they have more points with intensity greater than 2). Different judges also have different time where they display stronger emotions. For example, Justice Nettle are more likely to have stronger emotion throughout the time when the appellent is speaking but only at the beginning and ending periold when the respondent is speaking.
 
 ![intense_point](images/is_intense.png)
-The points in the second plot are the one with intensity greater than 2. These are the points where the action units are slightly detected as per Ekman. It tells us that Edelman, Gageler and Nettle are the judges have stronger emotion that can be detected (since they have more points with intensity greater than 2). Different judges also have different time where they display stronger emotions. For example, Justice Nettle are more likely to have stronger emotion throughout the time when the appellent is speaking but only at the beginning and ending periold when the respondent is speaking. 
 
 ## Stage 4: Action unit within judge 
 
