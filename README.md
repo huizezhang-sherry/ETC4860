@@ -2,11 +2,11 @@
 
 ## Stage 1: Obtaining data
 
-The source data of the proeject are videos from the high court of Australia (http://www.hcourt.gov.au/cases/recent-av-recordings). Turning the video information into tidy facial data can be summarised through the following workflow: 
+The source data of the project are videos from the high court of Australia (http://www.hcourt.gov.au/cases/recent-av-recordings). Turning the video information into tidy facial data can be summarised through the following workflow: 
 
 ![Image](images/workflow.png)
 
-The revelent R code can be found in [2.Magick & OpenFace.Rmd](https://github.com/huizezhang-sherry/ETC4860/blob/master/2.Magick%20%26%20OpenFace.Rmd), [2.ffmpeg.Rmd](https://github.com/huizezhang-sherry/ETC4860/blob/master/2.ffmpeg.Rmd) and [3.0csv_proessing.Rmd](https://github.com/huizezhang-sherry/ETC4860/blob/master/3.0csv_processing.Rmd).
+The relevant R code can be found in [2.Magick & OpenFace.Rmd](https://github.com/huizezhang-sherry/ETC4860/blob/master/2.Magick%20%26%20OpenFace.Rmd), [2.ffmpeg.Rmd](https://github.com/huizezhang-sherry/ETC4860/blob/master/2.ffmpeg.Rmd) and [3.0csv_proessing.Rmd](https://github.com/huizezhang-sherry/ETC4860/blob/master/3.0csv_processing.Rmd).
 
 ## Stage 2: Exploratory Data Analysis
 
@@ -30,7 +30,7 @@ I conduct some exploratory data analysis on one video: `Nauru_a` and find the 70
  
  - **Action Unit**: Action units are used to describe facial expressions. More information can be find [here](https://github.com/TadasBaltrusaitis/OpenFace/wiki/Action-Units) and [this website](https://imotions.com/blog/facial-action-coding-system/) provides a good animation on each action unit. The action unit has intensity measures ending with `_c` and presence measures ending with `_r`. These variables will be the focus of my project and a reference study of using action units to detect human emotion by Kovalchik can be found [here](http://www.sloansportsconference.com/wp-content/uploads/2018/02/2005.pdf). 
  
- R markdown ducument [3.2EDA_nauru_a.Rmd](https://github.com/huizezhang-sherry/ETC4860/blob/master/3.2EDA_nauru_a.Rmd) records the analysis above. An extension to the full video EDA can be boudn [here](https://github.com/huizezhang-sherry/ETC4860/blob/master/3.3EDA.Rmd). 
+ R markdown document [3.2EDA_nauru_a.Rmd](https://github.com/huizezhang-sherry/ETC4860/blob/master/3.2EDA_nauru_a.Rmd) records the analysis above. An extension to the full video EDA can be bound [here](https://github.com/huizezhang-sherry/ETC4860/blob/master/3.3EDA.Rmd). 
  
 ### Text Analysis 
 
@@ -77,6 +77,7 @@ It can be seen that AU02(outer eyebrow raise) and AU20(lip stretcher) are both c
 
 
  - **How does the intensity of action units looks like?**
+ 
 The plot gives an overview of the action unit intensity of all the judges across all the trails. Each bar-and-whisker represents the intensity of all the action units aggregated on time for a particular judge in a specific case. For example, the first bar-and-whisker in case Nauru_a is created using all the 17 action units of Edelman through out the elapsed time in Nauru_a case. 
 
 In Ekman's 20002 FACS manual, the intensity of Action unit is defined based on five classes: Trace(1), Slight(2), Marked or pronounced(3), Severe or extreme(4) and Maximum(5). From the plot, most of the action units have low intensity (almost zero average and lower than one upper bounds) and this is expected because usually in the court room, judges are expected to behave neutral.
@@ -85,7 +86,7 @@ Looking carefully, we can find that Judge Nettle seems to have higher average in
  
 ![intensity_boxplot](images/intensity_boxplot_au.png)
 
-The second plot filters out the points have intensity greater than 2  (at least "slight" as per Ekman) in the previous plot and plot it against time and color by the speaker. It tells us that Edelman, Gageler and Nettle are the judges have stronger emotion that can be detected (since they have more points with intensity greater than 2). Different judges also have different time where they display stronger emotions. For example, Justice Nettle are more likely to have stronger emotion throughout the time when the appellent is speaking but only at the beginning and ending periold when the respondent is speaking.
+The second plot filters out the points have intensity greater than 2  (at least "slight" as per Ekman) in the previous plot and plot it against time and color by the speaker. It tells us that Edelman, Gageler and Nettle are the judges have stronger emotion that can be detected (since they have more points with intensity greater than 2). Different judges also have different time where they display stronger emotions. For example, Justice Nettle are more likely to have stronger emotion throughout the time when the appellant is speaking but only at the beginning and ending period when the respondent is speaking.
 
 ![intense_point](images/is_intense.png)
 
@@ -97,7 +98,7 @@ In this section, I use bootstrap simulation to answer the question
 
 ### AU presence 
 
-I first use simulation method to find the "normal" percentage of appearance of each AU for each Justices. The simulated mean percentage is then compared with the mean percentage appearance of each inidividual video to determine if an action unit appears considerably more or less than the "normal" level for each justices. The simulation and comparison procesure can be summarised as follows 
+I first use simulation method to find the "normal" percentage of appearance of each AU for each Justices. The simulated mean percentage is then compared with the mean percentage appearance of each individual video to determine if an action unit appears considerably more or less than the "normal" level for each justices. The simulation and comparison procedure can be summarised as follows 
 
 - Step 1: Compute the simulated mean percentage appearance ![\mu_{(i,k)}](https://latex.codecogs.com/gif.latex?%5Cmu_%7B%28i%2Ck%29%7D) for each pair of ![(i,k)](https://latex.codecogs.com/gif.latex?%28i%2Ck%29) using bootstrapping and binomial distribution. Below is an illustration of how bootstrap simulation is applied for *one particular* Justices-AU pair ![(i,k)](https://latex.codecogs.com/gif.latex?%28i%2Ck%29).
 
@@ -146,7 +147,7 @@ x_{I,J,\bar{t},1} & x_{I,J,\bar{t},2} & \cdots & x_{I,J,\bar{t},K}
 
 The result of PCA can be summarised through the following visualisation. ![pca](images/pca.png)
 
-Since PCs are linear combination of the original variables, we take the absolute value of the fitted PCs and compute the sum to create an index. In this study, the first two fitted PCs are summed to determine the most animated judge and I find that Justices Bell is the most animated, then followed by the Chief Justices Kiefel and Justices Nettle. Edelman and Keane are the more nutural Justices. 
+Since PCs are linear combination of the original variables, we take the absolute value of the fitted PCs and compute the sum to create an index. In this study, the first two fitted PCs are summed to determine the most animated judge and I find that Justices Bell is the most animated, then followed by the Chief Justices Kiefel and Justices Nettle. Edelman and Keane are the more neutral Justices. 
 
 The PCA exercise shows the most important linear combination of the action unit variables, which motivates us to find the most animated judge and thus help to build the judge profile. However, there are a few issues with the current PCA practice: 
 
@@ -158,13 +159,13 @@ The PCA exercise shows the most important linear combination of the action unit 
 In this section, I create emotion profile for each of the judge to summarise their emotion characteristics in the hearing. 
 
 
-|Judge |Charactieristics|
+|Judge |Characteristics|
 |----|--------------------------------|
-|Nettle|More stronger emotion; at the beginning and ending periold when the respondent is speaking.|
+|Nettle|More stronger emotion; at the beginning and ending period when the respondent is speaking.|
 |Bell|Most animated judge (has most influential action unit in both appearance and intensity).|
 |Edelman|More stronger emotion but not influential.|
-|Gageler|More stronger emotion, relatively neutural.|
-|Keane|relatively neutural.|
-|Kiefel|relatively neutural.|
+|Gageler|More stronger emotion, relatively neutral.|
+|Keane|relatively neutral.|
+|Kiefel|relatively neutral.|
 
 

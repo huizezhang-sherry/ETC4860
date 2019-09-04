@@ -76,6 +76,7 @@ df$Edelman
 ```
 
 
+
 # The most common action units for each judges
 
 The following allows us to see the percentage of each Action Unit appears given a specific judge, which provides as a baseline normal expression for each judge This normal expression will be compared with the result from `ActionUnitbySpeaker` to identify the case-specific expression for the judges. 
@@ -128,6 +129,78 @@ knitr::kable(most_common %>%
 
 ```
 
+# Comparing based on tf_irf
+
+```{r}
+au_imputed %>% 
+  group_by(judge_id,video_id) %>% 
+  dplyr::summarize_at(vars(ends_with("_c")), sum, na.rm = TRUE) %>% 
+  gather(AU_label, value, -c(judge_id, video_id)) %>% 
+  separate(AU_label, c("AU", "suffix")) %>%
+  select(-suffix) %>% 
+  filter(value != "NaN") %>% 
+  mutate(index = row_number()) %>% 
+  tidytext::bind_tf_idf(AU, index, value) %>% 
+  arrange(desc(tf_idf)) 
+  
+
+ggplot(aes(x = AU, y = tf_idf)) + 
+  geom_col(show.legend = FALSE) + 
+  facet_wrap(vars(judge_id),scales = "free") + 
+  coord_flip()
+
+temp <- au_imputed %>% 
+  group_by(judge_id) %>% 
+  dplyr::summarize_at(vars(ends_with("_c")), sum, na.rm = TRUE) %>% 
+  gather(AU_label, value, -c(judge_id)) %>% 
+  separate(AU_label, c("AU", "suffix")) %>%
+  select(-suffix) %>% 
+  filter(value != "NaN") %>% 
+  tidytext::bind_tf_idf(AU, judge_id, value) %>% 
+  arrange(desc(tf_idf)) 
+
+  ggplot(aes(x = AU, y = tf_idf)) + 
+  geom_col(show.legend = FALSE) + 
+  facet_wrap(vars(judge_id),scales = "free") + 
+  coord_flip()
+
+au_imputed %>% 
+  group_by(judge_id) %>% 
+  dplyr::summarize_at(vars(ends_with("_c")), sum, na.rm = TRUE) %>% 
+  gather(AU_label, value, -c(judge_id)) %>% 
+  separate(AU_label, c("AU", "suffix")) %>%
+  select(-suffix) %>% 
+  filter(value != "NaN") %>% 
+  mutate(tf = value/sum(value)) %>% 
+  ggplot(aes(x = fct_reorder(AU, tf), y = tf)) + 
+  geom_col(show.legend = FALSE) + 
+  facet_wrap(vars(judge_id),scales = "free") + 
+  coord_flip()
+
+
+# need it to have certian intensity to say it exist intensity >= 2
+
+au_imputed %>% 
+  group_by(judge_id) %>% 
+  select(-c(speaker)) %>% 
+  gather(AU_label, value, -c(judge_id, video_id, frame_id)) %>% 
+  separate(AU_label, c("AU", "suffix")) %>% 
+  spread(suffix, value) %>% 
+  rename(present = c, intensity = r) %>% 
+  arrange(desc(intensity))
+  
+
+au_imputed %>% 
+  filter(judge_id == "Edelman", video_id == "Parkes", frame_id == 3) %>% 
+  gather(AU_label, value, -c(judge_id, video_id, frame_id, speaker)) %>% 
+  separate(AU_label, c("AU", "suffix")) %>% 
+  spread(suffix, value)
+
+
+```
+
+
+
 # Who has the most intensive facial expression?
 
 The plot gives an overview of the action unit intensity of all the judges across all the trails. Each bar-and-whisker represents the intensity of all the action units aggregated on time for a particular judge in a specific case. For example, the first bar-and-whisker in case Nauru_a is created using all the 17 action units of Edelman through out the elapsed time in Nauru_a case. 
@@ -147,7 +220,7 @@ au_intensity_all %>%
   geom_boxplot() + 
   facet_wrap(vars(video_id), scales = "free_x") + 
   theme(axis.text.x = element_text(angle = 30, hjust = 1))
-#ggsave("images/intensity_boxplot_au.png")
+#ggsave("images/intensity_boxplot_au.png",width = 7, height = 5)
 
 ```
 
@@ -158,7 +231,7 @@ au_intensity_all %>% filter(is_intense ==1) %>%
   ggplot(aes(x = frame_id, y = intensity, col = speaker)) + 
   geom_point() +
   facet_wrap(vars(judge_id))
-#ggsave("images/is_intense.png")  
+ggsave("images/is_intense.png", width = 7, height = 5)  
 
 # compute the proportion of action unit that has intensity greater than 1
 # au_intensity <- au_intensity_all %>% filter(intensity > 1)
