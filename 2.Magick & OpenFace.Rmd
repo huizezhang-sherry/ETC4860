@@ -46,10 +46,13 @@ cord <- xy_cord %>%
 # after the re-download this should work 
 ```
 
-```{r}
-videos <- list("Nauru-a", "Nauru-b", "McKell", "OKS", "Parkes","Rinehart-a", "Rinehart-b")
 
-names <- map(videos, ~paste0("data/", .x))
+```{r}
+# maybe this chunk is the code I was playing around with magick and all sorts????
+# see like only the last two chunk of this document is useful????
+videos <- list("nauru-a", "nauru-b", "McKell", "OKS", "Parkes","Rinehart-a", "Rinehart-b")
+
+names <- map(videos, ~paste0("dt/", .x))
 filenames <- map(names, list.files, pattern = "*.png")
 geom <- cord %>% 
   select(xrange,yrange, xmin, ymin, geom) %>% 
@@ -67,31 +70,32 @@ match <- map(filenames, function(x){
 filenames_full <- map(names, list.files, pattern = "*.png", full.names = TRUE)
 images <- map(filenames_full, image_read)
 
-
-crop <- map(sample_image, sample_match, function(sample_image, sample_match){
+crop_function <- function(sample_image, sample_match){
   map(sample_match, function(sample_match){
     map(geom[unlist(sample_match),],image_crop(image = sample_image))
   })
-})
+}
+
+crop <- map2(sample_image, sample_match, crop_function)
 
 
 
 geom[unlist(sample_match[[1]][[1]]),]
 
 
-
-a <- c(geom[3,])
-a <- image_read(filenames_full[[1]][[3]])
-
-map(a, image_crop, c(geom[match[[1]][[1]]]))
-image_crop(a, c(geom[match[[1]][[1]]]))
-map(geom$geom[match[[1]][[1]]], ~image_crop(geom = .x, image=a))
-
-image_crop(a, geom$geom[1:3])
-map(subset(geom$geom, 
-           geom$line %in% unlist(match[[1]][[1]])), ~image_crop(geom= .x, image = a))
-
-crop = sample_image
+# these are perhaps code I write to get familiar with magick & map???
+# a <- c(geom[3,])
+# a <- image_read(filenames_full[[1]][[3]])
+# 
+# map(a, image_crop, c(geom[match[[1]][[1]]]))
+# image_crop(a, c(geom[match[[1]][[1]]]))
+# map(geom$geom[match[[1]][[1]]], ~image_crop(geom = .x, image=a))
+# 
+# image_crop(a, geom$geom[1:3])
+# map(subset(geom$geom, 
+#            geom$line %in% unlist(match[[1]][[1]])), ~image_crop(geom= .x, image = a))
+# 
+# crop = sample_image
 
 
 
@@ -120,17 +124,17 @@ for (image in sample_image){
   })
 }
 
-
-map(fils, ~{
-  curr_fil <- .x
-  image_read(curr_fil) %>%
-    image_crop("100x16+161+68") %>%
-    image_resize("2000") %>%
-    save_image(curr_fil, "/tmp/backup") %>% 
-    image_convert() %>%      
-    image_trim() %>%
-    image_ocr()
-}) -> ocr_result
+# dont think this is relevant???
+# map(fils, ~{
+#   curr_fil <- .x
+#   image_read(curr_fil) %>%
+#     image_crop("100x16+161+68") %>%
+#     image_resize("2000") %>%
+#     save_image(curr_fil, "/tmp/backup") %>% 
+#     image_convert() %>%      
+#     image_trim() %>%
+#     image_ocr()
+# }) -> ocr_result
 
 map(sample, ~{
   img <- .x
@@ -202,7 +206,7 @@ map(videos_more,cropping_more)
   - see Mendelay
   - citation: OpenFace 2.0: Facial Behavior Analysis Toolkit Tadas Baltrušaitis, Amir Zadeh, Yao Chong Lim, and Louis-Philippe Morency, IEEE International Conference on Automatic Face and Gesture Recognition, 2018
 
-## Commnad 
+## Command 
 
   - `FeatureExtraction`: image/ video with one face only 
   - `FaceLandmarkVidMulti`: image/ video with multiple faces
@@ -220,12 +224,12 @@ map(videos_more,cropping_more)
   
     docker cp cropped/nauru-a/1 b811e9b14812:/home/openface-build 
   
-  3) use openface inside docker to generate metrics
+  3) use openface inside docker to generate variables
   
     build/bin/FaceLandmarkImg -f nauru-a_003.png
     build/bin/FaceLandmarkImg -fdir data/1/
 
-  4) copy the metrics from processed folder to local machine
+  4) copy the variables from processed folder to local machine
   
     docker cp b811e9b14812:/home/openface-build/processed/nauru-a_003.csv /Users/huizezhang/Monash/Honours/ETC4860/data/csv/[specific address]
 
