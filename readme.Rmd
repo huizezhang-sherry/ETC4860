@@ -4,25 +4,11 @@ output: github_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 
 library(tidyverse)
 load("raw_data/au_tidy.rda")
 ```
-
-<head>
-<script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); </script>
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-
-tex2jax: { 
-inlineMath: [ ["\\$", "\\$"], ["\\(", "\\)"] ], 
-displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], 
-processEscapes: true, ignoreClass: "tex2jax_ignore|dno" }
-});
-</script>
-<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-</head>
 
 
 ## Stage 1: Data collecting
@@ -101,30 +87,73 @@ Assuming all the facial information can be summarised as a `Y` variable with mul
 $$Y_{ijtk} = \mu + \alpha_i + \beta_j + \gamma_t + \delta_k + CP_2(\alpha_i, \beta_j, \gamma_t, \delta_k) + CP_3(\alpha_i, \beta_j, \gamma_t, \delta_k)]$$
 
 where 
+
 - $CP_2$ is the all possible interaction of the two variables
 - $CP_3$ is the all possible interaction of the three variables
 
 
 ### 2.2 What can we learn from the presence variable of the action unit?  
  
-The statistics being plotted in the graph is the percentage of presence and mathematically it can be written as $$P_{ik} = \frac{\sum_{jt}X_{ijtk}}{\sum_{j = 1}^JT_j}$$ 
+The plot gives an overview of the presence of all the action unit across all the judge. The statistic each bar represents is the average presence of an action unit for a judge throughout all the video time and it can be written as $$P_{ik} = \frac{\sum_{jt}X_{ijtk}}{\sum_{j = 1}^JT_j}$$. The order of Action unit on the y axis is ranked by the average presence of all the judge, which can be re-presented as $P_{* K}$. 
 
-The order of the action unit is based on $P_{k}$, that is, the aggregated percentage of presence across all the judge. 
- 
-![most common action units](images/most_common_au.png)
+```{r}
+# Because each judge has different numbers of frame available, mean is a better way ,than sum/ count,  to discribe the frequency of occurence. 
 
-Rank by judge_id: 
+most_common <- au_tidy %>% 
+  group_by(judge_id,AU) %>% 
+  summarise(avg_presence = mean(presence)) %>% 
+  filter(avg_presence != "NaN") %>% 
+  group_by(judge_id) %>% 
+  arrange(-avg_presence) %>% 
+  mutate(common = row_number()) %>% 
+  mutate(most_common = as_factor(ifelse(common <=5, 1, 0))) 
 
-|index |Bell | Edelman| Gageler| Keane| Kiefel |Nettle|
-|------|-----|-------|------|------|------|------|
-|    1 |AU09 | AU02  | AU02 | AU20 | AU02 |AU02  |
-|    2 |AU15 | AU20  | AU05 | AU15 | AU25 |AU15  |
-|    3 |AU25 | AU01  | AU15 | AU02 | AU20 |AU20  |
-|    4 |AU02 | AU14  | AU14 | AU14 | AU45 |AU01  |
-|    5 |AU20 | AU15  | AU20 | AU45 | AU14 |AU14  |
+most_common %>% 
+  ggplot(aes(x =  fct_reorder(AU, avg_presence), y = avg_presence,
+         fill = most_common, col = most_common)) + 
+  geom_col() +
+  xlab("AU") + 
+  ylab("Average Presence") + 
+  facet_wrap(vars(judge_id)) + 
+  coord_flip() + 
+  theme(legend.position = "none")
 
-It can be seen that AU02(outer eyebrow raise) and AU20(lip stretcher) are both common for all the judges. AU15 and AU14 are also commonly detected for five out of the six judges. Other commonly displayed action units include: AU01, AU09, AU20, AU25 and AU45. 
+#ggsave(filename = "images/most_common_au.png")
+```
 
+The most frequent displayed action unit is highlighed in blue for each judge and summarised in the table below. 
+
+```{r}
+# in a table format
+knitr::kable(most_common %>% 
+  filter(most_common ==1) %>% 
+  select(-c(common, most_common, avg_presence)) %>% 
+  mutate(index = row_number()) %>% 
+  spread(judge_id, AU))
+```
+
+It can be seen that some of the action units are common across almost all the judges, these includes 
+
+- AU02 (outer eyebrow raise), 
+- AU20 (lip stretcher), 
+- AU15 (Lip Corner Depressor) and 
+- AU14 (Dimpler)
+
+The table below summarises the judge specific high frequent action units.
+
+```{r}
+other_highf <- most_common %>% 
+  filter(most_common ==1) %>% 
+  select(-c(common, most_common, avg_presence)) %>% 
+  filter(!AU %in% c("AU02", "AU20", "AU15", "AU14")) %>% 
+  mutate(index = row_number()) %>% 
+  spread(index, AU) %>% 
+  mutate(`2` = ifelse(is.na(`2`), "/", `2`))
+
+knitr::kable(other_highf, col.names = NULL)
+```
+
+These are the results from inspecting the action units visually and they should also be reflected thorugh the coefficients of the relevant models [see stage 3 modelling]. 
 
  ### 2.2 What can we learn from the intensity variable of the action unit? 
  
