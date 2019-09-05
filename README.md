@@ -22,6 +22,7 @@ and
 
 ## Stage 2: Exploratory Data Analysis
 
+<<<<<<< HEAD
 ### Missing value imputation
 
 The missingness in the dataset could be due to the fact that a judge is
@@ -36,6 +37,17 @@ number. Linear interpolation from `forecast` package is suitable to
 impute the variables end with `_r` and I sample from binomial
 distribution to impute the variables end with `_c`. More details in
 [3.1missing.Rmd](https://github.com/huizezhang-sherry/ETC4860/blob/master/3.1missing.Rmd).
+=======
+### Missing value imputation 
+
+The missingness in the dataset could be due to the fact that a judge is reading the materials on the desk so the face is not captured for a particular frame or simply because some faces are not detectable for the given resolution of the video stream. However, since that data is in time series structure, simply drop the missing observation will cause the time interval to be irregular and complicate further analysis. There are two different sets of variables that need imputation: the ones end with `_c`, which is binary and the ones end with `_r`, which is a float number. 
+
+Linear interpolation from `forecast` package is suitable to impute the variables end with `_r` and I sample from binomial distribution to impute the variables end with `_c`. More details in [3.1missing.Rmd](https://github.com/huizezhang-sherry/ETC4860/blob/master/3.1missing.Rmd). 
+
+### Data Quality
+
+For the data I get from OpenFace, there is a data quality issue that for some Action units, the intensity score is high while the presence score is zero. This doesnt make sense because if the intensity of an action unit is detected as high, that action unit should have a status of presence. Therefore, I adjust the presence value for the cases, where the intensity > 1. The threshold is set to one because in Ekman's definition of intensity score, a value greater than one means the action unit is at least slightly detected. 
+>>>>>>> b13d635c4df112c058d8a8152a77ce63b1f1064b
 
 ### Exploratory data analysis
 
@@ -98,9 +110,55 @@ for more details.
 
 ### Data Structure
 
+<<<<<<< HEAD
 The rest of the project focuses on the action unit related variables. If
 we write all the information in the matrix notation, every element will
 have four indices:
+=======
+The rest of the project focuses on the action unit related variables. If we write all the information in the matrix notation, every element will have four indices: 
+
+- `i` for `judge_id`; 
+- `j` for `video_id`; 
+- `t` for `frame_id` and 
+- `k` for `au_id`. 
+
+The `Y` variables are multivariate as Presence and Intensity. [put math in ]
+
+Using the tidy principle, the data is in a tsibble format with `index = frame_id` and `key = c("judge_id, video_id)`. Different measurements on the presence and intensity of each action units are the variables. 
+
+Assuming all the facial information can be summarised as a `Y` variable with multiple indices `(i,j,t,k)`. We can summarise the information via a linear combination of variables as 
+
+![Y_{ijtk} = \mu + \alpha_i + \beta_j + \gamma_t + \delta_k + CP_2(\alpha_i, \beta_j, \gamma_t, \delta_k) + CP_3(\alpha_i, \beta_j, \gamma_t, \delta_k)](https://latex.codecogs.com/gif.latex?Y_%7Bijtk%7D%20%3D%20%5Cmu%20&plus;%20%5Calpha_i%20&plus;%20%5Cbeta_j%20&plus;%20%5Cgamma_t%20&plus;%20%5Cdelta_k%20&plus;%20CP_2%28%5Calpha_i%2C%20%5Cbeta_j%2C%20%5Cgamma_t%2C%20%5Cdelta_k%29%20&plus;%20CP_3%28%5Calpha_i%2C%20%5Cbeta_j%2C%20%5Cgamma_t%2C%20%5Cdelta_k%29)
+
+where 
+- CP_2 is the all possible interaction of the two variables
+- CP_3 is the all possible interaction of the three variables
+
+
+### What can we learn from the action unit data 
+
+ - **What are the most common action units for each judges?**
+![most common action units](images/most_common_au.png)
+
+Rank by judge_id: 
+
+|index |Bell | Edelman| Gageler| Keane| Kiefel |Nettle|
+|------|-----|-------|------|------|------|------|
+|    1 |AU09 | AU02  | AU02 | AU20 | AU02 |AU02  |
+|    2 |AU15 | AU20  | AU05 | AU15 | AU25 |AU15  |
+|    3 |AU25 | AU01  | AU15 | AU02 | AU20 |AU20  |
+|    4 |AU02 | AU14  | AU14 | AU14 | AU45 |AU01  |
+|    5 |AU20 | AU15  | AU20 | AU45 | AU14 |AU14  |
+
+It can be seen that AU02(outer eyebrow raise) and AU20(lip stretcher) are both common for all the judges. AU15 and AU14 are also commonly detected for five out of the six judges. Other commonly displayed action units include: AU01, AU09, AU20, AU25 and AU45. 
+
+
+ - **How does the intensity of action units looks like?**
+ 
+The plot gives an overview of the action unit intensity of all the judges across all the trails. Each bar-and-whisker represents the intensity of all the action units aggregated on time for a particular judge in a specific case. For example, the first bar-and-whisker in case Nauru_a is created using all the 17 action units of Edelman through out the elapsed time in Nauru_a case. 
+
+In Ekman's 20002 FACS manual, the intensity of Action unit is defined based on five classes: Trace(1), Slight(2), Marked or pronounced(3), Severe or extreme(4) and Maximum(5). From the plot, most of the action units have low intensity (almost zero average and lower than one upper bounds) and this is expected because usually in the court room, judges are expected to behave neutral.
+>>>>>>> b13d635c4df112c058d8a8152a77ce63b1f1064b
 
   - `i` for `judge_id`;
   - `j` for `video_id`;
