@@ -12,7 +12,13 @@ The relevant R code can be found in [2.Magick & OpenFace.Rmd](https://github.com
 
 ### Missing value imputation 
 
-The missingness in the dataset could be due to the fact that a judge is reading the materials on the desk so the face is not captured for a particular frame or simply because some faces are not detectable for the given resolution of the video stream. However, since that data is in time series structure, simply drop the missing observation will cause the time interval to be irregular and complicate further analysis. There are two different sets of variables that need imputation: the ones end with `_c`, which is binary and the ones end with `_r`, which is a float number. Linear interpolation from `forecast` package is suitable to impute the variables end with `_r` and I sample from binomial distribution to impute the variables end with `_c`. More details in [3.1missing.Rmd](https://github.com/huizezhang-sherry/ETC4860/blob/master/3.1missing.Rmd). 
+The missingness in the dataset could be due to the fact that a judge is reading the materials on the desk so the face is not captured for a particular frame or simply because some faces are not detectable for the given resolution of the video stream. However, since that data is in time series structure, simply drop the missing observation will cause the time interval to be irregular and complicate further analysis. There are two different sets of variables that need imputation: the ones end with `_c`, which is binary and the ones end with `_r`, which is a float number. 
+
+Linear interpolation from `forecast` package is suitable to impute the variables end with `_r` and I sample from binomial distribution to impute the variables end with `_c`. More details in [3.1missing.Rmd](https://github.com/huizezhang-sherry/ETC4860/blob/master/3.1missing.Rmd). 
+
+### Data Quality
+
+For the data I get from OpenFace, there is a data quality issue that for some Action units, the intensity score is high while the presence score is zero. This doesnt make sense because if the intensity of an action unit is detected as high, that action unit should have a status of presence. Therefore, I adjust the presence value for the cases, where the intensity > 1. The threshold is set to one because in Ekman's definition of intensity score, a value greater than one means the action unit is at least slightly detected. 
 
 ### Exploratory data analysis
 
@@ -46,6 +52,8 @@ The rest of the project focuses on the action unit related variables. If we writ
 - `j` for `video_id`; 
 - `t` for `frame_id` and 
 - `k` for `au_id`. 
+
+The `Y` variables are multivariate as Presence and Intensity. [put math in ]
 
 Using the tidy principle, the data is in a tsibble format with `index = frame_id` and `key = c("judge_id, video_id)`. Different measurements on the presence and intensity of each action units are the variables. 
 
