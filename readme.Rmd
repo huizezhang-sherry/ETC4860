@@ -1,5 +1,5 @@
 ---
-title: "readme"
+title: "Honours project: Exploration of Judicial Facial Expression in Videos and Transcripts of Legal Proceedings"
 author: "Huize Zhang"
 date: "9/5/2019"
 output: github_document
@@ -9,7 +9,6 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Honours project: Exploration of Judicial Facial Expression in Videos and Transcripts of Legal Proceedings
 
 ## Stage 1: Obtaining data
 
@@ -19,7 +18,7 @@ The source data of the project are videos from the high court of Australia (http
 
 The relevant R code can be found in [2.Magick & OpenFace.Rmd](https://github.com/huizezhang-sherry/ETC4860/blob/master/2.Magick%20%26%20OpenFace.Rmd), [2.ffmpeg.Rmd](https://github.com/huizezhang-sherry/ETC4860/blob/master/2.ffmpeg.Rmd) and [3.0csv_proessing.Rmd](https://github.com/huizezhang-sherry/ETC4860/blob/master/3.0csv_processing.Rmd).
 
-## Stage 2: Manipulation
+## Stage 2: STAGE2
 
 ### Missing value imputation 
 The missingness in the dataset could be due to the fact that a judge is reading the materials on the desk so the face is not captured for a particular frame or simply because some faces are not detectable for the given resolution of the video stream. However, since that data is in time series structure, simply drop the missing observation will cause the time interval to be irregular and complicate further analysis. There are two different sets of variables that need imputation: the ones end with `_c`, which is binary and the ones end with `_r`, which is a float number. Linear interpolation from `forecast` package is suitable to impute the variables end with `_r` and I sample from binomial distribution to impute the variables end with `_c`. More details in [3.1missing.Rmd](https://github.com/huizezhang-sherry/ETC4860/blob/master/3.1missing.Rmd). 
