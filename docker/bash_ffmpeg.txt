@@ -4,8 +4,8 @@ cd dt
 
 cat list.txt | xargs mkdir
 
-ffmpeg -i Nauru-a.mp4 -r 1/60 ../dt/Nauru-a/nauru-a_%3d.png
-ffmpeg -i Nauru-b.mp4 -r 1/60 ../dt/Nauru-b/nauru-b_%3d.png
+ffmpeg -i nauru-a.mp4 -r 1/60 ../dt/Nauru-a/nauru-a_%3d.png
+ffmpeg -i nauru-b.mp4 -r 1/60 ../dt/Nauru-b/nauru-b_%3d.png
 ffmpeg -i OKS.mp4 -r 1/60 ../dt/OKS/OKS_%3d.png
 ffmpeg -i McKell.mp4 -r 1/60 ../dt/McKell/McKell_%3d.png
 ffmpeg -i Rinehart-a.mp4 -r 1/60 ../dt/Rinehart-a/Rinehart-a_%3d.png
