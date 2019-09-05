@@ -2,24 +2,6 @@ Honours project: Exploration of Judicial Facial Expression in Videos and
 Transcripts of Legal Proceedings
 ================
 
-<head>
-
-<script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); </script>
-
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-
-tex2jax: { 
-inlineMath: [ ["\\$", "\\$"], ["\\(", "\\)"] ], 
-displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], 
-processEscapes: true, ignoreClass: "tex2jax_ignore|dno" }
-});
-</script>
-
-<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-
-</head>
-
 ## Stage 1: Data collecting
 
 ### 1.1 Data processing
@@ -155,34 +137,52 @@ as
 
 \[Y_{ijtk} = \mu + \alpha_i + \beta_j + \gamma_t + \delta_k + CP_2(\alpha_i, \beta_j, \gamma_t, \delta_k) + CP_3(\alpha_i, \beta_j, \gamma_t, \delta_k)]\]
 
-where - \(CP_2\) is the all possible interaction of the two variables -
-\(CP_3\) is the all possible interaction of the three variables
+where
+
+  - \(CP_2\) is the all possible interaction of the two variables
+  - \(CP_3\) is the all possible interaction of the three variables
 
 ### 2.2 What can we learn from the presence variable of the action unit?
 
-The statistics being plotted in the graph is the percentage of presence
-and mathematically it can be written as
-\[P_{ik} = \frac{\sum_{jt}X_{ijtk}}{\sum_{j = 1}^JT_j}\]
+The plot gives an overview of the presence of all the action unit across
+all the judge. The statistic each bar represents is the average presence
+of an action unit for a judge throughout all the video time and it can
+be written as \[P_{ik} = \frac{\sum_{jt}X_{ijtk}}{\sum_{j = 1}^JT_j}\].
+The order of Action unit on the y axis is ranked by the average presence
+of all the judge, which can be re-presented as \(P_{* K}\).
 
-The order of the action unit is based on \(P_{k}\), that is, the
-aggregated percentage of presence across all the judge.
+![](README_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
 
-![most common action units](images/most_common_au.png)
-
-Rank by judge\_id:
+The most frequent displayed action unit is highlighed in blue for each
+judge and summarised in the table below.
 
 | index | Bell | Edelman | Gageler | Keane | Kiefel | Nettle |
-| ----- | ---- | ------- | ------- | ----- | ------ | ------ |
-| 1     | AU09 | AU02    | AU02    | AU20  | AU02   | AU02   |
-| 2     | AU15 | AU20    | AU05    | AU15  | AU25   | AU15   |
-| 3     | AU25 | AU01    | AU15    | AU02  | AU20   | AU20   |
-| 4     | AU02 | AU14    | AU14    | AU14  | AU45   | AU01   |
-| 5     | AU20 | AU15    | AU20    | AU45  | AU14   | AU14   |
+| ----: | :--- | :------ | :------ | :---- | :----- | :----- |
+|     1 | AU09 | AU02    | AU02    | AU20  | AU02   | AU02   |
+|     2 | AU15 | AU20    | AU05    | AU15  | AU20   | AU15   |
+|     3 | AU25 | AU01    | AU15    | AU02  | AU25   | AU20   |
+|     4 | AU02 | AU14    | AU14    | AU14  | AU45   | AU01   |
+|     5 | AU20 | AU23    | AU20    | AU17  | AU14   | AU07   |
 
-It can be seen that AU02(outer eyebrow raise) and AU20(lip stretcher)
-are both common for all the judges. AU15 and AU14 are also commonly
-detected for five out of the six judges. Other commonly displayed action
-units include: AU01, AU09, AU20, AU25 and AU45.
+It can be seen that some of the action units are common across almost
+all the judges, these includes
+
+  - AU02(outer eyebrow raise),
+  - AU20(lip stretcher),
+  - AU15 and
+  - AU14
+
+The table below summarises the judge specific high frequent action
+units.
+
+|         |      |      |
+| :------ | :--- | :--- |
+| Bell    | AU09 | AU25 |
+| Edelman | AU01 | AU23 |
+| Gageler | AU05 | /    |
+| Keane   | AU17 | /    |
+| Kiefel  | AU25 | AU45 |
+| Nettle  | AU01 | AU07 |
 
 \#\#\# 2.2 What can we learn from the intensity variable of the action
 unit?
