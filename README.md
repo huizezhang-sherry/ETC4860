@@ -6,6 +6,15 @@ Transcripts of Legal Proceedings
 
 <script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); </script>
 
+<script type="text/x-mathjax-config">
+         MathJax.Hub.Config({
+           tex2jax: {
+             inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+             processEscapes: true
+           }
+         });
+       </script>
+
 <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 
 </head>
@@ -125,6 +134,8 @@ for more details.
 The \(Y\) variable in our case is multivariate including `Presence` and
 `Intensity` and it can be written in matrix notation as
 
+\\  \\
+
 There are four layers of indexs, which are defined as follows
 
   - \(i\) for `judge_id` and \(i = 1,2, \cdots, 6\)
@@ -170,10 +181,10 @@ Rank by judge\_id:
 It can be seen that AU02(outer eyebrow raise) and AU20(lip stretcher)
 are both common for all the judges. AU15 and AU14 are also commonly
 detected for five out of the six judges. Other commonly displayed action
-units include: AU01, AU09, AU20, AU25 and AU45.
+units include: AU01, AU09, AU20, AU25 and
+AU45.
 
-\#\#\# 2.2 What can we learn from the intensity variable of the action
-unit?
+### 2.2 What can we learn from the intensity variable of the action unit?
 
 The plot gives an overview of the action unit intensity of all the
 judges across all the trails. Each bar-and-whisker represents the

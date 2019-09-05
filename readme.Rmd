@@ -11,9 +11,17 @@ load("raw_data/au_tidy.rda")
 ```
 
 <head>
-<script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); </script>
-<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-</head>
+       <script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); </script>
+       <script type="text/x-mathjax-config">
+         MathJax.Hub.Config({
+           tex2jax: {
+             inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+             processEscapes: true
+           }
+         });
+       </script>
+       <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+       </head>
 
 
 ## Stage 1: Data collecting
@@ -69,7 +77,7 @@ Text analysis conducted using the transcript strapped from the high court of Aus
 
 The $Y$ variable in our case is multivariate including `Presence` and `Intensity` and it can be written in matrix notation as 
 
-
+\\
 \begin{align}
 Y_{jitk} = 
 \begin{bmatrix}
@@ -77,7 +85,7 @@ P_{ijtk} \\
 I_{ijtk}
 \end{bmatrix}
 \end{align}
-
+\\
 
 There are four layers of indexs, which are defined as follows 
 
