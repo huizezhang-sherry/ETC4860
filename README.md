@@ -1,10 +1,10 @@
 Honours project: Exploration of Judicial Facial Expression in Videos and
 Transcripts of Legal Proceedings
 ================
-Huize Zhang
-9/5/2019
 
-## Stage 1: Obtaining data
+## Stage 1: Data collecting
+
+### 1.1 Data processing
 
 The source data of the project are videos from the high court of
 Australia (<http://www.hcourt.gov.au/cases/recent-av-recordings>).
@@ -19,30 +19,15 @@ OpenFace.Rmd](https://github.com/huizezhang-sherry/ETC4860/blob/master/2.Magick%
 and
 [3.0csv\_proessing.Rmd](https://github.com/huizezhang-sherry/ETC4860/blob/master/3.0csv_processing.Rmd).
 
-## Stage 2: STAGE2
+### 1.2 Variable description
 
-### Missing value imputation
-
-The missingness in the dataset could be due to the fact that a judge is
-reading the materials on the desk so the face is not captured for a
-particular frame or simply because some faces are not detectable for the
-given resolution of the video stream. However, since that data is in
-time series structure, simply drop the missing observation will cause
-the time interval to be irregular and complicate further analysis. There
-are two different sets of variables that need imputation: the ones end
-with `_c`, which is binary and the ones end with `_r`, which is a float
-number. Linear interpolation from `forecast` package is suitable to
-impute the variables end with `_r` and I sample from binomial
-distribution to impute the variables end with `_c`. More details in
-[3.1missing.Rmd](https://github.com/huizezhang-sherry/ETC4860/blob/master/3.1missing.Rmd).
-
-### Exploratory data analysis
-
-The obtained dataset has more than 700 variables for each of the 31
-video-judge pairs. This outlines the difficulty of this project: no
-existing models will present accurate prediction and inference using
-700+ variables - how can we incorporate these information to say about
-the facial expressions of the Justices during the hearings?
+OpenFace provides more than 700 variables measuring different aspect of
+a given face and a full description of the output variables can be found
+[here](https://github.com/TadasBaltrusaitis/OpenFace/wiki/Action-Units).
+This outlines the difficulty of this project: no existing models will
+present accurate prediction and inference using 700+ variables - how can
+we incorporate these information to say about the facial expressions of
+the Justices during the hearings?
 
 I conduct some exploratory data analysis on one video: `Nauru_a` and
 find the 700+ variables can be classified as follows with some insights
@@ -67,9 +52,7 @@ find the 700+ variables can be classified as follows with some insights
     of landmarking variables.
 
   - **Action Unit**: Action units are used to describe facial
-    expressions. More information can be find
-    [here](https://github.com/TadasBaltrusaitis/OpenFace/wiki/Action-Units)
-    and [this
+    expressions. [this
     website](https://imotions.com/blog/facial-action-coding-system/)
     provides a good animation on each action unit. The action unit has
     intensity measures ending with `_c` and presence measures ending
@@ -84,7 +67,41 @@ records the analysis above. An extension to the full video EDA can be
 bound
 [here](https://github.com/huizezhang-sherry/ETC4860/blob/master/3.3EDA.Rmd).
 
-### Text Analysis
+### 1.3 Missing value imputation
+
+The missingness in the dataset could be due to the fact that a judge is
+reading the materials on the desk so the face is not captured for a
+particular frame or simply because some faces are not detectable for the
+given resolution of the video stream. However, since that data is in
+time series structure, simply drop the missing observation will cause
+the time interval to be irregular and complicate further analysis.
+
+There are two different sets of variables that need imputation.
+`Presence` is a binary variable that takes value of one if an action
+unit is present in a particular frame for a judge in a video and
+`Intensity` measures how strong that action unit is. Linear
+interpolation from `forecast` package is suitable to impute `Intensity`
+and `Presence` is imputed through sampling from binomial distribution.
+The imputed action unit data is stored as `au_imputed` under the
+`raw_data` folder.
+
+### 1.4 Data quality
+
+There is a data quality issue coming from the data I get from OpenFace.
+For some observations, the intensity of the action unit could be high
+while the present variable has a zero value. This does not make sense
+since if an action unit has been detected as strong intensity for a
+judge in a particular frame, it should at least present on the judge’s
+face. Therefore, I adjust for the presence value if the intensity is
+higher than one. One is being chosen as the threshold value since in
+Ekman’s definition of the intensity of the action unit, a score of one
+means the action unit is at least slightly present in the judge’s face.
+The adjusted data is stored as `au_tidy` under the `raw_data` folder.
+
+The above two sections are documented in
+[3.1missing.Rmd](https://github.com/huizezhang-sherry/ETC4860/blob/master/3.1missing.Rmd).
+
+### 1.5 Text Analysis
 
 Text analysis conducted using the transcript strapped from the high
 court of Australia to study the interruptions by the justices. This is
@@ -93,35 +110,35 @@ understand more about Justices’ decisions. See
 [3.5text\&outcome.R](https://github.com/huizezhang-sherry/ETC4860/blob/master/3.5%20text%26outcome.R)
 for more details.
 
-## Stage 3: Action unit
+## Stage 2: Exploratory Data Analysis
 
-### Data Structure
+### 2.1 Data Structure
 
-The rest of the project focuses on the action unit related variables. If
-we write all the information in the matrix notation, every element will
-have four indices:
+The \(Y\) variable in our case is multivariate including `Presence` and
+`Intensity` and it can be written in matrix notation as
 
-  - `i` for `judge_id`;
-  - `j` for `video_id`;
-  - `t` for `frame_id` and
-  - `k` for `au_id`.
+There are four layers of indexs, which are defined as follows
 
-Using the tidy principle, the data is in a tsibble format with `index =
-frame_id` and `key = c("judge_id, video_id)`. Different measurements on
-the presence and intensity of each action units are the variables.
+  - \(i\) for `judge_id` and \(i = 1,2, \cdots, 6\)
+  - \(j\) for `video_id` and \(j = 1,2, \cdots, 7\)
+  - \(t\) for `frame_id` and \(t = 1,2, \cdots, T_j\)
+  - \(k\) for `au_id` and available action unit includes AU01, AU02,
+    AU04, AU05, AU06, AU07, AU09, AU10, AU12, AU14, AU15, AU17, AU20,
+    AU23, AU25, AU26, AU28, AU45. Notice that OpenFace doesnt provide
+    intensity score for AU28.
 
-Assuming all the facial information can be summarised as a `Y` variable
-with multiple indices `(i,j,t,k)`. We can summarise the information via
-a linear combination of variables as
+\[this may belong to the modelling part\] Assuming all the facial
+information can be summarised as a `Y` variable with multiple indices
+\((i,j,t,k)\). We can summarise the information via a linear combination
+of variables
+as
 
-![Y\_{ijtk} = + \_i + \_j + \_t + \_k + CP\_2(\_i, \_j, \_t, \_k) +
-CP\_3(\_i, \_j, \_t,
-\_k)](https://latex.codecogs.com/gif.latex?Y_%7Bijtk%7D%20%3D%20%5Cmu%20+%20%5Calpha_i%20+%20%5Cbeta_j%20+%20%5Cgamma_t%20+%20%5Cdelta_k%20+%20CP_2%28%5Calpha_i%2C%20%5Cbeta_j%2C%20%5Cgamma_t%2C%20%5Cdelta_k%29%20+%20CP_3%28%5Calpha_i%2C%20%5Cbeta_j%2C%20%5Cgamma_t%2C%20%5Cdelta_k%29)
+\[Y_{ijtk} = \mu + \alpha_i + \beta_j + \gamma_t + \delta_k + CP_2(\alpha_i, \beta_j, \gamma_t, \delta_k) + CP_3(\alpha_i, \beta_j, \gamma_t, \delta_k)]\]
 
-where - CP\_2 is the all possible interaction of the two variables -
-CP\_3 is the all possible interaction of the three variables
+where - \(CP_2\) is the all possible interaction of the two variables -
+\(CP_3\) is the all possible interaction of the three variables
 
-### What can we learn from the action unit data
+### 2.2 What can we learn from the presence variable of the action unit?
 
   - **What are the most common action units for each judges?**
 
@@ -149,7 +166,8 @@ are both common for all the judges. AU15 and AU14 are also commonly
 detected for five out of the six judges. Other commonly displayed action
 units include: AU01, AU09, AU20, AU25 and AU45.
 
-  - **How does the intensity of action units looks like?**
+\#\#\# 2.2 What can we learn from the intensity variable of the action
+unit?
 
 The plot gives an overview of the action unit intensity of all the
 judges across all the trails. Each bar-and-whisker represents the
@@ -206,36 +224,33 @@ than the “normal” level for each justices. The simulation and comparison
 procedure can be summarised as follows
 
   - Step 1: Compute the simulated mean percentage appearance
-    ![\_{(i,k)}](https://latex.codecogs.com/gif.latex?%5Cmu_%7B%28i%2Ck%29%7D)
-    for each pair of
-    ![(i,k)](https://latex.codecogs.com/gif.latex?%28i%2Ck%29) using
-    bootstrapping and binomial distribution. Below is an illustration of
-    how bootstrap simulation is applied for *one particular* Justices-AU
-    pair ![(i,k)](https://latex.codecogs.com/gif.latex?%28i%2Ck%29).
+    \(\mu_{(i,k)}\) for each pair of \((i,k)\) using bootstrapping and
+    binomial distribution. Below is an illustration of how bootstrap
+    simulation is applied for *one particular* Justices-AU pair
+    \((i,k)\)
     
-      - The replicates ![(r\_1, r\_2, ,
-        r\_n)](https://latex.codecogs.com/gif.latex?%28r_1%2C%20r_2%2C%20%5Ccdots%2C%20r_n%29)
-        for bootstrap simulation are drawn from ![x\_{(i,1,1,k)},
-        x\_{(i,1,2,k)}, , x\_{(i,1,T,k)},,
-        x\_{(i,J,1,k)},x\_{(i,J,2,k)},
-        ,x\_{(i,J,T,k)}](https://latex.codecogs.com/gif.latex?x_%7B%28i%2C1%2C1%2Ck%29%7D%2C%20x_%7B%28i%2C1%2C2%2Ck%29%7D%2C%20%5Ccdots%2C%20x_%7B%28i%2C1%2CT%2Ck%29%7D%2C%5Ccdots%2C%20x_%7B%28i%2CJ%2C1%2Ck%29%7D%2Cx_%7B%28i%2CJ%2C2%2Ck%29%7D%2C%20%5Ccdots%2Cx_%7B%28i%2CJ%2CT%2Ck%29%7D)
+      - The replicates \((r_1, r_2, \cdots, r_n)\) for bootstrap
+        simulation are drawn from
+        \!\[x_{(i,1,1,k)}, x_{(i,1,2,k)}, \cdots, x_{(i,1,T,k)},\cdots, x_{(i,J,1,k)},x_{(i,J,2,k)},  \cdots,x_{(i,J,T,k)}\]
     
-      - The statistics to compute is the mean percentage: ![*{(i,k)} =
-        *{i = 1}^n
-        r\_i](https://latex.codecogs.com/gif.latex?%5Cfrac%7B1%7D%7Bn%7D%5Csum_%7Bi%20%3D%201%7D%5En%20r_i)
+      - The statistics to compute is the mean percentage
+        \(\mu_{(i,k)} = \frac{1}{n}\sum_{i = 1}^n r_i\)
     
       - Simulation result for all Justices-AU pair can be written in the
         matrix notation as
 
-![\\begin{bmatrix} *{(1,1)} & & *{(1,k)} \\ *{(2,1)} & & *{(2,k)} \\ &&
-\\ *{(6,1)} & & *{(6,k)} \\
-\\end{bmatrix}](https://latex.codecogs.com/gif.latex?%5Cbegin%7Bbmatrix%7D%20%5Cmu_%7B%281%2C1%29%7D%20%26%20%5Ccdots%20%26%20%5Cmu_%7B%281%2Ck%29%7D%20%5C%5C%20%5Cmu_%7B%282%2C1%29%7D%20%26%20%5Ccdots%20%26%20%5Cmu_%7B%282%2Ck%29%7D%20%5C%5C%20%5Cvdots%20%26%26%20%5Cvdots%20%5C%5C%20%5Cmu_%7B%286%2C1%29%7D%20%26%20%5Ccdots%20%26%20%5Cmu_%7B%286%2Ck%29%7D%20%5C%5C%20%5Cend%7Bbmatrix%7D)
+\[
+\begin{bmatrix}
+\mu_{(1,1)} & \cdots & \mu_{(1,k)} \\
+\mu_{(2,1)} & \cdots & \mu_{(2,k)} \\
+\vdots  && \vdots \\
+\mu_{(6,1)}  & \cdots & \mu_{(6,k)} \\
+\end{bmatrix}
+\]
 
   - Step 2: Compute the mean percentage appearance of each individual
-    video ![ *{t = 1}^T
-    x*{(i,j,t,k)}](https://latex.codecogs.com/gif.latex?%5Cfrac%7B1%7D%7BT%7D%20%5Csum_%7Bt%20%3D%201%7D%5ET%20x_%7B%28i%2Cj%2Ct%2Ck%29%7D)
-    for each combination of
-    ![\((i, j, k)\)](https://latex.codecogs.com/gif.latex?%24%28i%2C%20j%2C%20k%29%24)
+    video \(\frac{1}{T} \sum_{t = 1}^T x_{(i,j,t,k)}\)for each
+    combination of \((i, j, k)\)
 
 The simulation result is presented below. We expect the simulated
 interval will be able to include most of the points and the very few
@@ -265,7 +280,18 @@ the Justices to study who are more animated than others during the
 hearings. Time index is averaged for each judge and video pair and
 mathmetically, the matrix supplied to the PCA algorithm can be
 represented as follows.
-![](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign%7D%20%5Cbegin%7Bbmatrix%7D%20x_%7B1%2C1%2C%5Cbar%7Bt%7D%2C1%7D%20%26%20x_%7B1%2C1%2C%5Cbar%7Bt%7D%2C2%7D%20%26%20%5Ccdots%20%26%20x_%7B1%2C1%2C%5Cbar%7Bt%7D%2CK%7D%5C%5C%20x_%7B1%2C2%2C%5Cbar%7Bt%7D%2C1%7D%20%26%20x_%7B1%2C2%2C%5Cbar%7Bt%7D%2C2%7D%20%26%20%5Ccdots%20%26%20x_%7B1%2C2%2C%5Cbar%7Bt%7D%2CK%7D%5C%5C%20%5Cvdots%20%26%20%5Cvdots%20%26%20%26%5Cvdots%5C%5C%20x_%7B1%2CJ%2C%5Cbar%7Bt%7D%2C1%7D%20%26%20x_%7B1%2CJ%2C%5Cbar%7Bt%7D%2C2%7D%20%26%20%5Ccdots%20%26%20x_%7B1%2C2%2C%5Cbar%7Bt%7D%2CK%7D%5C%5C%20x_%7B2%2C1%2C%5Cbar%7Bt%7D%2C1%7D%20%26%20x_%7B2%2C1%2C%5Cbar%7Bt%7D%2C2%7D%20%26%20%5Ccdots%20%26%20x_%7B2%2C1%2C%5Cbar%7Bt%7D%2CK%7D%5C%5C%20%5Cvdots%20%26%20%5Cvdots%20%26%20%26%5Cvdots%5C%5C%20x_%7BI%2CJ%2C%5Cbar%7Bt%7D%2C1%7D%20%26%20x_%7BI%2CJ%2C%5Cbar%7Bt%7D%2C2%7D%20%26%20%5Ccdots%20%26%20x_%7BI%2CJ%2C%5Cbar%7Bt%7D%2CK%7D%20%5Cend%7Bbmatrix%7D%20%5Cend%7Balign%7D)
+
+\[\begin{align}
+\begin{bmatrix}
+x_{1,1,\bar{t},1} & x_{1,1,\bar{t},2} & \cdots & x_{1,1,\bar{t},K}\\
+x_{1,2,\bar{t},1} & x_{1,2,\bar{t},2} & \cdots & x_{1,2,\bar{t},K}\\
+\vdots & \vdots & &\vdots\\
+x_{1,J,\bar{t},1} & x_{1,J,\bar{t},2} & \cdots & x_{1,2,\bar{t},K}\\
+x_{2,1,\bar{t},1} & x_{2,1,\bar{t},2} & \cdots & x_{2,1,\bar{t},K}\\
+\vdots & \vdots & &\vdots\\
+x_{I,J,\bar{t},1} & x_{I,J,\bar{t},2} & \cdots & x_{I,J,\bar{t},K}
+\end{bmatrix}
+\end{align}\]
 
 The result of PCA can be summarised through the following visualisation.
 ![pca](images/pca.png)
@@ -301,3 +327,5 @@ hearing.
 | Gageler | More stronger emotion, relatively neutral.                                                 |
 | Keane   | relatively neutral.                                                                        |
 | Kiefel  | relatively neutral.                                                                        |
+
+## Stage 3: Modelling
