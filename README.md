@@ -2,6 +2,14 @@ Honours project: Exploration of Judicial Facial Expression in Videos and
 Transcripts of Legal Proceedings
 ================
 
+<head>
+
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); </script>
+
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+</head>
+
 ## Stage 1: Data collecting
 
 ### 1.1 Data processing
@@ -139,8 +147,6 @@ where - \(CP_2\) is the all possible interaction of the two variables -
 \(CP_3\) is the all possible interaction of the three variables
 
 ### 2.2 What can we learn from the presence variable of the action unit?
-
-  - **What are the most common action units for each judges?**
 
 The statistics being plotted in the graph is the percentage of presence
 and mathematically it can be written as
