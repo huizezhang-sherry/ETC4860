@@ -63,7 +63,7 @@ au_intensity <- au %>%
   group_by(judge_id, video_id, AU) %>% 
   nest() %>% 
   mutate(interp = map(data, 
-                      ~.x %>% pull(value) %>% na.interp)) %>% 
+                      ~.x %>% pull(value) %>% na.interp %>% as.numeric)) %>% 
   select(judge_id, video_id, AU, interp) %>% 
   unnest() %>% 
   group_by(judge_id, video_id, AU) %>%
@@ -144,12 +144,56 @@ au_presence <- au %>%
   spread(AU, value) %>% 
   left_join(au %>% select(judge_id: speaker)) # add back speaker column
 
-au_imputed <- au_intensity %>% 
-  left_join(au_presence, by = c("judge_id", "video_id", "frame_id", "speaker"))
+au_imputed_old <- au_intensity %>% 
+  left_join(au_presence, 
+            by = c("judge_id", "video_id", "frame_id", "speaker")) 
 
-save(au_imputed, file = "raw_data/au_imputed.rda")  
+save(au_imputed_old, file = "raw_data/au_imputed_old.rda") 
 
+au_imputed <- au_imputed_old %>% 
+  group_by(judge_id) %>% 
+  gather(AU_label, value, -c(judge_id, video_id, frame_id, speaker)) %>% 
+  separate(AU_label, c("AU", "suffix")) %>% 
+  spread(suffix, value) %>% 
+  rename(presence = c, intensity = r) 
+
+save(au_imputed, file = "raw_data/au_imputed.rda") 
 ```
 
+# Data quality
 
+There is a problem with the data: for some records, the intensity score is high but presence ==0, see below
+
+```{r}  
+au_imputed %>% 
+  filter(presence ==0) %>% 
+  arrange(desc(intensity)) 
+```
+
+Our imputation could be a reason for this to happen(impute intensity via linear interpolation and presence from random sample - they are done independently), However, the original data also has this problem(see below). 
+
+```{r}
+au %>% 
+  group_by(judge_id) %>% 
+  select(-c(speaker)) %>% 
+  gather(AU_label, value, -c(judge_id, video_id, frame_id)) %>% 
+  separate(AU_label, c("AU", "suffix")) %>% 
+  spread(suffix, value) %>% 
+  rename(presence = c, intensity = r) %>%  
+  filter(presence == 0) %>% 
+  arrange(desc(intensity))
+```
+
+so we will have to adjust for the presence value if the intensity is higher than the threshold we set, say intensity >= 1 
+
+```{r}
+au_tidy <- au_imputed %>% 
+  mutate(presence = case_when(
+    presence ==1 ~ presence, 
+    presence ==0 & intensity >=1 ~ 1, 
+    presence ==0 & intensity <1 ~ 0, 
+  ))
+
+save(au_tidy, file = "raw_data/au_tidy.rda")
+```
 
