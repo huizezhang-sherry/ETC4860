@@ -9,3 +9,6 @@ six universal emotion identified by Ekman: anger, disgust, fear, happiness, sadn
 In Steph's paper, they manually label the images with 7 sports emotions and then train the supervised learning algorithms to predict the labelled emotions. Then profile of the big 4 is built based on the intensity of the sports emotions and see how that relates to the on-court performance(serving and winning the next point). s
 
 The problem in my proeject is more of an unsupervised learnig without labels - we can have labels being the decision
+
+"For AU occurence detection, we used Support Vector Machines (SVM), and for AU intensity estimation, we used Support Vector Regression (SVR)."" @https://www.cl.cam.ac.uk/~pr10/publications/fera15.pdf 
+- thus a high figure in intensity does not necessarily translate into presence
