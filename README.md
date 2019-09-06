@@ -2,6 +2,9 @@ Honours project: Exploration of Judicial Facial Expression in Videos and
 Transcripts of Legal Proceedings
 ================
 
+\[this readme file is not currently being updated, see 0.draft for the
+most recent progression of work \]
+
 ## Stage 1: Data collecting
 
 ### 1.1 Data processing
