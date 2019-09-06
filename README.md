@@ -167,10 +167,10 @@ judge and summarised in the table below.
 It can be seen that some of the action units are common across almost
 all the judges, these includes
 
-  - AU02(outer eyebrow raise),
-  - AU20(lip stretcher),
-  - AU15 and
-  - AU14
+  - AU02 (outer eyebrow raise),
+  - AU20 (lip stretcher),
+  - AU15 (Lip Corner Depressor) and
+  - AU14 (Dimpler)
 
 The table below summarises the judge specific high frequent action
 units.
@@ -183,6 +183,10 @@ units.
 | Keane   | AU17 | /    |
 | Kiefel  | AU25 | AU45 |
 | Nettle  | AU01 | AU07 |
+
+These are the results from inspecting the action units visually and they
+should also be reflected thorugh the coefficients of the relevant models
+\[see stage 3 modelling\].
 
 \#\#\# 2.2 What can we learn from the intensity variable of the action
 unit?
