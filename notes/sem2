@@ -21,11 +21,12 @@ week 6:
 *. write up a similar paragraph for presence, like the intensity one
 3. fix the data quality problem: `au_tidy`
 4. refine the data structure math: y is multivariate 
-
 5. more plots for 
-- intensity [need to figure out a way to rearrange]
+- intensity 
 - presence 
 - intensity 2
+
+
 
 6. modelling: 
 - P_{ik}: GLM binomial link
