@@ -192,7 +192,11 @@ au_tidy <- au_imputed %>%
     presence ==1 ~ presence, 
     presence ==0 & intensity >=1 ~ 1, 
     presence ==0 & intensity <1 ~ 0, 
-  ))
+  )) %>% 
+  ungroup() %>% 
+  mutate(judge_id = as.factor(judge_id), 
+         speaker = as.factor(speaker), 
+         AU = as.factor(AU))
 
 save(au_tidy, file = "raw_data/au_tidy.rda")
 ```
