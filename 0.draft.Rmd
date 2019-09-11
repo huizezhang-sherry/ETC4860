@@ -152,7 +152,8 @@ other_highf <- most_common %>%
   filter(!AU %in% c("AU02", "AU20", "AU15", "AU14")) %>% 
   mutate(index = row_number()) %>% 
   spread(index, AU) %>% 
-  mutate(`2` = ifelse(is.na(`2`), "/", `2`))
+  rename(first = `1`, second = `2`) 
+  
 
 knitr::kable(other_highf)
 ```
@@ -161,7 +162,7 @@ These are the results from inspecting the action units visually and they should 
 
 #### 2.2.1 Presence by videos
 
-Apart from visualising the general presence score for all the action unit, we are also interested in the break down statistics by video.  The statistics being plotted is thus $P_{ijk} = \frac{\sum_{t}X_{ijtk}}{T_j}$ with selected most common four action units. From this plot, it is interesting to know that almost all the judges have more frequent action units on the face for case OKS. This maybe related to the nature of the case... 
+Apart from visualising the general presence score for all the action unit, we are also interested in the break down statistics by video.  The statistics being plotted is thus $$P_{ijk} = \frac{\sum_{t}X_{ijtk}}{T_j}$$ with selected most common four action units. From this plot, it is interesting to know that almost all the judges have more frequent action units on the face for case OKS. This maybe related to the nature of the case... 
 
 
 ```{r}
