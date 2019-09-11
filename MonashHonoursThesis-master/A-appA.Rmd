@@ -1,0 +1,21 @@
+---
+knit: "bookdown::render_book"
+---
+
+\appendix
+
+# Additional stuff
+
+|Case|Name|AV recording link|
+|------|--|-----|
+|Republic of Nauru v. WET040| `Nauru_a`|http://www.hcourt.gov.au/cases/cases-av/av-2018-11-07a|
+|TTY167 v. Republic of Nauru|`Nauru_b`|http://www.hcourt.gov.au/cases/cases-av/av-2018-11-07b|
+|Rinehart & Anor v. Hancock Prospecting Pty Ltd & Ors on 13 Nov 18 |`Rinehart_a`|http://www.hcourt.gov.au/cases/cases-av/av-2018-11-13|
+|Rinehart & Anor v. Hancock Prospecting Pty Ltd & Ors on 14 Nov 18 |`Rinehart_b`|http://www.hcourt.gov.au/cases/cases-av/av-2018-11-14a|
+|Parkes Shire Council v. South West Helicopters Pty Limited |`Parkes`|http://www.hcourt.gov.au/cases/cases-av/av-2018-11-14b|
+|McKell v. The Queen| `McKell`|http://www.hcourt.gov.au/cases/cases-av/av-2018-12-07|
+|OKS v. The State of Western Australia|`OKS`|http://www.hcourt.gov.au/cases/cases-av/av-2019-02-14|
+
+Table: Details of videos processed.
+
+

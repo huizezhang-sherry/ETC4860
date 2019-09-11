@@ -1,0 +1,48 @@
+---
+chapter: 2
+knit: "bookdown::render_book"
+---
+
+# Data Source
+
+## Data Processing
+
+The source data for this research project is the AV recordings publicly available from the High Court of Australia [@highcourtau]. Multiple procedures need to be performed to obtain the dataset.
+
+
+The workflow for extracting numerical data from the videos can be found in Figure \ref{fig:workflow}. Youtube-dl [@youtube-dl] has been used to download videos from the High Court of Australia[@highcourtau] and the list of videos used in this research project is documented in the Appendix. Image frames are extracted from the videos for every minute via ffmpeg [@ffmpeg], resulting in 1021 image frames (252 frames from `Nauru` videos and 769 frames from other five videos). Taipan [@Taipan] is then used to find the x-y coordinates of the location of the Justices in each image frame. ImageMagick [@ImageMagick] is then used to crop the face of each Justice from each image frame that is taken from each video where three Justices present in `Nauru` videos and five Justices in other videos. The resulting 4601 cropped images (252 image frames from `Nauru` videos where three Justices are presented and 769 image frames from other videos where five justices are presented) are then sent to OpenFace [@baltrusaitis2018openface] to produce the variables for facial landmarking, head pose, eye gaze and facial action unit. This step is performed via the docker platform. The resulting outputs from OpenFace are individual comma-separated values (csv) files for each of the 4601 faces considered and processing is done in R to combine all the separate csv files into a final dataframe with appropriate index of `frame_id`, `judge_id` and `video_id`.
+
+```{r fig.cap="workflow \\label{fig:workflow}"}
+include_graphics("figures/workflow.png", dpi = 128)
+```
+
+## Variable description
+
+OpenFace provides more than 711 variables measuring different aspect of a given face and a full description of the output variables can be found [here](https://github.com/TadasBaltrusaitis/OpenFace/wiki/Action-Units). This outlines the difficulty of this project: no existing models will present accurate prediction and inference using 700+ variables - how can we incorporate these information to say about the facial expressions of the Justices during the hearings? 
+
+I conduct some exploratory data analysis on one video: `Nauru_a` and find the 700+ variables can be classified as follows with some insights
+
+ - **Confidence**: How confidence OpenFace is with the detection. Confidence is related to the angle that the Justice’s face present in the images. 
+ 
+ - **Gaze**: Gaze tracking: the vector from the pupil to corneal reflection. The dataset contains information on the gaze for both eyes while there is no distinct difference between the eyes. Also I was trying to make animation to track the change of the gaze for judges but no good luck. 
+ 
+ - **Pose**: the location of the head with respect to camera. Pose-related variables don't provide much useful information apart from gaze-related variables. 
+ 
+ - **Landmarking**: landmarking variables for face and eyes. Landmarking variables allows me to plot the face of the judge in a particular frame. More work could be done to explore the usefulness of landmarking variables. 
+ 
+ - **Action Unit**: Action units are used to describe facial expressions. [this website](https://imotions.com/blog/facial-action-coding-system/) provides a good animation on each action unit. The action unit has intensity measures ending with `_c` and presence measures ending with `_r`. These variables will be the focus of my project and a reference study of using action units to detect human emotion by Kovalchik can be found [here](http://www.sloansportsconference.com/wp-content/uploads/2018/02/2005.pdf). 
+ 
+
+## Missing value imputation 
+
+The missingness in the dataset could be due to the fact that a judge is reading the materials on the desk so the face is not captured for a particular frame or simply because some faces are not detectable for the given resolution of the video stream. However, since that data is in time series structure, simply drop the missing observation will cause the time interval to be irregular and complicate further analysis. 
+
+There are two different sets of variables that need imputation. `Presence` is a binary variable that takes value of one if an action unit is present in a particular frame for a judge in a video and `Intensity` measures how strong that action unit is. Linear interpolation from `forecast` package is suitable to impute `Intensity` and `Presence` is imputed through sampling from binomial distribution. The imputed action unit data is stored as `au_imputed` under the `raw_data` folder. 
+
+## Data quality
+
+There is a data quality issue coming from the data I get from OpenFace. For some observations, the intensity of the action unit could be high while the present variable has a zero value. This does not make sense since if an action unit has been detected as strong intensity for a judge in a particular frame, it should at least present on the judge's face. Therefore, I adjust for the presence value if the intensity is higher than one. One is being chosen as the threshold value since in Ekman's definition of the intensity of the action unit, a score of one means the action unit is at least slightly present in the judge's face. The adjusted data is stored as `au_tidy` under the `raw_data` folder. 
+
+
+
+
