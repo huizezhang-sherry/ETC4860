@@ -1,0 +1,54 @@
+---
+title: "5.1modelling"
+author: "Huize Zhang"
+date: "07/09/2019"
+output: html_document
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+load("raw_data/au_tidy.rda")
+library(stats)
+library(tidyverse)
+library(broom)
+```
+
+```{r}
+au_model <- au_tidy %>% 
+  filter(AU %in% c("AU02", "AU20", "AU15", "AU14")) %>% 
+  mutate(judge_id = fct_relevel(judge_id, "Edelman"), 
+         AU = fct_relevel(AU, "AU14"), 
+         video_id = fct_relevel(video_id, "OKS"))
+
+binomial_model <- glm(presence ~ judge_id*AU, 
+           family = "binomial",  data = au_model)
+summary(binomial_model)
+
+
+tidy(binomial_model)
+glance(binomial_model)
+
+```
+
+```{r}
+binomial_model_2 <- glm(presence ~ judge_id + AU + video_id +
+        judge_id*AU + AU*video_id + judge_id*video_id, 
+           family = "binomial",  data = au_model)
+
+tidy(binomial_model_2)
+glance(binomial_model_2)
+summary(binomial_model_2)
+```
+
+
+# Appellent vs. Respondent 
+```{r}
+binomial_model_3 <- glm(presence ~ judge_id + AU + video_id + speaker + 
+        judge_id*AU + AU*video_id + judge_id*video_id , 
+           family = "binomial",  data = au_model)
+
+summary(binomial_model_3)
+```
+
