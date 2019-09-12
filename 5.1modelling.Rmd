@@ -10,36 +10,73 @@ editor_options:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 load("raw_data/au_tidy.rda")
+load("raw_data/most_common.rda")
 library(stats)
 library(tidyverse)
 library(broom)
+library(visreg)
 ```
 
-```{r}
-au_model <- au_tidy %>% 
-  filter(AU %in% c("AU02", "AU20", "AU15", "AU14")) %>% 
-  mutate(judge_id = fct_relevel(judge_id, "Edelman"), 
-         AU = fct_relevel(AU, "AU14"), 
-         video_id = fct_relevel(video_id, "OKS"))
 
-binomial_model <- glm(presence ~ judge_id*AU, 
-           family = "binomial",  data = au_model)
+## Model1: GLM with judge_id, selected AU and interactions 
+
+$$P_{ik} = \mu + \alpha_i + \delta_k + (\alpha\delta)_{ik}$$
+```{r}
+most_common_au <- most_common %>% 
+  ungroup(judge_id) %>% 
+  group_by(AU) %>% 
+  summarise(mean = mean(avg_presence)) %>% 
+  arrange(-mean) %>% 
+  top_n(7)
+
+au_model <- au_tidy %>% 
+  filter(AU %in% most_common_au$AU) %>% 
+  mutate(judge_id = fct_relevel(judge_id, "Edelman"), 
+         AU = fct_other(AU, keep = c("AU15", "AU14", "AU02", "AU20", "AU01", "AU25", "AU45")),
+         AU = fct_relevel(AU, "Other"))
+
+binomial_model <- glm(presence ~ (.-frame_id-speaker-intensity-video_id)^2, 
+           family = "binomial",  data = au_model) %>% 
+  step(trace = FALSE)
+
 summary(binomial_model)
 
-
+anova(binomial_model, test="Chisq")
 tidy(binomial_model)
 glance(binomial_model)
 
 ```
 
+## Model2: GLM with judge_id, selected AU, video_id and interactions 
+
+$$P_{ijk} = \mu + \alpha_i + \beta_j +\delta_k + (\alpha\beta)_{ij}+(\alpha\delta)_{ik} + (\beta\delta)_{jk}$$
+
 ```{r}
+
+binomial_model_2 <- glm(presence ~ (.-frame_id-speaker-intensity)^2, 
+           family = "binomial",  data = au_model) %>% 
+  step(trace = FALSE)
+
+summary(binomial_model_2)
+
+anova(binomial_model_2, test="Chisq")
+
+
 binomial_model_2 <- glm(presence ~ judge_id + AU + video_id +
         judge_id*AU + AU*video_id + judge_id*video_id, 
-           family = "binomial",  data = au_model)
+           family = "binomial",  data = au_model) %>% 
+  step(trace = FALSE)
 
+summary(binomial_model_2)
 tidy(binomial_model_2)
 glance(binomial_model_2)
-summary(binomial_model_2)
+
+```
+
+
+```{r}
+gam_model <- gam(presence ~ lo(judge_id) + lo(AU) + lo(video_id), data=au_model)
+summary(amgam)
 ```
 
 
