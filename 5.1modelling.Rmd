@@ -32,7 +32,7 @@ most_common_au <- most_common %>%
 au_model <- au_tidy %>% 
   filter(AU %in% most_common_au$AU) %>% 
   mutate(judge_id = fct_relevel(judge_id, "Edelman"), 
-         AU = fct_other(AU, keep = c("AU15", "AU14", "AU02", "AU20", "AU01", "AU25", "AU45")),
+         AU = fct_other(AU, keep = c("AU15", "AU14", "AU02", "AU20", "AU01", "AU25")),
          AU = fct_relevel(AU, "Other"))
 
 binomial_model <- glm(presence ~ (.-frame_id-speaker-intensity-video_id)^2, 
@@ -62,14 +62,14 @@ summary(binomial_model_2)
 anova(binomial_model_2, test="Chisq")
 
 
-binomial_model_2 <- glm(presence ~ judge_id + AU + video_id +
-        judge_id*AU + AU*video_id + judge_id*video_id, 
-           family = "binomial",  data = au_model) %>% 
-  step(trace = FALSE)
-
-summary(binomial_model_2)
-tidy(binomial_model_2)
-glance(binomial_model_2)
+# binomial_model_2 <- glm(presence ~ judge_id + AU + video_id +
+#         judge_id*AU + AU*video_id + judge_id*video_id, 
+#            family = "binomial",  data = au_model) %>% 
+#   step(trace = FALSE)
+# 
+# summary(binomial_model_2)
+# tidy(binomial_model_2)
+# glance(binomial_model_2)
 
 ```
 
