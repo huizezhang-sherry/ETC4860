@@ -151,12 +151,12 @@ au_intensity_all <- au_tidy %>%
   mutate(is_intense = ifelse(intensity >= 2, 1, 0))  
 
 # intensity plot
-au_intensity_all %>% 
-  ggplot(aes(x = judge_id, y = intensity, color = judge_id)) + 
-  geom_boxplot() + 
-  facet_wrap(vars(video_id), scales = "free_x") + 
-  theme(axis.text.x = element_text(angle = 30, hjust = 1), 
-        legend.position = "none")
+#au_intensity_all %>% 
+#  ggplot(aes(x = judge_id, y = intensity, color = judge_id)) + 
+#  geom_boxplot() + 
+#  facet_wrap(vars(video_id), scales = "free_x") + 
+#  theme(axis.text.x = element_text(angle = 30, hjust = 1), 
+#        legend.position = "none")
 #ggsave("images/I_overall.png",width = 7, height = 5)  
 
 # the plot magnify the box

@@ -59,11 +59,11 @@ People have attempted to predict the decisions of the Justices for centuries. \t
 It is important for judges to maintain a standard of behaviour in court that is consistent with the status of judicial office and does not diminish the confidence of litigants in particular, and the public in general, in the ability, the integrity, the impartiality and the independence of the judge.
 \end{quote}
 
-This impartiality should be clear in judicial demeanour \autocites{tutton2018judicial}{goffman1956nature}. Paul Ekman \autocite{ekman1991invited} suggests that from a behavioural perspective, some facial and vocal inflections are often unbeknown to the speakers themselves . Many scholars have exploited this in studying the court outcomes through the language and words used by the Justices in the court \autocite{Shullman2004illusion} and vocal and facial characteristics of the Justices \autocite{chen2018justice}.
+This impartiality should be clear in judicial demeanour \autocite{tutton2018judicial,goffman1956nature}. Paul Ekman \autocite{ekman1991invited} suggests that from a behavioural perspective, some facial and vocal inflections are often unbeknown to the speakers themselves . Many scholars have exploited this in studying the court outcomes through the language and words used by the Justices in the court \autocite{Shullman2004illusion} and vocal and facial characteristics of the Justices \autocite{chen2018justice}.
 
 There are also existing works to understand the emotion of the Justices from a linguistic perspective and suggest some factors that could be useful to indicate how the Justices' vote and thus the court outcome. These factors include the use of pleasant and unpleasant language by \textcite{black2011emotions}, the frequency and content of Justices' questions by \textcite{Shullman2004illusion} and \textcite{johnson2009inquiring}. \textcite{epstein2010inferring} use a regression analysis with the number of questions asked by the Justices used to infer the winning party in a case.
 
-Other scholars \autocites{chen2016perceived}{chen2017covering}{schubert1992observing} have studied the emotion of the Justices from vocal characteristics and suggest that these vocal characteristics, especially perceived masculinity is strongly correlated with the court outcomes. \textcite{dietrich2019emotional} uses a multilevel logistic model with random effects to suggest that subconscious vocal inflections contain information that is not available from text.
+Other scholars \autocite{chen2016perceived,chen2017covering,schubert1992observing} have studied the emotion of the Justices from vocal characteristics and suggest that these vocal characteristics, especially perceived masculinity is strongly correlated with the court outcomes. \textcite{dietrich2019emotional} uses a multilevel logistic model with random effects to suggest that subconscious vocal inflections contain information that is not available from text.
 
 Chen \autocite*{chen2018justice} employed both vocal and facial characteristics to predict the court votes using Supreme Court data from 1946-2014. The audio clips are first preprocessed to get the Mel-frequency Cepstral Coefficients (MFCC) and then applied to a random forest model. The image features are extracted using a Histogram of Oriented Gradients (HOG) method. More specific facial recognition software is readily available to extract human facial features and these facial recognition technologies have not yet been applied to the legal proceedings.
 
@@ -74,7 +74,7 @@ Most of the literature is conducted using the U.S. Supreme Court Database and le
 
 An anatomical analysis of facial action \autocite{ekman1976measuring} led to the Facial Action Code (FAC) \autocite{ekman1978} and has been further revised by \textcite{ekman2002facial}. This decomposition of facial muscles is widely used in scientific research. It was applied in competitive sports, specifically tennis by \textcite{kovalchik2018going} who found that the emotion of professional tennis players will have an impact on their performance.
 
-There have been many algorithms created for facial detection and the analysis of their performance when applied to images have been the focus of events like the Audio/Visual Emotion Challenge \autocites{schuller2012avec}{schuller2011avec} and Emotion Recognition In The Wild Challenge and Workshop \autocites{dhall2013emotion}{kahou2013combining}.
+There have been many algorithms created for facial detection and the analysis of their performance when applied to images have been the focus of events like the Audio/Visual Emotion Challenge \autocite{schuller2012avec,schuller2011avec} and Emotion Recognition In The Wild Challenge and Workshop \autocite{dhall2013emotion,kahou2013combining}.
 
 Facial recognition software has also been implemented by DeepFace \autocite{taigman2014deepface} from Facebook, and FaceNet \autocite{schroff2015facenet} from Google. OpenFace \autocite{baltrusaitis2018openface} is the first open-sourced face recognition software that provides facial expression detection, including facial landmarking, head pose estimation, eye gaze tracking and facial action unit detection. Along with its previous version (\textcite{baltruvsaitis2016openface}), the OpenFace toolkit has been used in different social research studies including depression classification (\textcite{yang2016decision} and \textcite{nasir2016multimodal}).
 
@@ -89,7 +89,7 @@ The source data for this research project is the AV recordings publicly availabl
 The workflow for extracting numerical data from the videos can be found in Figure \ref{fig:workflow}. Youtube-dl \autocite{youtube-dl} has been used to download videos from the High Court of Australia\autocite{highcourtau} and the list of videos used in this research project is documented in the Appendix. Image frames are extracted from the videos for every minute via ffmpeg \autocite{ffmpeg}, resulting in 1021 image frames (252 frames from \texttt{Nauru} videos and 769 frames from other five videos). Taipan \autocite{Taipan} is then used to find the x-y coordinates of the location of the Justices in each image frame. ImageMagick \autocite{ImageMagick} is then used to crop the face of each Justice from each image frame that is taken from each video where three Justices present in \texttt{Nauru} videos and five Justices in other videos. The resulting 4601 cropped images (252 image frames from \texttt{Nauru} videos where three Justices are presented and 769 image frames from other videos where five justices are presented) are then sent to OpenFace \autocite{baltrusaitis2018openface} to produce the variables for facial landmarking, head pose, eye gaze and facial action unit. This step is performed via the docker platform. The resulting outputs from OpenFace are individual comma-separated values (csv) files for each of the 4601 faces considered and processing is done in R to combine all the separate csv files into a final dataframe with appropriate index of \texttt{frame\_id}, \texttt{judge\_id} and \texttt{video\_id}.
 
 \begin{figure}
-\includegraphics[width=6.2in]{figures/workflow} \caption{workflow \label{fig:workflow}}\label{fig:unnamed-chunk-1}
+\includegraphics[width=1\linewidth]{figures/workflow} \caption{workflow \label{fig:workflow}}\label{fig:unnamed-chunk-1}
 \end{figure}
 
 \hypertarget{variable-description}{%
@@ -177,7 +177,7 @@ where
 
 The plot gives an overview of the presence of all the action unit across all the judge. The statistic each bar represents is the average presence of an action unit for a judge throughout all the video time and it can be written as \[P_{ik} = \frac{\sum_{jt}X_{ijtk}}{\sum_{j = 1}^JT_j}\]. The order of Action unit on the y axis is ranked by the average presence of all the judge, which can be re-presented as \(P_{* K}\).
 
-\includegraphics{thesis_files/figure-latex/unnamed-chunk-2-1.pdf}
+\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-2-1}
 
 The most frequent displayed action unit is highlighed in blue for each judge and summarised in the table below.
 
@@ -238,7 +238,7 @@ These are the results from inspecting the action units visually and they should 
 
 Apart from visualising the general presence score for all the action unit, we are also interested in the break down statistics by video. The statistics being plotted is thus \[P_{ijk} = \frac{\sum_{t}X_{ijtk}}{T_j}\] with selected most common four action units. From this plot, it is interesting to know that almost all the judges have more frequent action units on the face for case OKS. This maybe related to the nature of the case\ldots{}
 
-\includegraphics{thesis_files/figure-latex/unnamed-chunk-5-1.pdf}
+\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-5-1}
 
 \hypertarget{action-unit-intensity}{%
 \section{Action unit: Intensity}\label{action-unit-intensity}}
@@ -252,14 +252,14 @@ In Ekman's 20002 FACS manual, the intensity of Action unit is defined based on f
 
 To better look at the mean of each boxplot, we take a square root transformation and hide the outliners into the upper line. We can find that Judge Nettle seems to have higher average in all the four cases he appears: Nauru\_a\&b, Rinehart\_a \&b.
 
-\includegraphics{thesis_files/figure-latex/unnamed-chunk-6-1.pdf} \includegraphics{thesis_files/figure-latex/unnamed-chunk-6-2.pdf}
+\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-6-1}
 
 \hypertarget{mean-intensity}{%
 \subsection{Mean intensity}\label{mean-intensity}}
 
 We compute a similar mean intensity score for each of the action unit for each of the judge, the statsitics is \[I_{ik} = \frac{\sum_{jt}X_{ijtk}}{\sum_{j = 1}^JT_j}\]. Less uniform as the mean presence plot - different judge response intense at different action units.
 
-\includegraphics{thesis_files/figure-latex/unnamed-chunk-7-1.pdf}
+\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-7-1}
 
 \hypertarget{intensity-plot-for-the-most-frequent-action-units}{%
 \subsection{Intensity plot for the most frequent action units}\label{intensity-plot-for-the-most-frequent-action-units}}
@@ -270,14 +270,15 @@ From the first plot, some panels are empty for some judges. This is because the 
 
 From the second plot, most of the intensity are low as the general intensity plot, while one action unit has drawn the attention: AU45 for Kiefel. The intensity in both case parkes and case Rinehart\_a for Kiefel are relatively higher than others and this will be reflected through our model.
 
-\includegraphics{thesis_files/figure-latex/unnamed-chunk-8-1.pdf} \includegraphics{thesis_files/figure-latex/unnamed-chunk-8-2.pdf}
+\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-8-1}
+\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-8-2}
 
 \hypertarget{high-intensity-points}{%
 \subsection{High intensity points}\label{high-intensity-points}}
 
 We filter out the points have intensity greater than 2 (at least ``slight'' as per Ekman) in the previous plot and plot it against time and color by the speaker. It tells us that Edelman, Gageler and Nettle are the judges have stronger emotion that can be detected (since they have more points with intensity greater than 2). Different judges also have different time where they display stronger emotions. For example, Justice Nettle are more likely to have stronger emotion throughout the time when the appellant is speaking but only at the beginning and ending period when the respondent is speaking.
 
-\includegraphics{thesis_files/figure-latex/unnamed-chunk-9-1.pdf}
+\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-9-1}
 
 \appendix
 

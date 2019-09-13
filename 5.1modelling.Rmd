@@ -32,6 +32,7 @@ most_common_au <- most_common %>%
   top_n(7)
 
 au_model <- au_tidy %>% 
+  ungroup(judge_id) %>% 
   filter(AU %in% most_common_au$AU) %>% 
   mutate(judge_id = fct_relevel(judge_id, "Edelman"), 
          AU = fct_other(AU, keep = c("AU15", "AU14", "AU02", "AU20", "AU01", "AU25")),

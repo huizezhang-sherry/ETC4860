@@ -4,7 +4,13 @@ knit: "bookdown::render_book"
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, message=FALSE, cache=TRUE, warning = FALSE)
+knitr::opts_chunk$set(echo = FALSE, 
+                      message=FALSE, 
+                      cache=TRUE, 
+                      warning = FALSE,
+                      out.width="100%", 
+                      fig.width=10, 
+                      fig.height=7)
 # Load any R packages you need here
 library(forecast)
 library(tidyverse)
