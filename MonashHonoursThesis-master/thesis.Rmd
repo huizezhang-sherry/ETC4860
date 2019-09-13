@@ -1,0 +1,534 @@
+---
+title: 'Exploration of Judicial Facial Expression in Videos and Transcripts of Legal Proceedings'
+degreetype: 'Bachelor of Commerce (Honours)'
+author: 'Huize Zhang'
+studentid: 27478343
+output: bookdown::pdf_book
+site: bookdown::bookdown_site
+link-citations: yes
+knit: "bookdown::render_book"
+---
+
+<!-- 
+Edit these lines as appropriate.
+The actual thesis content is in several Rmd files.
+
+You'll need to edit the _bookdown.yml file to set the order in which you'd like them to appear. 
+
+If you have specific LaTeX packages to add, put them in monashthesis.tex.
+
+You will need to ensure you have installed the knitr and bookdown packages for R.
+
+You will also need LaTeX installed on your computer.
+-->
+
+
+
+<!--chapter:end:index.Rmd-->
+
+---
+chapter: 1
+knit: "bookdown::render_book"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message=FALSE, cache=TRUE, warning = FALSE)
+# Load any R packages you need here
+library(forecast)
+library(tidyverse)
+library(ggpubr)
+library(knitr)
+library(broom)
+
+load("data/au_tidy.rda")
+load("data/most_common.rda")
+```
+
+# Introduction {#ch:intro}
+
+Decisions by courtroom Justices have been discussed broadly in the legal literature. Gender, political views and religious background of both the Justices and counsel in the case potentially influence the decisions. This paper will explore the facial behaviour of the Justices during hearings with the objective of being to assess whether it can help to predict outcomes. Audio Visual(AV) recordings and case transcripts will be computationally processed and analysed to examine the decisions of each Justice. 
+
+## Motivation
+
+@tutton2018judicial attemped to utilize the AV technology, which is made available online by the High Court of Australia [@highcourtau]. They visually inspect of the videos to highlight when Justices depart from the expected norms of judicial conduct. To better understand the emotion status and therefore the departure of the emotional behaviour, more advanced technologies could be applied. An example is to use OpenFace [-@baltrusaitis2018openface] technology, which provides information on emotions exhibited by the Justices. This technique has been applied by @kovalchik2018going on professional tennis players during Grand Slam matches. That study demonstrated the potential to predict the outcome of High Court appeals based on Justices' demeanour utilising contemporary tools and emotion tagging techniques. 
+ 
+## Literature review
+
+The literature sumary is divided into two parts: (1) current work in legal studies to understand the behaviour of the Justices and (2) existing facial recognition and emotion tagging technology.  
+
+### Legal study from a behaviour perspective 
+
+People have attempted to predict the decisions of the Justices for centuries. @judicalguid present the following code of conduct:
+
+>It is important for judges to maintain a standard of behaviour in court that is consistent with the status of judicial office and does not diminish the confidence of litigants in particular, and the public in general, in the ability, the integrity, the impartiality and the independence of the judge. 
+
+This impartiality should be clear in judicial demeanour [@tutton2018judicial; @goffman1956nature]. Paul Ekman [@ekman1991invited] suggests that from a behavioural perspective, some facial and vocal inflections are often unbeknown to the speakers themselves . Many scholars have exploited this in studying the court outcomes through the language and words used by the Justices in the court [@Shullman2004illusion] and vocal and facial characteristics of the Justices [@chen2018justice]. 
+
+There are also existing works to understand the emotion of the Justices from a linguistic perspective and suggest some factors that could be useful to indicate how the Justices' vote and thus the court outcome. These factors include the use of pleasant and unpleasant language by @black2011emotions, the frequency and content of Justices' questions by @Shullman2004illusion and @johnson2009inquiring. @epstein2010inferring use a regression analysis with the number of questions asked by the Justices used to infer the winning party in a case. 
+
+Other scholars [@chen2016perceived; @chen2017covering; @schubert1992observing] have studied the emotion of the Justices from vocal characteristics and suggest that these vocal characteristics, especially perceived masculinity is strongly correlated with the court outcomes. @dietrich2019emotional uses a multilevel logistic model with random effects to suggest that subconscious vocal inflections contain information that is not available from text. 
+
+Chen [-@chen2018justice] employed both vocal and facial characteristics to predict the court votes using Supreme Court data from 1946-2014. The audio clips are first preprocessed to get the Mel-frequency  Cepstral  Coefficients (MFCC) and then applied to a random forest model. The image features are extracted using a Histogram of Oriented Gradients (HOG) method. More specific facial recognition software is readily available to extract human facial features and these facial recognition technologies have not yet been applied to the legal proceedings. 
+
+Most of the literature is conducted using the U.S. Supreme Court Database and less studies have been conducted using Australian High Court data. @tutton2018judicial have used an ethnographic approach to study the transcript and AV recordings in the High Court of Australia but the study is conducted in an observational manner via matching the Justices' distinct behaviour with the transcript.
+
+### Facial recognition
+
+An anatomical analysis of facial action [@ekman1976measuring] led to the Facial Action Code (FAC) [@ekman1978] and has been further revised by @ekman2002facial. This decomposition of facial muscles is widely used in scientific research. It was applied in competitive sports, specifically tennis by @kovalchik2018going who found that the emotion of professional tennis players will have an impact on their performance.
+
+There have been many algorithms created for facial detection and the analysis of their performance when applied to images have been the focus of events like the Audio/Visual Emotion Challenge [@schuller2012avec; @schuller2011avec] and Emotion Recognition In The Wild Challenge and Workshop [@dhall2013emotion; @kahou2013combining]. 
+
+Facial recognition software has also been implemented by DeepFace [@taigman2014deepface] from Facebook, and FaceNet [@schroff2015facenet] from Google. OpenFace [@baltrusaitis2018openface] is the first open-sourced face recognition software that provides facial expression detection, including facial landmarking, head pose estimation, eye gaze tracking and facial action unit detection. Along with its previous version (@baltruvsaitis2016openface), the OpenFace toolkit has been used in different social research studies including depression classification (@yang2016decision and @nasir2016multimodal).  
+
+
+
+<!--chapter:end:01-chap1.Rmd-->
+
+---
+chapter: 2
+knit: "bookdown::render_book"
+---
+
+# Data Source
+
+## Data Processing
+
+The source data for this research project is the AV recordings publicly available from the High Court of Australia [@highcourtau]. Multiple procedures need to be performed to obtain the dataset.
+
+
+The workflow for extracting numerical data from the videos can be found in Figure \ref{fig:workflow}. Youtube-dl [@youtube-dl] has been used to download videos from the High Court of Australia[@highcourtau] and the list of videos used in this research project is documented in the Appendix. Image frames are extracted from the videos for every minute via ffmpeg [@ffmpeg], resulting in 1021 image frames (252 frames from `Nauru` videos and 769 frames from other five videos). Taipan [@Taipan] is then used to find the x-y coordinates of the location of the Justices in each image frame. ImageMagick [@ImageMagick] is then used to crop the face of each Justice from each image frame that is taken from each video where three Justices present in `Nauru` videos and five Justices in other videos. The resulting 4601 cropped images (252 image frames from `Nauru` videos where three Justices are presented and 769 image frames from other videos where five justices are presented) are then sent to OpenFace [@baltrusaitis2018openface] to produce the variables for facial landmarking, head pose, eye gaze and facial action unit. This step is performed via the docker platform. The resulting outputs from OpenFace are individual comma-separated values (csv) files for each of the 4601 faces considered and processing is done in R to combine all the separate csv files into a final dataframe with appropriate index of `frame_id`, `judge_id` and `video_id`.
+
+```{r fig.cap="workflow \\label{fig:workflow}"}
+include_graphics("figures/workflow.png", dpi = 128)
+```
+
+## Variable description
+
+OpenFace provides more than 711 variables measuring different aspect of a given face and a full description of the output variables can be found [here](https://github.com/TadasBaltrusaitis/OpenFace/wiki/Action-Units). This outlines the difficulty of this project: no existing models will present accurate prediction and inference using 700+ variables - how can we incorporate these information to say about the facial expressions of the Justices during the hearings? 
+
+I conduct some exploratory data analysis on one video: `Nauru_a` and find the 700+ variables can be classified as follows with some insights
+
+ - **Confidence**: How confidence OpenFace is with the detection. Confidence is related to the angle that the Justice’s face present in the images. 
+ 
+ - **Gaze**: Gaze tracking: the vector from the pupil to corneal reflection. The dataset contains information on the gaze for both eyes while there is no distinct difference between the eyes. Also I was trying to make animation to track the change of the gaze for judges but no good luck. 
+ 
+ - **Pose**: the location of the head with respect to camera. Pose-related variables don't provide much useful information apart from gaze-related variables. 
+ 
+ - **Landmarking**: landmarking variables for face and eyes. Landmarking variables allows me to plot the face of the judge in a particular frame. More work could be done to explore the usefulness of landmarking variables. 
+ 
+ - **Action Unit**: Action units are used to describe facial expressions. [this website](https://imotions.com/blog/facial-action-coding-system/) provides a good animation on each action unit. The action unit has intensity measures ending with `_c` and presence measures ending with `_r`. These variables will be the focus of my project and a reference study of using action units to detect human emotion by Kovalchik can be found [here](http://www.sloansportsconference.com/wp-content/uploads/2018/02/2005.pdf). 
+ 
+
+## Missing value imputation 
+
+The missingness in the dataset could be due to the fact that a judge is reading the materials on the desk so the face is not captured for a particular frame or simply because some faces are not detectable for the given resolution of the video stream. However, since that data is in time series structure, simply drop the missing observation will cause the time interval to be irregular and complicate further analysis. 
+
+There are two different sets of variables that need imputation. `Presence` is a binary variable that takes value of one if an action unit is present in a particular frame for a judge in a video and `Intensity` measures how strong that action unit is. Linear interpolation from `forecast` package is suitable to impute `Intensity` and `Presence` is imputed through sampling from binomial distribution. The imputed action unit data is stored as `au_imputed` under the `raw_data` folder. 
+
+## Data quality
+
+There is a data quality issue coming from the data I get from OpenFace. For some observations, the intensity of the action unit could be high while the present variable has a zero value. This does not make sense since if an action unit has been detected as strong intensity for a judge in a particular frame, it should at least present on the judge's face. Therefore, I adjust for the presence value if the intensity is higher than one. One is being chosen as the threshold value since in Ekman's definition of the intensity of the action unit, a score of one means the action unit is at least slightly present in the judge's face. The adjusted data is stored as `au_tidy` under the `raw_data` folder. 
+
+
+
+
+
+<!--chapter:end:02-data.Rmd-->
+
+---
+chapter: 3
+knit: "bookdown::render_book"
+---
+
+# Exploratory Data Analysis
+
+## Data Structure
+
+The $Y$ variable in our case is multivariate including `Presence` and `Intensity` and it can be written in matrix notation as 
+
+
+\begin{align}
+Y_{jitk} = 
+\begin{bmatrix}
+P_{ijtk} \\
+I_{ijtk}
+\end{bmatrix}
+\end{align}
+
+
+There are four layers of indexs, which are defined as follows 
+
+- $i$ for `judge_id` and $i = 1,2, \cdots, 6$
+- $j$ for `video_id` and $j = 1,2, \cdots, 7$
+- $t$ for `frame_id` and $t = 1,2, \cdots, T_j$
+- $k$ for `au_id` and available action unit includes `r unique(au_tidy$AU)`. Notice that OpenFace doesnt provide intensity score for AU28. 
+
+[this may belong to the modelling part]
+Assuming all the facial information can be summarised as a `Y` variable with multiple indices $(i,j,t,k)$. We can summarise the information via a linear combination of variables as 
+
+$$Y_{ijtk} = \mu + \alpha_i + \beta_j + \gamma_t + \delta_k + CP_2(\alpha_i, \beta_j, \gamma_t, \delta_k) + CP_3(\alpha_i, \beta_j, \gamma_t, \delta_k)$$
+
+where 
+
+- $CP_2$ is the all possible interaction of the two variables
+- $CP_3$ is the all possible interaction of the three variables
+
+
+## Action unit: Presence
+ 
+ 
+### Mean presence 
+
+The plot gives an overview of the presence of all the action unit across all the judge. The statistic each bar represents is the average presence of an action unit for a judge throughout all the video time and it can be written as $$P_{ik} = \frac{\sum_{jt}X_{ijtk}}{\sum_{j = 1}^JT_j}$$. The order of Action unit on the y axis is ranked by the average presence of all the judge, which can be re-presented as $P_{* K}$. 
+
+```{r}
+# Because each judge has different numbers of frame available, mean is a better way ,than sum/ count,  to discribe the frequency of occurence. 
+
+load("data/au_tidy.rda")
+
+most_common <- au_tidy %>% 
+  group_by(judge_id,AU) %>% 
+  summarise(avg_presence = mean(presence)) %>% 
+  filter(avg_presence != "NaN") %>% 
+  group_by(judge_id) %>% 
+  arrange(-avg_presence) %>% 
+  mutate(common = row_number()) %>% 
+  mutate(most_common = as_factor(ifelse(common <=5, 1, 0))) 
+
+most_common %>% 
+  ggplot(aes(x =  fct_reorder(AU, avg_presence), y = avg_presence,
+         fill = most_common, col = most_common)) + 
+  geom_col() +
+  xlab("AU") + 
+  ylab("Average Presence") + 
+  facet_wrap(vars(judge_id)) + 
+  coord_flip() + 
+  theme(legend.position = "none")
+
+#ggsave(filename = "images/most_common_au.png")
+```
+
+The most frequent displayed action unit is highlighed in blue for each judge and summarised in the table below. 
+
+```{r}
+# in a table format
+knitr::kable(most_common %>% 
+  filter(most_common ==1) %>% 
+  select(-c(common, most_common, avg_presence)) %>% 
+  mutate(index = row_number()) %>% 
+  spread(judge_id, AU))
+```
+
+It can be seen that some of the action units are common across almost all the judges, these includes 
+
+- AU02 (outer eyebrow raise), 
+- AU20 (lip stretcher), 
+- AU15 (Lip Corner Depressor) and 
+- AU14 (Dimpler)
+
+The table below summarises the judge specific high frequent action units.
+
+```{r}
+other_highf <- most_common %>% 
+  filter(most_common ==1) %>% 
+  select(-c(common, most_common, avg_presence)) %>% 
+  filter(!AU %in% c("AU02", "AU20", "AU15", "AU14")) %>% 
+  mutate(index = row_number()) %>% 
+  spread(index, AU) %>% 
+  rename(first = `1`, second = `2`) 
+  
+
+knitr::kable(other_highf)
+```
+
+These are the results from inspecting the action units visually and they should also be reflected thorugh the coefficients of the relevant models [see stage 3 modelling]. 
+
+### Presence by videos
+
+Apart from visualising the general presence score for all the action unit, we are also interested in the break down statistics by video.  The statistics being plotted is thus $$P_{ijk} = \frac{\sum_{t}X_{ijtk}}{T_j}$$ with selected most common four action units. From this plot, it is interesting to know that almost all the judges have more frequent action units on the face for case OKS. This maybe related to the nature of the case... 
+
+
+```{r}
+most_common_subset <- most_common %>% 
+  filter(most_common == 1) %>% 
+  mutate(index = paste0(judge_id,AU))
+
+more_presence <- au_tidy %>% 
+  group_by(judge_id,AU, video_id) %>% 
+  summarise(avg_presence = mean(presence)) %>% 
+  filter(avg_presence != "NaN") %>% 
+  arrange(-avg_presence) %>% 
+  mutate(index = paste0(judge_id,AU)) %>% 
+  filter(index %in% most_common_subset$index) 
+  
+more_presence %>% 
+  filter(AU %in% c("AU02", "AU14", "AU15", "AU20")) %>% 
+  ggplot(aes(x = video_id, y = avg_presence, 
+             group = judge_id, col = judge_id)) + 
+  geom_line() + 
+  geom_point() + 
+  facet_wrap(vars(AU),scales = "free_x") + 
+  theme(axis.text.x = element_text(angle = 30, hjust = 1))
+
+```
+
+
+## Action unit: Intensity
+
+### General Intensity  plot
+
+The plot gives an overview of the action unit intensity of all the judges across all the trails. Each bar-and-whisker represents the intensity of all the action units aggregated on time for a particular judge in a specific case. For example, the first bar-and-whisker in case Nauru_a is created using all the 17 action units of Edelman through out the elapsed time in Nauru_a case. In mathematics notation, the plotted statistics is $I_{ijtk}$ seperating by $i \text{and} j$. 
+
+In Ekman's 20002 FACS manual, the intensity of Action unit is defined based on five classes: Trace(1), Slight(2), Marked or pronounced(3), Severe or extreme(4) and Maximum(5). From the plot, most of the action units have low intensity (almost zero average and lower than one upper bounds) and this is expected because usually in the court room, judges are expected to behave neutral. From this plot, we can see that Judge Bell doesn't seem to have many intensive expressions as we can see from the relatively small amount of dots in the whisker.  
+
+To better look at the mean of each boxplot, we take a square root transformation and hide the outliners into the upper line. We can find that Judge Nettle seems to have higher average in all the four cases he appears: Nauru_a&b, Rinehart_a &b. 
+
+```{r}
+au_intensity_all <- au_tidy %>% 
+  mutate(is_intense = ifelse(intensity >= 2, 1, 0))  
+
+# intensity plot
+au_intensity_all %>% 
+  ggplot(aes(x = judge_id, y = intensity, color = judge_id)) + 
+  geom_boxplot() + 
+  facet_wrap(vars(video_id), scales = "free_x") + 
+  theme(axis.text.x = element_text(angle = 30, hjust = 1), 
+        legend.position = "none")
+#ggsave("images/I_overall.png",width = 7, height = 5)  
+
+# the plot magnify the box
+au_intensity_all %>% 
+  ggplot(aes(x = judge_id, y = intensity, color = judge_id)) + 
+  geom_boxplot(coef = 100) + 
+  facet_wrap(vars(video_id), scales = "free_x") + 
+  theme(axis.text.x = element_text(angle = 30, hjust = 1), 
+        legend.position = "none") + 
+  scale_y_sqrt()
+#ggsave("images/I_sqrt.png",width = 7, height = 5)
+
+``` 
+ 
+### Mean intensity 
+
+We compute a similar mean intensity score for each of the action unit for each of the judge, the statsitics is $$I_{ik} = \frac{\sum_{jt}X_{ijtk}}{\sum_{j = 1}^JT_j}$$. Less uniform as the mean presence plot - different judge response intense at different action units. 
+
+```{r}
+au_intensity_all %>% 
+  filter(!AU == "AU28") %>%  # AU28 doesnt have intensity score
+  group_by(judge_id, AU) %>% 
+  summarise(mean_intensity = mean(intensity, na.rm = TRUE)) %>% 
+  arrange(-mean_intensity) %>% 
+  mutate(index = row_number(), 
+         most_intense = as.factor(ifelse(index <= 5, 1,0))) %>% 
+  ggplot(aes(x = fct_reorder(AU, mean_intensity), 
+             y = mean_intensity, 
+             fill = most_intense)) + 
+  geom_col() + 
+  facet_wrap(vars(judge_id)) + 
+  coord_flip()
+```  
+ 
+### Intensity plot for the most frequent action units
+ 
+Apart from visualising the general intensity score for all the action unit, we are also interested in the intensity score of the most frequent units. The statistics being plotted is thus $I_{ij*k}$ with selected $i$ indicated by the `most_common` table above. Five most frequent action units for each of the six judges give 30 subplots and I arrange them into two seperate plots: Intensity for four major high frequent action units and Intensity for other high frequent action units. 
+
+From the first plot, some panels are empty for some judges. This is because the particular action unit is not the most frequent five for that particular judge. We can learn that AU02, although being commonly detected for all the judges, the intensity is quite low. 
+
+From the second plot, most of the intensity are low as the general intensity plot, while one action unit has drawn the attention: AU45 for Kiefel. The intensity in both case parkes and case Rinehart_a for Kiefel are relatively higher than others and this will be reflected through our model. 
+
+```{r}
+most_common_subset <- most_common %>% 
+  filter(most_common == 1) %>% 
+  mutate(index = paste0(judge_id,AU))
+
+intensity_subset <- au_intensity_all %>% 
+  mutate(index = paste0(judge_id,AU)) %>% 
+  filter(index %in% most_common_subset$index) 
+
+# plot for four major high frequent action units
+intensity_subset %>% 
+  filter(AU %in% c("AU02", "AU14", "AU15", "AU20")) %>% 
+  ggplot(aes(x = video_id, y = intensity, col = video_id)) + 
+  geom_boxplot() + 
+  facet_grid(rows = vars(AU),
+             cols = vars(judge_id), scales = "free_x") + 
+  theme(legend.position = "none",
+        axis.text.x = element_text(angle = 30, hjust = 1))
+
+# plot for other high frequent action units
+intensity_subset_plot <- function(judge){
+  intensity_subset %>% 
+    filter(!AU %in% c("AU02", "AU14", "AU15", "AU20")) %>% 
+    filter(judge_id == judge) %>% 
+    ggplot(aes(x = video_id, y = intensity, col = video_id)) + 
+    geom_boxplot() + 
+    facet_grid(rows = vars(judge_id),
+               cols = vars(AU), scales = "free_x") + 
+    ylim(c(0,4)) + 
+    theme(legend.position = "none",
+          axis.text.x = element_text(angle = 30, hjust = 1))
+}
+
+  
+judge <- unique(intensity_subset$judge_id)
+subplot <- map(judge, intensity_subset_plot)  
+
+
+ggarrange(subplot[[1]], 
+          subplot[[2]],
+          subplot[[5]],
+          subplot[[6]],
+          subplot[[3]],
+          subplot[[4]],
+          ncol = 2, nrow = 3)
+
+```
+ 
+### High intensity points
+
+We filter out the points have intensity greater than 2  (at least "slight" as per Ekman) in the previous plot and plot it against time and color by the speaker. It tells us that Edelman, Gageler and Nettle are the judges have stronger emotion that can be detected (since they have more points with intensity greater than 2). Different judges also have different time where they display stronger emotions. For example, Justice Nettle are more likely to have stronger emotion throughout the time when the appellant is speaking but only at the beginning and ending period when the respondent is speaking.
+
+```{r}
+au_intensity_all %>% filter(is_intense ==1) %>% 
+  ggplot(aes(x = frame_id, y = intensity, col = speaker)) + 
+  geom_point() +
+  facet_wrap(vars(judge_id))
+```
+
+
+<!--chapter:end:03-EDA.Rmd-->
+
+---
+chapter: 4
+knit: "bookdown::render_book"
+---
+
+# Modelling
+
+## Model1: GLM with judge_id, selected AU and interactions 
+
+The first model I use is a generalised linear model with binomial link to understand the presence of the action units. The variables used include the judge_id and a selection of action units based on the mean presence result in the previous section. The action units are chosen to be the ones with at least two judges have them to be the most common five action units. The model can be written down as 
+
+$$P_{ik} = \mu + \alpha_i + \delta_k + (\alpha\delta)_{ik}$$
+```{r}
+most_common_au <- most_common %>% 
+  ungroup(judge_id) %>% 
+  group_by(AU) %>% 
+  summarise(mean = mean(avg_presence)) %>% 
+  arrange(-mean) %>% 
+  top_n(7)
+
+au_model <- au_tidy %>% 
+  filter(AU %in% most_common_au$AU) %>% 
+  mutate(judge_id = fct_relevel(judge_id, "Edelman"), 
+         AU = fct_other(AU, keep = c("AU15", "AU14", "AU02", "AU20", "AU01", "AU25")),
+         AU = fct_relevel(AU, "Other"))
+
+binomial_model <- glm(presence ~ (.-frame_id-speaker-intensity-video_id)^2, 
+           family = "binomial",  data = au_model) %>% 
+  step(trace = FALSE)
+
+#summary(binomial_model)
+
+#anova(binomial_model, test="Chisq")
+estimates <- tidy(binomial_model)
+diagnoistics <- glance(binomial_model)
+```
+
+```{r results="asis"}
+# knitLatex::xTab(format(as.data.frame(estimates), nsmall=1, digits=1),
+#    caption.bottom="estimated coefficient for model 1",
+#    booktabs=TRUE, coldef='lrrrr',
+#    label='tab:coef_model_1')
+```
+
+
+```{r results="asis"}
+knitLatex::xTab(format(as.data.frame(diagnoistics), nsmall=1, digits=1),
+   caption.bottom="model diagnostics for model 1",
+   booktabs=TRUE, coldef='lrrrr',
+   label='tab:dia_model_1')
+```
+
+
+## Model2: GLM with judge_id, selected AU, video_id and interactions 
+
+In the second model, we add the video_id and the correpsonding interaction with judge_id and AU into the model. Action units are selected based on the same principle as model 1 and model formula is 
+
+$$P_{ijk} = \mu + \alpha_i + \beta_j +\delta_k + (\alpha\beta)_{ij}+(\alpha\delta)_{ik} + (\beta\delta)_{jk}$$
+
+```{r}
+
+binomial_model_2 <- glm(presence ~ (.-frame_id-speaker-intensity)^2, 
+           family = "binomial",  data = au_model) %>% 
+  step(trace = FALSE)
+
+summary(binomial_model_2)
+
+# anova(binomial_model_2, test="Chisq")
+estimates2 <- tidy(binomial_model_2)
+diagnoistics2 <- glance(binomial_model_2)
+
+# binomial_model_2 <- glm(presence ~ judge_id + AU + video_id +
+#         judge_id*AU + AU*video_id + judge_id*video_id, 
+#            family = "binomial",  data = au_model) %>% 
+#   step(trace = FALSE)
+# 
+# summary(binomial_model_2)
+# tidy(binomial_model_2)
+# glance(binomial_model_2)
+
+```
+
+# ```{r results="asis"}
+# knitLatex::xTab(format(as.data.frame(estimates2), nsmall=1, digits=1),
+#    caption.bottom="coefficient estimates for model 2",
+#    booktabs=TRUE, coldef='lrrrr',
+#    label='tab:coef_model_2')
+# ```
+
+
+```{r results="asis"}
+knitLatex::xTab(format(as.data.frame(diagnoistics2), nsmall=1, digits=1),
+   caption.bottom="model diagnostic for model 2",
+   booktabs=TRUE, coldef='lrrrr',
+   label='tab:diag_model_2')
+```
+
+
+## Appellent vs. Respondent 
+```{r}
+binomial_model_3 <- glm(presence ~ judge_id + AU + video_id + speaker + 
+        judge_id*AU + AU*video_id + judge_id*video_id , 
+           family = "binomial",  data = au_model)
+
+summary(binomial_model_3)
+```
+
+
+<!--chapter:end:04-modelling.Rmd-->
+
+---
+knit: "bookdown::render_book"
+---
+
+\appendix
+
+# Additional stuff
+
+|Case|Name|AV recording link|
+|------|--|-----|
+|Republic of Nauru v. WET040| `Nauru_a`|http://www.hcourt.gov.au/cases/cases-av/av-2018-11-07a|
+|TTY167 v. Republic of Nauru|`Nauru_b`|http://www.hcourt.gov.au/cases/cases-av/av-2018-11-07b|
+|Rinehart & Anor v. Hancock Prospecting Pty Ltd & Ors on 13 Nov 18 |`Rinehart_a`|http://www.hcourt.gov.au/cases/cases-av/av-2018-11-13|
+|Rinehart & Anor v. Hancock Prospecting Pty Ltd & Ors on 14 Nov 18 |`Rinehart_b`|http://www.hcourt.gov.au/cases/cases-av/av-2018-11-14a|
+|Parkes Shire Council v. South West Helicopters Pty Limited |`Parkes`|http://www.hcourt.gov.au/cases/cases-av/av-2018-11-14b|
+|McKell v. The Queen| `McKell`|http://www.hcourt.gov.au/cases/cases-av/av-2018-12-07|
+|OKS v. The State of Western Australia|`OKS`|http://www.hcourt.gov.au/cases/cases-av/av-2019-02-14|
+
+Table: Details of videos processed.
+
+
+
+<!--chapter:end:A-appA.Rmd-->
+

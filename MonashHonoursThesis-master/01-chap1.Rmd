@@ -10,9 +10,10 @@ library(forecast)
 library(tidyverse)
 library(ggpubr)
 library(knitr)
+library(broom)
 
 load("data/au_tidy.rda")
-
+load("data/most_common.rda")
 ```
 
 # Introduction {#ch:intro}
