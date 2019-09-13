@@ -119,10 +119,17 @@ The missingness in the dataset could be due to the fact that a judge is reading 
 
 There are two different sets of variables that need imputation. \texttt{Presence} is a binary variable that takes value of one if an action unit is present in a particular frame for a judge in a video and \texttt{Intensity} measures how strong that action unit is. Linear interpolation from \texttt{forecast} package is suitable to impute \texttt{Intensity} and \texttt{Presence} is imputed through sampling from binomial distribution. The imputed action unit data is stored as \texttt{au\_imputed} under the \texttt{raw\_data} folder.
 
-\hypertarget{data-quality}{%
-\section{Data quality}\label{data-quality}}
+\hypertarget{data-cleaning}{%
+\section{Data cleaning}\label{data-cleaning}}
 
 There is a data quality issue coming from the data I get from OpenFace. For some observations, the intensity of the action unit could be high while the present variable has a zero value. This does not make sense since if an action unit has been detected as strong intensity for a judge in a particular frame, it should at least present on the judge's face. Therefore, I adjust for the presence value if the intensity is higher than one. One is being chosen as the threshold value since in Ekman's definition of the intensity of the action unit, a score of one means the action unit is at least slightly present in the judge's face. The adjusted data is stored as \texttt{au\_tidy} under the \texttt{raw\_data} folder.
+
+\hypertarget{data-format}{%
+\section{Data format}\label{data-format}}
+
+XXX You need to spell out the format of the data, because this feeds into your notation in modeling
+
+\includegraphics[width=15cm]{figures/data_format.jpg}
 
 \hypertarget{methods}{%
 \chapter{Methods}\label{methods}}
@@ -135,29 +142,31 @@ Here you need to write about the analytical methods that you are using
 \hypertarget{notation}{%
 \section{Notation}\label{notation}}
 
-Let \(X_{jitkl}\) be a matrix of predictors, and \(Y_{jitkl}\) variable in our case is bivariate matrix of response variables, including a binary indicator of presence/absence and a numeric value measuring intensity, of facial action unit, where
+Let \(\mathbf{X}\) be a matrix of predictors, and \(\mathbf{Y}\) variable in our case is bivariate matrix of response variables, including a binary indicator of presence/absence and a numeric value measuring intensity, of facial action unit, where
 
 \begin{itemize}
 \tightlist
 \item
-  \(i\) indicates \texttt{judge\_id} and \(i = 1,2, \cdots, 6\)
+  \(X_1\) indicates \texttt{judge\_id} with six categories \(i = 1,2, \cdots, 6\)
 \item
-  \(j\) indicates \texttt{video\_id} and \(j = 1,2, \cdots, 7\)
+  \(X_2\) indicates \texttt{video\_id} for each of the seven cases, \(j = 1,2, \cdots, 7\)
 \item
-  \(t\) indicates \texttt{frame\_id} and \(t = 1,2, \cdots, T_j\)
+  \(X_3\) indicates action unit containing 18 possible facial expression.\\
 \item
-  \(k\) indicates \texttt{au\_id} and available action unit includes AU01, AU02, AU04, AU05, AU06, AU07, AU09, AU10, AU12, AU14, AU15, AU17, AU20, AU23, AU25, AU26, AU28, AU45. Notice that OpenFace doesnt provide intensity score for AU28.
+  \(X_4\) indicates the speaker, either the appellant or respondent, \(l=1,2\)
 \item
-  \(l\) indicates appellant or respondent, \(l=1,2\)
+  \(X_5\) indicates \texttt{frame\_id} corresponding to time, \(t = 1,2, \cdots, T_j\)
 \end{itemize}
 
 Note that \(t\) could be considered a time variable, but because images are taken at 1 minute intervals, temporal dependence is unlikely to exist. Rather this should be considered an independent observation.
 
-Assuming all the facial information can be summarised as a \texttt{Y} variable with multiple indices \((i,j,t,k,l)\). A main effect model for this data can be written as
+A full, main effects model for the data might be expressed as:
 
-\[\widehat{Y}_{ijtk} = \mu + \alpha_i + \beta_j + \gamma_t + \delta_k + \psi_l\]
+\[Y_{ijkl} = \mu + \alpha_i + \beta_j + \gamma_k + \delta_l + \varepsilon_{ijkl}\]
 
-Also, let \(P_{jitkl}\) represent the response variable presence, and \(I_{jitkl}\) represent the second response variable intensity.
+\noindent and we would be interested in interactions between judge, case, action unit and who is speaking. An alternative model structure, is to treat each action unit individually, and fit separate models.
+
+Also, let \(P_{jitkl}\) represent the response variable presence, and \(I_{jitkl}\) represent the second response variable intensity. This notation will be helpful for defining the plots and models explained in this section.
 
 \hypertarget{action-unit-presence}{%
 \section{Action unit: Presence}\label{action-unit-presence}}
@@ -548,8 +557,8 @@ video\_idRinehart\_b:AUAU25 & 0.24 & 0.32 & 0.76 & 0.45\\
 \hline
 \end{tabular}
 
-\hypertarget{appellent-vs.-respondent}{%
-\subsection{Appellent vs.~Respondent}\label{appellent-vs.-respondent}}
+\hypertarget{appellant-vs.-respondent}{%
+\subsection{Appellant vs.~Respondent}\label{appellant-vs.-respondent}}
 
 \begin{tabular}{r|r|r|r|r|r|r}
 \hline

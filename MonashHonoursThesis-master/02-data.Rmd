@@ -47,5 +47,5 @@ There is a data quality issue coming from the data I get from OpenFace. For some
 
 XXX You need to spell out the format of the data, because this feeds into your notation in modeling
 
-![](figures/data_format.jpg)
+\includegraphics[width=15cm]{figures/data_format.jpg}
 
