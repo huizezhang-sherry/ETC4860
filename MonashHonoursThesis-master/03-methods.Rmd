@@ -1,0 +1,8 @@
+---
+chapter: 2
+knit: "bookdown::render_book"
+---
+
+# Methods
+
+Here you need to write about the analytical methods that you are using

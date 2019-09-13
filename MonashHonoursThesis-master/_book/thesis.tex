@@ -78,8 +78,8 @@ There have been many algorithms created for facial detection and the analysis of
 
 Facial recognition software has also been implemented by DeepFace \autocite{taigman2014deepface} from Facebook, and FaceNet \autocite{schroff2015facenet} from Google. OpenFace \autocite{baltrusaitis2018openface} is the first open-sourced face recognition software that provides facial expression detection, including facial landmarking, head pose estimation, eye gaze tracking and facial action unit detection. Along with its previous version (\textcite{baltruvsaitis2016openface}), the OpenFace toolkit has been used in different social research studies including depression classification (\textcite{yang2016decision} and \textcite{nasir2016multimodal}).
 
-\hypertarget{data-source}{%
-\chapter{Data Source}\label{data-source}}
+\hypertarget{data-collection}{%
+\chapter{Data Collection}\label{data-collection}}
 
 \hypertarget{data-processing}{%
 \section{Data Processing}\label{data-processing}}
@@ -124,11 +124,16 @@ There are two different sets of variables that need imputation. \texttt{Presence
 
 There is a data quality issue coming from the data I get from OpenFace. For some observations, the intensity of the action unit could be high while the present variable has a zero value. This does not make sense since if an action unit has been detected as strong intensity for a judge in a particular frame, it should at least present on the judge's face. Therefore, I adjust for the presence value if the intensity is higher than one. One is being chosen as the threshold value since in Ekman's definition of the intensity of the action unit, a score of one means the action unit is at least slightly present in the judge's face. The adjusted data is stored as \texttt{au\_tidy} under the \texttt{raw\_data} folder.
 
-\hypertarget{exploratory-data-analysis}{%
-\chapter{Exploratory Data Analysis}\label{exploratory-data-analysis}}
+\hypertarget{methods}{%
+\chapter{Methods}\label{methods}}
 
-\hypertarget{data-structure}{%
-\section{Data Structure}\label{data-structure}}
+Here you need to write about the analytical methods that you are using
+
+\hypertarget{results}{%
+\chapter{Results}\label{results}}
+
+\hypertarget{notation}{%
+\section{Notation}\label{notation}}
 
 The \(Y\) variable in our case is multivariate including \texttt{Presence} and \texttt{Intensity} and it can be written in matrix notation as
 

@@ -3,9 +3,10 @@ language:
   ui:
     chapter_name: "Chapter "
 rmd_files: ["index.Rmd",
-  "01-chap1.Rmd",
+  "01-intro.Rmd",
   "02-data.Rmd",
-  "03-EDA.Rmd",
+  "03-methods.Rmd",
+  "04-results.Rmd",
   "A-appA.Rmd"]
 delete_merged_file: TRUE
 
