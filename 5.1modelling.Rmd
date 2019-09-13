@@ -14,11 +14,13 @@ load("raw_data/most_common.rda")
 library(stats)
 library(tidyverse)
 library(broom)
-library(visreg)
+
 ```
 
 
 ## Model1: GLM with judge_id, selected AU and interactions 
+
+The first model I use is a generalised linear model with binomial link to understand the presence of the action units. The variables used include the judge_id and a selection of action units based on the mean presence result in the previous section. The action units are chosen to be the ones with at least two judges have them to be the most common five action units. The model can be written down as 
 
 $$P_{ik} = \mu + \alpha_i + \delta_k + (\alpha\delta)_{ik}$$
 ```{r}
@@ -49,6 +51,8 @@ glance(binomial_model)
 
 ## Model2: GLM with judge_id, selected AU, video_id and interactions 
 
+In the second model, we add the video_id and the correpsonding interaction with judge_id and AU into the model. Action units are selected based on the same principle as model 1 and model formula is 
+
 $$P_{ijk} = \mu + \alpha_i + \beta_j +\delta_k + (\alpha\beta)_{ij}+(\alpha\delta)_{ik} + (\beta\delta)_{jk}$$
 
 ```{r}
@@ -60,7 +64,7 @@ binomial_model_2 <- glm(presence ~ (.-frame_id-speaker-intensity)^2,
 summary(binomial_model_2)
 
 anova(binomial_model_2, test="Chisq")
-
+tidy(binomial_model_2)
 
 # binomial_model_2 <- glm(presence ~ judge_id + AU + video_id +
 #         judge_id*AU + AU*video_id + judge_id*video_id, 
@@ -72,13 +76,6 @@ anova(binomial_model_2, test="Chisq")
 # glance(binomial_model_2)
 
 ```
-
-
-```{r}
-gam_model <- gam(presence ~ lo(judge_id) + lo(AU) + lo(video_id), data=au_model)
-summary(amgam)
-```
-
 
 # Appellent vs. Respondent 
 ```{r}
