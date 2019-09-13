@@ -6,7 +6,6 @@ rmd_files: ["index.Rmd",
   "01-chap1.Rmd",
   "02-data.Rmd",
   "03-EDA.Rmd",
-  "04-modelling.Rmd",
   "A-appA.Rmd"]
 delete_merged_file: TRUE
 
