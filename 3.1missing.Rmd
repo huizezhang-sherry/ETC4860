@@ -146,7 +146,10 @@ au_presence <- au %>%
 
 au_imputed_old <- au_intensity %>% 
   left_join(au_presence, 
-            by = c("judge_id", "video_id", "frame_id", "speaker")) 
+            by = c("judge_id", "video_id", "frame_id", "speaker")) %>% 
+  mutate_if(is.numeric, round, digits = 2) %>% 
+  mutate(judge_id = as.factor(judge_id), 
+         speaker = as.factor(speaker))
 
 save(au_imputed_old, file = "raw_data/au_imputed_old.rda") 
 
