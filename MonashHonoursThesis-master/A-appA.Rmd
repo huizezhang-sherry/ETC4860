@@ -27,3 +27,11 @@ au_meaning %>%
   kable()
 ```
 
+## Model results
+
+```{r}
+tidy(binomial_model) %>% kable(digits=2)
+tidy(binomial_model_2) %>% kable(digits=2)
+tidy(binomial_model_3) %>% kable(digits=2)
+```
+

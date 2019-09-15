@@ -2030,6 +2030,8 @@
     <bcf:citekey order="53">Taipan</bcf:citekey>
     <bcf:citekey order="54">ImageMagick</bcf:citekey>
     <bcf:citekey order="55">baltrusaitis2018openface</bcf:citekey>
+    <bcf:citekey order="56">ekman2002facial</bcf:citekey>
+    <bcf:citekey order="57">ekman2002facial</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nyt">
