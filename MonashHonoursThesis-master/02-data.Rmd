@@ -34,7 +34,7 @@ I conduct some exploratory data analysis on one video: `Nauru_a` and find the 70
 
 ## Data format
 
-In this project, we will make use of the action unit variables along with all the added indexs to analyse the face of the judge. In the wide format, apart from the first four index columns, each action unit has two columns with one for binary presence value and another for numeric intensity value. The Table \ref{tab:wide} presents the first five rows of the dataset with columns for the first action unit only. 
+In this project, we will make use of the action unit variables along with all the added indexes to analyse the face of the judge. In the wide format, apart from the first four index columns, each action unit has two columns with one for binary presence value and another for numeric intensity value. The Table \ref{tab:wide} presents the first five rows of the dataset with columns for the first action unit only. 
 
 
 ```{r}

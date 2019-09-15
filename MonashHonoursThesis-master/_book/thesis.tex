@@ -43,12 +43,12 @@ Decisions by courtroom Justices have been discussed broadly in the legal literat
 \hypertarget{motivation}{%
 \section{Motivation}\label{motivation}}
 
-\textcite{tutton2018judicial} attemped to utilize the AV technology, which is made available online by the High Court of Australia \autocite{highcourtau}. They visually inspect of the videos to highlight when Justices depart from the expected norms of judicial conduct. To better understand the emotion status and therefore the departure of the emotional behaviour, more advanced technologies could be applied. An example is to use OpenFace \autocite*{baltrusaitis2018openface} technology, which provides information on emotions exhibited by the Justices. This technique has been applied by \textcite{kovalchik2018going} on professional tennis players during Grand Slam matches. That study demonstrated the potential to predict the outcome of High Court appeals based on Justices' demeanour utilising contemporary tools and emotion tagging techniques.
+\textcite{tutton2018judicial} attempted to utilize the AV technology, which is made available online by the High Court of Australia \autocite{highcourtau}. They visually inspect of the videos to highlight when Justices depart from the expected norms of judicial conduct. To better understand the emotion status and therefore the departure of the emotional behaviour, more advanced technologies could be applied. An example is to use OpenFace \autocite*{baltrusaitis2018openface} technology, which provides information on emotions exhibited by the Justices. This technique has been applied by \textcite{kovalchik2018going} on professional tennis players during Grand Slam matches. That study demonstrated the potential to predict the outcome of High Court appeals based on Justices' demeanour utilising contemporary tools and emotion tagging techniques.
 
 \hypertarget{literature-review}{%
 \section{Literature review}\label{literature-review}}
 
-The literature sumary is divided into two parts: (1) current work in legal studies to understand the behaviour of the Justices and (2) existing facial recognition and emotion tagging technology.
+The literature summary is divided into two parts: (1) current work in legal studies to understand the behaviour of the Justices and (2) existing facial recognition and emotion tagging technology.
 
 \hypertarget{legal-study-from-a-behaviour-perspective}{%
 \subsection{Legal study from a behaviour perspective}\label{legal-study-from-a-behaviour-perspective}}
@@ -115,7 +115,7 @@ I conduct some exploratory data analysis on one video: \texttt{Nauru\_a} and fin
 \hypertarget{data-format}{%
 \section{Data format}\label{data-format}}
 
-In this project, we will make use of the action unit variables along with all the added indexs to analyse the face of the judge. In the wide format, apart from the first four index columns, each action unit has two columns with one for binary presence value and another for numeric intensity value. The Table \ref{tab:wide} presents the first five rows of the dataset with columns for the first action unit only.
+In this project, we will make use of the action unit variables along with all the added indexes to analyse the face of the judge. In the wide format, apart from the first four index columns, each action unit has two columns with one for binary presence value and another for numeric intensity value. The Table \ref{tab:wide} presents the first five rows of the dataset with columns for the first action unit only.
 
 \begin{table}[t]
 
@@ -220,7 +220,7 @@ Also, let \(P_{jitkl}\) represent the response variable presence, and \(I_{jitkl
 \hypertarget{mean-presence}{%
 \subsection{Mean presence}\label{mean-presence}}
 
-I first compute the average presence (\(P_{ik}\)) of each action unit for each judge as \[P_{ik} = \frac{\sum_{jt}X_{ijtk}}{\sum_{j = 1}^JT_j}\] This is then ploted in Figure \ref{fig:mean_presence} to give an overview of the presence of all the action units across all the judge. The order of action unit on the y axis is ranked by the average presence of all the judge. The five most frequent action units are highlighed in blue for each judge and summarised in Table \ref{tab:most_common}
+I first compute the average presence (\(P_{ik}\)) of each action unit for each judge as \[P_{ik} = \frac{\sum_{jt}X_{ijtk}}{\sum_{j = 1}^JT_j}\] This is then plotted in Figure \ref{fig:mean_presence} to give an overview of the presence of all the action units across all the judge. The order of action unit on the y axis is ranked by the average presence of all the judge. The five most frequent action units are highlighted in blue for each judge and summarised in Table \ref{tab:most_common}
 
 \begin{figure}
 \includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-4-1} \caption{The average presence score of each action unit for each judge, aggregating on video and time. \label{fig:mean_presence}}\label{fig:unnamed-chunk-4}
@@ -306,7 +306,7 @@ Nettle & AU01: Inner brow raiser & AU07: Lid tightener & NA\\
 \hypertarget{model-fit}{%
 \subsection{Model fit}\label{model-fit}}
 
-The first model I use is a generalised linear model with binomial link to understand the presence of the action units. The variables used include the judge\_id and a selection of action units based on the mean presence result in the previous section. The action units are chosen to be the ones with at least two judges have them to be the most common five action units. The model can be written down as Equation \ref{eq:judge_au}. Estimated coefficients of the model can be found in the Appendix and model fitting result is in Table \ref{tab:glance_1}.
+The first model I use is a generalised linear model with binomial link to understand the presence of the action units. The variables used include the judge\_id, action units that appear in Table \ref{tab:most_common} and interactions. The model can be written down as Equation \ref{eq:judge_au}.Judge Edelman and AU25 are selected as the base level. Estimated coefficients of the model can be found in the Appendix and model fitting result is in Table \ref{tab:glance_1}.
 
 \begin{equation}\label{eq:judge_au}
 P_{ik} = \mu + \alpha_i + \delta_k + (\alpha\delta)_{ik}
@@ -328,7 +328,7 @@ null.deviance & df.null & logLik & AIC & BIC & deviance & df.residual\\
 \hypertarget{presence-by-videos}{%
 \subsection{Presence by videos}\label{presence-by-videos}}
 
-Apart from visualising the general presence score for all the action unit, I'm also interested in the break down statistics by video (P\_\{ijk\}). This is computed as \[P_{ijk} = \frac{\sum_{t}X_{ijtk}}{T_j}\] for the four most common action units: AU02, AU14, AU15, AU20 and plotted in Figure \ref{common_video}. From this plot, we can observe that some of the judge are have relatively stable display of action unit throughout different videos (i.e.~Edelman and Nettle), while Gagaler seems to be highly reactive to some cases (i.e.~OKS).
+Apart from visualising the general presence score for all the action unit, I'm also interested in the break down statistics by video (\(P_{ijk}\)). This is computed as \[P_{ijk} = \frac{\sum_{t}X_{ijtk}}{T_j}\] for the four most common action units: AU02, AU14, AU15, AU20 and plotted in Figure \ref{common_video}. From this plot, we can observe that some of the judge are have relatively stable display of action unit throughout different videos (i.e.~Edelman and Nettle), while Gagaler seems to be highly reactive to some cases (i.e.~OKS).
 
 \begin{figure}
 \includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-9-1} \caption{Average presence of the four most common action units for each judge by video\label{fig:common_video}}\label{fig:unnamed-chunk-9}
@@ -389,7 +389,7 @@ From the plot, we can see that most of the action units have low intensity score
 \hypertarget{mean-intensity}{%
 \subsection{Mean intensity}\label{mean-intensity}}
 
-Mean intensity score (\(I_{ik}\)) of each action unit for each of the judge is computed as \[I_{ik} = \frac{\sum_{jt}X_{ijtk}}{\sum_{j = 1}^JT_j}\] and ploted in Figure \ref{fig:mean_intensity}. The five most intense action units for each judge are presented in Table \ref{tab:most_intense}. We can find that the common high intense action units includes
+Mean intensity score (\(I_{ik}\)) of each action unit for each of the judge is computed as \[I_{ik} = \frac{\sum_{jt}X_{ijtk}}{\sum_{j = 1}^JT_j}\] and plotted in Figure \ref{fig:mean_intensity}. The five most intense action units for each judge are presented in Table \ref{tab:most_intense}. We can find that the common high intense action units includes
 
 \begin{itemize}
 \tightlist
@@ -401,7 +401,7 @@ Mean intensity score (\(I_{ik}\)) of each action unit for each of the judge is c
   AU04 (Brow Lowerer)
 \end{itemize}
 
-It is interesting to notice that both AU07 and AU04 contribute to the emotion of confusion. This could help to understand that judges are more likely to express a stronger confusing expression than other emotions.
+AU04 also belongs to the confusion category as AU07. This could help to understand that judges are more likely to express a stronger confusing expression than other emotions.
 
 \begin{figure}
 \includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-15-1} \caption{Mean intensity score for each judge and action unit aggregating on videos.\label{fig:mean_intensity}}\label{fig:unnamed-chunk-15}
@@ -409,7 +409,7 @@ It is interesting to notice that both AU07 and AU04 contribute to the emotion of
 
 \begin{table}[t]
 
-\caption{\label{tab:unnamed-chunk-16}\label{tab:most_intense}The five most intense actio unit for each judge.}
+\caption{\label{tab:unnamed-chunk-16}\label{tab:most_intense}The five most intense action unit for each judge.}
 \centering
 \begin{tabular}{r|l|l|l|l|l|l}
 \hline

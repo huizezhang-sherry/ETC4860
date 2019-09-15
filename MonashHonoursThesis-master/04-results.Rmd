@@ -39,7 +39,7 @@ where
  
 ### Mean presence 
 
-I first compute the average presence ($P_{ik}$) of each action unit for each judge as $$P_{ik} = \frac{\sum_{jt}X_{ijtk}}{\sum_{j = 1}^JT_j}$$ This is then ploted in Figure \ref{fig:mean_presence} to give an overview of the presence of all the action units across all the judge. The order of action unit on the y axis is ranked by the average presence of all the judge. The five most frequent action units are highlighed in blue for each judge and summarised in Table \ref{tab:most_common}
+I first compute the average presence ($P_{ik}$) of each action unit for each judge as $$P_{ik} = \frac{\sum_{jt}X_{ijtk}}{\sum_{j = 1}^JT_j}$$ This is then plotted in Figure \ref{fig:mean_presence} to give an overview of the presence of all the action units across all the judge. The order of action unit on the y axis is ranked by the average presence of all the judge. The five most frequent action units are highlighted in blue for each judge and summarised in Table \ref{tab:most_common}
 
 ```{r fig.cap="The average presence score of each action unit for each judge, aggregating on video and time. \\label{fig:mean_presence}"}
 # Because each judge has different numbers of frame available, mean is a better way ,than sum/ count,  to discribe the frequency of occurence. 
@@ -114,7 +114,7 @@ knitr::kable(other_highf, caption = "\\label{tab:other_highf} Other high frequen
 
 ### Model fit
 
-The first model I use is a generalised linear model with binomial link to understand the presence of the action units. The variables used include the judge_id and a selection of action units based on the mean presence result in the previous section. The action units are chosen to be the ones with at least two judges have them to be the most common five action units. The model can be written down as Equation \ref{eq:judge_au}. Estimated coefficients of the model can be found in the Appendix and model fitting result is in Table \ref{tab:glance_1}.
+The first model I use is a generalised linear model with binomial link to understand the presence of the action units. The variables used include the judge_id, action units that appear in Table \ref{tab:most_common} and interactions. The model can be written down as Equation \ref{eq:judge_au}.Judge Edelman and AU25 are selected as the base level.  Estimated coefficients of the model can be found in the Appendix and model fitting result is in Table \ref{tab:glance_1}.
 
 \begin{equation}\label{eq:judge_au}
 P_{ik} = \mu + \alpha_i + \delta_k + (\alpha\delta)_{ik}
@@ -150,7 +150,7 @@ au_model_1_aug <- augment(binomial_model, au_model)
 
 ### Presence by videos
 
-Apart from visualising the general presence score for all the action unit, I'm also interested in the break down statistics by video (P_{ijk}). This is computed as $$P_{ijk} = \frac{\sum_{t}X_{ijtk}}{T_j}$$ for the four most common action units: AU02, AU14, AU15, AU20 and plotted in Figure \ref{common_video}. From this plot, we can observe that some of the judge are have relatively stable display of action unit throughout different videos (i.e. Edelman and Nettle), while Gagaler seems to be highly reactive to some cases (i.e. OKS). 
+Apart from visualising the general presence score for all the action unit, I'm also interested in the break down statistics by video ($P_{ijk}$). This is computed as $$P_{ijk} = \frac{\sum_{t}X_{ijtk}}{T_j}$$ for the four most common action units: AU02, AU14, AU15, AU20 and plotted in Figure \ref{common_video}. From this plot, we can observe that some of the judge are have relatively stable display of action unit throughout different videos (i.e. Edelman and Nettle), while Gagaler seems to be highly reactive to some cases (i.e. OKS). 
 
 ```{r fig.cap="Average presence of the four most common action units for each judge by video\\label{fig:common_video}"}
 most_common_subset <- most_common %>% 
@@ -261,7 +261,7 @@ au_intensity_all %>%
  
 ### Mean intensity 
 
-Mean intensity score ($I_{ik}$) of each action unit for each of the judge is computed as $$I_{ik} = \frac{\sum_{jt}X_{ijtk}}{\sum_{j = 1}^JT_j}$$ and ploted in Figure \ref{fig:mean_intensity}. The five most intense action units for each judge are presented in Table \ref{tab:most_intense}. We can find that the common high intense action units includes 
+Mean intensity score ($I_{ik}$) of each action unit for each of the judge is computed as $$I_{ik} = \frac{\sum_{jt}X_{ijtk}}{\sum_{j = 1}^JT_j}$$ and plotted in Figure \ref{fig:mean_intensity}. The five most intense action units for each judge are presented in Table \ref{tab:most_intense}. We can find that the common high intense action units includes 
 
 ```{r}
 # include_graphics("figures/AU20-lip-stretcher.gif", dpi = 128)
@@ -273,7 +273,7 @@ Mean intensity score ($I_{ik}$) of each action unit for each of the judge is com
 - AU07 (Lid Tightener)
 - AU04 (Brow Lowerer)
 
-It is interesting to notice that both AU07 and AU04 contribute to the emotion of confusion. This could help to understand that judges are more likely to express a stronger confusing expression than other emotions. 
+AU04 also belongs to the confusion category as AU07. This could help to understand that judges are more likely to express a stronger confusing expression than other emotions. 
 
 
 ```{r fig.cap="Mean intensity score for each judge and action unit aggregating on videos.\\label{fig:mean_intensity}"}
@@ -301,7 +301,7 @@ knitr::kable(most_intense %>%
   filter(most_intense ==1) %>% 
   select(c(judge_id, AU)) %>% 
   mutate(index = row_number()) %>% 
-  spread(judge_id, AU), caption = "\\label{tab:most_intense}The five most intense actio unit for each judge.")
+  spread(judge_id, AU), caption = "\\label{tab:most_intense}The five most intense action unit for each judge.")
 ```
  
  

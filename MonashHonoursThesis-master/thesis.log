@@ -1,31 +1,30 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.7.23)  15 SEP 2019 20:03
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.9.15)  15 SEP 2019 22:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **thesis.tex
 (./thesis.tex
-LaTeX2e <2018-04-01> patch level 2
-Babel <3.18> and hyphenation patterns for 84 language(s) loaded.
+LaTeX2e <2018-12-01>
 (./monashthesis.cls
 Document Class: monashthesis 2016/09/06 Monash Thesis Class
-(/usr/local/texlive/2018/texmf-dist/tex/latex/base/fontenc.sty
-Package: fontenc 2017/04/05 v2.0i Standard LaTeX package
-(/usr/local/texlive/2018/texmf-dist/tex/latex/base/t1enc.def
-File: t1enc.def 2017/04/05 v2.0i Standard LaTeX file
+(/usr/local/texlive/2019/texmf-dist/tex/latex/base/fontenc.sty
+Package: fontenc 2018/08/11 v2.0j Standard LaTeX package
+(/usr/local/texlive/2019/texmf-dist/tex/latex/base/t1enc.def
+File: t1enc.def 2018/08/11 v2.0j Standard LaTeX file
 LaTeX Font Info:    Redeclaring font encoding T1 on input line 48.
-)) (/usr/local/texlive/2018/texmf-dist/tex/latex/base/inputenc.sty
-Package: inputenc 2018/04/06 v1.3b Input encoding file
+)) (/usr/local/texlive/2019/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2018/08/11 v1.3c Input encoding file
 \inpenc@prehook=\toks14
 \inpenc@posthook=\toks15
-) (/usr/local/texlive/2018/texmf-dist/tex/latex/bera/bera.sty
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/bera/bera.sty
 Package: bera 2004/01/31 (WaS)
-(/usr/local/texlive/2018/texmf-dist/tex/latex/base/fontenc.sty
-Package: fontenc 2017/04/05 v2.0i Standard LaTeX package
-(/usr/local/texlive/2018/texmf-dist/tex/latex/base/t1enc.def
-File: t1enc.def 2017/04/05 v2.0i Standard LaTeX file
+(/usr/local/texlive/2019/texmf-dist/tex/latex/base/fontenc.sty
+Package: fontenc 2018/08/11 v2.0j Standard LaTeX package
+(/usr/local/texlive/2019/texmf-dist/tex/latex/base/t1enc.def
+File: t1enc.def 2018/08/11 v2.0j Standard LaTeX file
 LaTeX Font Info:    Redeclaring font encoding T1 on input line 48.
-)) (/usr/local/texlive/2018/texmf-dist/tex/latex/base/textcomp.sty
-Package: textcomp 2017/04/05 v2.0i Standard LaTeX package
+)) (/usr/local/texlive/2019/texmf-dist/tex/latex/base/textcomp.sty
+Package: textcomp 2018/08/11 v2.0j Standard LaTeX package
 Package textcomp Info: Sub-encoding information:
 (textcomp)               5 = only ISO-Adobe without \textcurrency
 (textcomp)               4 = 5 + \texteuro
@@ -38,12 +37,12 @@ Package textcomp Info: Sub-encoding information:
 (textcomp)             Family '?' is the default used for unknown fonts.
 (textcomp)             See the documentation for details.
 Package textcomp Info: Setting ? sub-encoding to TS1/1 on input line 79.
-(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1enc.def
+(/usr/local/texlive/2019/texmf-dist/tex/latex/base/ts1enc.def
 File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
 Now handling font encoding TS1 ...
 ... processing UTF-8 mapping file for font encoding TS1
-(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1enc.dfu
-File: ts1enc.dfu 2018/04/05 v1.2c UTF-8 support for inputenc
+(/usr/local/texlive/2019/texmf-dist/tex/latex/base/ts1enc.dfu
+File: ts1enc.dfu 2018/10/05 v1.2f UTF-8 support for inputenc
    defining Unicode char U+00A2 (decimal 162)
    defining Unicode char U+00A3 (decimal 163)
    defining Unicode char U+00A4 (decimal 164)
@@ -178,29 +177,29 @@ Package textcomp Info: Setting pplx sub-encoding to TS1/3 on input line 406.
 Package textcomp Info: Setting pplj sub-encoding to TS1/3 on input line 407.
 Package textcomp Info: Setting ptmx sub-encoding to TS1/4 on input line 408.
 Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 409.
-) (/usr/local/texlive/2018/texmf-dist/tex/latex/bera/beraserif.sty
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/bera/beraserif.sty
 Package: beraserif 2004/01/30 (WaS)
-(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics/keyval.sty
+(/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks16
 )
 LaTeX Font Info:    Try loading font information for T1+fve on input line 30.
-(/usr/local/texlive/2018/texmf-dist/tex/latex/bera/t1fve.fd
+(/usr/local/texlive/2019/texmf-dist/tex/latex/bera/t1fve.fd
 File: t1fve.fd 2004/09/07 scalable font definitions for T1/fve.
 )
 LaTeX Font Info:    Font shape `T1/fve/m/n' will be
 (Font)              scaled to size 8.99994pt on input line 30.
-) (/usr/local/texlive/2018/texmf-dist/tex/latex/bera/berasans.sty
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/bera/berasans.sty
 Package: berasans 2004/01/30 (WaS)
-) (/usr/local/texlive/2018/texmf-dist/tex/latex/bera/beramono.sty
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/bera/beramono.sty
 Package: beramono 2004/01/31 (WaS)
-)) (/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/mathpazo.sty
+)) (/usr/local/texlive/2019/texmf-dist/tex/latex/psnfss/mathpazo.sty
 Package: mathpazo 2005/04/12 PSNFSS-v9.2a Palatino w/ Pazo Math (D.Puga, WaS) 
 \symupright=\mathgroup4
-) (/usr/local/texlive/2018/texmf-dist/tex/latex/base/report.cls
-Document Class: report 2014/09/29 v1.4h Standard LaTeX document class
-(/usr/local/texlive/2018/texmf-dist/tex/latex/base/size11.clo
-File: size11.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/base/report.cls
+Document Class: report 2018/09/03 v1.4i Standard LaTeX document class
+(/usr/local/texlive/2019/texmf-dist/tex/latex/base/size11.clo
+File: size11.clo 2018/09/03 v1.4i Standard LaTeX file (size option)
 LaTeX Font Info:    Font shape `T1/fve/m/n' will be
 (Font)              scaled to size 9.85492pt on input line 54.
 )
@@ -216,14 +215,14 @@ LaTeX Font Info:    Font shape `T1/fve/m/n' will be
 \abovecaptionskip=\skip41
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
-) (/usr/local/texlive/2018/texmf-dist/tex/latex/geometry/geometry.sty
-Package: geometry 2018/03/24 v5.7 Page Geometry
-(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/ifpdf.sty
-Package: ifpdf 2017/03/15 v3.2 Provides the ifpdf switch
-) (/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/ifvtex.sty
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2018/04/16 v5.8 Page Geometry
+(/usr/local/texlive/2019/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2018/09/07 v3.3 Provides the ifpdf switch
+) (/usr/local/texlive/2019/texmf-dist/tex/generic/oberdiek/ifvtex.sty
 Package: ifvtex 2016/05/16 v1.6 Detect VTeX and its facilities (HO)
 Package ifvtex Info: VTeX not detected.
-) (/usr/local/texlive/2018/texmf-dist/tex/generic/ifxetex/ifxetex.sty
+) (/usr/local/texlive/2019/texmf-dist/tex/generic/ifxetex/ifxetex.sty
 Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 )
 \Gm@cnth=\count89
@@ -238,11 +237,11 @@ Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 \Gm@layouthoffset=\dimen109
 \Gm@layoutvoffset=\dimen110
 \Gm@dimlist=\toks17
-) (/usr/local/texlive/2018/texmf-dist/tex/latex/caption/caption.sty
-Package: caption 2016/02/21 v3.3-144 Customizing captions (AR)
-(/usr/local/texlive/2018/texmf-dist/tex/latex/caption/caption3.sty
-Package: caption3 2016/05/22 v1.7-166 caption3 kernel (AR)
-Package caption3 Info: TeX engine: e-TeX on input line 67.
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2018/10/06 v3.3-154 Customizing captions (AR)
+(/usr/local/texlive/2019/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2018/09/12 v1.8c caption3 kernel (AR)
+Package caption3 Info: TeX engine: e-TeX on input line 64.
 \captionmargin=\dimen111
 \captionmargin@=\dimen112
 \captionwidth=\dimen113
@@ -251,9 +250,10 @@ Package caption3 Info: TeX engine: e-TeX on input line 67.
 \caption@parindent=\dimen116
 \caption@hangindent=\dimen117
 )
-\c@ContinuedFloat=\count92
-) (/usr/local/texlive/2018/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
-Package: fancyhdr 2017/06/30 v3.9a Extensive control of page headers and footer
+\c@caption@flags=\count92
+\c@ContinuedFloat=\count93
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
+Package: fancyhdr 2019/01/31 v3.10 Extensive control of page headers and footer
 s
 \f@nch@headwidth=\skip43
 \f@nch@O@elh=\skip44
@@ -264,7 +264,7 @@ s
 \f@nch@O@erf=\skip49
 \f@nch@O@olf=\skip50
 \f@nch@O@orf=\skip51
-) (/usr/local/texlive/2018/texmf-dist/tex/latex/tools/bm.sty
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/tools/bm.sty
 Package: bm 2017/01/16 v1.2c Bold Symbol Support (DPC/FMi)
 \symboldoperators=\mathgroup5
 \symboldletters=\mathgroup6
@@ -272,47 +272,47 @@ Package: bm 2017/01/16 v1.2c Bold Symbol Support (DPC/FMi)
 \symboldupright=\mathgroup8
 LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 141.
 LaTeX Info: Redefining \bm on input line 207.
-) (/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsmath.sty
-Package: amsmath 2017/09/02 v2.17a AMS math features
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2018/12/01 v2.17b AMS math features
 \@mathmargin=\skip52
 For additional information on amsmath, use the `?' option.
-(/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amstext.sty
+(/usr/local/texlive/2019/texmf-dist/tex/latex/amsmath/amstext.sty
 Package: amstext 2000/06/29 v2.01 AMS text
-(/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsgen.sty
+(/usr/local/texlive/2019/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
 \@emptytoks=\toks18
 \ex@=\dimen118
-)) (/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsbsy.sty
+)) (/usr/local/texlive/2019/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 LaTeX Info: Redefining \boldsymbol on input line 28.
 \pmbraise@=\dimen119
-) (/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsopn.sty
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 2016/03/08 v2.02 operator names
 )
-\inf@bad=\count93
-LaTeX Info: Redefining \frac on input line 213.
-\uproot@=\count94
-\leftroot@=\count95
-LaTeX Info: Redefining \overline on input line 375.
-\classnum@=\count96
-\DOTSCASE@=\count97
-LaTeX Info: Redefining \ldots on input line 472.
-LaTeX Info: Redefining \dots on input line 475.
-LaTeX Info: Redefining \cdots on input line 596.
-\Mathstrutbox@=\box26
-\strutbox@=\box27
+\inf@bad=\count94
+LaTeX Info: Redefining \frac on input line 223.
+\uproot@=\count95
+\leftroot@=\count96
+LaTeX Info: Redefining \overline on input line 385.
+\classnum@=\count97
+\DOTSCASE@=\count98
+LaTeX Info: Redefining \ldots on input line 482.
+LaTeX Info: Redefining \dots on input line 485.
+LaTeX Info: Redefining \cdots on input line 606.
+\Mathstrutbox@=\box27
+\strutbox@=\box28
 \big@size=\dimen120
-LaTeX Font Info:    Redeclaring font encoding OML on input line 712.
-LaTeX Font Info:    Redeclaring font encoding OMS on input line 713.
-\macc@depth=\count98
-\c@MaxMatrixCols=\count99
+LaTeX Font Info:    Redeclaring font encoding OML on input line 729.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 730.
+\macc@depth=\count99
+\c@MaxMatrixCols=\count100
 \dotsspace@=\muskip10
-\c@parentequation=\count100
-\dspbrk@lvl=\count101
+\c@parentequation=\count101
+\dspbrk@lvl=\count102
 \tag@help=\toks19
-\row@=\count102
-\column@=\count103
-\maxfields@=\count104
+\row@=\count103
+\column@=\count104
+\maxfields@=\count105
 \andhelp@=\toks20
 \eqnshift@=\dimen121
 \alignsep@=\dimen122
@@ -324,28 +324,28 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 713.
 \multlinegap=\skip53
 \multlinetaggap=\skip54
 \mathdisplay@stack=\toks22
-LaTeX Info: Redefining \[ on input line 2817.
-LaTeX Info: Redefining \] on input line 2818.
-) (/usr/local/texlive/2018/texmf-dist/tex/latex/graphics/graphicx.sty
+LaTeX Info: Redefining \[ on input line 2844.
+LaTeX Info: Redefining \] on input line 2845.
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
-(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics/graphics.sty
+(/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2017/06/25 v1.2c Standard LaTeX Graphics (DPC,SPQR)
-(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics/trig.sty
+(/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
-) (/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 99.
-(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-def/pdftex.def
+(/usr/local/texlive/2019/texmf-dist/tex/latex/graphics-def/pdftex.def
 File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
 ))
 \Gin@req@height=\dimen127
 \Gin@req@width=\dimen128
-) (/usr/local/texlive/2018/texmf-dist/tex/latex/placeins/placeins.sty
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/placeins/placeins.sty
 Package: placeins 2005/04/18  v 2.2
-) (/usr/local/texlive/2018/texmf-dist/tex/latex/titlesec/titlesec.sty
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/titlesec/titlesec.sty
 Package: titlesec 2016/03/21 v2.10.2 Sectioning titles
-\ttl@box=\box28
+\ttl@box=\box29
 \beforetitleunit=\skip55
 \aftertitleunit=\skip56
 \ttl@plus=\dimen129
@@ -354,91 +354,81 @@ Package: titlesec 2016/03/21 v2.10.2 Sectioning titles
 \titlewidth=\dimen131
 \titlewidthlast=\dimen132
 \titlewidthfirst=\dimen133
-) (/usr/local/texlive/2018/texmf-dist/tex/latex/titlesec/block.tss
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/titlesec/block.tss
 File: block.tss 2016/03/15
-) (/usr/local/texlive/2018/texmf-dist/tex/latex/setspace/setspace.sty
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/setspace/setspace.sty
 Package: setspace 2011/12/19 v6.7a set line spacing
-) (/usr/local/texlive/2018/texmf-dist/tex/latex/microtype/microtype.sty
-Package: microtype 2018/01/14 v2.7a Micro-typographical refinements (RS)
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/microtype/microtype.sty
+Package: microtype 2019/02/28 v2.7b Micro-typographical refinements (RS)
 \MT@toks=\toks24
-\MT@count=\count105
-LaTeX Info: Redefining \textls on input line 793.
+\MT@count=\count106
+LaTeX Info: Redefining \textls on input line 790.
 \MT@outer@kern=\dimen134
-LaTeX Info: Redefining \textmicrotypecontext on input line 1339.
-\MT@listname@count=\count106
-(/usr/local/texlive/2018/texmf-dist/tex/latex/microtype/microtype-pdftex.def
-File: microtype-pdftex.def 2018/01/14 v2.7a Definitions specific to pdftex (RS)
+LaTeX Info: Redefining \textmicrotypecontext on input line 1336.
+\MT@listname@count=\count107
+(/usr/local/texlive/2019/texmf-dist/tex/latex/microtype/microtype-pdftex.def
+File: microtype-pdftex.def 2019/02/28 v2.7b Definitions specific to pdftex (RS)
 
-LaTeX Info: Redefining \lsstyle on input line 913.
-LaTeX Info: Redefining \lslig on input line 913.
+LaTeX Info: Redefining \lsstyle on input line 914.
+LaTeX Info: Redefining \lslig on input line 914.
 \MT@outer@space=\skip57
 )
 Package microtype Info: Loading configuration file microtype.cfg.
-(/usr/local/texlive/2018/texmf-dist/tex/latex/microtype/microtype.cfg
-File: microtype.cfg 2018/01/14 v2.7a microtype main configuration file (RS)
-)) (/usr/local/texlive/2018/texmf-dist/tex/latex/biblatex/biblatex.sty
-Package: biblatex 2018/03/04 v3.11 programmable bibliographies (PK/MW)
-(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
-Package: pdftexcmds 2018/01/30 v0.27 Utility functions of pdfTeX for LuaTeX (HO
+(/usr/local/texlive/2019/texmf-dist/tex/latex/microtype/microtype.cfg
+File: microtype.cfg 2019/02/28 v2.7b microtype main configuration file (RS)
+)) (/usr/local/texlive/2019/texmf-dist/tex/latex/biblatex/biblatex.sty
+Package: biblatex 2018/11/02 v3.12 programmable bibliographies (PK/MW)
+(/usr/local/texlive/2019/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2018/09/10 v0.29 Utility functions of pdfTeX for LuaTeX (HO
 )
-(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+(/usr/local/texlive/2019/texmf-dist/tex/generic/oberdiek/infwarerr.sty
 Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
-) (/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+) (/usr/local/texlive/2019/texmf-dist/tex/generic/oberdiek/ifluatex.sty
 Package: ifluatex 2016/05/16 v1.4 Provides the ifluatex switch (HO)
 Package ifluatex Info: LuaTeX not detected.
-) (/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+) (/usr/local/texlive/2019/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
 Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
 )
 Package pdftexcmds Info: LuaTeX not detected.
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
-) (/usr/local/texlive/2018/texmf-dist/tex/latex/etoolbox/etoolbox.sty
-Package: etoolbox 2018/02/11 v2.5e e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count107
-) (/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2018/08/19 v2.5f e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count108
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/oberdiek/kvoptions.sty
 Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
-(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+(/usr/local/texlive/2019/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
 Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
-(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+(/usr/local/texlive/2019/texmf-dist/tex/generic/oberdiek/etexcmds.sty
 Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
-Package etexcmds Info: Could not find \expanded.
-(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
-(etexcmds)             that some package has redefined \expanded.
-(etexcmds)             In the latter case, load this package earlier.
-))) (/usr/local/texlive/2018/texmf-dist/tex/latex/logreq/logreq.sty
+))) (/usr/local/texlive/2019/texmf-dist/tex/latex/logreq/logreq.sty
 Package: logreq 2010/08/04 v1.0 xml request logger
-\lrq@indent=\count108
-(/usr/local/texlive/2018/texmf-dist/tex/latex/logreq/logreq.def
+\lrq@indent=\count109
+(/usr/local/texlive/2019/texmf-dist/tex/latex/logreq/logreq.def
 File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
-)) (/usr/local/texlive/2018/texmf-dist/tex/latex/base/ifthen.sty
+)) (/usr/local/texlive/2019/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
-) (/usr/local/texlive/2018/texmf-dist/tex/latex/url/url.sty
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip11
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
-) (/usr/local/texlive/2018/texmf-dist/tex/generic/xstring/xstring.sty (/usr/loc
-al/texlive/2018/texmf-dist/tex/generic/xstring/xstring.tex
-\@xs@message=\write3
-\integerpart=\count109
-\decimalpart=\count110
 )
-Package: xstring 2013/10/13  v1.7c  String manipulations (C Tellechea)
-)
-\c@tabx@nest=\count111
-\c@listtotal=\count112
-\c@listcount=\count113
-\c@liststart=\count114
-\c@liststop=\count115
-\c@citecount=\count116
-\c@citetotal=\count117
-\c@multicitecount=\count118
-\c@multicitetotal=\count119
-\c@instcount=\count120
-\c@maxnames=\count121
-\c@minnames=\count122
-\c@maxitems=\count123
-\c@minitems=\count124
-\c@citecounter=\count125
+\c@tabx@nest=\count110
+\c@listtotal=\count111
+\c@listcount=\count112
+\c@liststart=\count113
+\c@liststop=\count114
+\c@citecount=\count115
+\c@citetotal=\count116
+\c@multicitecount=\count117
+\c@multicitetotal=\count118
+\c@instcount=\count119
+\c@maxnames=\count120
+\c@minnames=\count121
+\c@maxitems=\count122
+\c@minitems=\count123
+\c@citecounter=\count124
+\c@maxcitecounter=\count125
 \c@savedcitecounter=\count126
 \c@uniquelist=\count127
 \c@uniquename=\count128
@@ -446,22 +436,24 @@ Package: xstring 2013/10/13  v1.7c  String manipulations (C Tellechea)
 \c@refsegment=\count130
 \c@maxextratitle=\count131
 \c@maxextratitleyear=\count132
-\c@maxextradate=\count133
-\c@maxextraalpha=\count134
-\c@abbrvpenalty=\count135
-\c@highnamepenalty=\count136
-\c@lownamepenalty=\count137
-\c@maxparens=\count138
-\c@parenlevel=\count139
-\blx@tempcnta=\count140
-\blx@tempcntb=\count141
-\blx@tempcntc=\count142
-\blx@maxsection=\count143
-\blx@maxsegment@0=\count144
-\blx@notetype=\count145
-\blx@parenlevel@text=\count146
-\blx@parenlevel@foot=\count147
-\blx@sectionciteorder@0=\count148
+\c@maxextraname=\count133
+\c@maxextradate=\count134
+\c@maxextraalpha=\count135
+\c@abbrvpenalty=\count136
+\c@highnamepenalty=\count137
+\c@lownamepenalty=\count138
+\c@maxparens=\count139
+\c@parenlevel=\count140
+\blx@tempcnta=\count141
+\blx@tempcntb=\count142
+\blx@tempcntc=\count143
+\blx@maxsection=\count144
+\blx@maxsegment@0=\count145
+\blx@notetype=\count146
+\blx@parenlevel@text=\count147
+\blx@parenlevel@foot=\count148
+\blx@sectionciteorder@0=\count149
+\blx@entrysetcounter=\count150
 \labelnumberwidth=\skip58
 \labelalphawidth=\skip59
 \biblabelsep=\skip60
@@ -471,87 +463,87 @@ Package: xstring 2013/10/13  v1.7c  String manipulations (C Tellechea)
 \bibparsep=\skip64
 \bibhang=\skip65
 \blx@bcfin=\read1
-\blx@bcfout=\write4
-\c@mincomprange=\count149
-\c@maxcomprange=\count150
-\c@mincompwidth=\count151
+\blx@bcfout=\write3
+\c@mincomprange=\count151
+\c@maxcomprange=\count152
+\c@mincompwidth=\count153
 Package biblatex Info: Trying to load biblatex default data model...
 Package biblatex Info: ... file 'blx-dm.def' found.
-(/usr/local/texlive/2018/texmf-dist/tex/latex/biblatex/blx-dm.def
-File: blx-dm.def 2018/03/04 v3.11 biblatex localization (PK/MW)
+(/usr/local/texlive/2019/texmf-dist/tex/latex/biblatex/blx-dm.def
+File: blx-dm.def 2018/11/02 v3.12 biblatex localization (PK/MW)
 )
 Package biblatex Info: Trying to load biblatex style data model...
 Package biblatex Info: ... file 'authoryear-comp.dbx' not found.
 Package biblatex Info: Trying to load biblatex custom data model...
 Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
-\c@afterword=\count152
-\c@savedafterword=\count153
-\c@annotator=\count154
-\c@savedannotator=\count155
-\c@author=\count156
-\c@savedauthor=\count157
-\c@bookauthor=\count158
-\c@savedbookauthor=\count159
-\c@commentator=\count160
-\c@savedcommentator=\count161
-\c@editor=\count162
-\c@savededitor=\count163
-\c@editora=\count164
-\c@savededitora=\count165
-\c@editorb=\count166
-\c@savededitorb=\count167
-\c@editorc=\count168
-\c@savededitorc=\count169
-\c@foreword=\count170
-\c@savedforeword=\count171
-\c@holder=\count172
-\c@savedholder=\count173
-\c@introduction=\count174
-\c@savedintroduction=\count175
-\c@namea=\count176
-\c@savednamea=\count177
-\c@nameb=\count178
-\c@savednameb=\count179
-\c@namec=\count180
-\c@savednamec=\count181
-\c@translator=\count182
-\c@savedtranslator=\count183
-\c@shortauthor=\count184
-\c@savedshortauthor=\count185
-\c@shorteditor=\count186
-\c@savedshorteditor=\count187
-\c@labelname=\count188
-\c@savedlabelname=\count189
-\c@institution=\count190
-\c@savedinstitution=\count191
-\c@lista=\count192
-\c@savedlista=\count193
-\c@listb=\count194
-\c@savedlistb=\count195
-\c@listc=\count196
-\c@savedlistc=\count197
-\c@listd=\count198
-\c@savedlistd=\count199
-\c@liste=\count266
-\c@savedliste=\count267
-\c@listf=\count268
-\c@savedlistf=\count269
-\c@location=\count270
-\c@savedlocation=\count271
-\c@organization=\count272
-\c@savedorganization=\count273
-\c@origlocation=\count274
-\c@savedoriglocation=\count275
-\c@origpublisher=\count276
-\c@savedorigpublisher=\count277
-\c@publisher=\count278
-\c@savedpublisher=\count279
-\c@language=\count280
-\c@savedlanguage=\count281
-\c@origlanguage=\count282
-\c@savedoriglanguage=\count283
-\c@pageref=\count284
-\c@savedpageref=\count285
+\c@afterword=\count154
+\c@savedafterword=\count155
+\c@annotator=\count156
+\c@savedannotator=\count157
+\c@author=\count158
+\c@savedauthor=\count159
+\c@bookauthor=\count160
+\c@savedbookauthor=\count161
+\c@commentator=\count162
+\c@savedcommentator=\count163
+\c@editor=\count164
+\c@savededitor=\count165
+\c@editora=\count166
+\c@savededitora=\count167
+\c@editorb=\count168
+\c@savededitorb=\count169
+\c@editorc=\count170
+\c@savededitorc=\count171
+\c@foreword=\count172
+\c@savedforeword=\count173
+\c@holder=\count174
+\c@savedholder=\count175
+\c@introduction=\count176
+\c@savedintroduction=\count177
+\c@namea=\count178
+\c@savednamea=\count179
+\c@nameb=\count180
+\c@savednameb=\count181
+\c@namec=\count182
+\c@savednamec=\count183
+\c@translator=\count184
+\c@savedtranslator=\count185
+\c@shortauthor=\count186
+\c@savedshortauthor=\count187
+\c@shorteditor=\count188
+\c@savedshorteditor=\count189
+\c@labelname=\count190
+\c@savedlabelname=\count191
+\c@institution=\count192
+\c@savedinstitution=\count193
+\c@lista=\count194
+\c@savedlista=\count195
+\c@listb=\count196
+\c@savedlistb=\count197
+\c@listc=\count198
+\c@savedlistc=\count199
+\c@listd=\count266
+\c@savedlistd=\count267
+\c@liste=\count268
+\c@savedliste=\count269
+\c@listf=\count270
+\c@savedlistf=\count271
+\c@location=\count272
+\c@savedlocation=\count273
+\c@organization=\count274
+\c@savedorganization=\count275
+\c@origlocation=\count276
+\c@savedoriglocation=\count277
+\c@origpublisher=\count278
+\c@savedorigpublisher=\count279
+\c@publisher=\count280
+\c@savedpublisher=\count281
+\c@language=\count282
+\c@savedlanguage=\count283
+\c@origlanguage=\count284
+\c@savedoriglanguage=\count285
+\c@pageref=\count286
+\c@savedpageref=\count287
 \shorthandwidth=\skip66
 \shortjournalwidth=\skip67
 \shortserieswidth=\skip68
@@ -568,45 +560,47 @@ Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
 \localshorteditorwidth=\skip79
 Package biblatex Info: Trying to load compatibility code...
 Package biblatex Info: ... file 'blx-compat.def' found.
-(/usr/local/texlive/2018/texmf-dist/tex/latex/biblatex/blx-compat.def
-File: blx-compat.def 2018/03/04 v3.11 biblatex compatibility (PK/MW)
+(/usr/local/texlive/2019/texmf-dist/tex/latex/biblatex/blx-compat.def
+File: blx-compat.def 2018/11/02 v3.12 biblatex compatibility (PK/MW)
 )
 Package biblatex Info: Trying to load generic definitions...
 Package biblatex Info: ... file 'biblatex.def' found.
-(/usr/local/texlive/2018/texmf-dist/tex/latex/biblatex/biblatex.def
-File: biblatex.def 2018/03/04 v3.11 biblatex compatibility (PK/MW)
-\c@textcitecount=\count286
-\c@textcitetotal=\count287
-\c@textcitemaxnames=\count288
-\c@biburlnumpenalty=\count289
-\c@biburlucpenalty=\count290
-\c@biburllcpenalty=\count291
-\c@smartand=\count292
+(/usr/local/texlive/2019/texmf-dist/tex/latex/biblatex/biblatex.def
+File: biblatex.def 2018/11/02 v3.12 biblatex compatibility (PK/MW)
+\c@textcitecount=\count288
+\c@textcitetotal=\count289
+\c@textcitemaxnames=\count290
+\c@biburlnumpenalty=\count291
+\c@biburlucpenalty=\count292
+\c@biburllcpenalty=\count293
+\c@smartand=\count294
 )
 Package biblatex Info: Trying to load natbib compatibility...
 Package biblatex Info: ... file 'blx-natbib.def' found.
-(/usr/local/texlive/2018/texmf-dist/tex/latex/biblatex/blx-natbib.def
-File: blx-natbib.def 2018/03/04 v3.11 biblatex compatibility (PK/MW)
+(/usr/local/texlive/2019/texmf-dist/tex/latex/biblatex/blx-natbib.def
+File: blx-natbib.def 2018/11/02 v3.12 biblatex compatibility (PK/MW)
+Package biblatex Info: Delimiter 'nameyeardelim' in context '' already defined,
+ overwriting.
 )
 Package biblatex Info: Trying to load bibliography style 'authoryear-comp'...
 Package biblatex Info: ... file 'authoryear-comp.bbx' found.
-(/usr/local/texlive/2018/texmf-dist/tex/latex/biblatex/bbx/authoryear-comp.bbx
-File: authoryear-comp.bbx 2018/03/04 v3.11 biblatex bibliography style (PK/MW)
+(/usr/local/texlive/2019/texmf-dist/tex/latex/biblatex/bbx/authoryear-comp.bbx
+File: authoryear-comp.bbx 2018/11/02 v3.12 biblatex bibliography style (PK/MW)
 Package biblatex Info: Trying to load bibliography style 'authoryear'...
 Package biblatex Info: ... file 'authoryear.bbx' found.
-(/usr/local/texlive/2018/texmf-dist/tex/latex/biblatex/bbx/authoryear.bbx
-File: authoryear.bbx 2018/03/04 v3.11 biblatex bibliography style (PK/MW)
+(/usr/local/texlive/2019/texmf-dist/tex/latex/biblatex/bbx/authoryear.bbx
+File: authoryear.bbx 2018/11/02 v3.12 biblatex bibliography style (PK/MW)
 Package biblatex Info: Trying to load bibliography style 'standard'...
 Package biblatex Info: ... file 'standard.bbx' found.
-(/usr/local/texlive/2018/texmf-dist/tex/latex/biblatex/bbx/standard.bbx
-File: standard.bbx 2018/03/04 v3.11 biblatex bibliography style (PK/MW)
-\c@bbx:relatedcount=\count293
-\c@bbx:relatedtotal=\count294
+(/usr/local/texlive/2019/texmf-dist/tex/latex/biblatex/bbx/standard.bbx
+File: standard.bbx 2018/11/02 v3.12 biblatex bibliography style (PK/MW)
+\c@bbx:relatedcount=\count295
+\c@bbx:relatedtotal=\count296
 )))
 Package biblatex Info: Trying to load citation style 'authoryear-comp'...
 Package biblatex Info: ... file 'authoryear-comp.cbx' found.
-(/usr/local/texlive/2018/texmf-dist/tex/latex/biblatex/cbx/authoryear-comp.cbx
-File: authoryear-comp.cbx 2018/03/04 v3.11 biblatex citation style (PK/MW)
+(/usr/local/texlive/2019/texmf-dist/tex/latex/biblatex/cbx/authoryear-comp.cbx
+File: authoryear-comp.cbx 2018/11/02 v3.12 biblatex citation style (PK/MW)
 Package biblatex Info: Redefining '\cite'.
 Package biblatex Info: Redefining '\parencite'.
 Package biblatex Info: Redefining '\footcite'.
@@ -622,25 +616,25 @@ Package biblatex Info: Redefining '\smartcites'.
 )
 Package biblatex Info: Trying to load configuration file...
 Package biblatex Info: ... file 'biblatex.cfg' found.
-(/usr/local/texlive/2018/texmf-dist/tex/latex/biblatex/biblatex.cfg
+(/usr/local/texlive/2019/texmf-dist/tex/latex/biblatex/biblatex.cfg
 File: biblatex.cfg 
-)) (/usr/local/texlive/2018/texmf-dist/tex/latex/xpatch/xpatch.sty (/usr/local/
-texlive/2018/texmf-dist/tex/latex/l3kernel/expl3.sty
-Package: expl3 2018/03/05 L3 programming layer (loader) 
-(/usr/local/texlive/2018/texmf-dist/tex/latex/l3kernel/expl3-code.tex
-Package: expl3 2018/03/05 L3 programming layer (code)
-\c_max_int=\count295
-\l_tmpa_int=\count296
-\l_tmpb_int=\count297
-\g_tmpa_int=\count298
-\g_tmpb_int=\count299
-\g__intarray_font_int=\count300
-\g__prg_map_int=\count301
-\c_log_iow=\count302
-\l_iow_line_count_int=\count303
-\l__iow_line_target_int=\count304
-\l__iow_one_indent_int=\count305
-\l__iow_indent_int=\count306
+)) (/usr/local/texlive/2019/texmf-dist/tex/latex/xpatch/xpatch.sty (/usr/local/
+texlive/2019/texmf-dist/tex/latex/l3kernel/expl3.sty
+Package: expl3 2019-05-07 L3 programming layer (loader) 
+(/usr/local/texlive/2019/texmf-dist/tex/latex/l3kernel/expl3-code.tex
+Package: expl3 2019-05-07 L3 programming layer (code)
+\c_max_int=\count297
+\l_tmpa_int=\count298
+\l_tmpb_int=\count299
+\g_tmpa_int=\count300
+\g_tmpb_int=\count301
+\g__kernel_prg_map_int=\count302
+\c__ior_term_ior=\count303
+\c_log_iow=\count304
+\l_iow_line_count_int=\count305
+\l__iow_line_target_int=\count306
+\l__iow_one_indent_int=\count307
+\l__iow_indent_int=\count308
 \c_zero_dim=\dimen135
 \c_max_dim=\dimen136
 \l_tmpa_dim=\dimen137
@@ -659,313 +653,140 @@ Package: expl3 2018/03/05 L3 programming layer (code)
 \l_tmpb_muskip=\muskip15
 \g_tmpa_muskip=\muskip16
 \g_tmpb_muskip=\muskip17
-\l_keys_choice_int=\count307
-\c__fp_leading_shift_int=\count308
-\c__fp_middle_shift_int=\count309
-\c__fp_trailing_shift_int=\count310
-\c__fp_big_leading_shift_int=\count311
-\c__fp_big_middle_shift_int=\count312
-\c__fp_big_trailing_shift_int=\count313
-\c__fp_Bigg_leading_shift_int=\count314
-\c__fp_Bigg_middle_shift_int=\count315
-\c__fp_Bigg_trailing_shift_int=\count316
-\c__fp_rand_size_int=\count317
-\c__fp_rand_four_int=\count318
-\c__fp_rand_eight_int=\count319
-\l__sort_length_int=\count320
-\l__sort_min_int=\count321
-\l__sort_top_int=\count322
-\l__sort_max_int=\count323
-\l__sort_true_max_int=\count324
-\l__sort_block_int=\count325
-\l__sort_begin_int=\count326
-\l__sort_end_int=\count327
-\l__sort_A_int=\count328
-\l__sort_B_int=\count329
-\l__sort_C_int=\count330
-\l__tl_build_start_index_int=\count331
-\l__tl_build_index_int=\count332
-\l__tl_analysis_normal_int=\count333
-\l__tl_analysis_index_int=\count334
-\l__tl_analysis_nesting_int=\count335
-\l__tl_analysis_type_int=\count336
-\l__regex_internal_a_int=\count337
-\l__regex_internal_b_int=\count338
-\l__regex_internal_c_int=\count339
-\l__regex_balance_int=\count340
-\l__regex_group_level_int=\count341
-\l__regex_mode_int=\count342
-\c__regex_cs_in_class_mode_int=\count343
-\c__regex_cs_mode_int=\count344
-\l__regex_catcodes_int=\count345
-\l__regex_default_catcodes_int=\count346
-\c__regex_catcode_D_int=\count347
-\c__regex_catcode_S_int=\count348
-\c__regex_catcode_L_int=\count349
-\c__regex_catcode_O_int=\count350
-\c__regex_catcode_A_int=\count351
-\c__regex_all_catcodes_int=\count352
-\l__regex_show_lines_int=\count353
-\l__regex_min_state_int=\count354
-\l__regex_max_state_int=\count355
-\l__regex_left_state_int=\count356
-\l__regex_right_state_int=\count357
-\l__regex_capturing_group_int=\count358
-\l__regex_min_pos_int=\count359
-\l__regex_max_pos_int=\count360
-\l__regex_curr_pos_int=\count361
-\l__regex_start_pos_int=\count362
-\l__regex_success_pos_int=\count363
-\l__regex_curr_char_int=\count364
-\l__regex_curr_catcode_int=\count365
-\l__regex_last_char_int=\count366
-\l__regex_case_changed_char_int=\count367
-\l__regex_curr_state_int=\count368
-\l__regex_step_int=\count369
-\l__regex_min_active_int=\count370
-\l__regex_max_active_int=\count371
-\l__regex_replacement_csnames_int=\count372
-\l__regex_match_count_int=\count373
-\l__regex_min_submatch_int=\count374
-\l__regex_submatch_int=\count375
-\l__regex_zeroth_submatch_int=\count376
-\g__regex_trace_regex_int=\count377
-\c_empty_box=\box29
-\l_tmpa_box=\box30
-\l_tmpb_box=\box31
-\g_tmpa_box=\box32
-\g_tmpb_box=\box33
-\l__box_top_dim=\dimen141
-\l__box_bottom_dim=\dimen142
-\l__box_left_dim=\dimen143
-\l__box_right_dim=\dimen144
-\l__box_top_new_dim=\dimen145
-\l__box_bottom_new_dim=\dimen146
-\l__box_left_new_dim=\dimen147
-\l__box_right_new_dim=\dimen148
-\l__box_internal_box=\box34
-\l__coffin_internal_box=\box35
-\l__coffin_internal_dim=\dimen149
-\l__coffin_offset_x_dim=\dimen150
-\l__coffin_offset_y_dim=\dimen151
-\l__coffin_x_dim=\dimen152
-\l__coffin_y_dim=\dimen153
-\l__coffin_x_prime_dim=\dimen154
-\l__coffin_y_prime_dim=\dimen155
-\c_empty_coffin=\box36
-\l__coffin_aligned_coffin=\box37
-\l__coffin_aligned_internal_coffin=\box38
-\l_tmpa_coffin=\box39
-\l_tmpb_coffin=\box40
-\l__coffin_display_coffin=\box41
-\l__coffin_display_coord_coffin=\box42
-\l__coffin_display_pole_coffin=\box43
-\l__coffin_display_offset_dim=\dimen156
-\l__coffin_display_x_dim=\dimen157
-\l__coffin_display_y_dim=\dimen158
-\l__coffin_bounding_shift_dim=\dimen159
-\l__coffin_left_corner_dim=\dimen160
-\l__coffin_right_corner_dim=\dimen161
-\l__coffin_bottom_corner_dim=\dimen162
-\l__coffin_top_corner_dim=\dimen163
-\l__coffin_scaled_total_height_dim=\dimen164
-\l__coffin_scaled_width_dim=\dimen165
-) (/usr/local/texlive/2018/texmf-dist/tex/latex/l3kernel/l3pdfmode.def
-File: l3pdfmode.def 2017/03/18 v L3 Experimental driver: PDF mode
-\l__driver_color_stack_int=\count378
+\l_keys_choice_int=\count309
+\l__intarray_loop_int=\count310
+\c__intarray_sp_dim=\dimen141
+\g__intarray_font_int=\count311
+\c__fp_leading_shift_int=\count312
+\c__fp_middle_shift_int=\count313
+\c__fp_trailing_shift_int=\count314
+\c__fp_big_leading_shift_int=\count315
+\c__fp_big_middle_shift_int=\count316
+\c__fp_big_trailing_shift_int=\count317
+\c__fp_Bigg_leading_shift_int=\count318
+\c__fp_Bigg_middle_shift_int=\count319
+\c__fp_Bigg_trailing_shift_int=\count320
+\c__kernel_randint_max_int=\count321
+\g__fp_array_int=\count322
+\l__fp_array_loop_int=\count323
+\l__sort_length_int=\count324
+\l__sort_min_int=\count325
+\l__sort_top_int=\count326
+\l__sort_max_int=\count327
+\l__sort_true_max_int=\count328
+\l__sort_block_int=\count329
+\l__sort_begin_int=\count330
+\l__sort_end_int=\count331
+\l__sort_A_int=\count332
+\l__sort_B_int=\count333
+\l__sort_C_int=\count334
+\l__tl_analysis_normal_int=\count335
+\l__tl_analysis_index_int=\count336
+\l__tl_analysis_nesting_int=\count337
+\l__tl_analysis_type_int=\count338
+\l__regex_internal_a_int=\count339
+\l__regex_internal_b_int=\count340
+\l__regex_internal_c_int=\count341
+\l__regex_balance_int=\count342
+\l__regex_group_level_int=\count343
+\l__regex_mode_int=\count344
+\c__regex_cs_in_class_mode_int=\count345
+\c__regex_cs_mode_int=\count346
+\l__regex_catcodes_int=\count347
+\l__regex_default_catcodes_int=\count348
+\c__regex_catcode_D_int=\count349
+\c__regex_catcode_S_int=\count350
+\c__regex_catcode_L_int=\count351
+\c__regex_catcode_O_int=\count352
+\c__regex_catcode_A_int=\count353
+\c__regex_all_catcodes_int=\count354
+\l__regex_show_lines_int=\count355
+\l__regex_min_state_int=\count356
+\l__regex_max_state_int=\count357
+\l__regex_left_state_int=\count358
+\l__regex_right_state_int=\count359
+\l__regex_capturing_group_int=\count360
+\l__regex_min_pos_int=\count361
+\l__regex_max_pos_int=\count362
+\l__regex_curr_pos_int=\count363
+\l__regex_start_pos_int=\count364
+\l__regex_success_pos_int=\count365
+\l__regex_curr_char_int=\count366
+\l__regex_curr_catcode_int=\count367
+\l__regex_last_char_int=\count368
+\l__regex_case_changed_char_int=\count369
+\l__regex_curr_state_int=\count370
+\l__regex_step_int=\count371
+\l__regex_min_active_int=\count372
+\l__regex_max_active_int=\count373
+\l__regex_replacement_csnames_int=\count374
+\l__regex_match_count_int=\count375
+\l__regex_min_submatch_int=\count376
+\l__regex_submatch_int=\count377
+\l__regex_zeroth_submatch_int=\count378
+\g__regex_trace_regex_int=\count379
+\c_empty_box=\box30
+\l_tmpa_box=\box31
+\l_tmpb_box=\box32
+\g_tmpa_box=\box33
+\g_tmpb_box=\box34
+\l__box_top_dim=\dimen142
+\l__box_bottom_dim=\dimen143
+\l__box_left_dim=\dimen144
+\l__box_right_dim=\dimen145
+\l__box_top_new_dim=\dimen146
+\l__box_bottom_new_dim=\dimen147
+\l__box_left_new_dim=\dimen148
+\l__box_right_new_dim=\dimen149
+\l__box_internal_box=\box35
+\l__coffin_internal_box=\box36
+\l__coffin_internal_dim=\dimen150
+\l__coffin_offset_x_dim=\dimen151
+\l__coffin_offset_y_dim=\dimen152
+\l__coffin_x_dim=\dimen153
+\l__coffin_y_dim=\dimen154
+\l__coffin_x_prime_dim=\dimen155
+\l__coffin_y_prime_dim=\dimen156
+\c_empty_coffin=\box37
+\l__coffin_aligned_coffin=\box38
+\l__coffin_aligned_internal_coffin=\box39
+\l_tmpa_coffin=\box40
+\l_tmpb_coffin=\box41
+\g_tmpa_coffin=\box42
+\g_tmpb_coffin=\box43
+\l__coffin_bounding_shift_dim=\dimen157
+\l__coffin_left_corner_dim=\dimen158
+\l__coffin_right_corner_dim=\dimen159
+\l__coffin_bottom_corner_dim=\dimen160
+\l__coffin_top_corner_dim=\dimen161
+\l__coffin_scaled_total_height_dim=\dimen162
+\l__coffin_scaled_width_dim=\dimen163
+\c__coffin_empty_coffin=\box44
+\l__coffin_display_coffin=\box45
+\l__coffin_display_coord_coffin=\box46
+\l__coffin_display_pole_coffin=\box47
+\l__coffin_display_offset_dim=\dimen164
+\l__coffin_display_x_dim=\dimen165
+\l__coffin_display_y_dim=\dimen166
+\g__file_internal_ior=\read2
+\l__seq_internal_a_int=\count380
+\l__seq_internal_b_int=\count381
+\c__deprecation_minus_one=\count382
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/l3kernel/l3pdfmode.def
+File: l3pdfmode.def 2019-04-06 v L3 Experimental driver: PDF mode
+\l__driver_color_stack_int=\count383
+\l__driver_pdf_tmp_box=\box48
 ))
 Package: xpatch 2012/10/02 v0.3 Extending etoolbox patching commands
-(/usr/local/texlive/2018/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
-Package: xparse 2018/02/21 L3 Experimental document command parser
-\l__xparse_current_arg_int=\count379
-\g__xparse_grabber_int=\count380
-\l__xparse_m_args_int=\count381
-\l__xparse_mandatory_args_int=\count382
-\l__xparse_v_nesting_int=\count383
-)
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xpatchcmd with sig. '' on line 125.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xpretocmd with sig. '' on line 126.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xapptocmd with sig. '' on line 127.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xshowcmd with sig. '' on line 128.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xpatchbibmacro with sig. 'm' on line 131.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xpretobibmacro with sig. 'm' on line 133.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xapptobibmacro with sig. 'm' on line 135.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xshowbibmacro with sig. 'm' on line 137.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xpatchfieldformat with sig. 'O{*}m' on line 139.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xpretofieldformat with sig. 'O{*}m' on line 141.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xapptofieldformat with sig. 'O{*}m' on line 143.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xshowfieldformat with sig. 'O{*}m' on line 145.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xpatchnameformat with sig. 'O{*}m' on line 147.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xpretonameformat with sig. 'O{*}m' on line 149.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xapptonameformat with sig. 'O{*}m' on line 151.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xshownameformat with sig. 'O{*}m' on line 153.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xpatchlistformat with sig. 'O{*}m' on line 155.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xpretolistformat with sig. 'O{*}m' on line 157.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xapptolistformat with sig. 'O{*}m' on line 159.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xshowlistformat with sig. 'O{*}m' on line 161.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xpatchindexfieldformat with sig. 'O{*}m' on line 163.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xpretoindexfieldformat with sig. 'O{*}m' on line 165.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xapptoindexfieldformat with sig. 'O{*}m' on line 167.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xshowindexfieldformat with sig. 'O{*}m' on line 169.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xpatchindexnameformat with sig. 'O{*}m' on line 171.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xpretoindexnameformat with sig. 'O{*}m' on line 173.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xapptoindexnameformat with sig. 'O{*}m' on line 175.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xshowindexnameformat with sig. 'O{*}m' on line 177.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xpatchindexlistformat with sig. 'O{*}m' on line 179.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xpretoindexlistformat with sig. 'O{*}m' on line 181.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xappindextolistformat with sig. 'O{*}m' on line 183.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xshowindexlistformat with sig. 'O{*}m' on line 185.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xpatchbibdriver with sig. 'm' on line 187.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xpretobibdriver with sig. 'm' on line 189.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xapptobibdriver with sig. 'm' on line 191.
-.................................................
-.................................................
-. LaTeX info: "xparse/define-command"
-. 
-. Defining command \xshowbibdriver with sig. 'm' on line 193.
-.................................................
-) (/usr/local/texlive/2018/texmf-dist/tex/latex/xcolor/xcolor.sty
+(/usr/local/texlive/2019/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
+Package: xparse 2019-05-03 L3 Experimental document command parser
+\l__xparse_current_arg_int=\count384
+\g__xparse_grabber_int=\count385
+\l__xparse_m_args_int=\count386
+\l__xparse_v_nesting_int=\count387
+)) (/usr/local/texlive/2019/texmf-dist/tex/latex/xcolor/xcolor.sty
 Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
-(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-cfg/color.cfg
+(/usr/local/texlive/2019/texmf-dist/tex/latex/graphics-cfg/color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package xcolor Info: Driver file: pdftex.def on input line 225.
@@ -978,12 +799,12 @@ Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1368.
 Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
-) (/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/hyperref.sty
-Package: hyperref 2018/02/06 v6.86b Hypertext links for LaTeX
-(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2018/11/30 v6.88e Hypertext links for LaTeX
+(/usr/local/texlive/2019/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
 Package: hobsub-hyperref 2016/05/16 v1.14 Bundle oberdiek, subset hyperref (HO)
 
-(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty
+(/usr/local/texlive/2019/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty
 Package: hobsub-generic 2016/05/16 v1.14 Bundle oberdiek, subset generic (HO)
 Package: hobsub 2016/05/16 v1.14 Construct package bundles (HO)
 Package hobsub Info: Skipping package `infwarerr' (already loaded).
@@ -1010,54 +831,54 @@ Package: atveryend 2016/05/16 v1.9 Hooks at the very end of document (HO)
 Package: atbegshi 2016/06/09 v1.18 At begin shipout hook (HO)
 Package: refcount 2016/05/16 v3.5 Data extraction from label references (HO)
 Package: hycolor 2016/05/16 v1.8 Color options for hyperref/bookmark (HO)
-) (/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/auxhook.sty
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/oberdiek/auxhook.sty
 Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
 )
-\@linkdim=\dimen166
-\Hy@linkcounter=\count384
-\Hy@pagecounter=\count385
-(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/pd1enc.def
-File: pd1enc.def 2018/02/06 v6.86b Hyperref: PDFDocEncoding definition (HO)
+\@linkdim=\dimen167
+\Hy@linkcounter=\count388
+\Hy@pagecounter=\count389
+(/usr/local/texlive/2019/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2018/11/30 v6.88e Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
 )
-\Hy@SavedSpaceFactor=\count386
-(/usr/local/texlive/2018/texmf-dist/tex/latex/latexconfig/hyperref.cfg
+\Hy@SavedSpaceFactor=\count390
+(/usr/local/texlive/2019/texmf-dist/tex/latex/latexconfig/hyperref.cfg
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
 )
-Package hyperref Info: Option `colorlinks' set `false' on input line 4383.
-Package hyperref Info: Hyper figures OFF on input line 4509.
-Package hyperref Info: Link nesting OFF on input line 4514.
-Package hyperref Info: Hyper index ON on input line 4517.
-Package hyperref Info: Plain pages OFF on input line 4524.
-Package hyperref Info: Backreferencing OFF on input line 4529.
+Package hyperref Info: Option `colorlinks' set `false' on input line 4393.
+Package hyperref Info: Hyper figures OFF on input line 4519.
+Package hyperref Info: Link nesting OFF on input line 4524.
+Package hyperref Info: Hyper index ON on input line 4527.
+Package hyperref Info: Plain pages OFF on input line 4534.
+Package hyperref Info: Backreferencing OFF on input line 4539.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
-Package hyperref Info: Bookmarks ON on input line 4762.
-\c@Hy@tempcnt=\count387
-LaTeX Info: Redefining \url on input line 5115.
-\XeTeXLinkMargin=\dimen167
-\Fld@menulength=\count388
-\Field@Width=\dimen168
-\Fld@charsize=\dimen169
-Package hyperref Info: Hyper figures OFF on input line 6369.
-Package hyperref Info: Link nesting OFF on input line 6374.
-Package hyperref Info: Hyper index ON on input line 6377.
-Package hyperref Info: backreferencing OFF on input line 6384.
-Package hyperref Info: Link coloring OFF on input line 6389.
-Package hyperref Info: Link coloring with OCG OFF on input line 6394.
-Package hyperref Info: PDF/A mode OFF on input line 6399.
-LaTeX Info: Redefining \ref on input line 6439.
-LaTeX Info: Redefining \pageref on input line 6443.
-\Hy@abspage=\count389
-\c@Item=\count390
-\c@Hfootnote=\count391
+Package hyperref Info: Bookmarks ON on input line 4772.
+\c@Hy@tempcnt=\count391
+LaTeX Info: Redefining \url on input line 5125.
+\XeTeXLinkMargin=\dimen168
+\Fld@menulength=\count392
+\Field@Width=\dimen169
+\Fld@charsize=\dimen170
+Package hyperref Info: Hyper figures OFF on input line 6380.
+Package hyperref Info: Link nesting OFF on input line 6385.
+Package hyperref Info: Hyper index ON on input line 6388.
+Package hyperref Info: backreferencing OFF on input line 6395.
+Package hyperref Info: Link coloring OFF on input line 6400.
+Package hyperref Info: Link coloring with OCG OFF on input line 6405.
+Package hyperref Info: PDF/A mode OFF on input line 6410.
+LaTeX Info: Redefining \ref on input line 6450.
+LaTeX Info: Redefining \pageref on input line 6454.
+\Hy@abspage=\count393
+\c@Item=\count394
+\c@Hfootnote=\count395
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
-(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/hpdftex.def
-File: hpdftex.def 2018/02/06 v6.86b Hyperref driver for pdfTeX
-\Fld@listcount=\count392
-\c@bookmark@seq@number=\count393
-(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
+(/usr/local/texlive/2019/texmf-dist/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2018/11/30 v6.88e Hyperref driver for pdfTeX
+\Fld@listcount=\count396
+\c@bookmark@seq@number=\count397
+(/usr/local/texlive/2019/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
 Package: rerunfilecheck 2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 82.
@@ -1069,13 +890,13 @@ Package hyperref Info: Option `bookmarksopen' set `true' on input line 159.
 Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 159.
 
 Package hyperref Info: Option `colorlinks' set `true' on input line 159.
-(/usr/local/texlive/2018/texmf-dist/tex/latex/tocbibind/tocbibind.sty
+(/usr/local/texlive/2019/texmf-dist/tex/latex/tocbibind/tocbibind.sty
 Package: tocbibind 2010/10/13 v1.5k extra ToC listings
 Package tocbibind Info: The document has chapter divisions on input line 50.
 
 Package tocbibind Note: Using chapter style headings, unless overridden.
 
-) (/usr/local/texlive/2018/texmf-dist/tex/latex/tocloft/tocloft.sty
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/tocloft/tocloft.sty
 Package: tocloft 2017/08/31 v2.3i parameterised ToC, etc., typesetting
 Package tocloft Info: The document has chapter divisions on input line 51.
 \cftparskip=\skip87
@@ -1107,75 +928,73 @@ Package tocloft Info: The document has chapter divisions on input line 51.
 \cftbeforefigskip=\skip113
 \cftfigindent=\skip114
 \cftfignumwidth=\skip115
-\c@lofdepth=\count394
-\c@lotdepth=\count395
+\c@lofdepth=\count398
+\c@lotdepth=\count399
 \cftbeforelottitleskip=\skip116
 \cftafterlottitleskip=\skip117
 \cftbeforetabskip=\skip118
 \cfttabindent=\skip119
 \cfttabnumwidth=\skip120
-) (/usr/local/texlive/2018/texmf-dist/tex/latex/framed/framed.sty
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/framed/framed.sty
 Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
 \OuterFrameSep=\skip121
-\fb@frw=\dimen170
-\fb@frh=\dimen171
-\FrameRule=\dimen172
-\FrameSep=\dimen173
-) (/usr/local/texlive/2018/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
-Package: fancyvrb 2008/02/07
-
-Style option: `fancyvrb' v2.7a, with DG/SPQR fixes, and firstline=lastline fix 
-<2008/02/07> (tvz)
-\FV@CodeLineNo=\count396
-\FV@InFile=\read2
-\FV@TabBox=\box44
-\c@FancyVerbLine=\count397
-\FV@StepNumber=\count398
-\FV@OutFile=\write5
-) (/usr/local/texlive/2018/texmf-dist/tex/latex/tools/longtable.sty
-Package: longtable 2014/10/28 v4.11 Multi-page Table package (DPC)
+\fb@frw=\dimen171
+\fb@frh=\dimen172
+\FrameRule=\dimen173
+\FrameSep=\dimen174
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
+Package: fancyvrb 2019/01/15
+Style option: `fancyvrb' v3.2a <2019/01/15> (tvz)
+\FV@CodeLineNo=\count400
+\FV@InFile=\read3
+\FV@TabBox=\box49
+\c@FancyVerbLine=\count401
+\FV@StepNumber=\count402
+\FV@OutFile=\write4
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/tools/longtable.sty
+Package: longtable 2014/10/28 v4.11 Multi-page Table package (DPC)+ FMi change
 \LTleft=\skip122
 \LTright=\skip123
 \LTpre=\skip124
 \LTpost=\skip125
-\LTchunksize=\count399
-\LTcapwidth=\dimen174
-\LT@head=\box45
-\LT@firsthead=\box46
-\LT@foot=\box47
-\LT@lastfoot=\box48
-\LT@cols=\count400
-\LT@rows=\count401
-\c@LT@tables=\count402
-\c@LT@chunks=\count403
+\LTchunksize=\count403
+\LTcapwidth=\dimen175
+\LT@head=\box50
+\LT@firsthead=\box51
+\LT@foot=\box52
+\LT@lastfoot=\box53
+\LT@cols=\count404
+\LT@rows=\count405
+\c@LT@tables=\count406
+\c@LT@chunks=\count407
 \LT@p@ftn=\toks25
-) (/usr/local/texlive/2018/texmf-dist/tex/latex/booktabs/booktabs.sty
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/booktabs/booktabs.sty
 Package: booktabs 2016/04/27 v1.618033 publication quality tables
-\heavyrulewidth=\dimen175
-\lightrulewidth=\dimen176
-\cmidrulewidth=\dimen177
-\belowrulesep=\dimen178
-\belowbottomsep=\dimen179
-\aboverulesep=\dimen180
-\abovetopsep=\dimen181
-\cmidrulesep=\dimen182
-\cmidrulekern=\dimen183
-\defaultaddspace=\dimen184
-\@cmidla=\count404
-\@cmidlb=\count405
-\@aboverulesep=\dimen185
-\@belowrulesep=\dimen186
-\@thisruleclass=\count406
-\@lastruleclass=\count407
-\@thisrulewidth=\dimen187
+\heavyrulewidth=\dimen176
+\lightrulewidth=\dimen177
+\cmidrulewidth=\dimen178
+\belowrulesep=\dimen179
+\belowbottomsep=\dimen180
+\aboverulesep=\dimen181
+\abovetopsep=\dimen182
+\cmidrulesep=\dimen183
+\cmidrulekern=\dimen184
+\defaultaddspace=\dimen185
+\@cmidla=\count408
+\@cmidlb=\count409
+\@aboverulesep=\dimen186
+\@belowrulesep=\dimen187
+\@thisruleclass=\count410
+\@lastruleclass=\count411
+\@thisrulewidth=\dimen188
 ))
 Package biblatex Info: Trying to load language 'english'...
 Package biblatex Info: ... file 'english.lbx' found.
-(/usr/local/texlive/2018/texmf-dist/tex/latex/biblatex/lbx/english.lbx
-File: english.lbx 2018/03/04 v3.11 biblatex localization (PK/MW)
+(/usr/local/texlive/2019/texmf-dist/tex/latex/biblatex/lbx/english.lbx
+File: english.lbx 2018/11/02 v3.12 biblatex localization (PK/MW)
 )
-\@quotelevel=\count408
-\@quotereset=\count409
+\@quotelevel=\count412
+\@quotereset=\count413
 (./thesis.aux)
 \openout1 = `thesis.aux'.
 
@@ -1193,14 +1012,14 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 28.
 LaTeX Font Info:    ... okay on input line 28.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 28.
 LaTeX Font Info:    Try loading font information for TS1+cmr on input line 28.
-(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1cmr.fd
+(/usr/local/texlive/2019/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 28.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 28.
 LaTeX Font Info:    ... okay on input line 28.
 LaTeX Font Info:    Try loading font information for T1+ppl on input line 28.
-(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1ppl.fd
+(/usr/local/texlive/2019/texmf-dist/tex/latex/psnfss/t1ppl.fd
 File: t1ppl.fd 2001/06/04 font definitions for T1/ppl.
 )
 *geometry* driver: auto-detecting
@@ -1240,26 +1059,26 @@ File: t1ppl.fd 2001/06/04 font definitions for T1/ppl.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: longtable package is loaded.
-(/usr/local/texlive/2018/texmf-dist/tex/latex/caption/ltcaption.sty
-Package: ltcaption 2013/06/09 v1.4-94 longtable captions (AR)
+(/usr/local/texlive/2019/texmf-dist/tex/latex/caption/ltcaption.sty
+Package: ltcaption 2018/08/26 v1.4-95 longtable captions (AR)
 )
 Package caption Info: End \AtBeginDocument code.
-(/usr/local/texlive/2018/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+(/usr/local/texlive/2019/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count410
-\scratchdimen=\dimen188
-\scratchbox=\box49
-\nofMPsegments=\count411
-\nofMParguments=\count412
+\scratchcounter=\count414
+\scratchdimen=\dimen189
+\scratchbox=\box54
+\nofMPsegments=\count415
+\nofMParguments=\count416
 \everyMPshowfont=\toks26
-\MPscratchCnt=\count413
-\MPscratchDim=\dimen189
-\MPnumerator=\count414
-\makeMPintoPDFobject=\count415
+\MPscratchCnt=\count417
+\MPscratchDim=\dimen190
+\MPnumerator=\count418
+\makeMPintoPDFobject=\count419
 \everyMPtoPDFconversion=\toks27
-) (/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
-(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/grfext.sty
+(/usr/local/texlive/2019/texmf-dist/tex/latex/oberdiek/grfext.sty
 Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
 )
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
@@ -1268,7 +1087,7 @@ Package grfext Info: Graphics extension search list:
 (grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
 G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
-(/usr/local/texlive/2018/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+(/usr/local/texlive/2019/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
@@ -1282,37 +1101,37 @@ Package microtype Info: Using default expansion set `basictext'.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
-(/usr/local/texlive/2018/texmf-dist/tex/latex/microtype/mt-ppl.cfg
+(/usr/local/texlive/2019/texmf-dist/tex/latex/microtype/mt-ppl.cfg
 File: mt-ppl.cfg 2005/11/16 v1.6 microtype config. file: Palatino (RS)
 )
 Package biblatex Info: Input encoding 'utf8' detected.
 Package biblatex Info: Data encoding 'utf8' specified.
 (biblatex)             No need to reencode data.
-\openout4 = `thesis.bcf'.
+\openout3 = `thesis.bcf'.
 
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'thesis.bbl' found.
 (./thesis.bbl)
 Package biblatex Info: Reference section=0 on input line 28.
 Package biblatex Info: Reference segment=0 on input line 28.
-\AtBeginShipoutBox=\box50
+\AtBeginShipoutBox=\box55
 Package hyperref Info: Link coloring ON on input line 28.
-(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/local/texlive/2019/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
-(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
+(/usr/local/texlive/2019/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count416
+\c@section@level=\count420
 )
 LaTeX Info: Redefining \ref on input line 28.
 LaTeX Info: Redefining \pageref on input line 28.
 LaTeX Info: Redefining \nameref on input line 28.
 (./thesis.out) (./thesis.out)
-\@outlinefile=\write6
-\openout6 = `thesis.out'.
+\@outlinefile=\write5
+\openout5 = `thesis.out'.
 
 LaTeX Font Info:    Try loading font information for T1+fvs on input line 32.
-(/usr/local/texlive/2018/texmf-dist/tex/latex/bera/t1fvs.fd
+(/usr/local/texlive/2019/texmf-dist/tex/latex/bera/t1fvs.fd
 File: t1fvs.fd 2004/09/07 scalable font definitions for T1/fvs.
 )
 LaTeX Font Info:    Font shape `T1/fvs/m/n' will be
@@ -1338,7 +1157,7 @@ LaTeX Font Info:    Font shape `T1/fvs/m/n' will be
 (Font)              scaled to size 10.79993pt on input line 32.
 [1
 
-{/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./figur
+{/usr/local/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./figur
 es/crest.jpg>]
 LaTeX Font Info:    Font shape `T1/fvs/m/n' will be
 (Font)              scaled to size 21.59985pt on input line 34.
@@ -1348,23 +1167,23 @@ LaTeX Font Info:    Font shape `T1/fvs/b/n' will be
 LaTeX Font Info:    Font shape `T1/fvs/b/n' will be
 (Font)              scaled to size 9.85492pt on input line 3.
 LaTeX Font Info:    Try loading font information for OT1+ppl on input line 3.
-(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/ot1ppl.fd
+(/usr/local/texlive/2019/texmf-dist/tex/latex/psnfss/ot1ppl.fd
 File: ot1ppl.fd 2001/06/04 font definitions for OT1/ppl.
 )
 LaTeX Font Info:    Try loading font information for OML+zplm on input line 3.
-(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/omlzplm.fd
+(/usr/local/texlive/2019/texmf-dist/tex/latex/psnfss/omlzplm.fd
 File: omlzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OML/zplm.
 )
 LaTeX Font Info:    Try loading font information for OMS+zplm on input line 3.
-(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/omszplm.fd
+(/usr/local/texlive/2019/texmf-dist/tex/latex/psnfss/omszplm.fd
 File: omszplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMS/zplm.
 )
 LaTeX Font Info:    Try loading font information for OMX+zplm on input line 3.
-(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/omxzplm.fd
+(/usr/local/texlive/2019/texmf-dist/tex/latex/psnfss/omxzplm.fd
 File: omxzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMX/zplm.
 )
 LaTeX Font Info:    Try loading font information for OT1+zplm on input line 3.
-(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/ot1zplm.fd
+(/usr/local/texlive/2019/texmf-dist/tex/latex/psnfss/ot1zplm.fd
 File: ot1zplm.fd 2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
 )
 Package microtype Info: Loading generic protrusion settings for font family
@@ -1372,8 +1191,8 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 )
-\tf@toc=\write7
-\openout7 = `thesis.toc'.
+\tf@toc=\write6
+\openout6 = `thesis.toc'.
 
 [2] [0
 
@@ -1392,7 +1211,7 @@ LaTeX Font Info:    Font shape `T1/fvs/b/n' will be
 [2] [3] [4]
 Chapter 2.
 LaTeX Font Info:    Try loading font information for T1+fvm on input line 89.
-(/usr/local/texlive/2018/texmf-dist/tex/latex/bera/t1fvm.fd
+(/usr/local/texlive/2019/texmf-dist/tex/latex/bera/t1fvm.fd
 File: t1fvm.fd 2004/09/07 scalable font definitions for T1/fvm.
 )
 LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
@@ -1411,7 +1230,7 @@ Package pdftex.def Info: figures/workflow.png  used on input line 92.
 (pdftex.def)             Requested size: 426.79135pt x 247.56645pt.
 LaTeX Font Info:    Try loading font information for TS1+ppl on input line 104.
 
-(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/ts1ppl.fd
+(/usr/local/texlive/2019/texmf-dist/tex/latex/psnfss/ts1ppl.fd
 File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
 ) [6 <./figures/workflow.png>] [7] [8] [9] [10
 
@@ -1444,7 +1263,7 @@ Overfull \hbox (4.41089pt too wide) in paragraph at lines 287--304
 LaTeX Warning: Reference `common_video' on page 16 undefined on input line 331.
 
 
-<thesis_files/figure-latex/unnamed-chunk-9-1.pdf, id=308, 704.6325pt x 495.8525
+<thesis_files/figure-latex/unnamed-chunk-9-1.pdf, id=311, 704.6325pt x 495.8525
 pt>
 File: thesis_files/figure-latex/unnamed-chunk-9-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/unnamed-chunk-9-1.pdf>
@@ -1452,43 +1271,45 @@ Package pdftex.def Info: thesis_files/figure-latex/unnamed-chunk-9-1.pdf  used
 on input line 334.
 (pdftex.def)             Requested size: 426.79135pt x 300.33594pt.
 [16] [17 <./thesis_files/figure-latex/unnamed-chunk-9-1.pdf>]
-<thesis_files/figure-latex/unnamed-chunk-13-1.pdf, id=337, 712.6625pt x 495.852
+<thesis_files/figure-latex/unnamed-chunk-13-1.pdf, id=340, 712.6625pt x 495.852
 5pt>
 File: thesis_files/figure-latex/unnamed-chunk-13-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/unnamed-chunk-13-1.pdf>
 Package pdftex.def Info: thesis_files/figure-latex/unnamed-chunk-13-1.pdf  used
  on input line 386.
 (pdftex.def)             Requested size: 426.79135pt x 296.94633pt.
-[18]
-<thesis_files/figure-latex/unnamed-chunk-15-1.pdf, id=353, 710.655pt x 495.8525
+<thesis_files/figure-latex/unnamed-chunk-15-1.pdf, id=343, 710.655pt x 495.8525
 pt>
 File: thesis_files/figure-latex/unnamed-chunk-15-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/unnamed-chunk-15-1.pdf>
 Package pdftex.def Info: thesis_files/figure-latex/unnamed-chunk-15-1.pdf  used
  on input line 407.
 (pdftex.def)             Requested size: 426.79135pt x 297.79373pt.
-[19 <./thesis_files/figure-latex/unnamed-chunk-13-1.pdf>]
-<thesis_files/figure-latex/unnamed-chunk-17-1.pdf, id=367, 712.6625pt x 495.852
+[18
+
+]
+<thesis_files/figure-latex/unnamed-chunk-17-1.pdf, id=356, 712.6625pt x 495.852
 5pt>
 File: thesis_files/figure-latex/unnamed-chunk-17-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/unnamed-chunk-17-1.pdf>
 Package pdftex.def Info: thesis_files/figure-latex/unnamed-chunk-17-1.pdf  used
  on input line 437.
 (pdftex.def)             Requested size: 426.79135pt x 296.94633pt.
-[20 <./thesis_files/figure-latex/unnamed-chunk-15-1.pdf>]
-<thesis_files/figure-latex/unnamed-chunk-18-1.pdf, id=383, 706.64pt x 495.8525p
+[19 <./thesis_files/figure-latex/unnamed-chunk-13-1.pdf>] [20 <./thesis_files/f
+igure-latex/unnamed-chunk-15-1.pdf> <./thesis_files/figure-latex/unnamed-chunk-
+17-1.pdf>]
+<thesis_files/figure-latex/unnamed-chunk-18-1.pdf, id=390, 706.64pt x 495.8525p
 t>
 File: thesis_files/figure-latex/unnamed-chunk-18-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/unnamed-chunk-18-1.pdf>
 Package pdftex.def Info: thesis_files/figure-latex/unnamed-chunk-18-1.pdf  used
  on input line 445.
 (pdftex.def)             Requested size: 426.79135pt x 299.48097pt.
-[21 <./thesis_files/figure-latex/unnamed-chunk-17-1.pdf>] [22 <./thesis_files/f
-igure-latex/unnamed-chunk-18-1.pdf>]
-Appendix A.
-[23
+[21 <./thesis_files/figure-latex/unnamed-chunk-18-1.pdf>] [22
 
-] [24] [25]
+]
+Appendix A.
+[23] [24] [25]
 Overfull \vbox (320.66219pt too high) has occurred while \output is active []
 
 [26]
@@ -1526,28 +1347,28 @@ Package logreq Info: Writing requests to 'thesis.run.xml'.
 ### semi simple group (level 1) entered at line 102 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 27199 strings out of 492649
- 487350 string characters out of 6129622
- 1005309 words of memory out of 5000000
- 30411 multiletter control sequences out of 15000+600000
- 625212 words of font info for 225 fonts, out of 8000000 for 9000
+ 28497 strings out of 492616
+ 505507 string characters out of 6129481
+ 1017890 words of memory out of 5000000
+ 31751 multiletter control sequences out of 15000+600000
+ 627278 words of font info for 227 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 47i,12n,55p,10443b,16864s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc
-}</usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><
-/usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></
-usr/local/texlive/2018/texmf-dist/fonts/type1/public/mathpazo/fplmr.pfb></usr/l
-ocal/texlive/2018/texmf-dist/fonts/type1/public/mathpazo/fplmri.pfb></usr/local
-/texlive/2018/texmf-dist/fonts/type1/public/bera/fvmr8a.pfb></usr/local/texlive
-/2018/texmf-dist/fonts/type1/public/bera/fvsb8a.pfb></usr/local/texlive/2018/te
-xmf-dist/fonts/type1/public/bera/fvsr8a.pfb></usr/local/texlive/2018/texmf-dist
-/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/
-type1/urw/palatino/uplr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/u
+ 48i,12n,65p,1640b,17041s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2019/texmf-dist/fonts/enc/dvips/base/8r.enc
+}</usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><
+/usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></
+usr/local/texlive/2019/texmf-dist/fonts/type1/public/mathpazo/fplmr.pfb></usr/l
+ocal/texlive/2019/texmf-dist/fonts/type1/public/mathpazo/fplmri.pfb></usr/local
+/texlive/2019/texmf-dist/fonts/type1/public/bera/fvmr8a.pfb></usr/local/texlive
+/2019/texmf-dist/fonts/type1/public/bera/fvsb8a.pfb></usr/local/texlive/2019/te
+xmf-dist/fonts/type1/public/bera/fvsr8a.pfb></usr/local/texlive/2019/texmf-dist
+/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/texlive/2019/texmf-dist/fonts/
+type1/urw/palatino/uplr8a.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/u
 rw/palatino/uplri8a.pfb>
-Output written on thesis.pdf (34 pages, 575811 bytes).
+Output written on thesis.pdf (34 pages, 575010 bytes).
 PDF statistics:
- 544 PDF objects out of 1000 (max. 8388607)
- 472 compressed objects within 5 object streams
+ 545 PDF objects out of 1000 (max. 8388607)
+ 473 compressed objects within 5 object streams
  142 named destinations out of 1000 (max. 500000)
  32953 words of extra memory for PDF output out of 35830 (max. 10000000)
 

@@ -30,11 +30,11 @@ Decisions by courtroom Justices have been discussed broadly in the legal literat
 
 ## Motivation
 
-@tutton2018judicial attemped to utilize the AV technology, which is made available online by the High Court of Australia [@highcourtau]. They visually inspect of the videos to highlight when Justices depart from the expected norms of judicial conduct. To better understand the emotion status and therefore the departure of the emotional behaviour, more advanced technologies could be applied. An example is to use OpenFace [-@baltrusaitis2018openface] technology, which provides information on emotions exhibited by the Justices. This technique has been applied by @kovalchik2018going on professional tennis players during Grand Slam matches. That study demonstrated the potential to predict the outcome of High Court appeals based on Justices' demeanour utilising contemporary tools and emotion tagging techniques. 
+@tutton2018judicial attempted to utilize the AV technology, which is made available online by the High Court of Australia [@highcourtau]. They visually inspect of the videos to highlight when Justices depart from the expected norms of judicial conduct. To better understand the emotion status and therefore the departure of the emotional behaviour, more advanced technologies could be applied. An example is to use OpenFace [-@baltrusaitis2018openface] technology, which provides information on emotions exhibited by the Justices. This technique has been applied by @kovalchik2018going on professional tennis players during Grand Slam matches. That study demonstrated the potential to predict the outcome of High Court appeals based on Justices' demeanour utilising contemporary tools and emotion tagging techniques. 
  
 ## Literature review
 
-The literature sumary is divided into two parts: (1) current work in legal studies to understand the behaviour of the Justices and (2) existing facial recognition and emotion tagging technology.  
+The literature summary is divided into two parts: (1) current work in legal studies to understand the behaviour of the Justices and (2) existing facial recognition and emotion tagging technology.  
 
 ### Legal study from a behaviour perspective 
 
