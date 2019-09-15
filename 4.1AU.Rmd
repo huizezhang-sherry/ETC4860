@@ -112,6 +112,8 @@ most_common <- au_tidy %>%
   mutate(common = row_number()) %>% 
   mutate(most_common = as_factor(ifelse(common <=5, 1, 0))) 
 
+save(most_common, file = "raw_data/most_common.rda")
+
 most_common %>% 
   ggplot(aes(x =  fct_reorder(AU, avg_presence), y = avg_presence,
          fill = most_common, col = most_common)) + 
