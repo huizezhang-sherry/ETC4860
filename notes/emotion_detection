@@ -12,3 +12,6 @@ The problem in my proeject is more of an unsupervised learnig without labels - w
 
 "For AU occurence detection, we used Support Vector Machines (SVM), and for AU intensity estimation, we used Support Vector Regression (SVR)."" @https://www.cl.cam.ac.uk/~pr10/publications/fera15.pdf 
 - thus a high figure in intensity does not necessarily translate into presence
+
+
+use AU04 to detect confusion in the case of student's learning behaviour: https://www.intellimedia.ncsu.edu/wp-content/uploads/grafsgaard-aied-2011.pdf

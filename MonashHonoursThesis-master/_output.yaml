@@ -1,4 +1,6 @@
 bookdown::pdf_book:
+  includes:
+    in_header: preamble.tex
   template: monashthesis.tex
   fig_caption: yes
   fig_height: 3.8

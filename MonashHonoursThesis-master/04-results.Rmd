@@ -215,13 +215,13 @@ tidy(binomial_model_3) %>% kable(digits=2)
 
 ### General Intensity  plot
 
-In Ekman's 20002 FACS manual, the intensity of Action unit is defined based on five classes: Trace(1), Slight(2), Marked or pronounced(3), Severe or extreme(4) and Maximum(5). The boxplot of the intensity for all the judges across all the videos is presented in Figure \ref{fig:intensity}. Each bar-and-whisker represents the intensity of all the action units aggregated on time for a particular judge in a specific case. For example, the first bar-and-whisker in case Nauru_a is created using all the 17 action units of Edelman through out the elapsed time in Nauru_a case. In mathematics notation, the plotted statistics is $I_{ijtk}$ seperating by $i \text{and} j$. 
+In Ekman's 20002 FACS manual, the intensity of an action unit is defined based on five classes: Trace: 0-1, Slight: 1-2, Marked or pronounced: 2-3, Severe or extreme: 3-4 and Maximum: 4-5. 
 
-From the plot, most of the action units have low intensity (almost zero average and lower than one upper bounds) and this is expected because usually in the court room, judges are expected to behave neutral. From this plot, we can see that Judge Bell doesn't seem to have many intensive expressions as we can see from the relatively small amount of dots in the whisker.  
+The boxplot of the intensity for all the judges across all the videos is presented in Figure \ref{fig:intensity}. Each bar-and-whisker represents the intensity ($I_{ijtk}$) of all the action units aggregated on time for a particular judge $i$ in a specific case $j$. For example, the first bar-and-whisker in case Nauru_a is created using all the 17 action units of Edelman through out the elapsed time in Nauru_a case.
 
-To better look at the mean of each boxplot, we take a square root transformation and hide the outliners into the upper line. We can find that Judge Nettle seems to have higher average in all the four cases he appears: Nauru_a&b, Rinehart_a &b. 
+From the plot, we can see that most of the action units have low intensity score and this is expected because usually judges are expected to behave neutral in the court room. Thus a square root transformation is taken on the y axis for better visualisation effect. We can find that Judge Nettle seems to have higher average in all the four cases he appears: Nauru_a&b, Rinehart_a &b. 
 
-```{r fig.cap="Boxplot of intensity by judge and video\\label{fig:intensity}"}
+```{r fig.cap="General intensity score by judge and video\\label{fig:intensity}"}
 au_intensity_all <- au_tidy %>% 
   mutate(is_intense = ifelse(intensity >= 2, 1, 0))  
 
@@ -244,20 +244,35 @@ au_intensity_all %>%
 
 ``` 
  
-
-
 ### Mean intensity 
 
-We compute a similar mean intensity score for each of the action unit for each of the judge, the statsitics is $$I_{ik} = \frac{\sum_{jt}X_{ijtk}}{\sum_{j = 1}^JT_j}$$. Less uniform as the mean presence plot - different judge response intense at different action units. 
+Mean intensity score ($I_{ik}$) of each action unit for each of the judge is computed as $$I_{ik} = \frac{\sum_{jt}X_{ijtk}}{\sum_{j = 1}^JT_j}$$ and ploted in Figure \ref{fig:mean_intensity}. The five most intense action units for each judge are presented in Table \ref{tab:most_intense}. We can find that the common high intense action units includes 
 
 ```{r}
-au_intensity_all %>% 
+# include_graphics("figures/AU20-lip-stretcher.gif", dpi = 128)
+# include_graphics("figures/AU7-lid-tightener.gif")
+# include_graphics("figures/AU4-brow-lowerer.gif")
+```
+
+- AU20(Lip Stretcher)
+- AU07(Lid Tightener)
+- AU04(Brow Lowerer)
+
+
+
+It is interesting to notice that both AU07 and AU04 contribute to the emotion of confusion. This could help to understand that judges are more likely to express a stronger confusing expression than other emotions. 
+
+
+```{r fig.cap="Mean intensity score for each judge and action unit aggregating on videos.\\label{fig:mean_intensity}"}
+most_intense <- au_intensity_all %>% 
   filter(!AU == "AU28") %>%  # AU28 doesnt have intensity score
   group_by(judge_id, AU) %>% 
   summarise(mean_intensity = mean(intensity, na.rm = TRUE)) %>% 
   arrange(-mean_intensity) %>% 
   mutate(index = row_number(), 
-         most_intense = as.factor(ifelse(index <= 5, 1,0))) %>% 
+         most_intense = as.factor(ifelse(index <= 5, 1,0))) 
+
+most_intense%>% 
   ggplot(aes(x = fct_reorder(AU, mean_intensity), 
              y = mean_intensity, 
              fill = most_intense)) + 
@@ -266,59 +281,62 @@ au_intensity_all %>%
   coord_flip()
 ```  
  
-### Intensity plot for the most frequent action units
- 
-Apart from visualising the general intensity score for all the action unit, we are also interested in the intensity score of the most frequent units. The statistics being plotted is thus $I_{ij*k}$ with selected $i$ indicated by the `most_common` table above. Five most frequent action units for each of the six judges give 30 subplots and I arrange them into two seperate plots: Intensity for four major high frequent action units and Intensity for other high frequent action units. 
 
-From the first plot, some panels are empty for some judges. This is because the particular action unit is not the most frequent five for that particular judge. We can learn that AU02, although being commonly detected for all the judges, the intensity is quite low. 
-
-From the second plot, most of the intensity are low as the general intensity plot, while one action unit has drawn the attention: AU45 for Kiefel. The intensity in both case parkes and case Rinehart_a for Kiefel are relatively higher than others and this will be reflected through our model. 
 
 ```{r}
-most_common_subset <- most_common %>% 
-  filter(most_common == 1) %>% 
-  mutate(index = paste0(judge_id,AU))
+knitr::kable(most_intense %>% 
+  filter(most_intense ==1) %>% 
+  select(c(judge_id, AU)) %>% 
+  mutate(index = row_number()) %>% 
+  spread(judge_id, AU), caption = "\\label{tab:most_intense}The five most intense actio unit for each judge.")
+```
+ 
+ 
+### Intensity plot for the most frequent action units
+ 
+Apart from visualising the general intensity score for all the action units, I'm also interested in the intensity score of the most frequent action units. Figure \ref{fig:intensity_by_au} presents this. The statistics being plotted is $I_{ijtk}$ with $k$ including AU02, AU14, AU15 and AU20 as the most common four action units. From this plot, we can learn that AU02, although being commonly detected for all the judges, has low intensity score. 
 
-intensity_subset <- au_intensity_all %>% 
-  mutate(index = paste0(judge_id,AU)) %>% 
-  filter(index %in% most_common_subset$index) 
+
+```{r fig.cap = "Intensity score of the most frequent action units, seperating by judge and video ID.\\label{fig:intensity_by_au}"}
 
 # plot for four major high frequent action units
-intensity_subset %>% 
+au_intensity_all %>% 
+  left_join(au_meaning, by = c("AU" = "AU_number")) %>% 
+  mutate(AU = as.factor(AU)) %>% 
   filter(AU %in% c("AU02", "AU14", "AU15", "AU20")) %>% 
   ggplot(aes(x = video_id, y = intensity, col = video_id)) + 
   geom_boxplot() + 
-  facet_grid(rows = vars(AU),
+  facet_grid(rows = vars(AU_meaning),
              cols = vars(judge_id), scales = "free_x") + 
   theme(legend.position = "none",
         axis.text.x = element_text(angle = 30, hjust = 1))
 
 # plot for other high frequent action units
-intensity_subset_plot <- function(judge){
-  intensity_subset %>% 
-    filter(!AU %in% c("AU02", "AU14", "AU15", "AU20")) %>% 
-    filter(judge_id == judge) %>% 
-    ggplot(aes(x = video_id, y = intensity, col = video_id)) + 
-    geom_boxplot() + 
-    facet_grid(rows = vars(judge_id),
-               cols = vars(AU), scales = "free_x") + 
-    ylim(c(0,4)) + 
-    theme(legend.position = "none",
-          axis.text.x = element_text(angle = 30, hjust = 1))
-}
-
-  
-judge <- unique(intensity_subset$judge_id)
-subplot <- map(judge, intensity_subset_plot)  
-
-
-ggarrange(subplot[[1]], 
-          subplot[[2]],
-          subplot[[5]],
-          subplot[[6]],
-          subplot[[3]],
-          subplot[[4]],
-          ncol = 2, nrow = 3)
+# intensity_subset_plot <- function(judge){
+#   intensity_subset %>% 
+#     filter(!AU %in% c("AU02", "AU14", "AU15", "AU20")) %>% 
+#     filter(judge_id == judge) %>% 
+#     ggplot(aes(x = video_id, y = intensity, col = video_id)) + 
+#     geom_boxplot() + 
+#     facet_grid(rows = vars(judge_id),
+#                cols = vars(AU), scales = "free_x") + 
+#     ylim(c(0,4)) + 
+#     theme(legend.position = "none",
+#           axis.text.x = element_text(angle = 30, hjust = 1))
+# }
+# 
+#   
+# judge <- unique(intensity_subset$judge_id)
+# subplot <- map(judge, intensity_subset_plot)  
+# 
+# 
+# ggarrange(subplot[[1]], 
+#           subplot[[2]],
+#           subplot[[5]],
+#           subplot[[6]],
+#           subplot[[3]],
+#           subplot[[4]],
+#           ncol = 2, nrow = 3)
 
 ```
  
