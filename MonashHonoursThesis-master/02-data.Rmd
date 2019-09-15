@@ -12,7 +12,7 @@ The source data for this research project is the AV recordings publicly availabl
 
 The workflow for extracting numerical data from the videos can be found in Figure \ref{fig:workflow}. Youtube-dl [@youtube-dl] has been used to download videos from the High Court of Australia[@highcourtau] and the list of videos used in this research project is documented in the Appendix. Image frames are extracted from the videos for every minute via ffmpeg [@ffmpeg], resulting in 1021 image frames (252 frames from `Nauru` videos and 769 frames from other five videos). Taipan [@Taipan] is then used to find the x-y coordinates of the location of the Justices in each image frame. ImageMagick [@ImageMagick] is then used to crop the face of each Justice from each image frame that is taken from each video where three Justices present in `Nauru` videos and five Justices in other videos. The resulting 4601 cropped images (252 image frames from `Nauru` videos where three Justices are presented and 769 image frames from other videos where five justices are presented) are then sent to OpenFace [@baltrusaitis2018openface] to produce the variables for facial landmarking, head pose, eye gaze and facial action unit. This step is performed via the docker platform. The resulting outputs from OpenFace are individual comma-separated values (csv) files for each of the 4601 faces considered and processing is done in R to combine all the separate csv files into a final dataframe with appropriate index of `frame_id`, `judge_id` and `video_id`.
 
-```{r fig.cap="workflow \\label{fig:workflow}"}
+```{r fig.cap="data processing workflow \\label{fig:workflow}"}
 include_graphics("figures/workflow.png", dpi = 128)
 ```
 
@@ -31,7 +31,6 @@ I conduct some exploratory data analysis on one video: `Nauru_a` and find the 70
  - **Landmarking**: landmarking variables for face and eyes. Landmarking variables allows me to plot the face of the judge in a particular frame. More work could be done to explore the usefulness of landmarking variables. 
  
  - **Action Unit**: Action units are used to describe facial expressions. [this website](https://imotions.com/blog/facial-action-coding-system/) provides a good animation on each action unit. The action unit has intensity measures ending with `_c` and presence measures ending with `_r`. These variables will be the focus of my project and a reference study of using action units to detect human emotion by Kovalchik can be found [here](http://www.sloansportsconference.com/wp-content/uploads/2018/02/2005.pdf). 
- 
 
 ## Missing value imputation 
 
@@ -45,7 +44,21 @@ There is a data quality issue coming from the data I get from OpenFace. For some
 
 ## Data format
 
-XXX You need to spell out the format of the data, because this feeds into your notation in modeling
+In this project, we will make use of the action unit variables along with all the added indexs to analyse the face of the judge. In the wide format, apart from the first four index columns, each action unit has two columns with one for binary presence value and another for numeric intensity value. The Table \ref{tab:wide} presents the first five rows of the dataset with columns for the first action unit only. 
 
-\includegraphics[width=15cm]{figures/data_format.jpg}
+
+```{r}
+au_imputed_old %>% 
+        select(judge_id: frame_id, speaker, AU04_r, AU04_c) %>% 
+        head() %>% kable(caption = "\\label{tab:wide}")
+```
+
+The data can also be expressed in the long format with action unit being another index and presence and intensity being two columns. The Table \ref{tab:long} presents the first five rows of the data in the long format. 
+
+
+```{r}
+au_tidy %>% head() %>% kable(caption = "\\label{tab:long}")
+```
+
+
 

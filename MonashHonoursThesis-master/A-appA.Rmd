@@ -18,4 +18,12 @@ knit: "bookdown::render_book"
 
 Table: Details of videos processed.
 
+## List of the name of ction units
+
+```{r}
+au_meaning %>% 
+  filter(AU_number %in% unique(au_tidy$AU)) %>% 
+  select(AU_meaning) %>% 
+  kable()
+```
 

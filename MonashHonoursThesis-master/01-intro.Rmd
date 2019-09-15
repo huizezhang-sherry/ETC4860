@@ -20,6 +20,8 @@ library(broom)
 
 load("data/au_tidy.rda")
 load("data/most_common.rda")
+load("data/au_imputed_old.rda")
+load("data/au_meaning.rda")
 ```
 
 # Introduction {#ch:intro}

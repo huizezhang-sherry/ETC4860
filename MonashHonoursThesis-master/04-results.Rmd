@@ -12,7 +12,7 @@ Let $\mathbf{X}$ be a matrix of predictors, and $\mathbf{Y}$ variable in our cas
 - $X_1$ indicates `judge_id` with six categories $i = 1,2, \cdots, 6$
 - $X_2$ indicates `video_id` for each of the seven cases, $j = 1,2, \cdots, 7$
 - $X_3$ indicates action unit containing `r length(unique(au_tidy$AU))` possible facial expression.  
-- $X_4$ indicates the speaker, either the appellant or respondent, $l=1,2$
+- $X_4$ indicates `speaker`, either the appellant or respondent, $l=1,2$
 - $X_5$ indicates `frame_id` corresponding to time, $t = 1,2, \cdots, T_j$
 
 Note that $t$ could be considered a time variable, but because images are taken at 1 minute intervals, temporal dependence is unlikely to exist. Rather this should be considered an independent observation. 
@@ -44,8 +44,6 @@ The plot gives an overview of the presence of all the action unit across all the
 ```{r}
 # Because each judge has different numbers of frame available, mean is a better way ,than sum/ count,  to discribe the frequency of occurence. 
 
-load("data/au_tidy.rda")
-
 most_common <- au_tidy %>% 
   group_by(judge_id,AU) %>% 
   summarise(avg_presence = mean(presence)) %>% 
@@ -53,7 +51,9 @@ most_common <- au_tidy %>%
   group_by(judge_id) %>% 
   arrange(-avg_presence) %>% 
   mutate(common = row_number()) %>% 
-  mutate(most_common = as_factor(ifelse(common <=5, 1, 0))) 
+  mutate(most_common = as_factor(ifelse(common <=5, 1, 0))) %>% 
+  left_join(au_meaning, by = c("AU" = "AU_number")) %>% 
+  mutate(AU = as.factor(AU))
 
 most_common %>% 
   ggplot(aes(x =  fct_reorder(AU, avg_presence), y = avg_presence,
@@ -64,8 +64,6 @@ most_common %>%
   facet_wrap(vars(judge_id)) + 
   coord_flip() + 
   theme(legend.position = "none")
-
-#ggsave(filename = "images/most_common_au.png")
 ```
 
 The most frequent displayed action unit is highlighed in blue for each judge and summarised in the table below. 
@@ -74,7 +72,7 @@ The most frequent displayed action unit is highlighed in blue for each judge and
 # in a table format
 knitr::kable(most_common %>% 
   filter(most_common ==1) %>% 
-  select(-c(common, most_common, avg_presence)) %>% 
+  select(c(judge_id, AU)) %>% 
   mutate(index = row_number()) %>% 
   spread(judge_id, AU))
 ```
@@ -91,12 +89,13 @@ The table below summarises the judge specific high frequent action units.
 ```{r}
 other_highf <- most_common %>% 
   filter(most_common ==1) %>% 
-  select(-c(common, most_common, avg_presence)) %>% 
+  select(-c(common, most_common, avg_presence, Muscle)) %>% 
   filter(!AU %in% c("AU02", "AU20", "AU15", "AU14")) %>% 
   mutate(index = row_number()) %>% 
-  spread(index, AU) %>% 
-  rename(first = `1`, second = `2`) 
-  
+  select(-AU) %>% 
+  spread(index, AU_meaning) %>% 
+  rename(first = `1`, second = `2`, third = `3`) %>% 
+  mutate_all(funs(replace_na(., 0)))
 
 knitr::kable(other_highf)
 ```
@@ -122,15 +121,15 @@ au_model <- au_tidy %>%
   ungroup(judge_id) %>% 
   filter(AU %in% most_common_au$AU) %>% 
   mutate(judge_id = fct_relevel(judge_id, "Edelman"), 
-         AU = fct_other(AU, keep = c("AU15", "AU14", "AU02", "AU20", "AU01", "AU25")),
-         AU = fct_relevel(AU, "Other"))
+         AU = fct_relevel(AU, "AU25"))
 
 binomial_model <- glm(presence ~ (.-frame_id-speaker-intensity-video_id)^2, 
-           family = "binomial",  data = au_model) %>% 
+           family = binomial(link = "logit"),  data = au_model) %>% 
   step(trace = FALSE)
 
 glance(binomial_model) %>% kable()
-tidy(binomial_model) %>% kable(digits=2)
+tidy(binomial_model)[1:13,] %>% kable(digits=2)
+tidy(binomial_model)[13:nrow(tidy(binomial_model)),] %>% kable(digits=2)
 
 au_model_1_aug <- augment(binomial_model, au_model)
 #ggplot(au_model_1_aug, aes(x=.fitted, y=.resid)) + geom_point()
@@ -146,14 +145,17 @@ Apart from visualising the general presence score for all the action unit, we ar
 most_common_subset <- most_common %>% 
   filter(most_common == 1) %>% 
   mutate(index = paste0(judge_id,AU))
-
+  
 more_presence <- au_tidy %>% 
   group_by(judge_id,AU, video_id) %>% 
   summarise(avg_presence = mean(presence)) %>% 
   filter(avg_presence != "NaN") %>% 
   arrange(-avg_presence) %>% 
   mutate(index = paste0(judge_id,AU)) %>% 
-  filter(index %in% most_common_subset$index) 
+  filter(index %in% most_common_subset$index) %>% 
+  ungroup(judge_id) %>% 
+  left_join(au_meaning, by = c("AU" = "AU_number")) %>% 
+  mutate(AU = as.factor(AU))
   
 more_presence %>% 
   filter(AU %in% c("AU02", "AU14", "AU15", "AU20")) %>% 
@@ -161,7 +163,7 @@ more_presence %>%
              group = judge_id, col = judge_id)) + 
   geom_line() + 
   geom_point() + 
-  facet_wrap(vars(AU),scales = "free_x") + 
+  facet_wrap(vars(AU_meaning),scales = "free_x") + 
   theme(axis.text.x = element_text(angle = 30, hjust = 1))
 
 ```
@@ -173,11 +175,13 @@ $$P_{ijk} = \mu + \alpha_i + \beta_j +\delta_k + (\alpha\beta)_{ij}+(\alpha\delt
 ```{r}
 
 binomial_model_2 <- glm(presence ~ (.-frame_id-speaker-intensity)^2, 
-           family = "binomial",  data = au_model) %>% 
+           family = binomial(link = "logit"),  data = au_model) %>% 
   step(trace = FALSE)
 
 glance(binomial_model_2) %>% kable()
-tidy(binomial_model_2) %>% kable(digits=2)
+
+tidy(binomial_model_2)[1:19,] %>% kable(digits=2)
+tidy(binomial_model_2)[19:nrow(tidy(binomial_model_2)),] %>% kable(digits=2)
 
 #au_model_2_aug <- augment(binomial_model_2, au_model)
 
@@ -211,13 +215,13 @@ tidy(binomial_model_3) %>% kable(digits=2)
 
 ### General Intensity  plot
 
-The plot gives an overview of the action unit intensity of all the judges across all the trails. Each bar-and-whisker represents the intensity of all the action units aggregated on time for a particular judge in a specific case. For example, the first bar-and-whisker in case Nauru_a is created using all the 17 action units of Edelman through out the elapsed time in Nauru_a case. In mathematics notation, the plotted statistics is $I_{ijtk}$ seperating by $i \text{and} j$. 
+In Ekman's 20002 FACS manual, the intensity of Action unit is defined based on five classes: Trace(1), Slight(2), Marked or pronounced(3), Severe or extreme(4) and Maximum(5). The boxplot of the intensity for all the judges across all the videos is presented in Figure \ref{fig:intensity}. Each bar-and-whisker represents the intensity of all the action units aggregated on time for a particular judge in a specific case. For example, the first bar-and-whisker in case Nauru_a is created using all the 17 action units of Edelman through out the elapsed time in Nauru_a case. In mathematics notation, the plotted statistics is $I_{ijtk}$ seperating by $i \text{and} j$. 
 
-In Ekman's 20002 FACS manual, the intensity of Action unit is defined based on five classes: Trace(1), Slight(2), Marked or pronounced(3), Severe or extreme(4) and Maximum(5). From the plot, most of the action units have low intensity (almost zero average and lower than one upper bounds) and this is expected because usually in the court room, judges are expected to behave neutral. From this plot, we can see that Judge Bell doesn't seem to have many intensive expressions as we can see from the relatively small amount of dots in the whisker.  
+From the plot, most of the action units have low intensity (almost zero average and lower than one upper bounds) and this is expected because usually in the court room, judges are expected to behave neutral. From this plot, we can see that Judge Bell doesn't seem to have many intensive expressions as we can see from the relatively small amount of dots in the whisker.  
 
 To better look at the mean of each boxplot, we take a square root transformation and hide the outliners into the upper line. We can find that Judge Nettle seems to have higher average in all the four cases he appears: Nauru_a&b, Rinehart_a &b. 
 
-```{r}
+```{r fig.cap="Boxplot of intensity by judge and video\\label{fig:intensity}"}
 au_intensity_all <- au_tidy %>% 
   mutate(is_intense = ifelse(intensity >= 2, 1, 0))  
 
@@ -228,7 +232,6 @@ au_intensity_all <- au_tidy %>%
 #  facet_wrap(vars(video_id), scales = "free_x") + 
 #  theme(axis.text.x = element_text(angle = 30, hjust = 1), 
 #        legend.position = "none")
-#ggsave("images/I_overall.png",width = 7, height = 5)  
 
 # the plot magnify the box
 au_intensity_all %>% 
@@ -238,7 +241,6 @@ au_intensity_all %>%
   theme(axis.text.x = element_text(angle = 30, hjust = 1), 
         legend.position = "none") + 
   scale_y_sqrt()
-#ggsave("images/I_sqrt.png",width = 7, height = 5)
 
 ``` 
  

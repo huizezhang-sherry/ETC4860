@@ -59,11 +59,11 @@ People have attempted to predict the decisions of the Justices for centuries. \t
 It is important for judges to maintain a standard of behaviour in court that is consistent with the status of judicial office and does not diminish the confidence of litigants in particular, and the public in general, in the ability, the integrity, the impartiality and the independence of the judge.
 \end{quote}
 
-This impartiality should be clear in judicial demeanour \autocite{tutton2018judicial,goffman1956nature}. Paul Ekman \autocite{ekman1991invited} suggests that from a behavioural perspective, some facial and vocal inflections are often unbeknown to the speakers themselves . Many scholars have exploited this in studying the court outcomes through the language and words used by the Justices in the court \autocite{Shullman2004illusion} and vocal and facial characteristics of the Justices \autocite{chen2018justice}.
+This impartiality should be clear in judicial demeanour \autocites{tutton2018judicial}{goffman1956nature}. Paul Ekman \autocite{ekman1991invited} suggests that from a behavioural perspective, some facial and vocal inflections are often unbeknown to the speakers themselves . Many scholars have exploited this in studying the court outcomes through the language and words used by the Justices in the court \autocite{Shullman2004illusion} and vocal and facial characteristics of the Justices \autocite{chen2018justice}.
 
 There are also existing works to understand the emotion of the Justices from a linguistic perspective and suggest some factors that could be useful to indicate how the Justices' vote and thus the court outcome. These factors include the use of pleasant and unpleasant language by \textcite{black2011emotions}, the frequency and content of Justices' questions by \textcite{Shullman2004illusion} and \textcite{johnson2009inquiring}. \textcite{epstein2010inferring} use a regression analysis with the number of questions asked by the Justices used to infer the winning party in a case.
 
-Other scholars \autocite{chen2016perceived,chen2017covering,schubert1992observing} have studied the emotion of the Justices from vocal characteristics and suggest that these vocal characteristics, especially perceived masculinity is strongly correlated with the court outcomes. \textcite{dietrich2019emotional} uses a multilevel logistic model with random effects to suggest that subconscious vocal inflections contain information that is not available from text.
+Other scholars \autocites{chen2016perceived}{chen2017covering}{schubert1992observing} have studied the emotion of the Justices from vocal characteristics and suggest that these vocal characteristics, especially perceived masculinity is strongly correlated with the court outcomes. \textcite{dietrich2019emotional} uses a multilevel logistic model with random effects to suggest that subconscious vocal inflections contain information that is not available from text.
 
 Chen \autocite*{chen2018justice} employed both vocal and facial characteristics to predict the court votes using Supreme Court data from 1946-2014. The audio clips are first preprocessed to get the Mel-frequency Cepstral Coefficients (MFCC) and then applied to a random forest model. The image features are extracted using a Histogram of Oriented Gradients (HOG) method. More specific facial recognition software is readily available to extract human facial features and these facial recognition technologies have not yet been applied to the legal proceedings.
 
@@ -74,7 +74,7 @@ Most of the literature is conducted using the U.S. Supreme Court Database and le
 
 An anatomical analysis of facial action \autocite{ekman1976measuring} led to the Facial Action Code (FAC) \autocite{ekman1978} and has been further revised by \textcite{ekman2002facial}. This decomposition of facial muscles is widely used in scientific research. It was applied in competitive sports, specifically tennis by \textcite{kovalchik2018going} who found that the emotion of professional tennis players will have an impact on their performance.
 
-There have been many algorithms created for facial detection and the analysis of their performance when applied to images have been the focus of events like the Audio/Visual Emotion Challenge \autocite{schuller2012avec,schuller2011avec} and Emotion Recognition In The Wild Challenge and Workshop \autocite{dhall2013emotion,kahou2013combining}.
+There have been many algorithms created for facial detection and the analysis of their performance when applied to images have been the focus of events like the Audio/Visual Emotion Challenge \autocites{schuller2012avec}{schuller2011avec} and Emotion Recognition In The Wild Challenge and Workshop \autocites{dhall2013emotion}{kahou2013combining}.
 
 Facial recognition software has also been implemented by DeepFace \autocite{taigman2014deepface} from Facebook, and FaceNet \autocite{schroff2015facenet} from Google. OpenFace \autocite{baltrusaitis2018openface} is the first open-sourced face recognition software that provides facial expression detection, including facial landmarking, head pose estimation, eye gaze tracking and facial action unit detection. Along with its previous version (\textcite{baltruvsaitis2016openface}), the OpenFace toolkit has been used in different social research studies including depression classification (\textcite{yang2016decision} and \textcite{nasir2016multimodal}).
 
@@ -89,7 +89,7 @@ The source data for this research project is the AV recordings publicly availabl
 The workflow for extracting numerical data from the videos can be found in Figure \ref{fig:workflow}. Youtube-dl \autocite{youtube-dl} has been used to download videos from the High Court of Australia\autocite{highcourtau} and the list of videos used in this research project is documented in the Appendix. Image frames are extracted from the videos for every minute via ffmpeg \autocite{ffmpeg}, resulting in 1021 image frames (252 frames from \texttt{Nauru} videos and 769 frames from other five videos). Taipan \autocite{Taipan} is then used to find the x-y coordinates of the location of the Justices in each image frame. ImageMagick \autocite{ImageMagick} is then used to crop the face of each Justice from each image frame that is taken from each video where three Justices present in \texttt{Nauru} videos and five Justices in other videos. The resulting 4601 cropped images (252 image frames from \texttt{Nauru} videos where three Justices are presented and 769 image frames from other videos where five justices are presented) are then sent to OpenFace \autocite{baltrusaitis2018openface} to produce the variables for facial landmarking, head pose, eye gaze and facial action unit. This step is performed via the docker platform. The resulting outputs from OpenFace are individual comma-separated values (csv) files for each of the 4601 faces considered and processing is done in R to combine all the separate csv files into a final dataframe with appropriate index of \texttt{frame\_id}, \texttt{judge\_id} and \texttt{video\_id}.
 
 \begin{figure}
-\includegraphics[width=1\linewidth]{figures/workflow} \caption{workflow \label{fig:workflow}}\label{fig:unnamed-chunk-1}
+\includegraphics[width=1\linewidth]{figures/workflow} \caption{data processing workflow \label{fig:workflow}}\label{fig:unnamed-chunk-1}
 \end{figure}
 
 \hypertarget{variable-description}{%
@@ -127,9 +127,55 @@ There is a data quality issue coming from the data I get from OpenFace. For some
 \hypertarget{data-format}{%
 \section{Data format}\label{data-format}}
 
-XXX You need to spell out the format of the data, because this feeds into your notation in modeling
+In this project, we will make use of the action unit variables along with all the added indexs to analyse the face of the judge. In the wide format, apart from the first four index columns, each action unit has two columns with one for binary presence value and another for numeric intensity value. The Table \ref{tab:wide} presents the first five rows of the dataset with columns for the first action unit only.
 
-\includegraphics[width=15cm]{figures/data_format.jpg}
+\begin{table}[t]
+
+\caption{\label{tab:unnamed-chunk-2}\label{tab:wide}}
+\centering
+\begin{tabular}{l|l|r|l|r|r}
+\hline
+judge\_id & video\_id & frame\_id & speaker & AU04\_r & AU04\_c\\
+\hline
+Bell & McKell & 1 & Appellent & 0.69 & 0\\
+\hline
+Bell & McKell & 2 & Appellent & 0.69 & 1\\
+\hline
+Bell & McKell & 3 & Appellent & 0.69 & 0\\
+\hline
+Bell & McKell & 4 & Appellent & 0.73 & 1\\
+\hline
+Bell & McKell & 5 & Appellent & 0.76 & 0\\
+\hline
+Bell & McKell & 6 & Appellent & 0.80 & 0\\
+\hline
+\end{tabular}
+\end{table}
+
+The data can also be expressed in the long format with action unit being another index and presence and intensity being two columns. The Table \ref{tab:long} presents the first five rows of the data in the long format.
+
+\begin{table}[t]
+
+\caption{\label{tab:unnamed-chunk-3}\label{tab:long}}
+\centering
+\begin{tabular}{l|l|r|l|l|r|r}
+\hline
+judge\_id & video\_id & frame\_id & speaker & AU & presence & intensity\\
+\hline
+Bell & McKell & 1 & Appellent & AU01 & 1 & 0.00\\
+\hline
+Bell & McKell & 1 & Appellent & AU02 & 1 & 0.00\\
+\hline
+Bell & McKell & 1 & Appellent & AU04 & 1 & 0.69\\
+\hline
+Bell & McKell & 1 & Appellent & AU05 & 0 & 0.63\\
+\hline
+Bell & McKell & 1 & Appellent & AU06 & 0 & 0.00\\
+\hline
+Bell & McKell & 1 & Appellent & AU07 & 1 & 1.54\\
+\hline
+\end{tabular}
+\end{table}
 
 \hypertarget{methods}{%
 \chapter{Methods}\label{methods}}
@@ -153,7 +199,7 @@ Let \(\mathbf{X}\) be a matrix of predictors, and \(\mathbf{Y}\) variable in our
 \item
   \(X_3\) indicates action unit containing 18 possible facial expression.\\
 \item
-  \(X_4\) indicates the speaker, either the appellant or respondent, \(l=1,2\)
+  \(X_4\) indicates \texttt{speaker}, either the appellant or respondent, \(l=1,2\)
 \item
   \(X_5\) indicates \texttt{frame\_id} corresponding to time, \(t = 1,2, \cdots, T_j\)
 \end{itemize}
@@ -176,7 +222,7 @@ Also, let \(P_{jitkl}\) represent the response variable presence, and \(I_{jitkl
 
 The plot gives an overview of the presence of all the action unit across all the judge. The statistic each bar represents is the average presence of an action unit for a judge throughout all the video time and it can be written as \[P_{ik} = \frac{\sum_{jt}X_{ijtk}}{\sum_{j = 1}^JT_j}\]. The order of Action unit on the y axis is ranked by the average presence of all the judge, which can be re-presented as \(P_{* K}\).
 
-\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-2-1}
+\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-4-1}
 
 The most frequent displayed action unit is highlighed in blue for each judge and summarised in the table below.
 
@@ -214,19 +260,19 @@ The table below summarises the judge specific high frequent action units.
 
 \begin{tabular}{l|l|l|l}
 \hline
-judge\_id & first & second & 3\\
+judge\_id & first & second & third\\
 \hline
-Bell & AU25 & AU09 & AU01\\
+Bell & AU25: Lips part & AU09: Nose wrinkler & AU01: Inner brow raiser\\
 \hline
-Edelman & AU01 & AU23 & NA\\
+Edelman & AU01: Inner brow raiser & AU23: Lip tightener & NA\\
 \hline
-Gageler & AU05 & NA & NA\\
+Gageler & AU05: Upper lid raiser & NA & NA\\
 \hline
-Keane & AU07 & NA & NA\\
+Keane & AU07: Lid tightener & NA & NA\\
 \hline
-Kiefel & AU25 & AU45 & NA\\
+Kiefel & AU25: Lips part & AU45: Blink & NA\\
 \hline
-Nettle & AU01 & AU07 & NA\\
+Nettle & AU01: Inner brow raiser & AU07: Lid tightener & NA\\
 \hline
 \end{tabular}
 
@@ -251,89 +297,97 @@ null.deviance & df.null & logLik & AIC & BIC & deviance & df.residual\\
 \hline
 term & estimate & std.error & statistic & p.value\\
 \hline
-(Intercept) & -0.80 & 0.07 & -11.85 & 0.00\\
+(Intercept) & -0.80 & 0.07 & -11.80 & 0.00\\
 \hline
-judge\_idBell & 0.99 & 0.12 & 8.16 & 0.00\\
+judge\_idBell & 2.46 & 0.15 & 16.16 & 0.00\\
 \hline
-judge\_idGageler & 1.53 & 0.10 & 15.05 & 0.00\\
+judge\_idGageler & 0.57 & 0.10 & 5.80 & 0.00\\
 \hline
-judge\_idKeane & 0.96 & 0.12 & 7.92 & 0.00\\
+judge\_idKeane & -0.88 & 0.15 & -5.77 & 0.00\\
 \hline
-judge\_idKiefel & 0.02 & 0.11 & 0.22 & 0.83\\
+judge\_idKiefel & 2.84 & 0.15 & 19.08 & 0.00\\
 \hline
-judge\_idNettle & -0.33 & 0.12 & -2.86 & 0.00\\
+judge\_idNettle & 0.54 & 0.11 & 5.17 & 0.00\\
 \hline
-AUAU01 & 1.16 & 0.09 & 12.54 & 0.00\\
+AUAU01 & 1.16 & 0.09 & 12.49 & 0.00\\
 \hline
-AUAU02 & 3.58 & 0.15 & 23.95 & 0.00\\
+AUAU02 & 3.57 & 0.15 & 23.93 & 0.00\\
 \hline
-AUAU14 & 0.42 & 0.09 & 4.56 & 0.00\\
+AUAU05 & 0.00 & 0.10 & -0.05 & 0.96\\
 \hline
-AUAU15 & 0.56 & 0.09 & 6.06 & 0.00\\
+AUAU14 & 0.42 & 0.09 & 4.51 & 0.00\\
 \hline
-AUAU20 & 1.91 & 0.10 & 19.29 & 0.00\\
+AUAU15 & 0.56 & 0.09 & 6.01 & 0.00\\
 \hline
-AUAU25 & 0.00 & 0.10 & 0.05 & 0.96\\
+AUAU20 & 1.91 & 0.10 & 19.25 & 0.00\\
 \hline
-judge\_idBell:AUAU01 & -0.57 & 0.17 & -3.27 & 0.00\\
+judge\_idBell:AUAU01 & -2.04 & 0.20 & -10.36 & 0.00\\
 \hline
-judge\_idGageler:AUAU01 & -2.70 & 0.14 & -18.95 & 0.00\\
+\end{tabular}
+
+\begin{tabular}{l|r|r|r|r}
 \hline
-judge\_idKeane:AUAU01 & -3.29 & 0.20 & -16.08 & 0.00\\
+term & estimate & std.error & statistic & p.value\\
 \hline
-judge\_idKiefel:AUAU01 & -0.38 & 0.16 & -2.43 & 0.02\\
+judge\_idBell:AUAU01 & -2.04 & 0.20 & -10.36 & 0.00\\
 \hline
-judge\_idNettle:AUAU01 & 0.77 & 0.16 & 4.88 & 0.00\\
+judge\_idGageler:AUAU01 & -1.74 & 0.14 & -12.42 & 0.00\\
 \hline
-judge\_idBell:AUAU02 & -2.66 & 0.21 & -12.44 & 0.00\\
+judge\_idKeane:AUAU01 & -1.45 & 0.23 & -6.45 & 0.00\\
 \hline
-judge\_idGageler:AUAU02 & -2.47 & 0.20 & -12.60 & 0.00\\
+judge\_idKiefel:AUAU01 & -3.20 & 0.18 & -17.48 & 0.00\\
 \hline
-judge\_idKeane:AUAU02 & -2.46 & 0.22 & -11.37 & 0.00\\
+judge\_idNettle:AUAU01 & -0.11 & 0.15 & -0.70 & 0.48\\
 \hline
-judge\_idKiefel:AUAU02 & 0.26 & 0.27 & 0.98 & 0.33\\
+judge\_idBell:AUAU02 & -4.13 & 0.23 & -17.74 & 0.00\\
 \hline
-judge\_idNettle:AUAU02 & 2.88 & 0.60 & 4.77 & 0.00\\
+judge\_idGageler:AUAU02 & -1.52 & 0.19 & -7.79 & 0.00\\
 \hline
-judge\_idBell:AUAU14 & -2.47 & 0.20 & -12.33 & 0.00\\
+judge\_idKeane:AUAU02 & -0.62 & 0.24 & -2.64 & 0.01\\
 \hline
-judge\_idGageler:AUAU14 & -0.63 & 0.14 & -4.51 & 0.00\\
+judge\_idKiefel:AUAU02 & -2.56 & 0.29 & -8.94 & 0.00\\
 \hline
-judge\_idKeane:AUAU14 & 0.36 & 0.18 & 2.03 & 0.04\\
+judge\_idNettle:AUAU02 & 2.01 & 0.60 & 3.33 & 0.00\\
 \hline
-judge\_idKiefel:AUAU14 & 0.42 & 0.16 & 2.72 & 0.01\\
+judge\_idBell:AUAU05 & -1.47 & 0.19 & -7.57 & 0.00\\
 \hline
-judge\_idNettle:AUAU14 & 0.56 & 0.15 & 3.63 & 0.00\\
+judge\_idGageler:AUAU05 & 0.96 & 0.14 & 6.77 & 0.00\\
 \hline
-judge\_idBell:AUAU15 & 1.01 & 0.20 & 5.16 & 0.00\\
+judge\_idKeane:AUAU05 & 1.84 & 0.19 & 9.43 & 0.00\\
 \hline
-judge\_idGageler:AUAU15 & -0.79 & 0.14 & -5.61 & 0.00\\
+judge\_idKiefel:AUAU05 & -2.82 & 0.19 & -15.05 & 0.00\\
 \hline
-judge\_idKeane:AUAU15 & 1.26 & 0.20 & 6.14 & 0.00\\
+judge\_idNettle:AUAU05 & -0.88 & 0.16 & -5.60 & 0.00\\
 \hline
-judge\_idKiefel:AUAU15 & 0.26 & 0.15 & 1.66 & 0.10\\
+judge\_idBell:AUAU14 & -3.94 & 0.22 & -17.87 & 0.00\\
 \hline
-judge\_idNettle:AUAU15 & 1.70 & 0.16 & 10.52 & 0.00\\
+judge\_idGageler:AUAU14 & 0.32 & 0.14 & 2.34 & 0.02\\
 \hline
-judge\_idBell:AUAU20 & -1.33 & 0.18 & -7.50 & 0.00\\
+judge\_idKeane:AUAU14 & 2.20 & 0.20 & 11.01 & 0.00\\
 \hline
-judge\_idGageler:AUAU20 & -2.61 & 0.14 & -18.20 & 0.00\\
+judge\_idKiefel:AUAU14 & -2.40 & 0.18 & -13.11 & 0.00\\
 \hline
-judge\_idKeane:AUAU20 & 0.38 & 0.23 & 1.63 & 0.10\\
+judge\_idNettle:AUAU14 & -0.31 & 0.15 & -2.14 & 0.03\\
 \hline
-judge\_idKiefel:AUAU20 & 0.63 & 0.18 & 3.47 & 0.00\\
+judge\_idBell:AUAU15 & -0.46 & 0.22 & -2.12 & 0.03\\
 \hline
-judge\_idNettle:AUAU20 & 0.31 & 0.16 & 1.88 & 0.06\\
+judge\_idGageler:AUAU15 & 0.17 & 0.14 & 1.24 & 0.22\\
 \hline
-judge\_idBell:AUAU25 & 1.47 & 0.19 & 7.57 & 0.00\\
+judge\_idKeane:AUAU15 & 3.10 & 0.23 & 13.76 & 0.00\\
 \hline
-judge\_idGageler:AUAU25 & -0.96 & 0.14 & -6.77 & 0.00\\
+judge\_idKiefel:AUAU15 & -2.56 & 0.18 & -14.03 & 0.00\\
 \hline
-judge\_idKeane:AUAU25 & -1.84 & 0.19 & -9.43 & 0.00\\
+judge\_idNettle:AUAU15 & 0.82 & 0.15 & 5.32 & 0.00\\
 \hline
-judge\_idKiefel:AUAU25 & 2.82 & 0.19 & 15.05 & 0.00\\
+judge\_idBell:AUAU20 & -2.80 & 0.20 & -14.01 & 0.00\\
 \hline
-judge\_idNettle:AUAU25 & 0.88 & 0.16 & 5.60 & 0.00\\
+judge\_idGageler:AUAU20 & -1.66 & 0.14 & -11.71 & 0.00\\
+\hline
+judge\_idKeane:AUAU20 & 2.22 & 0.25 & 8.86 & 0.00\\
+\hline
+judge\_idKiefel:AUAU20 & -2.19 & 0.20 & -10.73 & 0.00\\
+\hline
+judge\_idNettle:AUAU20 & -0.57 & 0.16 & -3.58 & 0.00\\
 \hline
 \end{tabular}
 
@@ -342,7 +396,7 @@ judge\_idNettle:AUAU25 & 0.88 & 0.16 & 5.60 & 0.00\\
 
 Apart from visualising the general presence score for all the action unit, we are also interested in the break down statistics by video. The statistics being plotted is thus \[P_{ijk} = \frac{\sum_{t}X_{ijtk}}{T_j}\] with selected most common four action units. From this plot, it is interesting to know that almost all the judges have more frequent action units on the face for case OKS. This maybe related to the nature of the case\ldots{}
 
-\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-6-1}
+\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-8-1}
 
 \hypertarget{model-fit-1}{%
 \subsection{Model fit}\label{model-fit-1}}
@@ -361,41 +415,49 @@ null.deviance & df.null & logLik & AIC & BIC & deviance & df.residual\\
 \hline
 term & estimate & std.error & statistic & p.value\\
 \hline
-(Intercept) & -0.72 & 0.13 & -5.55 & 0.00\\
+(Intercept) & -0.31 & 0.12 & -2.50 & 0.01\\
 \hline
-judge\_idBell & 0.80 & 0.15 & 5.30 & 0.00\\
+judge\_idBell & 2.46 & 0.18 & 13.83 & 0.00\\
 \hline
-judge\_idGageler & 1.31 & 0.14 & 9.65 & 0.00\\
+judge\_idGageler & 0.28 & 0.13 & 2.13 & 0.03\\
 \hline
-judge\_idKeane & 1.19 & 0.15 & 7.87 & 0.00\\
+judge\_idKeane & -0.52 & 0.18 & -2.92 & 0.00\\
 \hline
-judge\_idKiefel & -0.02 & 0.13 & -0.14 & 0.89\\
+judge\_idKiefel & 2.96 & 0.16 & 18.22 & 0.00\\
 \hline
-judge\_idNettle & -0.66 & 0.15 & -4.36 & 0.00\\
+judge\_idNettle & 0.12 & 0.14 & 0.86 & 0.39\\
 \hline
-video\_idNauru\_b & -0.14 & 0.19 & -0.73 & 0.46\\
+video\_idNauru\_b & -0.13 & 0.17 & -0.72 & 0.47\\
 \hline
-video\_idMcKell & -0.03 & 0.17 & -0.17 & 0.87\\
+video\_idMcKell & -0.99 & 0.18 & -5.58 & 0.00\\
 \hline
-video\_idOKS & -2.20 & 0.29 & -7.67 & 0.00\\
+video\_idOKS & -1.54 & 0.28 & -5.44 & 0.00\\
 \hline
-video\_idParkes & -0.13 & 0.16 & -0.79 & 0.43\\
+video\_idParkes & -0.66 & 0.17 & -3.99 & 0.00\\
 \hline
-video\_idRinehart\_a & 0.06 & 0.14 & 0.46 & 0.65\\
+video\_idRinehart\_a & -0.52 & 0.13 & -3.86 & 0.00\\
 \hline
-video\_idRinehart\_b & -0.17 & 0.26 & -0.64 & 0.52\\
+video\_idRinehart\_b & 0.07 & 0.26 & 0.29 & 0.77\\
 \hline
-AUAU01 & 1.53 & 0.17 & 9.03 & 0.00\\
+AUAU01 & 1.12 & 0.16 & 6.82 & 0.00\\
 \hline
-AUAU02 & 3.66 & 0.26 & 13.95 & 0.00\\
+AUAU02 & 3.24 & 0.26 & 12.53 & 0.00\\
 \hline
-AUAU14 & 0.51 & 0.16 & 3.10 & 0.00\\
+AUAU05 & -0.41 & 0.17 & -2.49 & 0.01\\
 \hline
-AUAU15 & 0.17 & 0.17 & 1.03 & 0.30\\
+AUAU14 & 0.10 & 0.16 & 0.62 & 0.53\\
 \hline
-AUAU20 & 1.88 & 0.17 & 10.87 & 0.00\\
+AUAU15 & -0.24 & 0.16 & -1.49 & 0.14\\
 \hline
-AUAU25 & 0.41 & 0.17 & 2.49 & 0.01\\
+AUAU20 & 1.47 & 0.17 & 8.75 & 0.00\\
+\hline
+judge\_idGageler:video\_idNauru\_b & -0.04 & 0.15 & -0.25 & 0.81\\
+\hline
+\end{tabular}
+
+\begin{tabular}{l|r|r|r|r}
+\hline
+term & estimate & std.error & statistic & p.value\\
 \hline
 judge\_idGageler:video\_idNauru\_b & -0.04 & 0.15 & -0.25 & 0.81\\
 \hline
@@ -423,142 +485,142 @@ judge\_idGageler:video\_idRinehart\_b & -0.16 & 0.22 & -0.76 & 0.45\\
 \hline
 judge\_idNettle:video\_idRinehart\_b & 1.23 & 0.24 & 5.07 & 0.00\\
 \hline
-judge\_idBell:AUAU01 & -0.46 & 0.20 & -2.35 & 0.02\\
+judge\_idBell:AUAU01 & -2.12 & 0.22 & -9.66 & 0.00\\
 \hline
-judge\_idGageler:AUAU01 & -2.78 & 0.15 & -18.70 & 0.00\\
+judge\_idGageler:AUAU01 & -1.75 & 0.15 & -11.96 & 0.00\\
 \hline
-judge\_idKeane:AUAU01 & -3.36 & 0.23 & -14.88 & 0.00\\
+judge\_idKeane:AUAU01 & -1.65 & 0.25 & -6.72 & 0.00\\
 \hline
-judge\_idKiefel:AUAU01 & -0.36 & 0.16 & -2.20 & 0.03\\
+judge\_idKiefel:AUAU01 & -3.34 & 0.19 & -17.49 & 0.00\\
 \hline
-judge\_idNettle:AUAU01 & 0.71 & 0.17 & 4.24 & 0.00\\
+judge\_idNettle:AUAU01 & -0.07 & 0.16 & -0.45 & 0.65\\
 \hline
-judge\_idBell:AUAU02 & -2.92 & 0.25 & -11.57 & 0.00\\
+judge\_idBell:AUAU02 & -4.57 & 0.27 & -16.93 & 0.00\\
 \hline
-judge\_idGageler:AUAU02 & -2.46 & 0.20 & -12.14 & 0.00\\
+judge\_idGageler:AUAU02 & -1.43 & 0.20 & -7.12 & 0.00\\
 \hline
-judge\_idKeane:AUAU02 & -2.70 & 0.25 & -10.70 & 0.00\\
+judge\_idKeane:AUAU02 & -0.99 & 0.27 & -3.65 & 0.00\\
 \hline
-judge\_idKiefel:AUAU02 & 0.31 & 0.28 & 1.13 & 0.26\\
+judge\_idKiefel:AUAU02 & -2.67 & 0.30 & -9.02 & 0.00\\
 \hline
-judge\_idNettle:AUAU02 & 3.01 & 0.61 & 4.94 & 0.00\\
+judge\_idNettle:AUAU02 & 2.23 & 0.61 & 3.66 & 0.00\\
 \hline
-judge\_idBell:AUAU14 & -2.81 & 0.23 & -12.48 & 0.00\\
+judge\_idBell:AUAU05 & -1.66 & 0.22 & -7.61 & 0.00\\
 \hline
-judge\_idGageler:AUAU14 & -0.70 & 0.15 & -4.79 & 0.00\\
+judge\_idGageler:AUAU05 & 1.03 & 0.15 & 7.00 & 0.00\\
 \hline
-judge\_idKeane:AUAU14 & 0.18 & 0.20 & 0.93 & 0.35\\
+judge\_idKeane:AUAU05 & 1.71 & 0.22 & 7.82 & 0.00\\
 \hline
-judge\_idKiefel:AUAU14 & 0.59 & 0.16 & 3.61 & 0.00\\
+judge\_idKiefel:AUAU05 & -2.98 & 0.20 & -15.27 & 0.00\\
 \hline
-judge\_idNettle:AUAU14 & 0.64 & 0.16 & 3.90 & 0.00\\
+judge\_idNettle:AUAU05 & -0.78 & 0.17 & -4.71 & 0.00\\
 \hline
-judge\_idBell:AUAU15 & 0.79 & 0.22 & 3.63 & 0.00\\
+judge\_idBell:AUAU14 & -4.47 & 0.25 & -18.10 & 0.00\\
 \hline
-judge\_idGageler:AUAU15 & -0.75 & 0.15 & -5.15 & 0.00\\
+judge\_idGageler:AUAU14 & 0.33 & 0.14 & 2.32 & 0.02\\
 \hline
-judge\_idKeane:AUAU15 & 0.94 & 0.22 & 4.23 & 0.00\\
+judge\_idKeane:AUAU14 & 1.89 & 0.22 & 8.60 & 0.00\\
 \hline
-judge\_idKiefel:AUAU15 & 0.34 & 0.16 & 2.10 & 0.04\\
+judge\_idKiefel:AUAU14 & -2.39 & 0.19 & -12.53 & 0.00\\
 \hline
-judge\_idNettle:AUAU15 & 1.94 & 0.17 & 11.31 & 0.00\\
+judge\_idNettle:AUAU14 & -0.14 & 0.16 & -0.92 & 0.36\\
 \hline
-judge\_idBell:AUAU20 & -1.58 & 0.21 & -7.68 & 0.00\\
+judge\_idBell:AUAU15 & -0.87 & 0.24 & -3.66 & 0.00\\
 \hline
-judge\_idGageler:AUAU20 & -2.68 & 0.15 & -17.88 & 0.00\\
+judge\_idGageler:AUAU15 & 0.27 & 0.14 & 1.91 & 0.06\\
 \hline
-judge\_idKeane:AUAU20 & 0.04 & 0.25 & 0.17 & 0.87\\
+judge\_idKeane:AUAU15 & 2.66 & 0.25 & 10.84 & 0.00\\
 \hline
-judge\_idKiefel:AUAU20 & 0.80 & 0.19 & 4.28 & 0.00\\
+judge\_idKiefel:AUAU15 & -2.64 & 0.19 & -13.81 & 0.00\\
 \hline
-judge\_idNettle:AUAU20 & 0.50 & 0.17 & 2.86 & 0.00\\
+judge\_idNettle:AUAU15 & 1.15 & 0.16 & 6.99 & 0.00\\
 \hline
-judge\_idBell:AUAU25 & 1.66 & 0.22 & 7.61 & 0.00\\
+judge\_idBell:AUAU20 & -3.24 & 0.23 & -14.25 & 0.00\\
 \hline
-judge\_idGageler:AUAU25 & -1.03 & 0.15 & -7.00 & 0.00\\
+judge\_idGageler:AUAU20 & -1.65 & 0.15 & -11.18 & 0.00\\
 \hline
-judge\_idKeane:AUAU25 & -1.71 & 0.22 & -7.82 & 0.00\\
+judge\_idKeane:AUAU20 & 1.75 & 0.27 & 6.48 & 0.00\\
 \hline
-judge\_idKiefel:AUAU25 & 2.98 & 0.20 & 15.27 & 0.00\\
+judge\_idKiefel:AUAU20 & -2.18 & 0.21 & -10.30 & 0.00\\
 \hline
-judge\_idNettle:AUAU25 & 0.78 & 0.17 & 4.71 & 0.00\\
+judge\_idNettle:AUAU20 & -0.29 & 0.17 & -1.70 & 0.09\\
 \hline
-video\_idNauru\_b:AUAU01 & -0.20 & 0.23 & -0.86 & 0.39\\
+video\_idNauru\_b:AUAU01 & -0.21 & 0.22 & -0.95 & 0.34\\
 \hline
-video\_idMcKell:AUAU01 & -1.18 & 0.22 & -5.32 & 0.00\\
+video\_idMcKell:AUAU01 & -0.22 & 0.22 & -0.96 & 0.33\\
 \hline
-video\_idOKS:AUAU01 & 1.60 & 0.32 & 5.06 & 0.00\\
+video\_idOKS:AUAU01 & 0.94 & 0.32 & 2.93 & 0.00\\
 \hline
-video\_idParkes:AUAU01 & -0.29 & 0.21 & -1.38 & 0.17\\
+video\_idParkes:AUAU01 & 0.25 & 0.21 & 1.16 & 0.25\\
 \hline
-video\_idRinehart\_a:AUAU01 & -0.44 & 0.17 & -2.53 & 0.01\\
+video\_idRinehart\_a:AUAU01 & 0.14 & 0.17 & 0.87 & 0.38\\
 \hline
-video\_idRinehart\_b:AUAU01 & -0.14 & 0.34 & -0.42 & 0.68\\
+video\_idRinehart\_b:AUAU01 & -0.38 & 0.33 & -1.14 & 0.25\\
 \hline
-video\_idNauru\_b:AUAU02 & 0.35 & 0.36 & 0.95 & 0.34\\
+video\_idNauru\_b:AUAU02 & 0.34 & 0.36 & 0.94 & 0.35\\
 \hline
-video\_idMcKell:AUAU02 & -0.43 & 0.30 & -1.43 & 0.15\\
+video\_idMcKell:AUAU02 & 0.53 & 0.30 & 1.77 & 0.08\\
 \hline
-video\_idOKS:AUAU02 & 1.54 & 0.40 & 3.81 & 0.00\\
+video\_idOKS:AUAU02 & 0.88 & 0.41 & 2.13 & 0.03\\
 \hline
-video\_idParkes:AUAU02 & 0.35 & 0.31 & 1.12 & 0.26\\
+video\_idParkes:AUAU02 & 0.88 & 0.31 & 2.81 & 0.01\\
 \hline
-video\_idRinehart\_a:AUAU02 & -0.41 & 0.26 & -1.56 & 0.12\\
+video\_idRinehart\_a:AUAU02 & 0.17 & 0.26 & 0.66 & 0.51\\
 \hline
-video\_idRinehart\_b:AUAU02 & 0.29 & 0.51 & 0.57 & 0.57\\
+video\_idRinehart\_b:AUAU02 & 0.05 & 0.51 & 0.10 & 0.92\\
 \hline
-video\_idNauru\_b:AUAU14 & 0.25 & 0.22 & 1.12 & 0.26\\
+video\_idNauru\_b:AUAU05 & -0.01 & 0.22 & -0.04 & 0.96\\
 \hline
-video\_idMcKell:AUAU14 & -0.07 & 0.21 & -0.33 & 0.74\\
+video\_idMcKell:AUAU05 & 0.96 & 0.22 & 4.38 & 0.00\\
 \hline
-video\_idOKS:AUAU14 & 1.72 & 0.31 & 5.58 & 0.00\\
+video\_idOKS:AUAU05 & -0.66 & 0.33 & -2.01 & 0.04\\
 \hline
-video\_idParkes:AUAU14 & -0.10 & 0.20 & -0.49 & 0.62\\
+video\_idParkes:AUAU05 & 0.53 & 0.21 & 2.50 & 0.01\\
 \hline
-video\_idRinehart\_a:AUAU14 & -0.36 & 0.17 & -2.11 & 0.03\\
+video\_idRinehart\_a:AUAU05 & 0.58 & 0.17 & 3.44 & 0.00\\
 \hline
-video\_idRinehart\_b:AUAU14 & 0.06 & 0.32 & 0.20 & 0.84\\
+video\_idRinehart\_b:AUAU05 & -0.24 & 0.32 & -0.76 & 0.45\\
 \hline
-video\_idNauru\_b:AUAU15 & 0.72 & 0.23 & 3.15 & 0.00\\
+video\_idNauru\_b:AUAU14 & 0.24 & 0.21 & 1.14 & 0.26\\
 \hline
-video\_idMcKell:AUAU15 & 0.30 & 0.22 & 1.39 & 0.16\\
+video\_idMcKell:AUAU14 & 0.89 & 0.22 & 4.13 & 0.00\\
 \hline
-video\_idOKS:AUAU15 & 3.22 & 0.37 & 8.67 & 0.00\\
+video\_idOKS:AUAU14 & 1.06 & 0.32 & 3.31 & 0.00\\
 \hline
-video\_idParkes:AUAU15 & 0.60 & 0.21 & 2.90 & 0.00\\
+video\_idParkes:AUAU14 & 0.43 & 0.21 & 2.08 & 0.04\\
 \hline
-video\_idRinehart\_a:AUAU15 & 0.10 & 0.17 & 0.60 & 0.55\\
+video\_idRinehart\_a:AUAU14 & 0.22 & 0.16 & 1.40 & 0.16\\
 \hline
-video\_idRinehart\_b:AUAU15 & 0.44 & 0.33 & 1.31 & 0.19\\
+video\_idRinehart\_b:AUAU14 & -0.18 & 0.31 & -0.57 & 0.57\\
 \hline
-video\_idNauru\_b:AUAU20 & 0.18 & 0.23 & 0.77 & 0.44\\
+video\_idNauru\_b:AUAU15 & 0.71 & 0.22 & 3.25 & 0.00\\
 \hline
-video\_idMcKell:AUAU20 & 0.37 & 0.22 & 1.63 & 0.10\\
+video\_idMcKell:AUAU15 & 1.27 & 0.22 & 5.79 & 0.00\\
 \hline
-video\_idOKS:AUAU20 & 2.49 & 0.36 & 7.00 & 0.00\\
+video\_idOKS:AUAU15 & 2.56 & 0.37 & 6.87 & 0.00\\
 \hline
-video\_idParkes:AUAU20 & 0.05 & 0.22 & 0.23 & 0.82\\
+video\_idParkes:AUAU15 & 1.14 & 0.21 & 5.38 & 0.00\\
 \hline
-video\_idRinehart\_a:AUAU20 & -0.27 & 0.17 & -1.54 & 0.12\\
+video\_idRinehart\_a:AUAU15 & 0.68 & 0.16 & 4.18 & 0.00\\
 \hline
-video\_idRinehart\_b:AUAU20 & -0.28 & 0.33 & -0.83 & 0.41\\
+video\_idRinehart\_b:AUAU15 & 0.19 & 0.33 & 0.59 & 0.56\\
 \hline
-video\_idNauru\_b:AUAU25 & 0.01 & 0.22 & 0.04 & 0.96\\
+video\_idNauru\_b:AUAU20 & 0.17 & 0.22 & 0.77 & 0.44\\
 \hline
-video\_idMcKell:AUAU25 & -0.96 & 0.22 & -4.38 & 0.00\\
+video\_idMcKell:AUAU20 & 1.33 & 0.23 & 5.88 & 0.00\\
 \hline
-video\_idOKS:AUAU25 & 0.66 & 0.33 & 2.01 & 0.04\\
+video\_idOKS:AUAU20 & 1.83 & 0.36 & 5.08 & 0.00\\
 \hline
-video\_idParkes:AUAU25 & -0.53 & 0.21 & -2.50 & 0.01\\
+video\_idParkes:AUAU20 & 0.58 & 0.22 & 2.62 & 0.01\\
 \hline
-video\_idRinehart\_a:AUAU25 & -0.58 & 0.17 & -3.44 & 0.00\\
+video\_idRinehart\_a:AUAU20 & 0.31 & 0.17 & 1.86 & 0.06\\
 \hline
-video\_idRinehart\_b:AUAU25 & 0.24 & 0.32 & 0.76 & 0.45\\
+video\_idRinehart\_b:AUAU20 & -0.52 & 0.33 & -1.57 & 0.12\\
 \hline
 \end{tabular}
 
-\hypertarget{appellant-vs.-respondent}{%
-\subsection{Appellant vs.~Respondent}\label{appellant-vs.-respondent}}
+\hypertarget{appellant-vs.respondent}{%
+\subsection{Appellant vs.~Respondent}\label{appellant-vs.respondent}}
 
 \begin{tabular}{r|r|r|r|r|r|r}
 \hline
@@ -572,175 +634,175 @@ null.deviance & df.null & logLik & AIC & BIC & deviance & df.residual\\
 \hline
 term & estimate & std.error & statistic & p.value\\
 \hline
-(Intercept) & -0.69 & 0.16 & -4.42 & 0.00\\
+(Intercept) & -0.22 & 0.15 & -1.48 & 0.14\\
 \hline
-judge\_idBell & 0.80 & 0.15 & 5.32 & 0.00\\
+judge\_idBell & 2.46 & 0.18 & 13.84 & 0.00\\
 \hline
-judge\_idGageler & 1.31 & 0.14 & 9.62 & 0.00\\
+judge\_idGageler & 0.28 & 0.13 & 2.08 & 0.04\\
 \hline
-judge\_idKeane & 1.20 & 0.15 & 7.89 & 0.00\\
+judge\_idKeane & -0.52 & 0.18 & -2.90 & 0.00\\
 \hline
-judge\_idKiefel & -0.02 & 0.13 & -0.14 & 0.89\\
+judge\_idKiefel & 2.97 & 0.16 & 18.23 & 0.00\\
 \hline
-judge\_idNettle & -0.66 & 0.15 & -4.35 & 0.00\\
+judge\_idNettle & 0.12 & 0.14 & 0.86 & 0.39\\
 \hline
-AUAU01 & 1.49 & 0.21 & 7.18 & 0.00\\
+AUAU01 & 1.02 & 0.20 & 5.09 & 0.00\\
 \hline
-AUAU02 & 3.28 & 0.30 & 11.10 & 0.00\\
+AUAU02 & 2.81 & 0.29 & 9.66 & 0.00\\
 \hline
-AUAU14 & 0.47 & 0.20 & 2.33 & 0.02\\
+AUAU05 & -0.47 & 0.20 & -2.34 & 0.02\\
 \hline
-AUAU15 & 0.02 & 0.20 & 0.11 & 0.91\\
+AUAU14 & 0.00 & 0.19 & -0.01 & 0.99\\
 \hline
-AUAU20 & 1.55 & 0.21 & 7.42 & 0.00\\
+AUAU15 & -0.45 & 0.20 & -2.28 & 0.02\\
 \hline
-AUAU25 & 0.47 & 0.20 & 2.34 & 0.02\\
+AUAU20 & 1.08 & 0.20 & 5.35 & 0.00\\
 \hline
-video\_idNauru\_b & -0.19 & 0.21 & -0.88 & 0.38\\
+video\_idNauru\_b & -0.20 & 0.20 & -1.00 & 0.32\\
 \hline
-video\_idMcKell & 0.05 & 0.21 & 0.22 & 0.82\\
+video\_idMcKell & -0.95 & 0.21 & -4.59 & 0.00\\
 \hline
-video\_idOKS & -1.81 & 0.34 & -5.36 & 0.00\\
+video\_idOKS & -1.69 & 0.36 & -4.73 & 0.00\\
 \hline
-video\_idParkes & -0.37 & 0.21 & -1.77 & 0.08\\
+video\_idParkes & -0.71 & 0.22 & -3.30 & 0.00\\
 \hline
-video\_idRinehart\_a & -0.10 & 0.18 & -0.53 & 0.60\\
+video\_idRinehart\_a & -0.71 & 0.18 & -4.01 & 0.00\\
 \hline
-video\_idRinehart\_b & -0.07 & 0.31 & -0.22 & 0.83\\
+video\_idRinehart\_b & 0.16 & 0.31 & 0.53 & 0.59\\
 \hline
-speakerRespondent & -0.08 & 0.21 & -0.35 & 0.72\\
+speakerRespondent & -0.22 & 0.19 & -1.15 & 0.25\\
 \hline
-judge\_idBell:AUAU01 & -0.47 & 0.20 & -2.38 & 0.02\\
+judge\_idBell:AUAU01 & -2.13 & 0.22 & -9.67 & 0.00\\
 \hline
-judge\_idGageler:AUAU01 & -2.78 & 0.15 & -18.72 & 0.00\\
+judge\_idGageler:AUAU01 & -1.75 & 0.15 & -11.96 & 0.00\\
 \hline
-judge\_idKeane:AUAU01 & -3.37 & 0.23 & -14.88 & 0.00\\
+judge\_idKeane:AUAU01 & -1.65 & 0.25 & -6.72 & 0.00\\
 \hline
-judge\_idKiefel:AUAU01 & -0.36 & 0.16 & -2.20 & 0.03\\
+judge\_idKiefel:AUAU01 & -3.34 & 0.19 & -17.50 & 0.00\\
 \hline
-judge\_idNettle:AUAU01 & 0.71 & 0.17 & 4.23 & 0.00\\
+judge\_idNettle:AUAU01 & -0.07 & 0.16 & -0.46 & 0.65\\
 \hline
-judge\_idBell:AUAU02 & -2.93 & 0.25 & -11.60 & 0.00\\
+judge\_idBell:AUAU02 & -4.59 & 0.27 & -16.94 & 0.00\\
 \hline
-judge\_idGageler:AUAU02 & -2.47 & 0.20 & -12.16 & 0.00\\
+judge\_idGageler:AUAU02 & -1.44 & 0.20 & -7.13 & 0.00\\
 \hline
-judge\_idKeane:AUAU02 & -2.71 & 0.25 & -10.71 & 0.00\\
+judge\_idKeane:AUAU02 & -1.00 & 0.27 & -3.67 & 0.00\\
 \hline
-judge\_idKiefel:AUAU02 & 0.31 & 0.28 & 1.12 & 0.26\\
+judge\_idKiefel:AUAU02 & -2.67 & 0.30 & -9.03 & 0.00\\
 \hline
-judge\_idNettle:AUAU02 & 3.02 & 0.61 & 4.94 & 0.00\\
+judge\_idNettle:AUAU02 & 2.23 & 0.61 & 3.67 & 0.00\\
 \hline
-judge\_idBell:AUAU14 & -2.83 & 0.23 & -12.51 & 0.00\\
+judge\_idBell:AUAU05 & -1.66 & 0.22 & -7.59 & 0.00\\
 \hline
-judge\_idGageler:AUAU14 & -0.70 & 0.15 & -4.80 & 0.00\\
+judge\_idGageler:AUAU05 & 1.03 & 0.15 & 7.01 & 0.00\\
 \hline
-judge\_idKeane:AUAU14 & 0.19 & 0.20 & 0.94 & 0.35\\
+judge\_idKeane:AUAU05 & 1.71 & 0.22 & 7.83 & 0.00\\
 \hline
-judge\_idKiefel:AUAU14 & 0.59 & 0.16 & 3.62 & 0.00\\
+judge\_idKiefel:AUAU05 & -2.98 & 0.20 & -15.27 & 0.00\\
 \hline
-judge\_idNettle:AUAU14 & 0.64 & 0.16 & 3.90 & 0.00\\
+judge\_idNettle:AUAU05 & -0.78 & 0.17 & -4.71 & 0.00\\
 \hline
-judge\_idBell:AUAU15 & 0.79 & 0.22 & 3.63 & 0.00\\
+judge\_idBell:AUAU14 & -4.49 & 0.25 & -18.12 & 0.00\\
 \hline
-judge\_idGageler:AUAU15 & -0.76 & 0.15 & -5.16 & 0.00\\
+judge\_idGageler:AUAU14 & 0.33 & 0.14 & 2.33 & 0.02\\
 \hline
-judge\_idKeane:AUAU15 & 0.95 & 0.22 & 4.25 & 0.00\\
+judge\_idKeane:AUAU14 & 1.90 & 0.22 & 8.62 & 0.00\\
 \hline
-judge\_idKiefel:AUAU15 & 0.34 & 0.16 & 2.10 & 0.04\\
+judge\_idKiefel:AUAU14 & -2.39 & 0.19 & -12.52 & 0.00\\
 \hline
-judge\_idNettle:AUAU15 & 1.94 & 0.17 & 11.32 & 0.00\\
+judge\_idNettle:AUAU14 & -0.14 & 0.16 & -0.92 & 0.36\\
 \hline
-judge\_idBell:AUAU20 & -1.59 & 0.21 & -7.71 & 0.00\\
+judge\_idBell:AUAU15 & -0.87 & 0.24 & -3.65 & 0.00\\
 \hline
-judge\_idGageler:AUAU20 & -2.70 & 0.15 & -17.92 & 0.00\\
+judge\_idGageler:AUAU15 & 0.28 & 0.14 & 1.92 & 0.05\\
 \hline
-judge\_idKeane:AUAU20 & 0.04 & 0.25 & 0.14 & 0.89\\
+judge\_idKeane:AUAU15 & 2.67 & 0.25 & 10.86 & 0.00\\
 \hline
-judge\_idKiefel:AUAU20 & 0.80 & 0.19 & 4.25 & 0.00\\
+judge\_idKiefel:AUAU15 & -2.64 & 0.19 & -13.80 & 0.00\\
 \hline
-judge\_idNettle:AUAU20 & 0.50 & 0.17 & 2.86 & 0.00\\
+judge\_idNettle:AUAU15 & 1.16 & 0.17 & 7.01 & 0.00\\
 \hline
-judge\_idBell:AUAU25 & 1.66 & 0.22 & 7.59 & 0.00\\
+judge\_idBell:AUAU20 & -3.25 & 0.23 & -14.27 & 0.00\\
 \hline
-judge\_idGageler:AUAU25 & -1.03 & 0.15 & -7.01 & 0.00\\
+judge\_idGageler:AUAU20 & -1.66 & 0.15 & -11.23 & 0.00\\
 \hline
-judge\_idKeane:AUAU25 & -1.71 & 0.22 & -7.83 & 0.00\\
+judge\_idKeane:AUAU20 & 1.75 & 0.27 & 6.47 & 0.00\\
 \hline
-judge\_idKiefel:AUAU25 & 2.98 & 0.20 & 15.27 & 0.00\\
+judge\_idKiefel:AUAU20 & -2.19 & 0.21 & -10.32 & 0.00\\
 \hline
-judge\_idNettle:AUAU25 & 0.78 & 0.17 & 4.71 & 0.00\\
+judge\_idNettle:AUAU20 & -0.29 & 0.17 & -1.69 & 0.09\\
 \hline
-AUAU01:video\_idNauru\_b & -0.12 & 0.27 & -0.45 & 0.66\\
+AUAU01:video\_idNauru\_b & -0.11 & 0.25 & -0.43 & 0.67\\
 \hline
-AUAU02:video\_idNauru\_b & 0.90 & 0.42 & 2.16 & 0.03\\
+AUAU02:video\_idNauru\_b & 0.91 & 0.41 & 2.23 & 0.03\\
 \hline
-AUAU14:video\_idNauru\_b & 0.22 & 0.26 & 0.83 & 0.40\\
+AUAU05:video\_idNauru\_b & 0.01 & 0.26 & 0.04 & 0.97\\
 \hline
-AUAU15:video\_idNauru\_b & 0.82 & 0.27 & 3.09 & 0.00\\
+AUAU14:video\_idNauru\_b & 0.23 & 0.25 & 0.92 & 0.36\\
 \hline
-AUAU20:video\_idNauru\_b & 0.47 & 0.27 & 1.77 & 0.08\\
+AUAU15:video\_idNauru\_b & 0.83 & 0.25 & 3.29 & 0.00\\
 \hline
-AUAU25:video\_idNauru\_b & -0.01 & 0.26 & -0.04 & 0.97\\
+AUAU20:video\_idNauru\_b & 0.48 & 0.26 & 1.89 & 0.06\\
 \hline
-AUAU01:video\_idMcKell & -1.17 & 0.27 & -4.34 & 0.00\\
+AUAU01:video\_idMcKell & -0.18 & 0.27 & -0.66 & 0.51\\
 \hline
-AUAU02:video\_idMcKell & -0.19 & 0.34 & -0.54 & 0.59\\
+AUAU02:video\_idMcKell & 0.81 & 0.35 & 2.34 & 0.02\\
 \hline
-AUAU14:video\_idMcKell & -0.13 & 0.26 & -0.51 & 0.61\\
+AUAU05:video\_idMcKell & 1.00 & 0.27 & 3.72 & 0.00\\
 \hline
-AUAU15:video\_idMcKell & 0.41 & 0.27 & 1.54 & 0.12\\
+AUAU14:video\_idMcKell & 0.86 & 0.26 & 3.28 & 0.00\\
 \hline
-AUAU20:video\_idMcKell & 0.71 & 0.28 & 2.56 & 0.01\\
+AUAU15:video\_idMcKell & 1.41 & 0.27 & 5.27 & 0.00\\
 \hline
-AUAU25:video\_idMcKell & -1.00 & 0.27 & -3.72 & 0.00\\
+AUAU20:video\_idMcKell & 1.70 & 0.28 & 6.18 & 0.00\\
 \hline
-AUAU01:video\_idOKS & 1.10 & 0.41 & 2.67 & 0.01\\
+AUAU01:video\_idOKS & 0.99 & 0.43 & 2.27 & 0.02\\
 \hline
-AUAU02:video\_idOKS & 1.00 & 0.48 & 2.10 & 0.04\\
+AUAU02:video\_idOKS & 0.89 & 0.50 & 1.78 & 0.08\\
 \hline
-AUAU14:video\_idOKS & 1.42 & 0.40 & 3.54 & 0.00\\
+AUAU05:video\_idOKS & -0.11 & 0.43 & -0.26 & 0.79\\
 \hline
-AUAU15:video\_idOKS & 3.14 & 0.50 & 6.28 & 0.00\\
+AUAU14:video\_idOKS & 1.31 & 0.43 & 3.06 & 0.00\\
 \hline
-AUAU20:video\_idOKS & 2.46 & 0.47 & 5.18 & 0.00\\
+AUAU15:video\_idOKS & 3.03 & 0.52 & 5.87 & 0.00\\
 \hline
-AUAU25:video\_idOKS & 0.11 & 0.43 & 0.26 & 0.79\\
+AUAU20:video\_idOKS & 2.34 & 0.49 & 4.75 & 0.00\\
 \hline
-AUAU01:video\_idParkes & 0.02 & 0.28 & 0.07 & 0.94\\
+AUAU01:video\_idParkes & 0.36 & 0.28 & 1.28 & 0.20\\
 \hline
-AUAU02:video\_idParkes & 1.19 & 0.39 & 3.05 & 0.00\\
+AUAU02:video\_idParkes & 1.53 & 0.39 & 3.88 & 0.00\\
 \hline
-AUAU14:video\_idParkes & 0.39 & 0.27 & 1.42 & 0.16\\
+AUAU05:video\_idParkes & 0.34 & 0.29 & 1.20 & 0.23\\
 \hline
-AUAU15:video\_idParkes & 0.69 & 0.28 & 2.50 & 0.01\\
+AUAU14:video\_idParkes & 0.73 & 0.28 & 2.60 & 0.01\\
 \hline
-AUAU20:video\_idParkes & 0.53 & 0.29 & 1.85 & 0.06\\
+AUAU15:video\_idParkes & 1.04 & 0.28 & 3.65 & 0.00\\
 \hline
-AUAU25:video\_idParkes & -0.34 & 0.29 & -1.20 & 0.23\\
+AUAU20:video\_idParkes & 0.88 & 0.29 & 2.98 & 0.00\\
 \hline
-AUAU01:video\_idRinehart\_a & -0.20 & 0.24 & -0.83 & 0.40\\
+AUAU01:video\_idRinehart\_a & 0.41 & 0.23 & 1.77 & 0.08\\
 \hline
-AUAU02:video\_idRinehart\_a & 0.04 & 0.34 & 0.12 & 0.91\\
+AUAU02:video\_idRinehart\_a & 0.65 & 0.34 & 1.93 & 0.05\\
 \hline
-AUAU14:video\_idRinehart\_a & -0.03 & 0.23 & -0.14 & 0.89\\
+AUAU05:video\_idRinehart\_a & 0.61 & 0.24 & 2.58 & 0.01\\
 \hline
-AUAU15:video\_idRinehart\_a & 0.36 & 0.24 & 1.51 & 0.13\\
+AUAU14:video\_idRinehart\_a & 0.58 & 0.23 & 2.55 & 0.01\\
 \hline
-AUAU20:video\_idRinehart\_a & 0.18 & 0.24 & 0.73 & 0.46\\
+AUAU15:video\_idRinehart\_a & 0.97 & 0.23 & 4.22 & 0.00\\
 \hline
-AUAU25:video\_idRinehart\_a & -0.61 & 0.24 & -2.58 & 0.01\\
+AUAU20:video\_idRinehart\_a & 0.78 & 0.23 & 3.36 & 0.00\\
 \hline
-AUAU01:video\_idRinehart\_b & -0.19 & 0.42 & -0.45 & 0.65\\
+AUAU01:video\_idRinehart\_b & -0.42 & 0.42 & -1.01 & 0.31\\
 \hline
-AUAU02:video\_idRinehart\_b & 0.72 & 0.64 & 1.11 & 0.27\\
+AUAU02:video\_idRinehart\_b & 0.49 & 0.64 & 0.75 & 0.45\\
 \hline
-AUAU14:video\_idRinehart\_b & -0.15 & 0.39 & -0.39 & 0.70\\
+AUAU05:video\_idRinehart\_b & -0.23 & 0.39 & -0.58 & 0.56\\
 \hline
-AUAU15:video\_idRinehart\_b & 0.69 & 0.41 & 1.68 & 0.09\\
+AUAU14:video\_idRinehart\_b & -0.38 & 0.39 & -0.98 & 0.33\\
 \hline
-AUAU20:video\_idRinehart\_b & -0.30 & 0.41 & -0.73 & 0.46\\
+AUAU15:video\_idRinehart\_b & 0.46 & 0.41 & 1.12 & 0.26\\
 \hline
-AUAU25:video\_idRinehart\_b & 0.23 & 0.39 & 0.58 & 0.56\\
+AUAU20:video\_idRinehart\_b & -0.53 & 0.41 & -1.29 & 0.20\\
 \hline
 judge\_idGageler:video\_idNauru\_b & -0.03 & 0.15 & -0.20 & 0.84\\
 \hline
@@ -768,101 +830,101 @@ judge\_idGageler:video\_idRinehart\_b & -0.16 & 0.22 & -0.73 & 0.47\\
 \hline
 judge\_idNettle:video\_idRinehart\_b & 1.25 & 0.24 & 5.11 & 0.00\\
 \hline
-AUAU01:speakerRespondent & 0.09 & 0.30 & 0.32 & 0.75\\
+AUAU01:speakerRespondent & 0.24 & 0.28 & 0.85 & 0.40\\
 \hline
-AUAU02:speakerRespondent & 1.21 & 0.52 & 2.33 & 0.02\\
+AUAU02:speakerRespondent & 1.36 & 0.51 & 2.65 & 0.01\\
 \hline
-AUAU14:speakerRespondent & 0.10 & 0.29 & 0.34 & 0.73\\
+AUAU05:speakerRespondent & 0.15 & 0.29 & 0.51 & 0.61\\
 \hline
-AUAU15:speakerRespondent & 0.36 & 0.29 & 1.25 & 0.21\\
+AUAU14:speakerRespondent & 0.24 & 0.27 & 0.90 & 0.37\\
 \hline
-AUAU20:speakerRespondent & 0.88 & 0.30 & 2.88 & 0.00\\
+AUAU15:speakerRespondent & 0.51 & 0.28 & 1.84 & 0.07\\
 \hline
-AUAU25:speakerRespondent & -0.15 & 0.29 & -0.51 & 0.61\\
+AUAU20:speakerRespondent & 1.02 & 0.29 & 3.51 & 0.00\\
 \hline
-video\_idNauru\_b:speakerRespondent & 0.20 & 0.44 & 0.45 & 0.65\\
+video\_idNauru\_b:speakerRespondent & 0.02 & 0.41 & 0.04 & 0.97\\
 \hline
-video\_idMcKell:speakerRespondent & -0.26 & 0.29 & -0.91 & 0.36\\
+video\_idMcKell:speakerRespondent & -0.22 & 0.31 & -0.71 & 0.48\\
 \hline
-video\_idOKS:speakerRespondent & -0.89 & 0.43 & -2.08 & 0.04\\
+video\_idOKS:speakerRespondent & 0.34 & 0.46 & 0.73 & 0.46\\
 \hline
-video\_idParkes:speakerRespondent & 0.39 & 0.26 & 1.52 & 0.13\\
+video\_idParkes:speakerRespondent & 0.15 & 0.26 & 0.58 & 0.56\\
 \hline
-video\_idRinehart\_a:speakerRespondent & 0.27 & 0.25 & 1.11 & 0.27\\
+video\_idRinehart\_a:speakerRespondent & 0.37 & 0.23 & 1.60 & 0.11\\
 \hline
-video\_idRinehart\_b:speakerRespondent & -0.35 & 0.48 & -0.73 & 0.47\\
+video\_idRinehart\_b:speakerRespondent & -0.33 & 0.47 & -0.70 & 0.48\\
 \hline
-AUAU01:video\_idNauru\_b:speakerRespondent & -0.42 & 0.62 & -0.68 & 0.50\\
+AUAU01:video\_idNauru\_b:speakerRespondent & -0.24 & 0.60 & -0.40 & 0.69\\
 \hline
-AUAU02:video\_idNauru\_b:speakerRespondent & -2.29 & 0.90 & -2.53 & 0.01\\
+AUAU02:video\_idNauru\_b:speakerRespondent & -2.11 & 0.89 & -2.37 & 0.02\\
 \hline
-AUAU14:video\_idNauru\_b:speakerRespondent & 0.57 & 0.62 & 0.92 & 0.36\\
+AUAU05:video\_idNauru\_b:speakerRespondent & 0.18 & 0.61 & 0.30 & 0.76\\
 \hline
-AUAU15:video\_idNauru\_b:speakerRespondent & 0.08 & 0.64 & 0.13 & 0.89\\
+AUAU14:video\_idNauru\_b:speakerRespondent & 0.75 & 0.60 & 1.27 & 0.21\\
 \hline
-AUAU20:video\_idNauru\_b:speakerRespondent & -0.46 & 0.65 & -0.71 & 0.48\\
+AUAU15:video\_idNauru\_b:speakerRespondent & 0.27 & 0.62 & 0.43 & 0.67\\
 \hline
-AUAU25:video\_idNauru\_b:speakerRespondent & -0.18 & 0.61 & -0.30 & 0.76\\
+AUAU20:video\_idNauru\_b:speakerRespondent & -0.28 & 0.63 & -0.44 & 0.66\\
 \hline
-AUAU01:video\_idMcKell:speakerRespondent & 0.00 & 0.42 & 0.01 & 1.00\\
+AUAU01:video\_idMcKell:speakerRespondent & -0.04 & 0.43 & -0.09 & 0.93\\
 \hline
-AUAU02:video\_idMcKell:speakerRespondent & -0.77 & 0.61 & -1.28 & 0.20\\
+AUAU02:video\_idMcKell:speakerRespondent & -0.82 & 0.62 & -1.33 & 0.18\\
 \hline
-AUAU14:video\_idMcKell:speakerRespondent & 0.22 & 0.40 & 0.55 & 0.58\\
+AUAU05:video\_idMcKell:speakerRespondent & -0.04 & 0.42 & -0.10 & 0.92\\
 \hline
-AUAU15:video\_idMcKell:speakerRespondent & -0.24 & 0.41 & -0.58 & 0.56\\
+AUAU14:video\_idMcKell:speakerRespondent & 0.18 & 0.42 & 0.43 & 0.67\\
 \hline
-AUAU20:video\_idMcKell:speakerRespondent & -0.86 & 0.43 & -1.99 & 0.05\\
+AUAU15:video\_idMcKell:speakerRespondent & -0.28 & 0.43 & -0.66 & 0.51\\
 \hline
-AUAU25:video\_idMcKell:speakerRespondent & 0.04 & 0.42 & 0.10 & 0.92\\
+AUAU20:video\_idMcKell:speakerRespondent & -0.90 & 0.44 & -2.03 & 0.04\\
 \hline
-AUAU01:video\_idOKS:speakerRespondent & 1.11 & 0.60 & 1.84 & 0.07\\
+AUAU01:video\_idOKS:speakerRespondent & -0.13 & 0.62 & -0.21 & 0.84\\
 \hline
-AUAU02:video\_idOKS:speakerRespondent & 1.15 & 0.87 & 1.31 & 0.19\\
+AUAU02:video\_idOKS:speakerRespondent & -0.09 & 0.89 & -0.10 & 0.92\\
 \hline
-AUAU14:video\_idOKS:speakerRespondent & 0.67 & 0.58 & 1.14 & 0.25\\
+AUAU05:video\_idOKS:speakerRespondent & -1.23 & 0.63 & -1.95 & 0.05\\
 \hline
-AUAU15:video\_idOKS:speakerRespondent & 0.21 & 0.70 & 0.30 & 0.76\\
+AUAU14:video\_idOKS:speakerRespondent & -0.57 & 0.61 & -0.93 & 0.35\\
 \hline
-AUAU20:video\_idOKS:speakerRespondent & -0.02 & 0.69 & -0.03 & 0.98\\
+AUAU15:video\_idOKS:speakerRespondent & -1.02 & 0.72 & -1.43 & 0.15\\
 \hline
-AUAU25:video\_idOKS:speakerRespondent & 1.23 & 0.63 & 1.95 & 0.05\\
+AUAU20:video\_idOKS:speakerRespondent & -1.25 & 0.71 & -1.77 & 0.08\\
 \hline
-AUAU01:video\_idParkes:speakerRespondent & -0.51 & 0.36 & -1.40 & 0.16\\
+AUAU01:video\_idParkes:speakerRespondent & -0.27 & 0.37 & -0.73 & 0.47\\
 \hline
-AUAU02:video\_idParkes:speakerRespondent & -1.90 & 0.59 & -3.23 & 0.00\\
+AUAU02:video\_idParkes:speakerRespondent & -1.66 & 0.59 & -2.81 & 0.00\\
 \hline
-AUAU14:video\_idParkes:speakerRespondent & -0.79 & 0.36 & -2.20 & 0.03\\
+AUAU05:video\_idParkes:speakerRespondent & 0.24 & 0.37 & 0.66 & 0.51\\
 \hline
-AUAU15:video\_idParkes:speakerRespondent & -0.27 & 0.36 & -0.73 & 0.46\\
+AUAU14:video\_idParkes:speakerRespondent & -0.55 & 0.36 & -1.52 & 0.13\\
 \hline
-AUAU20:video\_idParkes:speakerRespondent & -1.10 & 0.38 & -2.90 & 0.00\\
+AUAU15:video\_idParkes:speakerRespondent & -0.02 & 0.36 & -0.07 & 0.95\\
 \hline
-AUAU25:video\_idParkes:speakerRespondent & -0.24 & 0.37 & -0.66 & 0.51\\
+AUAU20:video\_idParkes:speakerRespondent & -0.86 & 0.38 & -2.25 & 0.02\\
 \hline
-AUAU01:video\_idRinehart\_a:speakerRespondent & -0.40 & 0.34 & -1.17 & 0.24\\
+AUAU01:video\_idRinehart\_a:speakerRespondent & -0.50 & 0.33 & -1.51 & 0.13\\
 \hline
-AUAU02:video\_idRinehart\_a:speakerRespondent & -1.32 & 0.58 & -2.26 & 0.02\\
+AUAU02:video\_idRinehart\_a:speakerRespondent & -1.42 & 0.58 & -2.46 & 0.01\\
 \hline
-AUAU14:video\_idRinehart\_a:speakerRespondent & -0.54 & 0.33 & -1.61 & 0.11\\
+AUAU05:video\_idRinehart\_a:speakerRespondent & -0.10 & 0.34 & -0.29 & 0.77\\
 \hline
-AUAU15:video\_idRinehart\_a:speakerRespondent & -0.53 & 0.34 & -1.56 & 0.12\\
+AUAU14:video\_idRinehart\_a:speakerRespondent & -0.64 & 0.32 & -1.96 & 0.05\\
 \hline
-AUAU20:video\_idRinehart\_a:speakerRespondent & -1.04 & 0.35 & -2.94 & 0.00\\
+AUAU15:video\_idRinehart\_a:speakerRespondent & -0.62 & 0.33 & -1.90 & 0.06\\
 \hline
-AUAU25:video\_idRinehart\_a:speakerRespondent & 0.10 & 0.34 & 0.29 & 0.77\\
+AUAU20:video\_idRinehart\_a:speakerRespondent & -1.14 & 0.34 & -3.31 & 0.00\\
 \hline
-AUAU01:video\_idRinehart\_b:speakerRespondent & 0.18 & 0.71 & 0.25 & 0.80\\
+AUAU01:video\_idRinehart\_b:speakerRespondent & 0.16 & 0.70 & 0.23 & 0.82\\
 \hline
-AUAU02:video\_idRinehart\_b:speakerRespondent & -1.26 & 1.06 & -1.18 & 0.24\\
+AUAU02:video\_idRinehart\_b:speakerRespondent & -1.28 & 1.06 & -1.20 & 0.23\\
 \hline
-AUAU14:video\_idRinehart\_b:speakerRespondent & 0.69 & 0.67 & 1.03 & 0.31\\
+AUAU05:video\_idRinehart\_b:speakerRespondent & -0.02 & 0.67 & -0.03 & 0.98\\
 \hline
-AUAU15:video\_idRinehart\_b:speakerRespondent & -0.65 & 0.70 & -0.94 & 0.35\\
+AUAU14:video\_idRinehart\_b:speakerRespondent & 0.67 & 0.67 & 1.00 & 0.32\\
 \hline
-AUAU20:video\_idRinehart\_b:speakerRespondent & 0.24 & 0.72 & 0.34 & 0.74\\
+AUAU15:video\_idRinehart\_b:speakerRespondent & -0.67 & 0.69 & -0.97 & 0.33\\
 \hline
-AUAU25:video\_idRinehart\_b:speakerRespondent & 0.02 & 0.67 & 0.03 & 0.98\\
+AUAU20:video\_idRinehart\_b:speakerRespondent & 0.22 & 0.71 & 0.31 & 0.76\\
 \hline
 \end{tabular}
 
@@ -872,20 +934,22 @@ AUAU25:video\_idRinehart\_b:speakerRespondent & 0.02 & 0.67 & 0.03 & 0.98\\
 \hypertarget{general-intensity-plot}{%
 \subsection{General Intensity plot}\label{general-intensity-plot}}
 
-The plot gives an overview of the action unit intensity of all the judges across all the trails. Each bar-and-whisker represents the intensity of all the action units aggregated on time for a particular judge in a specific case. For example, the first bar-and-whisker in case Nauru\_a is created using all the 17 action units of Edelman through out the elapsed time in Nauru\_a case. In mathematics notation, the plotted statistics is \(I_{ijtk}\) seperating by \(i \text{and} j\).
+In Ekman's 20002 FACS manual, the intensity of Action unit is defined based on five classes: Trace(1), Slight(2), Marked or pronounced(3), Severe or extreme(4) and Maximum(5). The boxplot of the intensity for all the judges across all the videos is presented in Figure \ref{fig:intensity}. Each bar-and-whisker represents the intensity of all the action units aggregated on time for a particular judge in a specific case. For example, the first bar-and-whisker in case Nauru\_a is created using all the 17 action units of Edelman through out the elapsed time in Nauru\_a case. In mathematics notation, the plotted statistics is \(I_{ijtk}\) seperating by \(i \text{and} j\).
 
-In Ekman's 20002 FACS manual, the intensity of Action unit is defined based on five classes: Trace(1), Slight(2), Marked or pronounced(3), Severe or extreme(4) and Maximum(5). From the plot, most of the action units have low intensity (almost zero average and lower than one upper bounds) and this is expected because usually in the court room, judges are expected to behave neutral. From this plot, we can see that Judge Bell doesn't seem to have many intensive expressions as we can see from the relatively small amount of dots in the whisker.
+From the plot, most of the action units have low intensity (almost zero average and lower than one upper bounds) and this is expected because usually in the court room, judges are expected to behave neutral. From this plot, we can see that Judge Bell doesn't seem to have many intensive expressions as we can see from the relatively small amount of dots in the whisker.
 
 To better look at the mean of each boxplot, we take a square root transformation and hide the outliners into the upper line. We can find that Judge Nettle seems to have higher average in all the four cases he appears: Nauru\_a\&b, Rinehart\_a \&b.
 
-\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-10-1}
+\begin{figure}
+\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-12-1} \caption{Boxplot of intensity by judge and video\label{fig:intensity}}\label{fig:unnamed-chunk-12}
+\end{figure}
 
 \hypertarget{mean-intensity}{%
 \subsection{Mean intensity}\label{mean-intensity}}
 
 We compute a similar mean intensity score for each of the action unit for each of the judge, the statsitics is \[I_{ik} = \frac{\sum_{jt}X_{ijtk}}{\sum_{j = 1}^JT_j}\]. Less uniform as the mean presence plot - different judge response intense at different action units.
 
-\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-11-1}
+\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-13-1}
 
 \hypertarget{intensity-plot-for-the-most-frequent-action-units}{%
 \subsection{Intensity plot for the most frequent action units}\label{intensity-plot-for-the-most-frequent-action-units}}
@@ -896,15 +960,15 @@ From the first plot, some panels are empty for some judges. This is because the 
 
 From the second plot, most of the intensity are low as the general intensity plot, while one action unit has drawn the attention: AU45 for Kiefel. The intensity in both case parkes and case Rinehart\_a for Kiefel are relatively higher than others and this will be reflected through our model.
 
-\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-12-1}
-\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-12-2}
+\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-14-1}
+\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-14-2}
 
 \hypertarget{high-intensity-points}{%
 \subsection{High intensity points}\label{high-intensity-points}}
 
 We filter out the points have intensity greater than 2 (at least ``slight'' as per Ekman) in the previous plot and plot it against time and color by the speaker. It tells us that Edelman, Gageler and Nettle are the judges have stronger emotion that can be detected (since they have more points with intensity greater than 2). Different judges also have different time where they display stronger emotions. For example, Justice Nettle are more likely to have stronger emotion throughout the time when the appellant is speaking but only at the beginning and ending period when the respondent is speaking.
 
-\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-13-1}
+\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-15-1}
 
 \appendix
 
@@ -984,6 +1048,51 @@ OKS v. The State of Western Australia\strut
 \end{minipage}\tabularnewline
 \bottomrule
 \end{longtable}
+
+\hypertarget{list-of-the-name-of-ction-units}{%
+\section{List of the name of ction units}\label{list-of-the-name-of-ction-units}}
+
+\begin{tabular}{l}
+\hline
+AU\_meaning\\
+\hline
+AU01: Inner brow raiser\\
+\hline
+AU02: Outer brow raiser\\
+\hline
+AU04: Brow lowerer\\
+\hline
+AU05: Upper lid raiser\\
+\hline
+AU06: Cheek raiser\\
+\hline
+AU07: Lid tightener\\
+\hline
+AU09: Nose wrinkler\\
+\hline
+AU10: Upper lip raiser\\
+\hline
+AU12: Lip corner puller\\
+\hline
+AU14: Dimpler\\
+\hline
+AU15: Lip corner depressor\\
+\hline
+AU17: Chin raiser\\
+\hline
+AU20: Lip stretcher\\
+\hline
+AU23: Lip tightener\\
+\hline
+AU25: Lips part\\
+\hline
+AU26: Jaw drop\\
+\hline
+AU28: Lip suck\\
+\hline
+AU45: Blink\\
+\hline
+\end{tabular}
 
 \printbibliography[heading=bibintoc]
 
