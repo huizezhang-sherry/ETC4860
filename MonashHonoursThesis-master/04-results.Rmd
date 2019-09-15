@@ -254,11 +254,9 @@ Mean intensity score ($I_{ik}$) of each action unit for each of the judge is com
 # include_graphics("figures/AU4-brow-lowerer.gif")
 ```
 
-- AU20(Lip Stretcher)
-- AU07(Lid Tightener)
-- AU04(Brow Lowerer)
-
-
+- AU20 (Lip Stretcher)
+- AU07 (Lid Tightener)
+- AU04 (Brow Lowerer)
 
 It is interesting to notice that both AU07 and AU04 contribute to the emotion of confusion. This could help to understand that judges are more likely to express a stronger confusing expression than other emotions. 
 
