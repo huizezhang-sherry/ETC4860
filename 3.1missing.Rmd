@@ -145,11 +145,14 @@ au_presence <- au %>%
   left_join(au %>% select(judge_id: speaker)) # add back speaker column
 
 au_imputed_old <- au_intensity %>% 
+  ungroup(judge_id) %>% 
   left_join(au_presence, 
             by = c("judge_id", "video_id", "frame_id", "speaker")) %>% 
   mutate_if(is.numeric, round, digits = 2) %>% 
   mutate(judge_id = as.factor(judge_id), 
-         speaker = as.factor(speaker))
+         speaker = as.factor(speaker)) %>% 
+  ungroup(judge_id, video_id) %>% 
+  rename(judge = judge_id, video = video_id,frame = frame_id)
 
 save(au_imputed_old, file = "raw_data/au_imputed_old.rda") 
 
@@ -199,7 +202,10 @@ au_tidy <- au_imputed %>%
   ungroup() %>% 
   mutate(judge_id = as.factor(judge_id), 
          speaker = as.factor(speaker), 
-         AU = as.factor(AU))
+         AU = as.factor(AU)) %>% 
+  rename(judge = judge_id, 
+         video = video_id,
+         frame = frame_id)
 
 save(au_tidy, file = "raw_data/au_tidy.rda")
 ```
