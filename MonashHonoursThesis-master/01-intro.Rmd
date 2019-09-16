@@ -17,6 +17,8 @@ library(tidyverse)
 library(ggpubr)
 library(knitr)
 library(broom)
+library(lsmeans)
+library(multcomp)
 
 load("data/au_tidy.rda")
 load("data/most_common.rda")

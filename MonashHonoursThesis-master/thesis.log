@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.9.15)  15 SEP 2019 22:39
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.9.16)  17 SEP 2019 00:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -7,23 +7,23 @@ entering extended mode
 LaTeX2e <2018-12-01>
 (./monashthesis.cls
 Document Class: monashthesis 2016/09/06 Monash Thesis Class
-(/usr/local/texlive/2019/texmf-dist/tex/latex/base/fontenc.sty
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2018/08/11 v2.0j Standard LaTeX package
-(/usr/local/texlive/2019/texmf-dist/tex/latex/base/t1enc.def
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/base/t1enc.def
 File: t1enc.def 2018/08/11 v2.0j Standard LaTeX file
 LaTeX Font Info:    Redeclaring font encoding T1 on input line 48.
-)) (/usr/local/texlive/2019/texmf-dist/tex/latex/base/inputenc.sty
+)) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2018/08/11 v1.3c Input encoding file
 \inpenc@prehook=\toks14
 \inpenc@posthook=\toks15
-) (/usr/local/texlive/2019/texmf-dist/tex/latex/bera/bera.sty
+) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/bera/bera.sty
 Package: bera 2004/01/31 (WaS)
-(/usr/local/texlive/2019/texmf-dist/tex/latex/base/fontenc.sty
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2018/08/11 v2.0j Standard LaTeX package
-(/usr/local/texlive/2019/texmf-dist/tex/latex/base/t1enc.def
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/base/t1enc.def
 File: t1enc.def 2018/08/11 v2.0j Standard LaTeX file
 LaTeX Font Info:    Redeclaring font encoding T1 on input line 48.
-)) (/usr/local/texlive/2019/texmf-dist/tex/latex/base/textcomp.sty
+)) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/base/textcomp.sty
 Package: textcomp 2018/08/11 v2.0j Standard LaTeX package
 Package textcomp Info: Sub-encoding information:
 (textcomp)               5 = only ISO-Adobe without \textcurrency
@@ -37,11 +37,11 @@ Package textcomp Info: Sub-encoding information:
 (textcomp)             Family '?' is the default used for unknown fonts.
 (textcomp)             See the documentation for details.
 Package textcomp Info: Setting ? sub-encoding to TS1/1 on input line 79.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/base/ts1enc.def
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/base/ts1enc.def
 File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
 Now handling font encoding TS1 ...
 ... processing UTF-8 mapping file for font encoding TS1
-(/usr/local/texlive/2019/texmf-dist/tex/latex/base/ts1enc.dfu
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/base/ts1enc.dfu
 File: ts1enc.dfu 2018/10/05 v1.2f UTF-8 support for inputenc
    defining Unicode char U+00A2 (decimal 162)
    defining Unicode char U+00A3 (decimal 163)
@@ -177,28 +177,28 @@ Package textcomp Info: Setting pplx sub-encoding to TS1/3 on input line 406.
 Package textcomp Info: Setting pplj sub-encoding to TS1/3 on input line 407.
 Package textcomp Info: Setting ptmx sub-encoding to TS1/4 on input line 408.
 Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 409.
-) (/usr/local/texlive/2019/texmf-dist/tex/latex/bera/beraserif.sty
+) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/bera/beraserif.sty
 Package: beraserif 2004/01/30 (WaS)
-(/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/keyval.sty
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks16
 )
 LaTeX Font Info:    Try loading font information for T1+fve on input line 30.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/bera/t1fve.fd
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/bera/t1fve.fd
 File: t1fve.fd 2004/09/07 scalable font definitions for T1/fve.
 )
 LaTeX Font Info:    Font shape `T1/fve/m/n' will be
 (Font)              scaled to size 8.99994pt on input line 30.
-) (/usr/local/texlive/2019/texmf-dist/tex/latex/bera/berasans.sty
+) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/bera/berasans.sty
 Package: berasans 2004/01/30 (WaS)
-) (/usr/local/texlive/2019/texmf-dist/tex/latex/bera/beramono.sty
+) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/bera/beramono.sty
 Package: beramono 2004/01/31 (WaS)
-)) (/usr/local/texlive/2019/texmf-dist/tex/latex/psnfss/mathpazo.sty
+)) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/psnfss/mathpazo.sty
 Package: mathpazo 2005/04/12 PSNFSS-v9.2a Palatino w/ Pazo Math (D.Puga, WaS) 
 \symupright=\mathgroup4
-) (/usr/local/texlive/2019/texmf-dist/tex/latex/base/report.cls
+) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/base/report.cls
 Document Class: report 2018/09/03 v1.4i Standard LaTeX document class
-(/usr/local/texlive/2019/texmf-dist/tex/latex/base/size11.clo
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/base/size11.clo
 File: size11.clo 2018/09/03 v1.4i Standard LaTeX file (size option)
 LaTeX Font Info:    Font shape `T1/fve/m/n' will be
 (Font)              scaled to size 9.85492pt on input line 54.
@@ -215,14 +215,14 @@ LaTeX Font Info:    Font shape `T1/fve/m/n' will be
 \abovecaptionskip=\skip41
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
-) (/usr/local/texlive/2019/texmf-dist/tex/latex/geometry/geometry.sty
+) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2018/04/16 v5.8 Page Geometry
-(/usr/local/texlive/2019/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/generic/oberdiek/ifpdf.sty
 Package: ifpdf 2018/09/07 v3.3 Provides the ifpdf switch
-) (/usr/local/texlive/2019/texmf-dist/tex/generic/oberdiek/ifvtex.sty
+) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/generic/oberdiek/ifvtex.sty
 Package: ifvtex 2016/05/16 v1.6 Detect VTeX and its facilities (HO)
 Package ifvtex Info: VTeX not detected.
-) (/usr/local/texlive/2019/texmf-dist/tex/generic/ifxetex/ifxetex.sty
+) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/generic/ifxetex/ifxetex.sty
 Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 )
 \Gm@cnth=\count89
@@ -237,10 +237,10 @@ Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 \Gm@layouthoffset=\dimen109
 \Gm@layoutvoffset=\dimen110
 \Gm@dimlist=\toks17
-) (/usr/local/texlive/2019/texmf-dist/tex/latex/caption/caption.sty
-Package: caption 2018/10/06 v3.3-154 Customizing captions (AR)
-(/usr/local/texlive/2019/texmf-dist/tex/latex/caption/caption3.sty
-Package: caption3 2018/09/12 v1.8c caption3 kernel (AR)
+) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2019/09/01 v3.3d Customizing captions (AR)
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2019/09/01 v1.8d caption3 kernel (AR)
 Package caption3 Info: TeX engine: e-TeX on input line 64.
 \captionmargin=\dimen111
 \captionmargin@=\dimen112
@@ -252,7 +252,7 @@ Package caption3 Info: TeX engine: e-TeX on input line 64.
 )
 \c@caption@flags=\count92
 \c@ContinuedFloat=\count93
-) (/usr/local/texlive/2019/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
+) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
 Package: fancyhdr 2019/01/31 v3.10 Extensive control of page headers and footer
 s
 \f@nch@headwidth=\skip43
@@ -264,7 +264,7 @@ s
 \f@nch@O@erf=\skip49
 \f@nch@O@olf=\skip50
 \f@nch@O@orf=\skip51
-) (/usr/local/texlive/2019/texmf-dist/tex/latex/tools/bm.sty
+) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/tools/bm.sty
 Package: bm 2017/01/16 v1.2c Bold Symbol Support (DPC/FMi)
 \symboldoperators=\mathgroup5
 \symboldletters=\mathgroup6
@@ -272,21 +272,21 @@ Package: bm 2017/01/16 v1.2c Bold Symbol Support (DPC/FMi)
 \symboldupright=\mathgroup8
 LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 141.
 LaTeX Info: Redefining \bm on input line 207.
-) (/usr/local/texlive/2019/texmf-dist/tex/latex/amsmath/amsmath.sty
+) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2018/12/01 v2.17b AMS math features
 \@mathmargin=\skip52
 For additional information on amsmath, use the `?' option.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/amsmath/amstext.sty
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amstext.sty
 Package: amstext 2000/06/29 v2.01 AMS text
-(/usr/local/texlive/2019/texmf-dist/tex/latex/amsmath/amsgen.sty
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
 \@emptytoks=\toks18
 \ex@=\dimen118
-)) (/usr/local/texlive/2019/texmf-dist/tex/latex/amsmath/amsbsy.sty
+)) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 LaTeX Info: Redefining \boldsymbol on input line 28.
 \pmbraise@=\dimen119
-) (/usr/local/texlive/2019/texmf-dist/tex/latex/amsmath/amsopn.sty
+) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 2016/03/08 v2.02 operator names
 )
 \inf@bad=\count94
@@ -326,25 +326,28 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 730.
 \mathdisplay@stack=\toks22
 LaTeX Info: Redefining \[ on input line 2844.
 LaTeX Info: Redefining \] on input line 2845.
-) (/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/graphicx.sty
+) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
-(/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/graphics.sty
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2017/06/25 v1.2c Standard LaTeX Graphics (DPC,SPQR)
-(/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/trig.sty
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
-) (/usr/local/texlive/2019/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+)
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/graphics.c
+fg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 99.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/graphics-def/pdftex.def
+
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex.def
 File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
 ))
 \Gin@req@height=\dimen127
 \Gin@req@width=\dimen128
-) (/usr/local/texlive/2019/texmf-dist/tex/latex/placeins/placeins.sty
+) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/placeins/placeins.sty
 Package: placeins 2005/04/18  v 2.2
-) (/usr/local/texlive/2019/texmf-dist/tex/latex/titlesec/titlesec.sty
-Package: titlesec 2016/03/21 v2.10.2 Sectioning titles
+) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/titlesec/titlesec.sty
+Package: titlesec 2019/09/09 v2.12 Sectioning titles
 \ttl@box=\box29
 \beforetitleunit=\skip55
 \aftertitleunit=\skip56
@@ -354,11 +357,10 @@ Package: titlesec 2016/03/21 v2.10.2 Sectioning titles
 \titlewidth=\dimen131
 \titlewidthlast=\dimen132
 \titlewidthfirst=\dimen133
-) (/usr/local/texlive/2019/texmf-dist/tex/latex/titlesec/block.tss
-File: block.tss 2016/03/15
-) (/usr/local/texlive/2019/texmf-dist/tex/latex/setspace/setspace.sty
+) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/setspace/setspace.sty
 Package: setspace 2011/12/19 v6.7a set line spacing
-) (/usr/local/texlive/2019/texmf-dist/tex/latex/microtype/microtype.sty
+)
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/microtype/microtype.sty
 Package: microtype 2019/02/28 v2.7b Micro-typographical refinements (RS)
 \MT@toks=\toks24
 \MT@count=\count106
@@ -366,7 +368,9 @@ LaTeX Info: Redefining \textls on input line 790.
 \MT@outer@kern=\dimen134
 LaTeX Info: Redefining \textmicrotypecontext on input line 1336.
 \MT@listname@count=\count107
-(/usr/local/texlive/2019/texmf-dist/tex/latex/microtype/microtype-pdftex.def
+
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/microtype/microtype-pdf
+tex.def
 File: microtype-pdftex.def 2019/02/28 v2.7b Definitions specific to pdftex (RS)
 
 LaTeX Info: Redefining \lsstyle on input line 914.
@@ -374,42 +378,54 @@ LaTeX Info: Redefining \lslig on input line 914.
 \MT@outer@space=\skip57
 )
 Package microtype Info: Loading configuration file microtype.cfg.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/microtype/microtype.cfg
+
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/microtype/microtype.cfg
 File: microtype.cfg 2019/02/28 v2.7b microtype main configuration file (RS)
-)) (/usr/local/texlive/2019/texmf-dist/tex/latex/biblatex/biblatex.sty
-Package: biblatex 2018/11/02 v3.12 programmable bibliographies (PK/MW)
-(/usr/local/texlive/2019/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
-Package: pdftexcmds 2018/09/10 v0.29 Utility functions of pdfTeX for LuaTeX (HO
+)) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/biblatex/biblatex.st
+y
+Package: biblatex 2019/08/31 v3.13a programmable bibliographies (PK/MW)
+
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/generic/oberdiek/pdftexcmds.s
+ty
+Package: pdftexcmds 2019/07/25 v0.30 Utility functions of pdfTeX for LuaTeX (HO
 )
-(/usr/local/texlive/2019/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/generic/oberdiek/infwarerr.st
+y
 Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
-) (/usr/local/texlive/2019/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+)
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/generic/oberdiek/ifluatex.sty
 Package: ifluatex 2016/05/16 v1.4 Provides the ifluatex switch (HO)
 Package ifluatex Info: LuaTeX not detected.
-) (/usr/local/texlive/2019/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/generic/oberdiek/ltxcmds.st
+y
 Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
 )
 Package pdftexcmds Info: LuaTeX not detected.
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
-) (/usr/local/texlive/2019/texmf-dist/tex/latex/etoolbox/etoolbox.sty
-Package: etoolbox 2018/08/19 v2.5f e-TeX tools for LaTeX (JAW)
+) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2019/09/09 v2.5g e-TeX tools for LaTeX (JAW)
 \etb@tempcnta=\count108
-) (/usr/local/texlive/2019/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/oberdiek/kvoptions.st
+y
 Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
-(/usr/local/texlive/2019/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/generic/oberdiek/kvsetkeys.st
+y
 Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
-(/usr/local/texlive/2019/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/generic/oberdiek/etexcmds.sty
 Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
-))) (/usr/local/texlive/2019/texmf-dist/tex/latex/logreq/logreq.sty
+))) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/logreq/logreq.sty
 Package: logreq 2010/08/04 v1.0 xml request logger
 \lrq@indent=\count109
-(/usr/local/texlive/2019/texmf-dist/tex/latex/logreq/logreq.def
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/logreq/logreq.def
 File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
-)) (/usr/local/texlive/2019/texmf-dist/tex/latex/base/ifthen.sty
+)) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
-) (/usr/local/texlive/2019/texmf-dist/tex/latex/url/url.sty
+) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip11
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
@@ -464,13 +480,14 @@ Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 \bibhang=\skip65
 \blx@bcfin=\read1
 \blx@bcfout=\write3
+\blx@langwohyphens=\language3
 \c@mincomprange=\count151
 \c@maxcomprange=\count152
 \c@mincompwidth=\count153
 Package biblatex Info: Trying to load biblatex default data model...
 Package biblatex Info: ... file 'blx-dm.def' found.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/biblatex/blx-dm.def
-File: blx-dm.def 2018/11/02 v3.12 biblatex localization (PK/MW)
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/biblatex/blx-dm.def
+File: blx-dm.def 2019/08/31 v3.13a biblatex localization (PK/MW)
 )
 Package biblatex Info: Trying to load biblatex style data model...
 Package biblatex Info: ... file 'authoryear-comp.dbx' not found.
@@ -560,47 +577,64 @@ Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
 \localshorteditorwidth=\skip79
 Package biblatex Info: Trying to load compatibility code...
 Package biblatex Info: ... file 'blx-compat.def' found.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/biblatex/blx-compat.def
-File: blx-compat.def 2018/11/02 v3.12 biblatex compatibility (PK/MW)
+
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/biblatex/blx-compat.def
+File: blx-compat.def 2019/08/31 v3.13a biblatex compatibility (PK/MW)
 )
 Package biblatex Info: Trying to load generic definitions...
 Package biblatex Info: ... file 'biblatex.def' found.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/biblatex/biblatex.def
-File: biblatex.def 2018/11/02 v3.12 biblatex compatibility (PK/MW)
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/biblatex/biblatex.def
+File: biblatex.def 2019/08/31 v3.13a biblatex compatibility (PK/MW)
 \c@textcitecount=\count288
 \c@textcitetotal=\count289
 \c@textcitemaxnames=\count290
-\c@biburlnumpenalty=\count291
-\c@biburlucpenalty=\count292
-\c@biburllcpenalty=\count293
-\c@smartand=\count294
+\c@biburlbigbreakpenalty=\count291
+\c@biburlbreakpenalty=\count292
+\c@biburlnumpenalty=\count293
+\c@biburlucpenalty=\count294
+\c@biburllcpenalty=\count295
+\biburlbigskip=\muskip12
+\biburlnumskip=\muskip13
+\biburlucskip=\muskip14
+\biburllcskip=\muskip15
+\c@smartand=\count296
 )
 Package biblatex Info: Trying to load natbib compatibility...
 Package biblatex Info: ... file 'blx-natbib.def' found.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/biblatex/blx-natbib.def
-File: blx-natbib.def 2018/11/02 v3.12 biblatex compatibility (PK/MW)
+
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/biblatex/blx-natbib.def
+File: blx-natbib.def 2019/08/31 v3.13a biblatex compatibility (PK/MW)
 Package biblatex Info: Delimiter 'nameyeardelim' in context '' already defined,
  overwriting.
 )
 Package biblatex Info: Trying to load bibliography style 'authoryear-comp'...
 Package biblatex Info: ... file 'authoryear-comp.bbx' found.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/biblatex/bbx/authoryear-comp.bbx
-File: authoryear-comp.bbx 2018/11/02 v3.12 biblatex bibliography style (PK/MW)
+
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/biblatex/bbx/authoryear
+-comp.bbx
+File: authoryear-comp.bbx 2019/08/31 v3.13a biblatex bibliography style (PK/MW)
+
 Package biblatex Info: Trying to load bibliography style 'authoryear'...
 Package biblatex Info: ... file 'authoryear.bbx' found.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/biblatex/bbx/authoryear.bbx
-File: authoryear.bbx 2018/11/02 v3.12 biblatex bibliography style (PK/MW)
+
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/biblatex/bbx/authoryear
+.bbx
+File: authoryear.bbx 2019/08/31 v3.13a biblatex bibliography style (PK/MW)
 Package biblatex Info: Trying to load bibliography style 'standard'...
 Package biblatex Info: ... file 'standard.bbx' found.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/biblatex/bbx/standard.bbx
-File: standard.bbx 2018/11/02 v3.12 biblatex bibliography style (PK/MW)
-\c@bbx:relatedcount=\count295
-\c@bbx:relatedtotal=\count296
+
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/biblatex/bbx/standard.b
+bx
+File: standard.bbx 2019/08/31 v3.13a biblatex bibliography style (PK/MW)
+\c@bbx:relatedcount=\count297
+\c@bbx:relatedtotal=\count298
 )))
 Package biblatex Info: Trying to load citation style 'authoryear-comp'...
 Package biblatex Info: ... file 'authoryear-comp.cbx' found.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/biblatex/cbx/authoryear-comp.cbx
-File: authoryear-comp.cbx 2018/11/02 v3.12 biblatex citation style (PK/MW)
+
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/biblatex/cbx/authoryear
+-comp.cbx
+File: authoryear-comp.cbx 2019/08/31 v3.13a biblatex citation style (PK/MW)
 Package biblatex Info: Redefining '\cite'.
 Package biblatex Info: Redefining '\parencite'.
 Package biblatex Info: Redefining '\footcite'.
@@ -616,25 +650,26 @@ Package biblatex Info: Redefining '\smartcites'.
 )
 Package biblatex Info: Trying to load configuration file...
 Package biblatex Info: ... file 'biblatex.cfg' found.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/biblatex/biblatex.cfg
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/biblatex/biblatex.cfg
 File: biblatex.cfg 
-)) (/usr/local/texlive/2019/texmf-dist/tex/latex/xpatch/xpatch.sty (/usr/local/
-texlive/2019/texmf-dist/tex/latex/l3kernel/expl3.sty
-Package: expl3 2019-05-07 L3 programming layer (loader) 
-(/usr/local/texlive/2019/texmf-dist/tex/latex/l3kernel/expl3-code.tex
-Package: expl3 2019-05-07 L3 programming layer (code)
-\c_max_int=\count297
-\l_tmpa_int=\count298
-\l_tmpb_int=\count299
-\g_tmpa_int=\count300
-\g_tmpb_int=\count301
-\g__kernel_prg_map_int=\count302
-\c__ior_term_ior=\count303
-\c_log_iow=\count304
-\l_iow_line_count_int=\count305
-\l__iow_line_target_int=\count306
-\l__iow_one_indent_int=\count307
-\l__iow_indent_int=\count308
+)) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/xpatch/xpatch.sty (/
+Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/l3kernel/expl3.sty
+Package: expl3 2019-09-08 L3 programming layer (loader) 
+
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/l3kernel/expl3-code.tex
+Package: expl3 2019-09-08 L3 programming layer (code)
+\c_max_int=\count299
+\l_tmpa_int=\count300
+\l_tmpb_int=\count301
+\g_tmpa_int=\count302
+\g_tmpb_int=\count303
+\g__kernel_prg_map_int=\count304
+\c__ior_term_noprompt_ior=\count305
+\c_log_iow=\count306
+\l_iow_line_count_int=\count307
+\l__iow_line_target_int=\count308
+\l__iow_one_indent_int=\count309
+\l__iow_indent_int=\count310
 \c_zero_dim=\dimen135
 \c_max_dim=\dimen136
 \l_tmpa_dim=\dimen137
@@ -647,84 +682,86 @@ Package: expl3 2019-05-07 L3 programming layer (code)
 \l_tmpb_skip=\skip83
 \g_tmpa_skip=\skip84
 \g_tmpb_skip=\skip85
-\c_zero_muskip=\muskip12
-\c_max_muskip=\muskip13
-\l_tmpa_muskip=\muskip14
-\l_tmpb_muskip=\muskip15
-\g_tmpa_muskip=\muskip16
-\g_tmpb_muskip=\muskip17
-\l_keys_choice_int=\count309
-\l__intarray_loop_int=\count310
+\c_zero_muskip=\muskip16
+\c_max_muskip=\muskip17
+\l_tmpa_muskip=\muskip18
+\l_tmpb_muskip=\muskip19
+\g_tmpa_muskip=\muskip20
+\g_tmpb_muskip=\muskip21
+\l_keys_choice_int=\count311
+\l__intarray_loop_int=\count312
 \c__intarray_sp_dim=\dimen141
-\g__intarray_font_int=\count311
-\c__fp_leading_shift_int=\count312
-\c__fp_middle_shift_int=\count313
-\c__fp_trailing_shift_int=\count314
-\c__fp_big_leading_shift_int=\count315
-\c__fp_big_middle_shift_int=\count316
-\c__fp_big_trailing_shift_int=\count317
-\c__fp_Bigg_leading_shift_int=\count318
-\c__fp_Bigg_middle_shift_int=\count319
-\c__fp_Bigg_trailing_shift_int=\count320
-\c__kernel_randint_max_int=\count321
-\g__fp_array_int=\count322
-\l__fp_array_loop_int=\count323
-\l__sort_length_int=\count324
-\l__sort_min_int=\count325
-\l__sort_top_int=\count326
-\l__sort_max_int=\count327
-\l__sort_true_max_int=\count328
-\l__sort_block_int=\count329
-\l__sort_begin_int=\count330
-\l__sort_end_int=\count331
-\l__sort_A_int=\count332
-\l__sort_B_int=\count333
-\l__sort_C_int=\count334
-\l__tl_analysis_normal_int=\count335
-\l__tl_analysis_index_int=\count336
-\l__tl_analysis_nesting_int=\count337
-\l__tl_analysis_type_int=\count338
-\l__regex_internal_a_int=\count339
-\l__regex_internal_b_int=\count340
-\l__regex_internal_c_int=\count341
-\l__regex_balance_int=\count342
-\l__regex_group_level_int=\count343
-\l__regex_mode_int=\count344
-\c__regex_cs_in_class_mode_int=\count345
-\c__regex_cs_mode_int=\count346
-\l__regex_catcodes_int=\count347
-\l__regex_default_catcodes_int=\count348
-\c__regex_catcode_D_int=\count349
-\c__regex_catcode_S_int=\count350
-\c__regex_catcode_L_int=\count351
-\c__regex_catcode_O_int=\count352
-\c__regex_catcode_A_int=\count353
-\c__regex_all_catcodes_int=\count354
-\l__regex_show_lines_int=\count355
-\l__regex_min_state_int=\count356
-\l__regex_max_state_int=\count357
-\l__regex_left_state_int=\count358
-\l__regex_right_state_int=\count359
-\l__regex_capturing_group_int=\count360
-\l__regex_min_pos_int=\count361
-\l__regex_max_pos_int=\count362
-\l__regex_curr_pos_int=\count363
-\l__regex_start_pos_int=\count364
-\l__regex_success_pos_int=\count365
-\l__regex_curr_char_int=\count366
-\l__regex_curr_catcode_int=\count367
-\l__regex_last_char_int=\count368
-\l__regex_case_changed_char_int=\count369
-\l__regex_curr_state_int=\count370
-\l__regex_step_int=\count371
-\l__regex_min_active_int=\count372
-\l__regex_max_active_int=\count373
-\l__regex_replacement_csnames_int=\count374
-\l__regex_match_count_int=\count375
-\l__regex_min_submatch_int=\count376
-\l__regex_submatch_int=\count377
-\l__regex_zeroth_submatch_int=\count378
-\g__regex_trace_regex_int=\count379
+\g__intarray_font_int=\count313
+\c__fp_leading_shift_int=\count314
+\c__fp_middle_shift_int=\count315
+\c__fp_trailing_shift_int=\count316
+\c__fp_big_leading_shift_int=\count317
+\c__fp_big_middle_shift_int=\count318
+\c__fp_big_trailing_shift_int=\count319
+\c__fp_Bigg_leading_shift_int=\count320
+\c__fp_Bigg_middle_shift_int=\count321
+\c__fp_Bigg_trailing_shift_int=\count322
+\c__kernel_randint_max_int=\count323
+\g__fp_array_int=\count324
+\l__fp_array_loop_int=\count325
+\l__sort_length_int=\count326
+\l__sort_min_int=\count327
+\l__sort_top_int=\count328
+\l__sort_max_int=\count329
+\l__sort_true_max_int=\count330
+\l__sort_block_int=\count331
+\l__sort_begin_int=\count332
+\l__sort_end_int=\count333
+\l__sort_A_int=\count334
+\l__sort_B_int=\count335
+\l__sort_C_int=\count336
+\l__str_internal_int=\count337
+\c__str_replacement_char_int=\count338
+\l__tl_analysis_normal_int=\count339
+\l__tl_analysis_index_int=\count340
+\l__tl_analysis_nesting_int=\count341
+\l__tl_analysis_type_int=\count342
+\l__regex_internal_a_int=\count343
+\l__regex_internal_b_int=\count344
+\l__regex_internal_c_int=\count345
+\l__regex_balance_int=\count346
+\l__regex_group_level_int=\count347
+\l__regex_mode_int=\count348
+\c__regex_cs_in_class_mode_int=\count349
+\c__regex_cs_mode_int=\count350
+\l__regex_catcodes_int=\count351
+\l__regex_default_catcodes_int=\count352
+\c__regex_catcode_D_int=\count353
+\c__regex_catcode_S_int=\count354
+\c__regex_catcode_L_int=\count355
+\c__regex_catcode_O_int=\count356
+\c__regex_catcode_A_int=\count357
+\c__regex_all_catcodes_int=\count358
+\l__regex_show_lines_int=\count359
+\l__regex_min_state_int=\count360
+\l__regex_max_state_int=\count361
+\l__regex_left_state_int=\count362
+\l__regex_right_state_int=\count363
+\l__regex_capturing_group_int=\count364
+\l__regex_min_pos_int=\count365
+\l__regex_max_pos_int=\count366
+\l__regex_curr_pos_int=\count367
+\l__regex_start_pos_int=\count368
+\l__regex_success_pos_int=\count369
+\l__regex_curr_char_int=\count370
+\l__regex_curr_catcode_int=\count371
+\l__regex_last_char_int=\count372
+\l__regex_case_changed_char_int=\count373
+\l__regex_curr_state_int=\count374
+\l__regex_step_int=\count375
+\l__regex_min_active_int=\count376
+\l__regex_max_active_int=\count377
+\l__regex_replacement_csnames_int=\count378
+\l__regex_match_count_int=\count379
+\l__regex_min_submatch_int=\count380
+\l__regex_submatch_int=\count381
+\l__regex_zeroth_submatch_int=\count382
+\g__regex_trace_regex_int=\count383
 \c_empty_box=\box30
 \l_tmpa_box=\box31
 \l_tmpb_box=\box32
@@ -768,25 +805,28 @@ Package: expl3 2019-05-07 L3 programming layer (code)
 \l__coffin_display_offset_dim=\dimen164
 \l__coffin_display_x_dim=\dimen165
 \l__coffin_display_y_dim=\dimen166
-\g__file_internal_ior=\read2
-\l__seq_internal_a_int=\count380
-\l__seq_internal_b_int=\count381
-\c__deprecation_minus_one=\count382
-) (/usr/local/texlive/2019/texmf-dist/tex/latex/l3kernel/l3pdfmode.def
-File: l3pdfmode.def 2019-04-06 v L3 Experimental driver: PDF mode
-\l__driver_color_stack_int=\count383
-\l__driver_pdf_tmp_box=\box48
+\g__char_data_ior=\read2
+\l__seq_internal_a_int=\count384
+\l__seq_internal_b_int=\count385
+)
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdf
+mode.def
+File: l3backend-pdfmode.def 2019-04-06 v L3 backend support: PDF mode
+\l__kernel_color_stack_int=\count386
+\l__pdf_internal_box=\box48
 ))
 Package: xpatch 2012/10/02 v0.3 Extending etoolbox patching commands
-(/usr/local/texlive/2019/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
-Package: xparse 2019-05-03 L3 Experimental document command parser
-\l__xparse_current_arg_int=\count384
-\g__xparse_grabber_int=\count385
-\l__xparse_m_args_int=\count386
-\l__xparse_v_nesting_int=\count387
-)) (/usr/local/texlive/2019/texmf-dist/tex/latex/xcolor/xcolor.sty
+
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/l3packages/xparse/xpars
+e.sty
+Package: xparse 2019-05-28 L3 Experimental document command parser
+\l__xparse_current_arg_int=\count387
+\g__xparse_grabber_int=\count388
+\l__xparse_m_args_int=\count389
+\l__xparse_v_nesting_int=\count390
+)) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/xcolor/xcolor.sty
 Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
-(/usr/local/texlive/2019/texmf-dist/tex/latex/graphics-cfg/color.cfg
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package xcolor Info: Driver file: pdftex.def on input line 225.
@@ -799,12 +839,16 @@ Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1368.
 Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
-) (/usr/local/texlive/2019/texmf-dist/tex/latex/hyperref/hyperref.sty
-Package: hyperref 2018/11/30 v6.88e Hypertext links for LaTeX
-(/usr/local/texlive/2019/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2019/06/12 v6.88h Hypertext links for LaTeX
+
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/generic/oberdiek/hobsub-hyper
+ref.sty
 Package: hobsub-hyperref 2016/05/16 v1.14 Bundle oberdiek, subset hyperref (HO)
 
-(/usr/local/texlive/2019/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty
+
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/generic/oberdiek/hobsub-gener
+ic.sty
 Package: hobsub-generic 2016/05/16 v1.14 Bundle oberdiek, subset generic (HO)
 Package: hobsub 2016/05/16 v1.14 Construct package bundles (HO)
 Package hobsub Info: Skipping package `infwarerr' (already loaded).
@@ -831,54 +875,58 @@ Package: atveryend 2016/05/16 v1.9 Hooks at the very end of document (HO)
 Package: atbegshi 2016/06/09 v1.18 At begin shipout hook (HO)
 Package: refcount 2016/05/16 v3.5 Data extraction from label references (HO)
 Package: hycolor 2016/05/16 v1.8 Color options for hyperref/bookmark (HO)
-) (/usr/local/texlive/2019/texmf-dist/tex/latex/oberdiek/auxhook.sty
+) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/oberdiek/auxhook.sty
 Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
 )
 \@linkdim=\dimen167
-\Hy@linkcounter=\count388
-\Hy@pagecounter=\count389
-(/usr/local/texlive/2019/texmf-dist/tex/latex/hyperref/pd1enc.def
-File: pd1enc.def 2018/11/30 v6.88e Hyperref: PDFDocEncoding definition (HO)
+\Hy@linkcounter=\count391
+\Hy@pagecounter=\count392
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2019/06/12 v6.88h Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
 )
-\Hy@SavedSpaceFactor=\count390
-(/usr/local/texlive/2019/texmf-dist/tex/latex/latexconfig/hyperref.cfg
+\Hy@SavedSpaceFactor=\count393
+
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/latexconfig/hyperref.cf
+g
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
 )
-Package hyperref Info: Option `colorlinks' set `false' on input line 4393.
-Package hyperref Info: Hyper figures OFF on input line 4519.
-Package hyperref Info: Link nesting OFF on input line 4524.
-Package hyperref Info: Hyper index ON on input line 4527.
-Package hyperref Info: Plain pages OFF on input line 4534.
-Package hyperref Info: Backreferencing OFF on input line 4539.
+Package hyperref Info: Option `colorlinks' set `false' on input line 4424.
+Package hyperref Info: Hyper figures OFF on input line 4550.
+Package hyperref Info: Link nesting OFF on input line 4555.
+Package hyperref Info: Hyper index ON on input line 4558.
+Package hyperref Info: Plain pages OFF on input line 4565.
+Package hyperref Info: Backreferencing OFF on input line 4570.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
-Package hyperref Info: Bookmarks ON on input line 4772.
-\c@Hy@tempcnt=\count391
-LaTeX Info: Redefining \url on input line 5125.
+Package hyperref Info: Bookmarks ON on input line 4803.
+\c@Hy@tempcnt=\count394
+LaTeX Info: Redefining \url on input line 5156.
 \XeTeXLinkMargin=\dimen168
-\Fld@menulength=\count392
+\Fld@menulength=\count395
 \Field@Width=\dimen169
 \Fld@charsize=\dimen170
-Package hyperref Info: Hyper figures OFF on input line 6380.
-Package hyperref Info: Link nesting OFF on input line 6385.
-Package hyperref Info: Hyper index ON on input line 6388.
-Package hyperref Info: backreferencing OFF on input line 6395.
-Package hyperref Info: Link coloring OFF on input line 6400.
-Package hyperref Info: Link coloring with OCG OFF on input line 6405.
-Package hyperref Info: PDF/A mode OFF on input line 6410.
-LaTeX Info: Redefining \ref on input line 6450.
-LaTeX Info: Redefining \pageref on input line 6454.
-\Hy@abspage=\count393
-\c@Item=\count394
-\c@Hfootnote=\count395
+Package hyperref Info: Hyper figures OFF on input line 6411.
+Package hyperref Info: Link nesting OFF on input line 6416.
+Package hyperref Info: Hyper index ON on input line 6419.
+Package hyperref Info: backreferencing OFF on input line 6426.
+Package hyperref Info: Link coloring OFF on input line 6431.
+Package hyperref Info: Link coloring with OCG OFF on input line 6436.
+Package hyperref Info: PDF/A mode OFF on input line 6441.
+LaTeX Info: Redefining \ref on input line 6481.
+LaTeX Info: Redefining \pageref on input line 6485.
+\Hy@abspage=\count396
+\c@Item=\count397
+\c@Hfootnote=\count398
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/hyperref/hpdftex.def
-File: hpdftex.def 2018/11/30 v6.88e Hyperref driver for pdfTeX
-\Fld@listcount=\count396
-\c@bookmark@seq@number=\count397
-(/usr/local/texlive/2019/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2019/06/12 v6.88h Hyperref driver for pdfTeX
+\Fld@listcount=\count399
+\c@bookmark@seq@number=\count400
+
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/oberdiek/rerunfilecheck
+.sty
 Package: rerunfilecheck 2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 82.
@@ -890,13 +938,14 @@ Package hyperref Info: Option `bookmarksopen' set `true' on input line 159.
 Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 159.
 
 Package hyperref Info: Option `colorlinks' set `true' on input line 159.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/tocbibind/tocbibind.sty
+
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/tocbibind/tocbibind.sty
 Package: tocbibind 2010/10/13 v1.5k extra ToC listings
 Package tocbibind Info: The document has chapter divisions on input line 50.
 
 Package tocbibind Note: Using chapter style headings, unless overridden.
 
-) (/usr/local/texlive/2019/texmf-dist/tex/latex/tocloft/tocloft.sty
+) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/tocloft/tocloft.sty
 Package: tocloft 2017/08/31 v2.3i parameterised ToC, etc., typesetting
 Package tocloft Info: The document has chapter divisions on input line 51.
 \cftparskip=\skip87
@@ -928,47 +977,47 @@ Package tocloft Info: The document has chapter divisions on input line 51.
 \cftbeforefigskip=\skip113
 \cftfigindent=\skip114
 \cftfignumwidth=\skip115
-\c@lofdepth=\count398
-\c@lotdepth=\count399
+\c@lofdepth=\count401
+\c@lotdepth=\count402
 \cftbeforelottitleskip=\skip116
 \cftafterlottitleskip=\skip117
 \cftbeforetabskip=\skip118
 \cfttabindent=\skip119
 \cfttabnumwidth=\skip120
-) (/usr/local/texlive/2019/texmf-dist/tex/latex/framed/framed.sty
+) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/framed/framed.sty
 Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
 \OuterFrameSep=\skip121
 \fb@frw=\dimen171
 \fb@frh=\dimen172
 \FrameRule=\dimen173
 \FrameSep=\dimen174
-) (/usr/local/texlive/2019/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
+) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
 Package: fancyvrb 2019/01/15
 Style option: `fancyvrb' v3.2a <2019/01/15> (tvz)
-\FV@CodeLineNo=\count400
+\FV@CodeLineNo=\count403
 \FV@InFile=\read3
 \FV@TabBox=\box49
-\c@FancyVerbLine=\count401
-\FV@StepNumber=\count402
+\c@FancyVerbLine=\count404
+\FV@StepNumber=\count405
 \FV@OutFile=\write4
-) (/usr/local/texlive/2019/texmf-dist/tex/latex/tools/longtable.sty
+) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty
 Package: longtable 2014/10/28 v4.11 Multi-page Table package (DPC)+ FMi change
 \LTleft=\skip122
 \LTright=\skip123
 \LTpre=\skip124
 \LTpost=\skip125
-\LTchunksize=\count403
+\LTchunksize=\count406
 \LTcapwidth=\dimen175
 \LT@head=\box50
 \LT@firsthead=\box51
 \LT@foot=\box52
 \LT@lastfoot=\box53
-\LT@cols=\count404
-\LT@rows=\count405
-\c@LT@tables=\count406
-\c@LT@chunks=\count407
+\LT@cols=\count407
+\LT@rows=\count408
+\c@LT@tables=\count409
+\c@LT@chunks=\count410
 \LT@p@ftn=\toks25
-) (/usr/local/texlive/2019/texmf-dist/tex/latex/booktabs/booktabs.sty
+) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/booktabs/booktabs.sty
 Package: booktabs 2016/04/27 v1.618033 publication quality tables
 \heavyrulewidth=\dimen176
 \lightrulewidth=\dimen177
@@ -980,21 +1029,23 @@ Package: booktabs 2016/04/27 v1.618033 publication quality tables
 \cmidrulesep=\dimen183
 \cmidrulekern=\dimen184
 \defaultaddspace=\dimen185
-\@cmidla=\count408
-\@cmidlb=\count409
+\@cmidla=\count411
+\@cmidlb=\count412
 \@aboverulesep=\dimen186
 \@belowrulesep=\dimen187
-\@thisruleclass=\count410
-\@lastruleclass=\count411
+\@thisruleclass=\count413
+\@lastruleclass=\count414
 \@thisrulewidth=\dimen188
 ))
 Package biblatex Info: Trying to load language 'english'...
 Package biblatex Info: ... file 'english.lbx' found.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/biblatex/lbx/english.lbx
-File: english.lbx 2018/11/02 v3.12 biblatex localization (PK/MW)
+
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/biblatex/lbx/english.lb
+x
+File: english.lbx 2019/08/31 v3.13a biblatex localization (PK/MW)
 )
-\@quotelevel=\count412
-\@quotereset=\count413
+\@quotelevel=\count415
+\@quotereset=\count416
 (./thesis.aux)
 \openout1 = `thesis.aux'.
 
@@ -1012,14 +1063,14 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 28.
 LaTeX Font Info:    ... okay on input line 28.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 28.
 LaTeX Font Info:    Try loading font information for TS1+cmr on input line 28.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/base/ts1cmr.fd
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 28.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 28.
 LaTeX Font Info:    ... okay on input line 28.
 LaTeX Font Info:    Try loading font information for T1+ppl on input line 28.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/psnfss/t1ppl.fd
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/psnfss/t1ppl.fd
 File: t1ppl.fd 2001/06/04 font definitions for T1/ppl.
 )
 *geometry* driver: auto-detecting
@@ -1059,26 +1110,15 @@ File: t1ppl.fd 2001/06/04 font definitions for T1/ppl.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: longtable package is loaded.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/caption/ltcaption.sty
-Package: ltcaption 2018/08/26 v1.4-95 longtable captions (AR)
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/caption/ltcaption.sty
+Package: ltcaption 2018/08/26 v1.4a longtable captions (AR)
 )
 Package caption Info: End \AtBeginDocument code.
-(/usr/local/texlive/2019/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
-[Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count414
-\scratchdimen=\dimen189
-\scratchbox=\box54
-\nofMPsegments=\count415
-\nofMParguments=\count416
-\everyMPshowfont=\toks26
-\MPscratchCnt=\count417
-\MPscratchDim=\dimen190
-\MPnumerator=\count418
-\makeMPintoPDFobject=\count419
-\everyMPtoPDFconversion=\toks27
-) (/usr/local/texlive/2019/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/oberdiek/epstopdf-base.
+sty
 Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
-(/usr/local/texlive/2019/texmf-dist/tex/latex/oberdiek/grfext.sty
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/oberdiek/grfext.sty
 Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
 )
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
@@ -1087,7 +1127,9 @@ Package grfext Info: Graphics extension search list:
 (grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
 G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/latexconfig/epstopdf-sy
+s.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
@@ -1101,7 +1143,7 @@ Package microtype Info: Using default expansion set `basictext'.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/microtype/mt-ppl.cfg
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/microtype/mt-ppl.cfg
 File: mt-ppl.cfg 2005/11/16 v1.6 microtype config. file: Palatino (RS)
 )
 Package biblatex Info: Input encoding 'utf8' detected.
@@ -1110,18 +1152,20 @@ Package biblatex Info: Data encoding 'utf8' specified.
 \openout3 = `thesis.bcf'.
 
 Package biblatex Info: Trying to load bibliographic data...
-Package biblatex Info: ... file 'thesis.bbl' found.
-(./thesis.bbl)
+Package biblatex Info: ... file 'thesis.bbl' not found.
+No file thesis.bbl.
 Package biblatex Info: Reference section=0 on input line 28.
 Package biblatex Info: Reference segment=0 on input line 28.
-\AtBeginShipoutBox=\box55
+\AtBeginShipoutBox=\box54
 Package hyperref Info: Link coloring ON on input line 28.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/hyperref/nameref.sty
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
-(/usr/local/texlive/2019/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
+
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/generic/oberdiek/gettitlestri
+ng.sty
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count420
+\c@section@level=\count417
 )
 LaTeX Info: Redefining \ref on input line 28.
 LaTeX Info: Redefining \pageref on input line 28.
@@ -1131,7 +1175,7 @@ LaTeX Info: Redefining \nameref on input line 28.
 \openout5 = `thesis.out'.
 
 LaTeX Font Info:    Try loading font information for T1+fvs on input line 32.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/bera/t1fvs.fd
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/bera/t1fvs.fd
 File: t1fvs.fd 2004/09/07 scalable font definitions for T1/fvs.
 )
 LaTeX Font Info:    Font shape `T1/fvs/m/n' will be
@@ -1148,7 +1192,7 @@ LaTeX Font Info:    Font shape `T1/fvs/m/n' will be
 (Font)              scaled to size 12.9599pt on input line 32.
 LaTeX Font Info:    Font shape `T1/fvs/m/n' will be
 (Font)              scaled to size 15.55188pt on input line 32.
-<figures/crest.jpg, id=76, 509.905pt x 553.06625pt>
+<figures/crest.jpg, id=72, 509.905pt x 553.06625pt>
 File: figures/crest.jpg Graphic file (type jpg)
 <use figures/crest.jpg>
 Package pdftex.def Info: figures/crest.jpg  used on input line 32.
@@ -1157,8 +1201,8 @@ LaTeX Font Info:    Font shape `T1/fvs/m/n' will be
 (Font)              scaled to size 10.79993pt on input line 32.
 [1
 
-{/usr/local/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./figur
-es/crest.jpg>]
+{/Users/huizezhang/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map
+} <./figures/crest.jpg>]
 LaTeX Font Info:    Font shape `T1/fvs/m/n' will be
 (Font)              scaled to size 21.59985pt on input line 34.
 LaTeX Font Info:    Font shape `T1/fvs/b/n' will be
@@ -1167,23 +1211,23 @@ LaTeX Font Info:    Font shape `T1/fvs/b/n' will be
 LaTeX Font Info:    Font shape `T1/fvs/b/n' will be
 (Font)              scaled to size 9.85492pt on input line 3.
 LaTeX Font Info:    Try loading font information for OT1+ppl on input line 3.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/psnfss/ot1ppl.fd
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ot1ppl.fd
 File: ot1ppl.fd 2001/06/04 font definitions for OT1/ppl.
 )
 LaTeX Font Info:    Try loading font information for OML+zplm on input line 3.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/psnfss/omlzplm.fd
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/psnfss/omlzplm.fd
 File: omlzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OML/zplm.
 )
 LaTeX Font Info:    Try loading font information for OMS+zplm on input line 3.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/psnfss/omszplm.fd
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/psnfss/omszplm.fd
 File: omszplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMS/zplm.
 )
 LaTeX Font Info:    Try loading font information for OMX+zplm on input line 3.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/psnfss/omxzplm.fd
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/psnfss/omxzplm.fd
 File: omxzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMX/zplm.
 )
 LaTeX Font Info:    Try loading font information for OT1+zplm on input line 3.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/psnfss/ot1zplm.fd
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ot1zplm.fd
 File: ot1zplm.fd 2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
 )
 Package microtype Info: Loading generic protrusion settings for font family
@@ -1208,10 +1252,16 @@ LaTeX Font Info:    Font shape `T1/fvs/b/n' will be
 (Font)              scaled to size 10.79993pt on input line 54.
 LaTeX Font Info:    Font shape `T1/fvs/b/n' will be
 (Font)              scaled to size 12.9599pt on input line 67.
-[2] [3] [4]
+[2]
+Underfull \hbox (badness 5302) in paragraph at lines 79--80
+[]\T1/ppl/m/n/10.95 (+20) Facial recog-ni-tion soft-ware has also been im-ple-m
+ented by Deep-Face [@taig-
+ []
+
+[3] [4]
 Chapter 2.
 LaTeX Font Info:    Try loading font information for T1+fvm on input line 89.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/bera/t1fvm.fd
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/bera/t1fvm.fd
 File: t1fvm.fd 2004/09/07 scalable font definitions for T1/fvm.
 )
 LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
@@ -1223,121 +1273,128 @@ Package microtype Info: Loading generic protrusion settings for font family
 [5
 
 ]
-<figures/workflow.png, id=218, 795.97375pt x 461.725pt>
+<figures/workflow.png, id=139, 795.97375pt x 461.725pt>
 File: figures/workflow.png Graphic file (type png)
 <use figures/workflow.png>
 Package pdftex.def Info: figures/workflow.png  used on input line 92.
 (pdftex.def)             Requested size: 426.79135pt x 247.56645pt.
 LaTeX Font Info:    Try loading font information for TS1+ppl on input line 104.
 
-(/usr/local/texlive/2019/texmf-dist/tex/latex/psnfss/ts1ppl.fd
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ts1ppl.fd
 File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
-) [6 <./figures/workflow.png>] [7] [8] [9] [10
+) [6 <./figures/workflow.png>]
+Overfull \hbox (1512.27309pt too wide) in paragraph at lines 124--133
+ [][] 
+ []
+
+
+LaTeX Warning: Float too large for page by 3.66824pt on input line 219.
+
+[7] [8] [9] [10
 
 ]
 Chapter 3.
-[11] [12
+[11
+
+] [12
 
 ]
 Chapter 4.
 
-Underfull \hbox (badness 10000) in paragraph at lines 200--202
+Underfull \hbox (badness 10000) in paragraph at lines 253--255
 
  []
 
 [13]
-<thesis_files/figure-latex/unnamed-chunk-4-1.pdf, id=275, 712.6625pt x 496.8562
+<thesis_files/figure-latex/unnamed-chunk-4-1.pdf, id=197, 712.6625pt x 496.8562
 5pt>
 File: thesis_files/figure-latex/unnamed-chunk-4-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/unnamed-chunk-4-1.pdf>
 Package pdftex.def Info: thesis_files/figure-latex/unnamed-chunk-4-1.pdf  used 
-on input line 226.
+on input line 279.
 (pdftex.def)             Requested size: 426.79135pt x 297.54744pt.
 [14]
-Overfull \hbox (4.41089pt too wide) in paragraph at lines 287--304
+Overfull \hbox (4.41089pt too wide) in paragraph at lines 340--357
  [][] 
  []
 
 [15 <./thesis_files/figure-latex/unnamed-chunk-4-1.pdf>]
-
-LaTeX Warning: Reference `common_video' on page 16 undefined on input line 331.
-
-
-<thesis_files/figure-latex/unnamed-chunk-9-1.pdf, id=311, 704.6325pt x 495.8525
-pt>
-File: thesis_files/figure-latex/unnamed-chunk-9-1.pdf Graphic file (type pdf)
-<use thesis_files/figure-latex/unnamed-chunk-9-1.pdf>
-Package pdftex.def Info: thesis_files/figure-latex/unnamed-chunk-9-1.pdf  used 
-on input line 334.
-(pdftex.def)             Requested size: 426.79135pt x 300.33594pt.
-[16] [17 <./thesis_files/figure-latex/unnamed-chunk-9-1.pdf>]
-<thesis_files/figure-latex/unnamed-chunk-13-1.pdf, id=340, 712.6625pt x 495.852
+<thesis_files/figure-latex/unnamed-chunk-10-1.pdf, id=232, 712.6625pt x 495.852
 5pt>
-File: thesis_files/figure-latex/unnamed-chunk-13-1.pdf Graphic file (type pdf)
-<use thesis_files/figure-latex/unnamed-chunk-13-1.pdf>
-Package pdftex.def Info: thesis_files/figure-latex/unnamed-chunk-13-1.pdf  used
- on input line 386.
+File: thesis_files/figure-latex/unnamed-chunk-10-1.pdf Graphic file (type pdf)
+<use thesis_files/figure-latex/unnamed-chunk-10-1.pdf>
+Package pdftex.def Info: thesis_files/figure-latex/unnamed-chunk-10-1.pdf  used
+ on input line 457.
 (pdftex.def)             Requested size: 426.79135pt x 296.94633pt.
-<thesis_files/figure-latex/unnamed-chunk-15-1.pdf, id=343, 710.655pt x 495.8525
+[16] [17 <./thesis_files/figure-latex/unnamed-chunk-10-1.pdf>]
+<thesis_files/figure-latex/unnamed-chunk-11-1.pdf, id=255, 704.6325pt x 493.845
 pt>
-File: thesis_files/figure-latex/unnamed-chunk-15-1.pdf Graphic file (type pdf)
-<use thesis_files/figure-latex/unnamed-chunk-15-1.pdf>
-Package pdftex.def Info: thesis_files/figure-latex/unnamed-chunk-15-1.pdf  used
- on input line 407.
-(pdftex.def)             Requested size: 426.79135pt x 297.79373pt.
-[18
-
-]
-<thesis_files/figure-latex/unnamed-chunk-17-1.pdf, id=356, 712.6625pt x 495.852
+File: thesis_files/figure-latex/unnamed-chunk-11-1.pdf Graphic file (type pdf)
+<use thesis_files/figure-latex/unnamed-chunk-11-1.pdf>
+Package pdftex.def Info: thesis_files/figure-latex/unnamed-chunk-11-1.pdf  used
+ on input line 466.
+(pdftex.def)             Requested size: 426.79135pt x 299.12pt.
+[18 <./thesis_files/figure-latex/unnamed-chunk-11-1.pdf>] [19] [20]
+<thesis_files/figure-latex/unnamed-chunk-16-1.pdf, id=285, 712.6625pt x 495.852
 5pt>
-File: thesis_files/figure-latex/unnamed-chunk-17-1.pdf Graphic file (type pdf)
-<use thesis_files/figure-latex/unnamed-chunk-17-1.pdf>
-Package pdftex.def Info: thesis_files/figure-latex/unnamed-chunk-17-1.pdf  used
- on input line 437.
+File: thesis_files/figure-latex/unnamed-chunk-16-1.pdf Graphic file (type pdf)
+<use thesis_files/figure-latex/unnamed-chunk-16-1.pdf>
+Package pdftex.def Info: thesis_files/figure-latex/unnamed-chunk-16-1.pdf  used
+ on input line 505.
 (pdftex.def)             Requested size: 426.79135pt x 296.94633pt.
-[19 <./thesis_files/figure-latex/unnamed-chunk-13-1.pdf>] [20 <./thesis_files/f
-igure-latex/unnamed-chunk-15-1.pdf> <./thesis_files/figure-latex/unnamed-chunk-
-17-1.pdf>]
-<thesis_files/figure-latex/unnamed-chunk-18-1.pdf, id=390, 706.64pt x 495.8525p
-t>
+<thesis_files/figure-latex/unnamed-chunk-18-1.pdf, id=288, 710.655pt x 495.8525
+pt>
 File: thesis_files/figure-latex/unnamed-chunk-18-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/unnamed-chunk-18-1.pdf>
 Package pdftex.def Info: thesis_files/figure-latex/unnamed-chunk-18-1.pdf  used
- on input line 445.
-(pdftex.def)             Requested size: 426.79135pt x 299.48097pt.
-[21 <./thesis_files/figure-latex/unnamed-chunk-18-1.pdf>] [22
+ on input line 526.
+(pdftex.def)             Requested size: 426.79135pt x 297.79373pt.
+[21
 
 ]
+<thesis_files/figure-latex/unnamed-chunk-20-1.pdf, id=301, 712.6625pt x 493.845
+pt>
+File: thesis_files/figure-latex/unnamed-chunk-20-1.pdf Graphic file (type pdf)
+<use thesis_files/figure-latex/unnamed-chunk-20-1.pdf>
+Package pdftex.def Info: thesis_files/figure-latex/unnamed-chunk-20-1.pdf  used
+ on input line 556.
+(pdftex.def)             Requested size: 426.79135pt x 295.74411pt.
+[22 <./thesis_files/figure-latex/unnamed-chunk-16-1.pdf>] [23 <./thesis_files/f
+igure-latex/unnamed-chunk-18-1.pdf> <./thesis_files/figure-latex/unnamed-chunk-
+20-1.pdf>]
+<thesis_files/figure-latex/unnamed-chunk-21-1.pdf, id=336, 706.64pt x 493.845pt
+>
+File: thesis_files/figure-latex/unnamed-chunk-21-1.pdf Graphic file (type pdf)
+<use thesis_files/figure-latex/unnamed-chunk-21-1.pdf>
+Package pdftex.def Info: thesis_files/figure-latex/unnamed-chunk-21-1.pdf  used
+ on input line 564.
+(pdftex.def)             Requested size: 426.79135pt x 298.2685pt.
+[24 <./thesis_files/figure-latex/unnamed-chunk-21-1.pdf>]
 Appendix A.
-[23] [24] [25]
+[25
+
+] [26] [27]
 Overfull \vbox (320.66219pt too high) has occurred while \output is active []
 
-[26]
-Overfull \vbox (1516.23264pt too high) has occurred while \output is active []
+[28]
+Overfull \vbox (1224.97122pt too high) has occurred while \output is active []
 
-[27]
-Overfull \hbox (30.31593pt too wide) in paragraph at lines 864--1161
-[][] 
- []
+[29]
 
+LaTeX Warning: Empty bibliography on input line 1133.
 
-Overfull \vbox (2614.06412pt too high) has occurred while \output is active []
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1137.
 
-[28] [29
+Overfull \vbox (1247.37595pt too high) has occurred while \output is active []
 
-] [30]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1166.
-[31]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1166.
+[30]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1137.
 (./thesis.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1166.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1166.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1137.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1137.
 
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 04685EFEDBE655B2A2867300A86A4A21;1091.
-
-LaTeX Warning: There were undefined references.
-
+(rerunfilecheck)             Checksum: F6FB5C4F045DD2F5EEF4F7D3185930A3;1041.
 Package logreq Info: Writing requests to 'thesis.run.xml'.
 \openout1 = `thesis.run.xml'.
 
@@ -1347,28 +1404,29 @@ Package logreq Info: Writing requests to 'thesis.run.xml'.
 ### semi simple group (level 1) entered at line 102 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 28497 strings out of 492616
- 505507 string characters out of 6129481
- 1017890 words of memory out of 5000000
- 31751 multiletter control sequences out of 15000+600000
- 627278 words of font info for 227 fonts, out of 8000000 for 9000
- 1141 hyphenation exceptions out of 8191
- 48i,12n,65p,1640b,17041s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2019/texmf-dist/fonts/enc/dvips/base/8r.enc
-}</usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><
-/usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></
-usr/local/texlive/2019/texmf-dist/fonts/type1/public/mathpazo/fplmr.pfb></usr/l
-ocal/texlive/2019/texmf-dist/fonts/type1/public/mathpazo/fplmri.pfb></usr/local
-/texlive/2019/texmf-dist/fonts/type1/public/bera/fvmr8a.pfb></usr/local/texlive
-/2019/texmf-dist/fonts/type1/public/bera/fvsb8a.pfb></usr/local/texlive/2019/te
-xmf-dist/fonts/type1/public/bera/fvsr8a.pfb></usr/local/texlive/2019/texmf-dist
-/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/texlive/2019/texmf-dist/fonts/
-type1/urw/palatino/uplr8a.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/u
-rw/palatino/uplri8a.pfb>
-Output written on thesis.pdf (34 pages, 575010 bytes).
+ 28697 strings out of 494553
+ 517592 string characters out of 6174236
+ 1043219 words of memory out of 5000000
+ 31784 multiletter control sequences out of 15000+600000
+ 624873 words of font info for 196 fonts, out of 8000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 48i,12n,65p,1616b,15863s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/Users/huizezhang/Library/TinyTeX/texmf-dist/fonts/enc/dvips/b
+ase/8r.enc}</Users/huizezhang/Library/TinyTeX/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmr10.pfb></Users/huizezhang/Library/TinyTeX/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmsy10.pfb></Users/huizezhang/Library/TinyTeX/texmf-dist/fonts
+/type1/public/mathpazo/fplmr.pfb></Users/huizezhang/Library/TinyTeX/texmf-dist/
+fonts/type1/public/mathpazo/fplmri.pfb></Users/huizezhang/Library/TinyTeX/texmf
+-dist/fonts/type1/public/bera/fvmr8a.pfb></Users/huizezhang/Library/TinyTeX/tex
+mf-dist/fonts/type1/public/bera/fvsb8a.pfb></Users/huizezhang/Library/TinyTeX/t
+exmf-dist/fonts/type1/public/bera/fvsr8a.pfb></Users/huizezhang/Library/TinyTeX
+/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></Users/huizezhang/Library/Tiny
+TeX/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></Users/huizezhang/Library/T
+inyTeX/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
+Output written on thesis.pdf (33 pages, 569705 bytes).
 PDF statistics:
- 545 PDF objects out of 1000 (max. 8388607)
- 473 compressed objects within 5 object streams
- 142 named destinations out of 1000 (max. 500000)
- 32953 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 460 PDF objects out of 1000 (max. 8388607)
+ 387 compressed objects within 4 object streams
+ 110 named destinations out of 1000 (max. 500000)
+ 32950 words of extra memory for PDF output out of 35830 (max. 10000000)
 

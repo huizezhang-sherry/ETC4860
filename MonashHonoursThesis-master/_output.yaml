@@ -10,4 +10,4 @@ bookdown::pdf_book:
   pandoc_args: [
     "--top-level-division=chapter"
   ]
-  citation_package: biblatex
+  #citation_package: biblatex

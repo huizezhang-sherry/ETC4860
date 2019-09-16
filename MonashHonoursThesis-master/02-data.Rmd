@@ -38,16 +38,21 @@ In this project, we will make use of the action unit variables along with all th
 
 
 ```{r}
-au_imputed_old %>% 
-        select(judge_id: frame_id, speaker, AU04_r, AU04_c) %>% 
-        head() %>% kable(caption = "\\label{tab:wide}")
+au_imputed_old %>%
+        filter(judge == "Bell", video == "McKell") %>% head(2) %>%
+        kable(caption = "\\label{tab:wide}")
+
 ```
+
 
 The data can also be expressed in the long format with action unit being another index and presence and intensity being two columns. The Table \ref{tab:long} presents the first five rows of the data in the long format. 
 
 
 ```{r}
-au_tidy %>% head() %>% kable(caption = "\\label{tab:long}")
+au_tidy %>%
+        filter(judge == "Bell", video == "McKell", frame <=2) %>% 
+        kable(caption = "\\label{tab:long}") %>% 
+        kableExtra::kable_styling(latex_options="scale_down")
 ```
 
 

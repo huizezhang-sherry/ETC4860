@@ -23,14 +23,14 @@ Table: Details of videos processed.
 ```{r}
 au_meaning %>% 
   filter(AU_number %in% unique(au_tidy$AU)) %>% 
-  select(AU_meaning) %>% 
+  dplyr::select(AU_meaning) %>% 
   kable()
 ```
 
 ## Model results
 
 ```{r}
-tidy(binomial_model) %>% kable(digits=2)
+tidy(binomial_model_1) %>% kable(digits=2)
 tidy(binomial_model_2) %>% kable(digits=2)
 tidy(binomial_model_3) %>% kable(digits=2)
 ```
