@@ -18,7 +18,7 @@ crop_function <- function(video){
   
   if(video %in% c("nauru-a", "nauru-b")){
     for (j in seq(1,3,1)){
-      cmd[j] = paste0("cd dt/", video,"; magick mogrify -crop ", cord$geom[j + start_position], " -path ../cropped/", video, "/", j, " *.png")
+      cmd[j] = paste0("cd dt/", video,"; magick mogrify -crop ", cord$geom[j + start_position], " -path ../../cropped/", video, "/", j, " *.png")
     }
     
     for (i in 1:length(cmd)){
@@ -26,7 +26,7 @@ crop_function <- function(video){
     }
   }else{
     for (j in seq(1,5,1)){
-      cmd[j] = paste0("cd dt/", video,"; magick mogrify -crop ", cord$geom[j + start_position], " -path ../cropped/", video, "/", j, " *.png")
+      cmd[j] = paste0("cd dt/", video,"; magick mogrify -crop ", cord$geom[j + start_position], " -path ../../cropped/", video, "/", j, " *.png")
     }
     
     for (i in 1:length(cmd)){
