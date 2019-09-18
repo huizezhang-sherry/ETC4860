@@ -98,10 +98,10 @@ tibble::tibble(emotion = c("Surprise", "Boredom", "Confusion"),
 ```{r}
 other_highf <- most_common %>% 
   filter(most_common ==1) %>% 
-  select(-c(common, most_common, avg_presence, Muscle)) %>% 
+  dplyr::select(-c(common, most_common, avg_presence, Muscle)) %>% 
   filter(!AU %in% c("AU02", "AU20", "AU15", "AU14")) %>% 
   mutate(index = row_number()) %>% 
-  select(-AU) %>% 
+  dplyr::select(-AU) %>% 
   spread(index, AU_meaning) %>% 
   rename(first = `1`, second = `2`, third = `3`)
 
