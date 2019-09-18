@@ -1,7 +1,0 @@
-#!/bin/bash
-
-cd videos
-cd trail
-youtube-dl --batch-file=download_list.txt --no-check-certificate
-
-mv 2018-11-07a-299815101.mp4 nauru-a.mp4mv 2018-11-07b-299374582.mp4 nauru-b.mp4mv 2018-11-13-300592675.mp4 Rinehart-a.mp4mv 2018-11-14a-300675578.mp4 Rinehart-b.mp4mv 2018-11-14b-300710411.mp4 Parkes.mp4 mv 2018-12-07-304963408.mp4 McKell.mp4mv 2019-02-14-317155140.mp4 OKS.mp4

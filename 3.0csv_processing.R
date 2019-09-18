@@ -1,8 +1,8 @@
 processing <- function(video_name, judge_name, number_of_frame, appellent_respondent_change){
   
   num_of_judge <- length(judge_name)
-  names <- map(judges, ~paste0("data/csv/", video_name, "/face",.x, "/processed"))
-  names <- map(judges, ~paste0("data/csv/", video_name,"/face",.x, "/processed"))
+  names <- map(judges, ~paste0("csv/", video_name, "/face",.x, "/processed"))
+  names <- map(judges, ~paste0("csv/", video_name,"/face",.x, "/processed"))
   filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
   temp <- map_df(filenames, function(x){
         map_df(x, function(x){
@@ -24,7 +24,7 @@ processing <- function(video_name, judge_name, number_of_frame, appellent_respon
   judge_profile <- tibble(judge, judge_name)
   
   
-  names <- map(judges, ~paste0("data/csv/",video_name ,"/face",.x, "/processed"))
+  names <- map(judges, ~paste0("csv/",video_name ,"/face",.x, "/processed"))
   filenames <- map(names, list.files, pattern = "*.csv", full.names = TRUE)
   
   filenames_n <- map(names,
@@ -40,9 +40,9 @@ processing <- function(video_name, judge_name, number_of_frame, appellent_respon
   
   organised <- dt %>%
     separate(info,
-             into = c("dt", "csv", video_name, "judge_id", "processed", paste0(video_name, "_id")),
+             into = c("csv", video_name, "judge_id", "processed", paste0(video_name, "_id")),
              sep = "/") %>%
-    separate(nauru_a_id, into= c(video_name, "frame_no"), sep = "_") %>%
+    separate(paste0(video_name, "_id"), into= c(video_name, "frame_no"), sep = "_") %>%
     separate(frame_no, into = c("frame_id", "csv"), sep = "\\.") %>%
     arrange(judge_id, frame_id) %>%
     mutate(judge_id = sub("face","", judge_id)) %>%
