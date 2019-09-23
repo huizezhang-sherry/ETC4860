@@ -117,105 +117,68 @@ I conduct some exploratory data analysis on one video: \texttt{Nauru\_a} and fin
 
 In this project, we will make use of the action unit variables along with all the added indexes to analyse the face of the judge. In the wide format, apart from the first four index columns, each action unit has two columns with one for binary presence value and another for numeric intensity value. The Table \ref{tab:wide} presents the first five rows of the dataset with columns for the first action unit only.
 
-\begin{table}[t]
-
-\caption{\label{tab:unnamed-chunk-2}\label{tab:wide}}
-\centering
-\begin{tabular}{l|l|r|r|r|r|r|r|r|r|r|r|r|r|r|r|r|r|r|r|l|r|r|r|r|r|r|r|r|r|r|r|r|r|r|r|r|r|r}
-\hline
-judge & video & frame & AU01\_r & AU02\_r & AU04\_r & AU05\_r & AU06\_r & AU07\_r & AU09\_r & AU10\_r & AU12\_r & AU14\_r & AU15\_r & AU17\_r & AU20\_r & AU23\_r & AU25\_r & AU26\_r & AU45\_r & speaker & AU01\_c & AU02\_c & AU04\_c & AU05\_c & AU06\_c & AU07\_c & AU09\_c & AU10\_c & AU12\_c & AU14\_c & AU15\_c & AU17\_c & AU20\_c & AU23\_c & AU25\_c & AU26\_c & AU28\_c & AU45\_c\\
-\hline
-Bell & McKell & 1 & 0 & 0 & 0.69 & 0.63 & 0 & 1.54 & 0 & 0 & 0 & 0 & 0 & 0 & 0.05 & 0 & 0 & 0.26 & 0.47 & Appellent & 1 & 1 & 0 & 1 & 0 & 1 & 1 & 1 & 0 & 0 & 1 & 0 & 1 & 0 & 1 & 0 & 0 & 0\\
-\hline
-Bell & McKell & 2 & 0 & 0 & 0.69 & 0.63 & 0 & 1.54 & 0 & 0 & 0 & 0 & 0 & 0 & 0.05 & 0 & 0 & 0.26 & 0.47 & Appellent & 0 & 1 & 1 & 1 & 0 & 1 & 1 & 1 & 0 & 0 & 1 & 0 & 1 & 0 & 1 & 0 & 0 & 0\\
-\hline
+\begin{table}[ht]
+\begin{center}
+\caption{\label{tab:wide} data in wide format}
+\begin{tabular}{lllllllllllllllllllllllllllllllllllllll}
+\toprule
+judge & video & frame & AU01-r & AU02-r & AU04-r & AU05-r & AU06-r & AU07-r & AU09-r & AU10-r & AU12-r & AU14-r & AU15-r & AU17-r & AU20-r & AU23-r & AU25-r & AU26-r & AU45-r & speaker & AU01-c & AU02-c & AU04-c & AU05-c & AU06-c & AU07-c & AU09-c & AU10-c & AU12-c & AU14-c & AU15-c & AU17-c & AU20-c & AU23-c & AU25-c & AU26-c & AU28-c & AU45-c \\
+\midrule
+Bell & McKell & 1 & 0 & 0 & 0.69 & 0.63 & 0 & 1.5 & 0 & 0 & 0 & 0 & 0 & 0 & 0.05 & 0 & 0 & 0.26 & 0.47 & Appellent & 0 & 1 & 1 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 1 & 0 & 1 & 0 & 1 & 0 & 0 & 0 \\
+Bell & McKell & 2 & 0 & 0 & 0.69 & 0.63 & 0 & 1.5 & 0 & 0 & 0 & 0 & 0 & 0 & 0.05 & 0 & 0 & 0.26 & 0.47 & Appellent & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 0 & 0 & 1 & 1 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+\bottomrule
 \end{tabular}
+\end{center}
 \end{table}
 
 The data can also be expressed in the long format with action unit being another index and presence and intensity being two columns. The Table \ref{tab:long} presents the first five rows of the data in the long format.
 
-\begin{table}[t]
-
-\caption{\label{tab:unnamed-chunk-3}\label{tab:long}}
-\centering
-\resizebox{\linewidth}{!}{
-\begin{tabular}{l|l|r|l|l|r|r}
-\hline
-judge & video & frame & speaker & AU & presence & intensity\\
-\hline
-Bell & McKell & 1 & Appellent & AU01 & 1 & 0.00\\
-\hline
-Bell & McKell & 1 & Appellent & AU02 & 1 & 0.00\\
-\hline
-Bell & McKell & 1 & Appellent & AU04 & 1 & 0.69\\
-\hline
-Bell & McKell & 1 & Appellent & AU05 & 0 & 0.63\\
-\hline
-Bell & McKell & 1 & Appellent & AU06 & 0 & 0.00\\
-\hline
-Bell & McKell & 1 & Appellent & AU07 & 1 & 1.54\\
-\hline
-Bell & McKell & 1 & Appellent & AU09 & 0 & 0.00\\
-\hline
-Bell & McKell & 1 & Appellent & AU10 & 0 & 0.00\\
-\hline
-Bell & McKell & 1 & Appellent & AU12 & 0 & 0.00\\
-\hline
-Bell & McKell & 1 & Appellent & AU14 & 0 & 0.00\\
-\hline
-Bell & McKell & 1 & Appellent & AU15 & 1 & 0.00\\
-\hline
-Bell & McKell & 1 & Appellent & AU17 & 0 & 0.00\\
-\hline
-Bell & McKell & 1 & Appellent & AU20 & 1 & 0.05\\
-\hline
-Bell & McKell & 1 & Appellent & AU23 & 0 & 0.00\\
-\hline
-Bell & McKell & 1 & Appellent & AU25 & 0 & 0.00\\
-\hline
-Bell & McKell & 1 & Appellent & AU26 & 0 & 0.26\\
-\hline
-Bell & McKell & 1 & Appellent & AU28 & NA & NA\\
-\hline
-Bell & McKell & 1 & Appellent & AU45 & 0 & 0.47\\
-\hline
-Bell & McKell & 2 & Appellent & AU01 & 0 & 0.00\\
-\hline
-Bell & McKell & 2 & Appellent & AU02 & 0 & 0.00\\
-\hline
-Bell & McKell & 2 & Appellent & AU04 & 1 & 0.69\\
-\hline
-Bell & McKell & 2 & Appellent & AU05 & 1 & 0.63\\
-\hline
-Bell & McKell & 2 & Appellent & AU06 & 1 & 0.00\\
-\hline
-Bell & McKell & 2 & Appellent & AU07 & 1 & 1.54\\
-\hline
-Bell & McKell & 2 & Appellent & AU09 & 1 & 0.00\\
-\hline
-Bell & McKell & 2 & Appellent & AU10 & 0 & 0.00\\
-\hline
-Bell & McKell & 2 & Appellent & AU12 & 0 & 0.00\\
-\hline
-Bell & McKell & 2 & Appellent & AU14 & 1 & 0.00\\
-\hline
-Bell & McKell & 2 & Appellent & AU15 & 0 & 0.00\\
-\hline
-Bell & McKell & 2 & Appellent & AU17 & 1 & 0.00\\
-\hline
-Bell & McKell & 2 & Appellent & AU20 & 1 & 0.05\\
-\hline
-Bell & McKell & 2 & Appellent & AU23 & 0 & 0.00\\
-\hline
-Bell & McKell & 2 & Appellent & AU25 & 1 & 0.00\\
-\hline
-Bell & McKell & 2 & Appellent & AU26 & 0 & 0.26\\
-\hline
-Bell & McKell & 2 & Appellent & AU28 & NA & NA\\
-\hline
-Bell & McKell & 2 & Appellent & AU45 & 0 & 0.47\\
-\hline
-\end{tabular}}
+\begin{table}[ht]
+\begin{center}
+\caption{\label{tab:long} data in long format}
+\begin{tabular}{lllllll}
+\toprule
+judge & video & frame & speaker & AU & presence & intensity \\
+\midrule
+Bell & McKell & 1 & Appellent & AU01 &  1 & 0.00 \\
+Bell & McKell & 1 & Appellent & AU02 &  1 & 0.00 \\
+Bell & McKell & 1 & Appellent & AU04 &  0 & 0.69 \\
+Bell & McKell & 1 & Appellent & AU05 &  1 & 0.63 \\
+Bell & McKell & 1 & Appellent & AU06 &  0 & 0.00 \\
+Bell & McKell & 1 & Appellent & AU07 &  1 & 1.54 \\
+Bell & McKell & 1 & Appellent & AU09 &  1 & 0.00 \\
+Bell & McKell & 1 & Appellent & AU10 &  1 & 0.00 \\
+Bell & McKell & 1 & Appellent & AU12 &  0 & 0.00 \\
+Bell & McKell & 1 & Appellent & AU14 &  0 & 0.00 \\
+Bell & McKell & 1 & Appellent & AU15 &  1 & 0.00 \\
+Bell & McKell & 1 & Appellent & AU17 &  0 & 0.00 \\
+Bell & McKell & 1 & Appellent & AU20 &  1 & 0.05 \\
+Bell & McKell & 1 & Appellent & AU23 &  0 & 0.00 \\
+Bell & McKell & 1 & Appellent & AU25 &  1 & 0.00 \\
+Bell & McKell & 1 & Appellent & AU26 &  0 & 0.26 \\
+Bell & McKell & 1 & Appellent & AU28 & NA &   NA \\
+Bell & McKell & 1 & Appellent & AU45 &  0 & 0.47 \\
+Bell & McKell & 2 & Appellent & AU01 &  0 & 0.00 \\
+Bell & McKell & 2 & Appellent & AU02 &  1 & 0.00 \\
+Bell & McKell & 2 & Appellent & AU04 &  1 & 0.69 \\
+Bell & McKell & 2 & Appellent & AU05 &  1 & 0.63 \\
+Bell & McKell & 2 & Appellent & AU06 &  0 & 0.00 \\
+Bell & McKell & 2 & Appellent & AU07 &  1 & 1.54 \\
+Bell & McKell & 2 & Appellent & AU09 &  1 & 0.00 \\
+Bell & McKell & 2 & Appellent & AU10 &  1 & 0.00 \\
+Bell & McKell & 2 & Appellent & AU12 &  0 & 0.00 \\
+Bell & McKell & 2 & Appellent & AU14 &  0 & 0.00 \\
+Bell & McKell & 2 & Appellent & AU15 &  1 & 0.00 \\
+Bell & McKell & 2 & Appellent & AU17 &  0 & 0.00 \\
+Bell & McKell & 2 & Appellent & AU20 &  1 & 0.05 \\
+Bell & McKell & 2 & Appellent & AU23 &  0 & 0.00 \\
+Bell & McKell & 2 & Appellent & AU25 &  1 & 0.00 \\
+Bell & McKell & 2 & Appellent & AU26 &  0 & 0.26 \\
+Bell & McKell & 2 & Appellent & AU28 & NA &   NA \\
+Bell & McKell & 2 & Appellent & AU45 &  0 & 0.47 \\
+\bottomrule
+\end{tabular}
+\end{center}
 \end{table}
 
 \hypertarget{missing-value-imputation}{%
@@ -289,11 +252,11 @@ index & Bell & Edelman & Gageler & Keane & Kiefel & Nettle\\
 \hline
 1 & AU15 & AU02 & AU02 & AU20 & AU02 & AU02\\
 \hline
-2 & AU25 & AU20 & AU05 & AU15 & AU25 & AU15\\
+2 & AU09 & AU20 & AU05 & AU15 & AU25 & AU15\\
 \hline
-3 & AU09 & AU01 & AU14 & AU02 & AU45 & AU20\\
+3 & AU25 & AU01 & AU15 & AU02 & AU45 & AU20\\
 \hline
-4 & AU02 & AU15 & AU15 & AU14 & AU20 & AU01\\
+4 & AU02 & AU15 & AU14 & AU14 & AU20 & AU01\\
 \hline
 5 & AU01 & AU23 & AU20 & AU07 & AU14 & AU07\\
 \hline
@@ -341,7 +304,7 @@ Confusion & AU07, AU15, AU23\\
 \hline
 judge & first & second & third\\
 \hline
-Bell & AU25: Lips part & AU09: Nose wrinkler & AU01: Inner brow raiser\\
+Bell & AU09: Nose wrinkler & AU25: Lips part & AU01: Inner brow raiser\\
 \hline
 Edelman & AU01: Inner brow raiser & AU23: Lip tightener & NA\\
 \hline
@@ -359,42 +322,27 @@ Nettle & AU01: Inner brow raiser & AU07: Lid tightener & NA\\
 \hypertarget{model-fit}{%
 \subsection{Model fit}\label{model-fit}}
 
-The first model I use is a generalised linear model with binomial link to understand the presence of the action units. The variables used include the judge, action units and their interactions. The model can be written down as Equation \ref{eq:judge_au}.Judge Edelman and AU01 are selected as the base level. Model fitting result presented in Table \ref{tab:glance_1}
+The first model I use is a generalised linear model with binomial link to understand the presence of the action units. The variables used include the judge, action units and their interactions. The model can be written down as Equation \ref{eq:judge_au}.Judge Edelman and AU01 are selected as the base level.
 
 \begin{equation}\label{eq:judge_au}
-P_{ik} = \mu + \alpha_i + \delta_k + (\alpha\delta)_{ik}
+P_{ik} = \mu + \alpha_i + \gamma_k + (\alpha\gamma)_{ik}
 \end{equation}
 
 \begin{table}[t]
 
-\caption{\label{tab:unnamed-chunk-8}\label{tab:glance_1}summary of model fit}
-\centering
-\begin{tabular}{r|r|r|r|r|r|r}
-\hline
-null.deviance & df.null & logLik & AIC & BIC & deviance & df.residual\\
-\hline
-35945.66 & 26571 & -14756.03 & 29596.06 & 29939.94 & 29512.06 & 26530\\
-\hline
-\end{tabular}
-\end{table}
-
-I'm interested to know if the presence score for one pair of judge and action unit is signficiantly different from another pair. Aanalysis of Varaince (ANOVA) test result in Table \ref{tab:anova} shows that there are significant variance for both judge, AU and their interactions. The next step after ANOVA is to test how each level of judge and AU different from another and I use multiple comparison to do this. (manually it will be 861 test to perform since 6 judges and 7 au - using multiple comparison, we can perform this take while control for a relatively low 5\% false positive rate). The estimated coefficient for each judge and AU pair is reported in Table \ref{tab:result_1} along with the upper and lower confidence interval bond. The information in the group column is helpful to understand how one particular pair of judge and au is different from another pair. With compact letter display, the pair with the same letter/number are \emph{NOT} significantly different from each other. This result is also plotted in Figure \ref{fig:result_1}.
-
-\begin{table}[t]
-
-\caption{\label{tab:unnamed-chunk-9}\label{tab:anova}ANOVA result}
+\caption{\label{tab:anova}\label{tab:anova}ANOVA result}
 \centering
 \begin{tabular}{l|r|r|r|r}
 \hline
   & Df & Deviance & Resid. Df & Resid. Dev\\
 \hline
-NULL & NA & NA & 26571 & 35945.66\\
+NULL & NA & NA & 15183 & 18900.38\\
 \hline
-judge & 5 & 192.8823 & 26566 & 35752.77\\
+judge & 5 & 298.5383 & 15178 & 18601.84\\
 \hline
-AU & 6 & 3051.6656 & 26560 & 32701.11\\
+AU & 3 & 1682.9621 & 15175 & 16918.88\\
 \hline
-judge:AU & 30 & 3189.0482 & 26530 & 29512.06\\
+judge:AU & 15 & 1113.8722 & 15160 & 15805.01\\
 \hline
 \end{tabular}
 \end{table}
@@ -406,88 +354,160 @@ judge:AU & 30 & 3189.0482 & 26530 & 29512.06\\
 \toprule
 judge & AU & prob & SE & df & asymp.LCL & asymp.UCL & .group \\
 \midrule
-Keane & AU01 & 0.12 & 0.0164 & Inf & 0.094 & 0.16 &  1                   \\
-Bell & AU14 & 0.13 & 0.0170 & Inf & 0.105 & 0.17 &  1                   \\
-Keane & AU25 & 0.16 & 0.0182 & Inf & 0.125 & 0.20 &  12                  \\
-Nettle & AU05 & 0.24 & 0.0172 & Inf & 0.211 & 0.28 &   23                 \\
-Gageler & AU01 & 0.31 & 0.0164 & Inf & 0.277 & 0.34 &    3                 \\
-Edelman & AU05 & 0.31 & 0.0145 & Inf & 0.282 & 0.34 &    3                 \\
-Edelman & AU25 & 0.31 & 0.0145 & Inf & 0.283 & 0.34 &    3                 \\
-Kiefel & AU05 & 0.31 & 0.0196 & Inf & 0.278 & 0.35 &    34                \\
-Edelman & AU14 & 0.41 & 0.0154 & Inf & 0.377 & 0.44 &     45               \\
-Nettle & AU25 & 0.44 & 0.0199 & Inf & 0.399 & 0.48 &      56              \\
-Edelman & AU15 & 0.44 & 0.0155 & Inf & 0.410 & 0.47 &      56              \\
-Gageler & AU25 & 0.44 & 0.0176 & Inf & 0.409 & 0.48 &      56              \\
-Nettle & AU14 & 0.46 & 0.0200 & Inf & 0.424 & 0.50 &      56              \\
-Kiefel & AU01 & 0.50 & 0.0211 & Inf & 0.461 & 0.54 &      567             \\
-Gageler & AU20 & 0.51 & 0.0177 & Inf & 0.472 & 0.54 &       67             \\
-Kiefel & AU15 & 0.51 & 0.0211 & Inf & 0.468 & 0.55 &       67             \\
-Kiefel & AU14 & 0.52 & 0.0211 & Inf & 0.476 & 0.56 &       678            \\
-Keane & AU05 & 0.54 & 0.0249 & Inf & 0.490 & 0.59 &       6789           \\
-Bell & AU05 & 0.55 & 0.0249 & Inf & 0.497 & 0.59 &       6789           \\
-Edelman & AU01 & 0.59 & 0.0154 & Inf & 0.559 & 0.62 &        7890          \\
-Gageler & AU15 & 0.62 & 0.0172 & Inf & 0.588 & 0.66 &         890A         \\
-Gageler & AU14 & 0.63 & 0.0172 & Inf & 0.592 & 0.66 &          90A         \\
-Gageler & AU05 & 0.67 & 0.0166 & Inf & 0.640 & 0.71 &           0AB        \\
-Bell & AU20 & 0.68 & 0.0232 & Inf & 0.636 & 0.73 &           0AB        \\
-Bell & AU01 & 0.69 & 0.0232 & Inf & 0.639 & 0.73 &           0AB        \\
-Nettle & AU01 & 0.69 & 0.0186 & Inf & 0.653 & 0.73 &            AB        \\
-Keane & AU14 & 0.72 & 0.0225 & Inf & 0.672 & 0.76 &            AB        \\
-Nettle & AU20 & 0.75 & 0.0174 & Inf & 0.713 & 0.78 &             BC       \\
-Bell & AU02 & 0.75 & 0.0216 & Inf & 0.706 & 0.79 &             BCD      \\
-Edelman & AU20 & 0.75 & 0.0135 & Inf & 0.725 & 0.78 &             BC       \\
-Nettle & AU15 & 0.75 & 0.0173 & Inf & 0.719 & 0.79 &             BCD      \\
-Keane & AU02 & 0.78 & 0.0207 & Inf & 0.737 & 0.82 &             BCDE     \\
-Bell & AU25 & 0.84 & 0.0183 & Inf & 0.801 & 0.87 &              CDEF    \\
-Bell & AU15 & 0.85 & 0.0177 & Inf & 0.815 & 0.88 &               DEF    \\
-Kiefel & AU20 & 0.85 & 0.0150 & Inf & 0.821 & 0.88 &                EF    \\
-Gageler & AU02 & 0.86 & 0.0123 & Inf & 0.836 & 0.88 &                EF    \\
-Keane & AU15 & 0.88 & 0.0164 & Inf & 0.842 & 0.91 &                EF    \\
-Kiefel & AU25 & 0.89 & 0.0135 & Inf & 0.856 & 0.91 &                 FG   \\
-Keane & AU20 & 0.92 & 0.0135 & Inf & 0.889 & 0.94 &                 FGH  \\
-Edelman & AU02 & 0.94 & 0.0074 & Inf & 0.925 & 0.95 &                  GH  \\
-Kiefel & AU02 & 0.96 & 0.0087 & Inf & 0.935 & 0.97 &                   HI \\
-Nettle & AU02 & 1.00 & 0.0028 & Inf & 0.985 & 1.00 &                    I \\
+Bell & AU14 & 0.15 & 0.0179 & Inf & 0.12 & 0.19 &  1             \\
+Edelman & AU14 & 0.43 & 0.0155 & Inf & 0.40 & 0.46 &   2            \\
+Kiefel & AU15 & 0.44 & 0.0210 & Inf & 0.40 & 0.48 &   2            \\
+Edelman & AU15 & 0.46 & 0.0156 & Inf & 0.43 & 0.49 &   2            \\
+Nettle & AU14 & 0.49 & 0.0201 & Inf & 0.45 & 0.52 &   23           \\
+Kiefel & AU14 & 0.52 & 0.0211 & Inf & 0.48 & 0.56 &   234          \\
+Gageler & AU20 & 0.55 & 0.0177 & Inf & 0.51 & 0.58 &    345         \\
+Gageler & AU14 & 0.62 & 0.0173 & Inf & 0.58 & 0.65 &     456        \\
+Gageler & AU15 & 0.62 & 0.0172 & Inf & 0.59 & 0.66 &      567       \\
+Bell & AU20 & 0.62 & 0.0242 & Inf & 0.57 & 0.67 &     4567       \\
+Keane & AU14 & 0.71 & 0.0227 & Inf & 0.66 & 0.75 &       678      \\
+Bell & AU02 & 0.73 & 0.0223 & Inf & 0.68 & 0.77 &        78      \\
+Nettle & AU20 & 0.74 & 0.0176 & Inf & 0.71 & 0.77 &         8      \\
+Edelman & AU20 & 0.77 & 0.0132 & Inf & 0.74 & 0.79 &         89     \\
+Keane & AU02 & 0.78 & 0.0207 & Inf & 0.74 & 0.82 &         890    \\
+Nettle & AU15 & 0.78 & 0.0166 & Inf & 0.75 & 0.81 &         890    \\
+Kiefel & AU20 & 0.84 & 0.0154 & Inf & 0.81 & 0.87 &          90    \\
+Gageler & AU02 & 0.85 & 0.0125 & Inf & 0.83 & 0.88 &           0A   \\
+Bell & AU15 & 0.86 & 0.0176 & Inf & 0.82 & 0.89 &          90A   \\
+Keane & AU15 & 0.87 & 0.0170 & Inf & 0.83 & 0.90 &           0A   \\
+Keane & AU20 & 0.93 & 0.0131 & Inf & 0.90 & 0.95 &            AB  \\
+Edelman & AU02 & 0.95 & 0.0069 & Inf & 0.93 & 0.96 &             B  \\
+Kiefel & AU02 & 0.95 & 0.0091 & Inf & 0.93 & 0.97 &             B  \\
+Nettle & AU02 & 1.00 & 0.0028 & Inf & 0.99 & 1.00 &              C \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{table}
+
+I'm interested to know if the presence score for one pair of judge and action unit is signficiantly different from another pair. Aanalysis of Varaince (ANOVA) test result in Table \ref{tab:anova} shows that there are significant variance for both judge, AU and their interactions. The next step after ANOVA is to test how each level of judge and AU different from another and I use multiple comparison to do this. (manually it will be 861 test to perform since 6 judges and 7 au - using multiple comparison, we can perform this take while control for a relatively low 5\% false positive rate). The estimated coefficient for each judge and AU pair is reported in Table \ref{tab:result_1} along with the upper and lower confidence interval bond. The information in the group column is helpful to understand how one particular pair of judge and au is different from another pair. With compact letter display, the pair with the same letter/number are \emph{NOT} significantly different from each other. This result is also plotted in Figure \ref{fig:model_1_plot}.
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-9-1} \caption{THis is the graphical representation of model1\label{fig:model_1_plot}}\label{fig:unnamed-chunk-9}
+\end{figure}
+
+\hypertarget{presence-by-videos}{%
+\subsection{Presence by videos}\label{presence-by-videos}}
+
+Apart from visualising the general presence score for all the action units, I'm also interested in the break down statistics by video (\(P_{ijk}\)). This is computed as \[P_{ijk} = \frac{\sum_{t}X_{ijtk}}{T_j}\] for the four most common action units: AU02, AU14, AU15, AU20 and plotted in Figure \ref{fig:common_video}. From this plot, we can observe that some of the judge are have relatively stable display of action unit throughout different videos (i.e.~Edelman and Nettle), while Gagaler seems to be highly reactive to some cases (i.e.~OKS).
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-10-1} \caption{Average presence of the four most common action units for each judge by video\label{fig:common_video}}\label{fig:unnamed-chunk-10}
+\end{figure}
+
+\hypertarget{model-fit-1}{%
+\subsection{Model fit}\label{model-fit-1}}
+
+The second model as shown in Equation \ref{eq:judge_video} is estimated to understand the interaction effect between judge and video.
+
+\begin{equation}\label{eq:judge_video}
+P_{ijk} = \mu + \alpha_i + \beta_j +\delta_k + (\alpha\beta)_{ij}
+\end{equation}
+
+The estimated coefficients are presented in Table \ref{tab:result_2}
+
+What we could find from Figure \ref{fig:model_2_plot}
+
+\begin{itemize}
+\tightlist
+\item
+  Judge Edelman, Keane and Kiefel behave relatively consistent throughout all the videos. Judge Gageler is also consistent throughout the trails except for video OKS.
+\item
+  Judge Nettle seems to have two different ``status''
+\item
+  Judge Bell behaves quite differently in the three videos she participates
+\end{itemize}
+
+\begin{table}[ht]
+\begin{center}
+\caption{\label{tab:result_2} model result 2}
+\begin{tabular}{llllllll}
+\toprule
+judge & video & prob & SE & df & asymp.LCL & asymp.UCL & .group \\
+\midrule
+Bell & Parkes & 0.50 & 0.018 & Inf & 0.47 & 0.54 &  1         \\
+Gageler & Rinehart-b & 0.56 & 0.044 & Inf & 0.47 & 0.65 &  123       \\
+Edelman & OKS & 0.58 & 0.041 & Inf & 0.50 & 0.66 &  1234      \\
+Gageler & Nauru-a & 0.62 & 0.021 & Inf & 0.58 & 0.66 &   2        \\
+Gageler & Nauru-b & 0.66 & 0.025 & Inf & 0.61 & 0.71 &   234      \\
+Edelman & Nauru-a & 0.67 & 0.020 & Inf & 0.63 & 0.71 &   234      \\
+Gageler & Rinehart-a & 0.67 & 0.014 & Inf & 0.65 & 0.70 &   234      \\
+Bell & McKell & 0.68 & 0.021 & Inf & 0.64 & 0.72 &   234      \\
+Edelman & McKell & 0.68 & 0.021 & Inf & 0.64 & 0.72 &   234      \\
+Edelman & Parkes & 0.68 & 0.016 & Inf & 0.65 & 0.71 &   234      \\
+Edelman & Nauru-b & 0.68 & 0.024 & Inf & 0.63 & 0.73 &   2345     \\
+Edelman & Rinehart-a & 0.68 & 0.013 & Inf & 0.66 & 0.71 &   234      \\
+Edelman & Rinehart-b & 0.69 & 0.040 & Inf & 0.61 & 0.77 &   23456    \\
+Kiefel & Rinehart-a & 0.71 & 0.013 & Inf & 0.68 & 0.73 &   2345     \\
+Kiefel & Parkes & 0.74 & 0.015 & Inf & 0.70 & 0.76 &     456    \\
+Gageler & McKell & 0.74 & 0.020 & Inf & 0.70 & 0.77 &    3456    \\
+Nettle & Nauru-a & 0.74 & 0.018 & Inf & 0.71 & 0.78 &     456    \\
+Nettle & Rinehart-a & 0.77 & 0.012 & Inf & 0.75 & 0.79 &      567   \\
+Nettle & Nauru-b & 0.83 & 0.019 & Inf & 0.79 & 0.86 &       678  \\
+Keane & McKell & 0.84 & 0.015 & Inf & 0.81 & 0.87 &        78  \\
+Keane & Parkes & 0.85 & 0.012 & Inf & 0.83 & 0.87 &         8  \\
+Keane & OKS & 0.86 & 0.026 & Inf & 0.80 & 0.90 &       6789 \\
+Nettle & Rinehart-b & 0.88 & 0.026 & Inf & 0.82 & 0.92 &       6789 \\
+Bell & OKS & 0.90 & 0.022 & Inf & 0.85 & 0.93 &        789 \\
+Gageler & OKS & 0.97 & 0.011 & Inf & 0.94 & 0.99 &          9 \\
 \bottomrule
 \end{tabular}
 \end{center}
 \end{table}
 
 \begin{figure}
-\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-10-1} \caption{plot the multiple comparison result \label{fig:result_1}}\label{fig:unnamed-chunk-10}
+\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-11-1} \caption{THis is the graphical representation of model2\label{fig:model_2_plot}}\label{fig:unnamed-chunk-11}
 \end{figure}
-
-\hypertarget{presence-by-videos}{%
-\subsection{Presence by videos}\label{presence-by-videos}}
-
-Apart from visualising the general presence score for all the action unit, I'm also interested in the break down statistics by video (\(P_{ijk}\)). This is computed as \[P_{ijk} = \frac{\sum_{t}X_{ijtk}}{T_j}\] for the four most common action units: AU02, AU14, AU15, AU20 and plotted in Figure \ref{fig:common_video}. From this plot, we can observe that some of the judge are have relatively stable display of action unit throughout different videos (i.e.~Edelman and Nettle), while Gagaler seems to be highly reactive to some cases (i.e.~OKS).
-
-\begin{figure}
-\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-11-1} \caption{Average presence of the four most common action units for each judge by video\label{fig:common_video}}\label{fig:unnamed-chunk-11}
-\end{figure}
-
-\hypertarget{model-fit-1}{%
-\subsection{Model fit}\label{model-fit-1}}
-
-\begin{equation}\label{eq:judge_au_video}
-P_{ijk} = \mu + \alpha_i + \beta_j +\delta_k + (\alpha\beta)_{ij}+(\alpha\delta)_{ik} + (\beta\delta)_{jk}
-\end{equation}
 
 \hypertarget{appellant-vs.respondent}{%
 \subsection{Appellant vs.~Respondent}\label{appellant-vs.respondent}}
 
-\begin{table}[t]
+The third model as shown in Equation \ref{eq:judge_speaker} is estimated to understand the interaction effect between judge and speaking party.
 
-\caption{\label{tab:unnamed-chunk-15}\label{tab:glance_3}summary of model fit}
-\centering
-\begin{tabular}{r|r|r|r|r|r|r}
-\hline
-null.deviance & df.null & logLik & AIC & BIC & deviance & df.residual\\
-\hline
-35945.66 & 26571 & -14609.05 & 29388.1 & 30084.05 & 29218.1 & 26487\\
-\hline
+\begin{equation}\label{eq:judge_speaker}
+P_{ijk} = \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\delta)_{il}
+\end{equation}
+
+The estimated coefficients are presented in Table \ref{tab:result_3}
+
+What we could find from Figure \ref{fig:model_3_plot}
+
+\begin{itemize}
+\tightlist
+\item
+  Judges are behaving pretty similar when different parties are talking
+\end{itemize}
+
+\begin{table}[ht]
+\begin{center}
+\caption{\label{tab:result_3} model result 3}
+\begin{tabular}{llllllll}
+\toprule
+judge & speaker & prob & SE & df & asymp.LCL & asymp.UCL & .group \\
+\midrule
+Bell & Appellent & 0.60 & 0.021 & Inf & 0.56 & 0.64 &  1    \\
+Bell & Respondent & 0.61 & 0.020 & Inf & 0.57 & 0.65 &  1    \\
+Edelman & Appellent & 0.69 & 0.011 & Inf & 0.67 & 0.71 &   2   \\
+Gageler & Appellent & 0.70 & 0.012 & Inf & 0.67 & 0.72 &   2   \\
+Edelman & Respondent & 0.71 & 0.012 & Inf & 0.68 & 0.73 &   2   \\
+Gageler & Respondent & 0.72 & 0.013 & Inf & 0.69 & 0.74 &   2   \\
+Kiefel & Respondent & 0.73 & 0.014 & Inf & 0.70 & 0.75 &   2   \\
+Kiefel & Appellent & 0.79 & 0.015 & Inf & 0.76 & 0.82 &    3  \\
+Nettle & Respondent & 0.80 & 0.012 & Inf & 0.77 & 0.82 &    3  \\
+Nettle & Appellent & 0.82 & 0.011 & Inf & 0.80 & 0.84 &    34 \\
+Keane & Appellent & 0.83 & 0.015 & Inf & 0.80 & 0.86 &    34 \\
+Keane & Respondent & 0.87 & 0.012 & Inf & 0.84 & 0.89 &     4 \\
+\bottomrule
 \end{tabular}
+\end{center}
 \end{table}
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-13-1} \caption{THis is the graphical representation of model3\label{fig:model_3_plot}}\label{fig:unnamed-chunk-13}
+\end{figure}
 
 \hypertarget{action-unit-intensity}{%
 \section{Action unit: Intensity}\label{action-unit-intensity}}
@@ -502,7 +522,7 @@ The boxplot of the intensity for all the judges across all the videos is present
 From the plot, we can see that most of the action units have low intensity score and this is expected because usually judges are expected to behave neutral in the court room. Thus a square root transformation is taken on the y axis for better visualisation effect. We can find that Judge Nettle seems to have higher average in all the four cases he appears: Nauru\_a\&b, Rinehart\_a \&b.
 
 \begin{figure}
-\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-16-1} \caption{General intensity score by judge and video\label{fig:intensity}}\label{fig:unnamed-chunk-16}
+\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-14-1} \caption{General intensity score by judge and video\label{fig:intensity}}\label{fig:unnamed-chunk-14}
 \end{figure}
 
 \hypertarget{mean-intensity}{%
@@ -523,12 +543,12 @@ Mean intensity score (\(I_{ik}\)) of each action unit for each of the judge is c
 AU04 also belongs to the confusion category as AU07. This could help to understand that judges are more likely to express a stronger confusing expression than other emotions.
 
 \begin{figure}
-\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-18-1} \caption{Mean intensity score for each judge and action unit aggregating on videos.\label{fig:mean_intensity}}\label{fig:unnamed-chunk-18}
+\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-16-1} \caption{Mean intensity score for each judge and action unit aggregating on videos.\label{fig:mean_intensity}}\label{fig:unnamed-chunk-16}
 \end{figure}
 
 \begin{table}[t]
 
-\caption{\label{tab:unnamed-chunk-19}\label{tab:most_intense}The five most intense action unit for each judge.}
+\caption{\label{tab:unnamed-chunk-17}\label{tab:most_intense}The five most intense action unit for each judge.}
 \centering
 \begin{tabular}{r|l|l|l|l|l|l}
 \hline
@@ -547,13 +567,16 @@ index & Bell & Edelman & Gageler & Keane & Kiefel & Nettle\\
 \end{tabular}
 \end{table}
 
+\hypertarget{model-fit-2}{%
+\subsection{Model fit}\label{model-fit-2}}
+
 \hypertarget{intensity-plot-for-the-most-frequent-action-units}{%
 \subsection{Intensity plot for the most frequent action units}\label{intensity-plot-for-the-most-frequent-action-units}}
 
 Apart from visualising the general intensity score for all the action units, I'm also interested in the intensity score of the most frequent action units. Figure \ref{fig:intensity_by_au} presents this. The statistics being plotted is \(I_{ijtk}\) with \(k\) including AU02, AU14, AU15 and AU20 as the most common four action units. From this plot, we can learn that AU02, although being commonly detected for all the judges, has low intensity score.
 
 \begin{figure}
-\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-20-1} \caption{Intensity score of the most frequent action units, seperating by judge and video ID.\label{fig:intensity_by_au}}\label{fig:unnamed-chunk-20}
+\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-19-1} \caption{Intensity score of the most frequent action units, seperating by judge and video ID.\label{fig:intensity_by_au}}\label{fig:unnamed-chunk-19}
 \end{figure}
 
 \hypertarget{high-intensity-points}{%
@@ -561,7 +584,7 @@ Apart from visualising the general intensity score for all the action units, I'm
 
 We filter out the points have intensity greater than 2 (at least ``slight'' as per Ekman) in the previous plot and plot it against time and color by the speaker. It tells us that Edelman, Gageler and Nettle are the judges have stronger emotion that can be detected (since they have more points with intensity greater than 2). Different judges also have different time where they display stronger emotions. For example, Justice Nettle are more likely to have stronger emotion throughout the time when the appellant is speaking but only at the beginning and ending period when the respondent is speaking.
 
-\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-21-1}
+\includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-20-1}
 
 \appendix
 
@@ -684,449 +707,6 @@ AU26: Jaw drop\\
 AU28: Lip suck\\
 \hline
 AU45: Blink\\
-\hline
-\end{tabular}
-
-\hypertarget{model-results}{%
-\section{Model results}\label{model-results}}
-
-\begin{tabular}{l|r|r|r|r}
-\hline
-term & estimate & std.error & statistic & p.value\\
-\hline
-(Intercept) & 0.36 & 0.06 & 5.70 & 0.00\\
-\hline
-judgeBell & 0.42 & 0.12 & 3.35 & 0.00\\
-\hline
-judgeGageler & -1.17 & 0.10 & -11.72 & 0.00\\
-\hline
-judgeKeane & -2.33 & 0.17 & -14.13 & 0.00\\
-\hline
-judgeKiefel & -0.35 & 0.11 & -3.32 & 0.00\\
-\hline
-judgeNettle & 0.44 & 0.11 & 4.08 & 0.00\\
-\hline
-AUAU02 & 2.41 & 0.15 & 16.35 & 0.00\\
-\hline
-AUAU05 & -1.16 & 0.09 & -12.54 & 0.00\\
-\hline
-AUAU14 & -0.74 & 0.09 & -8.23 & 0.00\\
-\hline
-AUAU15 & -0.60 & 0.09 & -6.75 & 0.00\\
-\hline
-AUAU20 & 0.75 & 0.10 & 7.76 & 0.00\\
-\hline
-AUAU25 & -1.16 & 0.09 & -12.49 & 0.00\\
-\hline
-judgeBell:AUAU02 & -2.09 & 0.22 & -9.68 & 0.00\\
-\hline
-judgeGageler:AUAU02 & 0.22 & 0.20 & 1.14 & 0.25\\
-\hline
-judgeKeane:AUAU02 & 0.83 & 0.24 & 3.40 & 0.00\\
-\hline
-judgeKiefel:AUAU02 & 0.64 & 0.27 & 2.40 & 0.02\\
-\hline
-judgeNettle:AUAU02 & 2.11 & 0.60 & 3.50 & 0.00\\
-\hline
-judgeBell:AUAU05 & 0.57 & 0.17 & 3.27 & 0.00\\
-\hline
-judgeGageler:AUAU05 & 2.70 & 0.14 & 18.95 & 0.00\\
-\hline
-judgeKeane:AUAU05 & 3.29 & 0.20 & 16.08 & 0.00\\
-\hline
-judgeKiefel:AUAU05 & 0.38 & 0.16 & 2.43 & 0.02\\
-\hline
-judgeNettle:AUAU05 & -0.77 & 0.16 & -4.88 & 0.00\\
-\hline
-judgeBell:AUAU14 & -1.90 & 0.20 & -9.37 & 0.00\\
-\hline
-judgeGageler:AUAU14 & 2.06 & 0.14 & 14.81 & 0.00\\
-\hline
-judgeKeane:AUAU14 & 3.65 & 0.21 & 17.46 & 0.00\\
-\hline
-judgeKiefel:AUAU14 & 0.80 & 0.15 & 5.33 & 0.00\\
-\hline
-judgeNettle:AUAU14 & -0.21 & 0.15 & -1.41 & 0.16\\
-\hline
-judgeBell:AUAU15 & 1.58 & 0.20 & 7.96 & 0.00\\
-\hline
-judgeGageler:AUAU15 & 1.91 & 0.14 & 13.75 & 0.00\\
-\hline
-judgeKeane:AUAU15 & 4.55 & 0.23 & 19.48 & 0.00\\
-\hline
-judgeKiefel:AUAU15 & 0.63 & 0.15 & 4.24 & 0.00\\
-\hline
-judgeNettle:AUAU15 & 0.93 & 0.16 & 5.95 & 0.00\\
-\hline
-judgeBell:AUAU20 & -0.76 & 0.18 & -4.22 & 0.00\\
-\hline
-judgeGageler:AUAU20 & 0.08 & 0.14 & 0.59 & 0.55\\
-\hline
-judgeKeane:AUAU20 & 3.67 & 0.26 & 14.23 & 0.00\\
-\hline
-judgeKiefel:AUAU20 & 1.00 & 0.18 & 5.71 & 0.00\\
-\hline
-judgeNettle:AUAU20 & -0.46 & 0.16 & -2.88 & 0.00\\
-\hline
-judgeBell:AUAU25 & 2.04 & 0.20 & 10.36 & 0.00\\
-\hline
-judgeGageler:AUAU25 & 1.74 & 0.14 & 12.42 & 0.00\\
-\hline
-judgeKeane:AUAU25 & 1.45 & 0.23 & 6.45 & 0.00\\
-\hline
-judgeKiefel:AUAU25 & 3.20 & 0.18 & 17.48 & 0.00\\
-\hline
-judgeNettle:AUAU25 & 0.11 & 0.15 & 0.70 & 0.48\\
-\hline
-\end{tabular}
-
-\begin{tabular}{l|r|r|r|r}
-\hline
-term & estimate & std.error & statistic & p.value\\
-\hline
-(Intercept) & 0.64 & 0.12 & 5.47 & 0.00\\
-\hline
-judgeBell & 0.63 & 0.14 & 4.56 & 0.00\\
-\hline
-judgeGageler & -1.22 & 0.10 & -11.73 & 0.00\\
-\hline
-judgeKeane & -2.20 & 0.18 & -12.45 & 0.00\\
-\hline
-judgeKiefel & -0.38 & 0.11 & -3.43 & 0.00\\
-\hline
-judgeNettle & 0.31 & 0.11 & 2.71 & 0.01\\
-\hline
-AUAU02 & 2.11 & 0.25 & 8.31 & 0.00\\
-\hline
-AUAU05 & -1.51 & 0.17 & -8.96 & 0.00\\
-\hline
-AUAU14 & -1.02 & 0.16 & -6.30 & 0.00\\
-\hline
-AUAU15 & -1.35 & 0.16 & -8.19 & 0.00\\
-\hline
-AUAU20 & 0.36 & 0.17 & 2.11 & 0.03\\
-\hline
-AUAU25 & -1.11 & 0.16 & -6.83 & 0.00\\
-\hline
-videoNauru\_b & -0.30 & 0.16 & -1.91 & 0.06\\
-\hline
-videoMcKell & -0.93 & 0.16 & -5.89 & 0.00\\
-\hline
-videoOKS & 0.32 & 0.21 & 1.51 & 0.13\\
-\hline
-videoParkes & -0.34 & 0.14 & -2.38 & 0.02\\
-\hline
-videoRinehart\_a & -0.18 & 0.12 & -1.50 & 0.13\\
-\hline
-videoRinehart\_b & -0.02 & 0.23 & -0.09 & 0.93\\
-\hline
-judgeBell:AUAU02 & -2.42 & 0.25 & -9.63 & 0.00\\
-\hline
-judgeGageler:AUAU02 & 0.33 & 0.20 & 1.67 & 0.09\\
-\hline
-judgeKeane:AUAU02 & 0.59 & 0.28 & 2.13 & 0.03\\
-\hline
-judgeKiefel:AUAU02 & 0.66 & 0.28 & 2.41 & 0.02\\
-\hline
-judgeNettle:AUAU02 & 2.30 & 0.61 & 3.79 & 0.00\\
-\hline
-judgeBell:AUAU05 & 0.47 & 0.19 & 2.43 & 0.02\\
-\hline
-judgeGageler:AUAU05 & 2.74 & 0.15 & 18.57 & 0.00\\
-\hline
-judgeKeane:AUAU05 & 3.27 & 0.22 & 14.68 & 0.00\\
-\hline
-judgeKiefel:AUAU05 & 0.34 & 0.16 & 2.08 & 0.04\\
-\hline
-judgeNettle:AUAU05 & -0.70 & 0.17 & -4.22 & 0.00\\
-\hline
-judgeBell:AUAU14 & -2.15 & 0.22 & -9.81 & 0.00\\
-\hline
-judgeGageler:AUAU14 & 2.08 & 0.14 & 14.47 & 0.00\\
-\hline
-judgeKeane:AUAU14 & 3.50 & 0.23 & 15.54 & 0.00\\
-\hline
-judgeKiefel:AUAU14 & 0.93 & 0.16 & 5.89 & 0.00\\
-\hline
-judgeNettle:AUAU14 & -0.07 & 0.16 & -0.41 & 0.68\\
-\hline
-judgeBell:AUAU15 & 1.19 & 0.22 & 5.49 & 0.00\\
-\hline
-judgeGageler:AUAU15 & 2.02 & 0.14 & 13.93 & 0.00\\
-\hline
-judgeKeane:AUAU15 & 4.23 & 0.25 & 17.03 & 0.00\\
-\hline
-judgeKiefel:AUAU15 & 0.67 & 0.16 & 4.25 & 0.00\\
-\hline
-judgeNettle:AUAU15 & 1.21 & 0.17 & 7.32 & 0.00\\
-\hline
-judgeBell:AUAU20 & -1.18 & 0.20 & -5.78 & 0.00\\
-\hline
-judgeGageler:AUAU20 & 0.07 & 0.15 & 0.47 & 0.64\\
-\hline
-judgeKeane:AUAU20 & 3.37 & 0.28 & 12.23 & 0.00\\
-\hline
-judgeKiefel:AUAU20 & 1.15 & 0.18 & 6.28 & 0.00\\
-\hline
-judgeNettle:AUAU20 & -0.22 & 0.17 & -1.30 & 0.19\\
-\hline
-judgeBell:AUAU25 & 2.12 & 0.22 & 9.75 & 0.00\\
-\hline
-judgeGageler:AUAU25 & 1.73 & 0.15 & 11.91 & 0.00\\
-\hline
-judgeKeane:AUAU25 & 1.60 & 0.24 & 6.58 & 0.00\\
-\hline
-judgeKiefel:AUAU25 & 3.32 & 0.19 & 17.40 & 0.00\\
-\hline
-judgeNettle:AUAU25 & 0.07 & 0.16 & 0.43 & 0.67\\
-\hline
-AUAU02:videoNauru\_b & 0.48 & 0.36 & 1.36 & 0.17\\
-\hline
-AUAU05:videoNauru\_b & 0.18 & 0.23 & 0.78 & 0.44\\
-\hline
-AUAU14:videoNauru\_b & 0.44 & 0.22 & 2.03 & 0.04\\
-\hline
-AUAU15:videoNauru\_b & 0.91 & 0.22 & 4.08 & 0.00\\
-\hline
-AUAU20:videoNauru\_b & 0.36 & 0.23 & 1.61 & 0.11\\
-\hline
-AUAU25:videoNauru\_b & 0.20 & 0.22 & 0.91 & 0.36\\
-\hline
-AUAU02:videoMcKell & 0.72 & 0.30 & 2.42 & 0.02\\
-\hline
-AUAU05:videoMcKell & 1.13 & 0.22 & 5.15 & 0.00\\
-\hline
-AUAU14:videoMcKell & 1.01 & 0.22 & 4.69 & 0.00\\
-\hline
-AUAU15:videoMcKell & 1.45 & 0.22 & 6.63 & 0.00\\
-\hline
-AUAU20:videoMcKell & 1.58 & 0.23 & 6.98 & 0.00\\
-\hline
-AUAU25:videoMcKell & 0.20 & 0.22 & 0.88 & 0.38\\
-\hline
-AUAU02:videoOKS & 0.23 & 0.40 & 0.58 & 0.56\\
-\hline
-AUAU05:videoOKS & -1.21 & 0.30 & -4.05 & 0.00\\
-\hline
-AUAU14:videoOKS & 0.21 & 0.30 & 0.71 & 0.48\\
-\hline
-AUAU15:videoOKS & 1.37 & 0.34 & 4.06 & 0.00\\
-\hline
-AUAU20:videoOKS & 1.06 & 0.34 & 3.08 & 0.00\\
-\hline
-AUAU25:videoOKS & -0.85 & 0.30 & -2.81 & 0.00\\
-\hline
-AUAU02:videoParkes & 0.63 & 0.30 & 2.07 & 0.04\\
-\hline
-AUAU05:videoParkes & 0.30 & 0.21 & 1.45 & 0.15\\
-\hline
-AUAU14:videoParkes & 0.23 & 0.20 & 1.16 & 0.25\\
-\hline
-AUAU15:videoParkes & 0.94 & 0.20 & 4.58 & 0.00\\
-\hline
-AUAU20:videoParkes & 0.34 & 0.21 & 1.57 & 0.12\\
-\hline
-AUAU25:videoParkes & -0.21 & 0.21 & -1.02 & 0.31\\
-\hline
-AUAU02:videoRinehart\_a & 0.07 & 0.26 & 0.25 & 0.80\\
-\hline
-AUAU05:videoRinehart\_a & 0.43 & 0.17 & 2.51 & 0.01\\
-\hline
-AUAU14:videoRinehart\_a & 0.09 & 0.16 & 0.53 & 0.59\\
-\hline
-AUAU15:videoRinehart\_a & 0.55 & 0.17 & 3.28 & 0.00\\
-\hline
-AUAU20:videoRinehart\_a & 0.18 & 0.17 & 1.08 & 0.28\\
-\hline
-AUAU25:videoRinehart\_a & -0.13 & 0.17 & -0.80 & 0.42\\
-\hline
-AUAU02:videoRinehart\_b & 0.04 & 0.50 & 0.09 & 0.93\\
-\hline
-AUAU05:videoRinehart\_b & 0.19 & 0.33 & 0.58 & 0.56\\
-\hline
-AUAU14:videoRinehart\_b & 0.26 & 0.32 & 0.83 & 0.40\\
-\hline
-AUAU15:videoRinehart\_b & 0.49 & 0.32 & 1.53 & 0.13\\
-\hline
-AUAU20:videoRinehart\_b & -0.15 & 0.32 & -0.45 & 0.65\\
-\hline
-AUAU25:videoRinehart\_b & 0.42 & 0.31 & 1.33 & 0.18\\
-\hline
-\end{tabular}
-
-\begin{tabular}{l|r|r|r|r}
-\hline
-term & estimate & std.error & statistic & p.value\\
-\hline
-(Intercept) & 0.64 & 0.12 & 5.43 & 0.00\\
-\hline
-judgeBell & 0.63 & 0.14 & 4.56 & 0.00\\
-\hline
-judgeGageler & -1.22 & 0.10 & -11.73 & 0.00\\
-\hline
-judgeKeane & -2.20 & 0.18 & -12.45 & 0.00\\
-\hline
-judgeKiefel & -0.38 & 0.11 & -3.43 & 0.00\\
-\hline
-judgeNettle & 0.31 & 0.11 & 2.71 & 0.01\\
-\hline
-AUAU02 & 2.11 & 0.25 & 8.31 & 0.00\\
-\hline
-AUAU05 & -1.51 & 0.17 & -8.96 & 0.00\\
-\hline
-AUAU14 & -1.02 & 0.16 & -6.30 & 0.00\\
-\hline
-AUAU15 & -1.35 & 0.16 & -8.19 & 0.00\\
-\hline
-AUAU20 & 0.36 & 0.17 & 2.11 & 0.03\\
-\hline
-AUAU25 & -1.11 & 0.16 & -6.83 & 0.00\\
-\hline
-videoNauru\_b & -0.30 & 0.16 & -1.90 & 0.06\\
-\hline
-videoMcKell & -0.93 & 0.16 & -5.89 & 0.00\\
-\hline
-videoOKS & 0.32 & 0.21 & 1.51 & 0.13\\
-\hline
-videoParkes & -0.34 & 0.14 & -2.38 & 0.02\\
-\hline
-videoRinehart\_a & -0.18 & 0.12 & -1.50 & 0.13\\
-\hline
-videoRinehart\_b & -0.02 & 0.23 & -0.08 & 0.93\\
-\hline
-speakerRespondent & 0.00 & 0.03 & 0.06 & 0.95\\
-\hline
-judgeBell:AUAU02 & -2.42 & 0.25 & -9.63 & 0.00\\
-\hline
-judgeGageler:AUAU02 & 0.33 & 0.20 & 1.67 & 0.09\\
-\hline
-judgeKeane:AUAU02 & 0.59 & 0.28 & 2.13 & 0.03\\
-\hline
-judgeKiefel:AUAU02 & 0.66 & 0.28 & 2.41 & 0.02\\
-\hline
-judgeNettle:AUAU02 & 2.30 & 0.61 & 3.79 & 0.00\\
-\hline
-judgeBell:AUAU05 & 0.47 & 0.19 & 2.43 & 0.02\\
-\hline
-judgeGageler:AUAU05 & 2.74 & 0.15 & 18.57 & 0.00\\
-\hline
-judgeKeane:AUAU05 & 3.27 & 0.22 & 14.68 & 0.00\\
-\hline
-judgeKiefel:AUAU05 & 0.34 & 0.16 & 2.08 & 0.04\\
-\hline
-judgeNettle:AUAU05 & -0.70 & 0.17 & -4.22 & 0.00\\
-\hline
-judgeBell:AUAU14 & -2.15 & 0.22 & -9.81 & 0.00\\
-\hline
-judgeGageler:AUAU14 & 2.08 & 0.14 & 14.47 & 0.00\\
-\hline
-judgeKeane:AUAU14 & 3.50 & 0.23 & 15.54 & 0.00\\
-\hline
-judgeKiefel:AUAU14 & 0.93 & 0.16 & 5.89 & 0.00\\
-\hline
-judgeNettle:AUAU14 & -0.07 & 0.16 & -0.41 & 0.68\\
-\hline
-judgeBell:AUAU15 & 1.19 & 0.22 & 5.49 & 0.00\\
-\hline
-judgeGageler:AUAU15 & 2.02 & 0.14 & 13.93 & 0.00\\
-\hline
-judgeKeane:AUAU15 & 4.23 & 0.25 & 17.03 & 0.00\\
-\hline
-judgeKiefel:AUAU15 & 0.67 & 0.16 & 4.25 & 0.00\\
-\hline
-judgeNettle:AUAU15 & 1.21 & 0.17 & 7.32 & 0.00\\
-\hline
-judgeBell:AUAU20 & -1.18 & 0.20 & -5.78 & 0.00\\
-\hline
-judgeGageler:AUAU20 & 0.07 & 0.15 & 0.47 & 0.64\\
-\hline
-judgeKeane:AUAU20 & 3.37 & 0.28 & 12.23 & 0.00\\
-\hline
-judgeKiefel:AUAU20 & 1.15 & 0.18 & 6.28 & 0.00\\
-\hline
-judgeNettle:AUAU20 & -0.22 & 0.17 & -1.30 & 0.19\\
-\hline
-judgeBell:AUAU25 & 2.12 & 0.22 & 9.75 & 0.00\\
-\hline
-judgeGageler:AUAU25 & 1.73 & 0.15 & 11.91 & 0.00\\
-\hline
-judgeKeane:AUAU25 & 1.60 & 0.24 & 6.58 & 0.00\\
-\hline
-judgeKiefel:AUAU25 & 3.32 & 0.19 & 17.40 & 0.00\\
-\hline
-judgeNettle:AUAU25 & 0.07 & 0.16 & 0.43 & 0.67\\
-\hline
-AUAU02:videoNauru\_b & 0.48 & 0.36 & 1.36 & 0.17\\
-\hline
-AUAU05:videoNauru\_b & 0.18 & 0.23 & 0.78 & 0.44\\
-\hline
-AUAU14:videoNauru\_b & 0.44 & 0.22 & 2.03 & 0.04\\
-\hline
-AUAU15:videoNauru\_b & 0.91 & 0.22 & 4.08 & 0.00\\
-\hline
-AUAU20:videoNauru\_b & 0.36 & 0.23 & 1.61 & 0.11\\
-\hline
-AUAU25:videoNauru\_b & 0.20 & 0.22 & 0.91 & 0.36\\
-\hline
-AUAU02:videoMcKell & 0.72 & 0.30 & 2.42 & 0.02\\
-\hline
-AUAU05:videoMcKell & 1.13 & 0.22 & 5.15 & 0.00\\
-\hline
-AUAU14:videoMcKell & 1.01 & 0.22 & 4.69 & 0.00\\
-\hline
-AUAU15:videoMcKell & 1.45 & 0.22 & 6.63 & 0.00\\
-\hline
-AUAU20:videoMcKell & 1.58 & 0.23 & 6.98 & 0.00\\
-\hline
-AUAU25:videoMcKell & 0.20 & 0.22 & 0.88 & 0.38\\
-\hline
-AUAU02:videoOKS & 0.23 & 0.40 & 0.58 & 0.56\\
-\hline
-AUAU05:videoOKS & -1.21 & 0.30 & -4.05 & 0.00\\
-\hline
-AUAU14:videoOKS & 0.21 & 0.30 & 0.71 & 0.48\\
-\hline
-AUAU15:videoOKS & 1.37 & 0.34 & 4.06 & 0.00\\
-\hline
-AUAU20:videoOKS & 1.06 & 0.34 & 3.08 & 0.00\\
-\hline
-AUAU25:videoOKS & -0.85 & 0.30 & -2.81 & 0.00\\
-\hline
-AUAU02:videoParkes & 0.63 & 0.30 & 2.07 & 0.04\\
-\hline
-AUAU05:videoParkes & 0.30 & 0.21 & 1.45 & 0.15\\
-\hline
-AUAU14:videoParkes & 0.23 & 0.20 & 1.16 & 0.25\\
-\hline
-AUAU15:videoParkes & 0.94 & 0.20 & 4.58 & 0.00\\
-\hline
-AUAU20:videoParkes & 0.34 & 0.21 & 1.57 & 0.12\\
-\hline
-AUAU25:videoParkes & -0.21 & 0.21 & -1.02 & 0.31\\
-\hline
-AUAU02:videoRinehart\_a & 0.07 & 0.26 & 0.25 & 0.80\\
-\hline
-AUAU05:videoRinehart\_a & 0.43 & 0.17 & 2.51 & 0.01\\
-\hline
-AUAU14:videoRinehart\_a & 0.09 & 0.16 & 0.53 & 0.59\\
-\hline
-AUAU15:videoRinehart\_a & 0.55 & 0.17 & 3.28 & 0.00\\
-\hline
-AUAU20:videoRinehart\_a & 0.18 & 0.17 & 1.08 & 0.28\\
-\hline
-AUAU25:videoRinehart\_a & -0.13 & 0.17 & -0.80 & 0.42\\
-\hline
-AUAU02:videoRinehart\_b & 0.04 & 0.50 & 0.09 & 0.93\\
-\hline
-AUAU05:videoRinehart\_b & 0.19 & 0.33 & 0.58 & 0.56\\
-\hline
-AUAU14:videoRinehart\_b & 0.26 & 0.32 & 0.83 & 0.40\\
-\hline
-AUAU15:videoRinehart\_b & 0.49 & 0.32 & 1.53 & 0.13\\
-\hline
-AUAU20:videoRinehart\_b & -0.15 & 0.32 & -0.45 & 0.65\\
-\hline
-AUAU25:videoRinehart\_b & 0.42 & 0.31 & 1.33 & 0.18\\
 \hline
 \end{tabular}
 

@@ -18,9 +18,9 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {2.3}Data format}{7}{section.2.3}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.4}Missing value imputation}{10}{section.2.4}% 
+\contentsline {section}{\numberline {2.4}Missing value imputation}{8}{section.2.4}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.5}Data cleaning}{10}{section.2.5}% 
+\contentsline {section}{\numberline {2.5}Data cleaning}{9}{section.2.5}% 
 \defcounter {refsection}{0}\relax 
 \contentsline {chapter}{\numberline {3}Methods}{11}{chapter.3}% 
 \defcounter {refsection}{0}\relax 
@@ -38,22 +38,22 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {4.2.4}Model fit}{18}{subsection.4.2.4}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.2.5}Appellant vs.\nobreakspace {}Respondent}{18}{subsection.4.2.5}% 
+\contentsline {subsection}{\numberline {4.2.5}Appellant vs.\nobreakspace {}Respondent}{19}{subsection.4.2.5}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.3}Action unit: Intensity}{21}{section.4.3}% 
+\contentsline {section}{\numberline {4.3}Action unit: Intensity}{22}{section.4.3}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.3.1}General Intensity plot}{21}{subsection.4.3.1}% 
+\contentsline {subsection}{\numberline {4.3.1}General Intensity plot}{22}{subsection.4.3.1}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.3.2}Mean intensity}{21}{subsection.4.3.2}% 
+\contentsline {subsection}{\numberline {4.3.2}Mean intensity}{22}{subsection.4.3.2}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.3.3}Intensity plot for the most frequent action units}{22}{subsection.4.3.3}% 
+\contentsline {subsection}{\numberline {4.3.3}Model fit}{23}{subsection.4.3.3}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.3.4}High intensity points}{24}{subsection.4.3.4}% 
+\contentsline {subsection}{\numberline {4.3.4}Intensity plot for the most frequent action units}{23}{subsection.4.3.4}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {A}Additional stuff}{25}{appendix.A}% 
+\contentsline {subsection}{\numberline {4.3.5}High intensity points}{24}{subsection.4.3.5}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {A.1}List of the name of ction units}{26}{section.A.1}% 
+\contentsline {chapter}{\numberline {A}Additional stuff}{27}{appendix.A}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {A.2}Model results}{28}{section.A.2}% 
+\contentsline {section}{\numberline {A.1}List of the name of ction units}{28}{section.A.1}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{Bibliography}{31}{appendix*.18}% 
+\contentsline {chapter}{Bibliography}{29}{appendix*.20}% 
