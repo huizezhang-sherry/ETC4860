@@ -25,18 +25,10 @@ $$Y_{ijkl} = \mu + \alpha_i + \beta_j + \gamma_k + \delta_l + \varepsilon_{ijkl}
 
 Also, let $P_{jitkl}$ represent the response variable presence, and $I_{jitkl}$ represent the second response variable intensity. This notation will be helpful for defining the plots and models explained in this section.
 
-<!--
-CP_2(\alpha_i, \beta_j, \gamma_t, \delta_k) + CP_3(\alpha_i, \beta_j, \gamma_t, \delta_k)$$
-
-where 
-
-- $CP_2$ is the all possible interaction of the two variables
-- $CP_3$ is the all possible interaction of the three variables
--->
 
 ## Action unit: Presence
- 
- 
+
+
 ### Mean presence 
 
 I first compute the average presence ($P_{ik}$) of each action unit for each judge as $$P_{ik} = \frac{\sum_{jt}X_{ijtk}}{\sum_{j = 1}^JT_j}$$ This is then plotted in Figure \ref{fig:mean_presence} to give an overview of the presence of all the action units across all the judge. The order of action unit on the y axis is ranked by the average presence of all the judge. The five most frequent action units are highlighted in blue for each judge and summarised in Table \ref{tab:most_common}
@@ -57,7 +49,7 @@ most_common <- au_tidy %>%
 
 most_common %>% 
   ggplot(aes(x =  fct_reorder(AU, avg_presence), y = avg_presence,
-         fill = most_common, col = most_common)) + 
+             fill = most_common, col = most_common)) + 
   geom_col() +
   xlab("AU") + 
   ylab("Average Presence") + 
@@ -68,11 +60,11 @@ most_common %>%
 
 ```{r}
 knitr::kable(most_common %>% 
-  filter(most_common ==1) %>% 
-  dplyr::select(judge, AU) %>% 
-  mutate(index = row_number()) %>% 
-  spread(judge, AU), 
-  caption = "\\label{tab:most_common}The five most commonly presented action unit for each judge.")
+               filter(most_common ==1) %>% 
+               dplyr::select(judge, AU) %>% 
+               mutate(index = row_number()) %>% 
+               spread(judge, AU), 
+             caption = "\\label{tab:most_common}The five most commonly presented action unit for each judge.")
 ```
 
 It can be seen that some of the action units are common across almost all the judges, these includes 
@@ -87,9 +79,9 @@ AU02 makes a contribution to surprise, which is a positive attitude showing that
 
 ```{r}
 tibble::tibble(emotion = c("Surprise", "Boredom", "Confusion"), 
-       `Featured Action Unit` = c("AU01, AU02, AU05", 
-                                  "AU14, AU23", 
-                                  "AU07, AU15, AU23")) %>% 
+               `Featured Action Unit` = c("AU01, AU02, AU05", 
+                                          "AU14, AU23", 
+                                          "AU07, AU15, AU23")) %>% 
   kable(caption = "\\label{tab:three_category} Summarised emotions and featured action units")
 ```
 
@@ -109,18 +101,6 @@ knitr::kable(other_highf, caption = "\\label{tab:other_highf} Other high frequen
 ```
 
 
-
-
-### Model fit
-
-The first model I use is a generalised linear model with binomial link to understand the presence of the action units. The variables used include the judge, action units and their interactions. The model can be written down as Equation \ref{eq:judge_au}.Judge Edelman and AU01 are selected as the base level. Model fitting result presented in Table \ref{tab:glance_1} 
-
-
-\begin{equation}\label{eq:judge_au}
-P_{ik} = \mu + \alpha_i + \delta_k + (\alpha\delta)_{ik}
-\end{equation}
-
-
 ```{r}
 most_common_au <- most_common %>% 
   ungroup(judge) %>% 
@@ -129,65 +109,89 @@ most_common_au <- most_common %>%
   arrange(-mean) %>% 
   top_n(7)
 
-au_model <- au_tidy %>% 
+model_dt <- au_tidy %>% 
   ungroup(judge) %>% 
-  filter(AU %in% most_common_au$AU) %>% 
   mutate(judge = fct_relevel(judge, "Edelman"), 
-         AU = fct_relevel(AU, "AU01")) %>% 
-  rename(judge = judge, video = video)
-
-binomial_model_1 <- glm(presence ~ judge*AU, 
-           family = binomial(link = "logit"),  data = au_model)
-
-glance(binomial_model_1) %>% kable(caption = "\\label{tab:glance_1}summary of model fit")
+         AU = fct_relevel(AU, "AU01")) 
 ```
 
 
-I'm interested to know if the presence score for one pair of judge and action unit is signficiantly different from another pair. Aanalysis of Varaince (ANOVA) test result in Table \ref{tab:anova} shows that there are significant variance for both judge, AU and their interactions. The next step after ANOVA is to test how each level of judge and AU different from another and I use multiple comparison to do this. (manually it will be `r 42*41/2` test to perform since 6 judges and 7 au - using multiple comparison, we can perform this take while control for a relatively low 5% false positive rate). The estimated coefficient for each judge and AU pair is reported in Table \ref{tab:result_1} along with the upper and lower confidence interval bond. The information in the group column is helpful to understand how one particular pair of judge and au is different from another pair. With compact letter display, the pair with the same letter/number are *NOT* significantly different from each other. This result is also plotted in Figure \ref{fig:result_1}. 
+### Model fit
 
-```{r results = "asis"}
+The first model I use is a generalised linear model with binomial link to understand the presence of the action units. The variables used include the judge, action units and their interactions. The model can be written down as Equation \ref{eq:judge_au}.Judge Edelman and AU01 are selected as the base level. 
+
+
+\begin{equation}\label{eq:judge_au}
+P_{ik} = \mu + \alpha_i + \gamma_k + (\alpha\gamma)_{ik}
+\end{equation}
+
+
+```{r model_1}
+model_dt_1 <- model_dt %>% 
+  filter(AU %in% c("AU02", "AU14", "AU15", "AU20"))
+
+binomial_model_1 <- glm(presence ~ judge*AU, 
+                        family = binomial(link = "logit"),  
+                        data = model_dt_1)
+```
+
+```{r anova}
 anova(binomial_model_1) %>% kable(caption = "\\label{tab:anova}ANOVA result")
+```
+
+```{r model_1_response, results = "asis"}
 lsmean_obj_1 <-  lsmeans(binomial_model_1, ~judge*AU)
 result_1 <- multcomp::cld(lsmean_obj_1, alpha = 0.05, type = "response") 
 
 knitLatex::xTab(format(as.data.frame(result_1), digits = 2), booktabs = TRUE, caption.top = "\\label{tab:result_1} model result")
 ```
 
+I'm interested to know if the presence score for one pair of judge and action unit is signficiantly different from another pair. Aanalysis of Varaince (ANOVA) test result in Table \ref{tab:anova} shows that there are significant variance for both judge, AU and their interactions. The next step after ANOVA is to test how each level of judge and AU different from another and I use multiple comparison to do this. (manually it will be `r 42*41/2` test to perform since 6 judges and 7 au - using multiple comparison, we can perform this take while control for a relatively low 5% false positive rate). The estimated coefficient for each judge and AU pair is reported in Table \ref{tab:result_1} along with the upper and lower confidence interval bond. The information in the group column is helpful to understand how one particular pair of judge and au is different from another pair. With compact letter display, the pair with the same letter/number are *NOT* significantly different from each other. This result is also plotted in Figure \ref{fig:model_1_plot}. 
 
-```{r fig.cap="plot the multiple comparison result \\label{fig:result_1}"}
-ggplot(result_1,aes(x = judge,y = prob,label = .group, col = judge)) +
+```{r fig.cap = "THis is the graphical representation of model1\\label{fig:model_1_plot}"}
+type <- result_1$.group%>% 
+  str_trim(side = "both") %>% 
+  str_split(pattern = "")
+
+group <- result_1 %>% 
+  dplyr::select(judge, AU) %>% 
+  mutate(type = type) %>%
+  unnest(type) %>% 
+  group_by(judge, AU) %>% 
+  mutate(type = case_when(type == "0" ~ "10",
+                          type == "A" ~ "11",
+                          type == "B" ~ "12",
+                          type == "C" ~ "13",
+                          TRUE ~ type),
+         type = as.numeric(type)) %>% 
+  summarise(average_group = mean(type))
+
+result_1 %>% 
+  left_join(group, by = c("judge", "AU")) %>% 
+  left_join(au_meaning, by = c("AU" = "AU_number")) %>% 
+  mutate(AU = as.factor(AU)) %>% 
+  ggplot(aes(x = fct_reorder(judge,prob),y = prob,
+             label = average_group, col = as.factor(average_group))) +
   geom_point() +
-  geom_errorbar(aes(ymin = asymp.LCL,ymax = asymp.UCL)) + 
-  facet_wrap(vars(AU)) + 
+  geom_errorbar(aes(ymin = asymp.LCL,ymax = asymp.UCL), width = 0.2) + 
+  ggrepel::geom_text_repel(aes(label = average_group)) + 
+  facet_wrap(vars(AU_meaning), nrow = 2) + 
   theme(legend.position = "none") + 
-  coord_flip()
+  coord_flip() + 
+  xlab("judge")
+
 ```
-
-
-<!-- some residual diagnoistic comments here.  -->
-
-<!-- ```{r} -->
-<!-- au_model_1_aug <- augment(binomial_model_1, au_model, -->
-<!--                           type.predict= "response", -->
-<!--                           type.residuals = "response") -->
-
-<!-- # the plot below looks funny because from calculation  presence - .fitted = .resid ->should be two piecewise linear lines -->
-<!-- #au_model_1_aug %>% ggplot(aes(x=.fitted, y=.resid)) + geom_point() -->
-
-<!-- #ggplot(au_model_1_aug, aes(x = .resid)) + geom_histogram() -->
-<!-- #summary(binomial_model) -->
-<!-- ``` -->
 
 
 ### Presence by videos
 
-Apart from visualising the general presence score for all the action unit, I'm also interested in the break down statistics by video ($P_{ijk}$). This is computed as $$P_{ijk} = \frac{\sum_{t}X_{ijtk}}{T_j}$$ for the four most common action units: AU02, AU14, AU15, AU20 and plotted in Figure \ref{fig:common_video}. From this plot, we can observe that some of the judge are have relatively stable display of action unit throughout different videos (i.e. Edelman and Nettle), while Gagaler seems to be highly reactive to some cases (i.e. OKS). 
+Apart from visualising the general presence score for all the action units, I'm also interested in the break down statistics by video ($P_{ijk}$). This is computed as $$P_{ijk} = \frac{\sum_{t}X_{ijtk}}{T_j}$$ for the four most common action units: AU02, AU14, AU15, AU20 and plotted in Figure \ref{fig:common_video}. From this plot, we can observe that some of the judge are have relatively stable display of action unit throughout different videos (i.e. Edelman and Nettle), while Gagaler seems to be highly reactive to some cases (i.e. OKS). 
 
 ```{r fig.cap="Average presence of the four most common action units for each judge by video\\label{fig:common_video}"}
 most_common_subset <- most_common %>% 
   filter(most_common == 1) %>% 
   mutate(index = paste0(judge,AU))
-  
+
 more_presence <- au_tidy %>% 
   group_by(judge,AU, video) %>% 
   summarise(avg_presence = mean(presence)) %>% 
@@ -198,7 +202,7 @@ more_presence <- au_tidy %>%
   ungroup(judge) %>% 
   left_join(au_meaning, by = c("AU" = "AU_number")) %>% 
   mutate(AU = as.factor(AU))
-  
+
 more_presence %>% 
   filter(AU %in% c("AU02", "AU14", "AU15", "AU20")) %>% 
   ggplot(aes(x = video, y = avg_presence, 
@@ -212,54 +216,124 @@ more_presence %>%
 
 ### Model fit
 
+The second model as shown in Equation \ref{eq:judge_video} is estimated to understand the interaction effect between judge and video. 
 
-
-
-\begin{equation}\label{eq:judge_au_video}
-P_{ijk} = \mu + \alpha_i + \beta_j +\delta_k + (\alpha\beta)_{ij}+(\alpha\delta)_{ik} + (\beta\delta)_{jk}
+\begin{equation}\label{eq:judge_video}
+P_{ijk} = \mu + \alpha_i + \beta_j +\delta_k + (\alpha\beta)_{ij}
 \end{equation}
 
-```{r}
-binomial_model_2 <- glm(presence ~ judge*AU + video*AU, 
-           family = binomial(link = "logit"),  data = au_model)
+The estimated coefficients are presented in Table \ref{tab:result_2}
 
-lsmean_obj_2 <-  lsmeans(binomial_model_2, ~judge*AU*video)
-# result_2 <- multcomp::cld(lsmean_obj_2, alpha = 0.05, type = "response") 
-# 
-# knitLatex::xTab(format(as.data.frame(result_2), digits = 2), booktabs = TRUE)
+
+What we could find from Figure \ref{fig:model_2_plot}
+
+- Judge Edelman, Keane and Kiefel behave relatively consistent throughout all the videos. Judge Gageler is also consistent throughout the trails except for video OKS. 
+- Judge Nettle seems to have two different "status"
+- Judge Bell behaves quite differently in the three videos she participates
+
+
+```{r model_2, results = "asis"}
+model_dt_2 <- model_dt %>% 
+  filter(AU %in% c("AU02", "AU14", "AU20","AU15")) 
+
+binomial_model_2 <- glm(presence ~ judge*video + AU, 
+                        family = binomial(link = "logit"),  
+                        data = model_dt_2)
+lsmean_obj_2 <-  lsmeans(binomial_model_2, ~judge*video)
+result_2 <- multcomp::cld(lsmean_obj_2, alpha = 0.05, type = "response") 
+
+knitLatex::xTab(format(as.data.frame(result_2) %>% filter(!is.na(prob)), digits = 2), booktabs = TRUE, caption.top = "\\label{tab:result_2} model result 2")
 ```      
 
-```{r}
-# glance(binomial_model_2) %>% kable(caption = "\\label{tab:glance_2}summary of model fit")
 
-#tidy(binomial_model_2) %>% kable(digits=2)
+```{r fig.cap = "THis is the graphical representation of model2\\label{fig:model_2_plot}"}
+type  <- result_2$.group%>% 
+  str_trim(side = "both") %>% 
+  str_split(pattern = "")
 
-#au_model_2_aug <- augment(binomial_model_2, au_model)
+group <- result_2 %>% 
+  dplyr::select(video, judge) %>% 
+  mutate(type = type) %>%
+  unnest() %>% 
+  mutate(type = 
+           case_when(type == "0" ~ "10",
+                     type == "A" ~ "11",
+                     TRUE ~ type),
+         type = as.numeric(type)) %>% 
+  group_by(video, judge) %>% 
+  summarise(average_group = mean(type))
 
-# binomial_model_2 <- glm(presence ~ judge + AU + video +
-#         judge*AU + AU*video + judge*video, 
-#            family = "binomial",  data = au_model) %>% 
-#   step(trace = FALSE)
-# 
-# summary(binomial_model_2)
-# tidy(binomial_model_2)
-# glance(binomial_model_2)
-
+result_2 %>% 
+  left_join(group, by = c("video", "judge")) %>% 
+  ggplot(aes(x = fct_reorder(video,prob),y = prob,
+             label = average_group, col = as.factor(average_group))) +
+  geom_point() +
+  geom_errorbar(aes(ymin = asymp.LCL,ymax = asymp.UCL), width = 0.2) + 
+  ggrepel::geom_text_repel(aes(label = average_group)) + 
+  facet_wrap(vars(judge), nrow = 2) + 
+  theme(legend.position = "none") + 
+  coord_flip() + 
+  xlab("video")
 ```
 
-```{r eval=FALSE}
-ggplot(au_model_2_aug, aes(x=.fitted, y=.resid)) + geom_point()
+```{r}
+#ggplot(au_model_2_aug, aes(x=.fitted, y=.resid)) + geom_point()
 ```
 
 ### Appellant vs. Respondent 
 
-```{r}
-binomial_model_3 <- glm(presence ~ judge*AU + video*AU + speaker, 
-           family = "binomial",  data = au_model)
+The third model as shown in Equation \ref{eq:judge_speaker} is estimated to understand the interaction effect between judge and speaking party. 
 
-glance(binomial_model_3) %>% kable(caption = "\\label{tab:glance_3}summary of model fit")
-#tidy(binomial_model_3) %>% kable(digits=2)
+\begin{equation}\label{eq:judge_speaker}
+P_{ijk} = \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\delta)_{il}
+\end{equation}
+
+The estimated coefficients are presented in Table \ref{tab:result_3}
+
+What we could find from Figure \ref{fig:model_3_plot}
+  
+- Judges are behaving pretty similar when different parties are talking
+
+```{r model_3, results = "asis"}
+model_dt_3 <- model_dt %>% 
+  filter(AU %in% c("AU02", "AU14", "AU20","AU15")) 
+
+binomial_model_3 <- glm(presence ~ judge*speaker + video + AU, 
+                        family = "binomial",  data = model_dt_3)
+
+lsmean_obj_3 <-  lsmeans(binomial_model_3, ~judge*speaker)
+result_3 <- multcomp::cld(lsmean_obj_3, alpha = 0.05, type = "response") 
+
+knitLatex::xTab(format(as.data.frame(result_3), digits = 2), booktabs = TRUE, caption.top = "\\label{tab:result_3} model result 3")
 ```
+
+```{r fig.cap = "THis is the graphical representation of model3\\label{fig:model_3_plot}"}
+type  <- result_3$.group%>% 
+  str_trim(side = "both") %>% 
+  str_split(pattern = "")
+
+group <- result_3 %>% 
+  dplyr::select(speaker, judge) %>% 
+  mutate(type = type) %>%
+  unnest() %>% 
+  mutate(type = as.numeric(type)) %>% 
+  group_by(speaker, judge) %>% 
+  summarise(average_group = mean(type))
+
+result_3 %>% 
+  left_join(group, by = c("speaker", "judge")) %>% 
+  ggplot(aes(x = fct_reorder(speaker,prob),y = prob,
+             label = average_group, col = as.factor(average_group))) +
+  geom_point() +
+  geom_errorbar(aes(ymin = asymp.LCL,ymax = asymp.UCL), width = 0.2) + 
+  ggrepel::geom_text_repel(aes(label = average_group)) + 
+  facet_wrap(vars(judge), nrow = 2) + 
+  theme(legend.position = "none") + 
+  coord_flip() + 
+  xlab("speaker")
+```
+
+
 
 ## Action unit: Intensity
 
@@ -339,7 +413,31 @@ knitr::kable(most_intense %>%
   spread(judge, AU), caption = "\\label{tab:most_intense}The five most intense action unit for each judge.")
 ```
  
- 
+### Model fit 
+
+```{r eval = FALSE}
+model_dt %>% 
+  filter(intensity != 0)%>% 
+  mutate(intensity = sqrt(intensity)) %>% 
+  ggplot(aes(x = intensity)) + 
+  geom_histogram()
+
+model_dt %>% 
+  ggplot(aes(x = sqrt(intensity))) + 
+  geom_histogram()
+
+model_dt %>% 
+  ggplot(aes(x = intensity)) + 
+  geom_histogram()
+
+# square root transformation
+model_dt %>% mutate(intensity = (intensity - mean(intensity))/sd(intensity)) %>% 
+  ggplot(aes(x = intensity)) + 
+  geom_histogram()
+```
+
+
+
 ### Intensity plot for the most frequent action units
  
 Apart from visualising the general intensity score for all the action units, I'm also interested in the intensity score of the most frequent action units. Figure \ref{fig:intensity_by_au} presents this. The statistics being plotted is $I_{ijtk}$ with $k$ including AU02, AU14, AU15 and AU20 as the most common four action units. From this plot, we can learn that AU02, although being commonly detected for all the judges, has low intensity score. 
