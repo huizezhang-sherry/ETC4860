@@ -34,6 +34,11 @@ Decisions by courtroom Justices have been discussed broadly in the legal literat
 
 @tutton2018judicial attempted to utilize the AV technology, which is made available online by the High Court of Australia [@highcourtau]. They visually inspect of the videos to highlight when Justices depart from the expected norms of judicial conduct. To better understand the emotion status and therefore the departure of the emotional behaviour, more advanced technologies could be applied. An example is to use OpenFace [-@baltrusaitis2018openface] technology, which provides information on emotions exhibited by the Justices. This technique has been applied by @kovalchik2018going on professional tennis players during Grand Slam matches. That study demonstrated the potential to predict the outcome of High Court appeals based on Justices' demeanour utilising contemporary tools and emotion tagging techniques. 
  
+ 
+<!-- Judge need to be impartial in their work but we know this is not true - people will have their own experience and opinion they bring into the court. we could infrence some of their decision based on their polictial party, the talks they give adn also from their facial expression. Observing facila expression by commentary is subjective, thus wwe need a more objective way to understand the facail expresson of the jduge, which in the end will help us to undersstand their decisions. -->
+
+People have attempted to predict the decisions of the Justices for centuries using judge characteristics. Thsis days, people start to incorporate more on court information i.e. av recording and transcript into the prediction. Manually observing the av recording could lead to subjective result of the facial behaviour of the justices and this motivates us to use a more objective facial recognition technology to analysis the facial expression of the justices and potentially improve the prediction of judge decision.
+ 
 ## Literature review
 
 The literature summary is divided into two parts: (1) current work in legal studies to understand the behaviour of the Justices and (2) existing facial recognition and emotion tagging technology.  
