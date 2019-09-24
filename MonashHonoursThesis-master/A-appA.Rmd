@@ -20,11 +20,22 @@ Table: Details of videos processed.
 
 ## List of the name of ction units
 
-```{r}
+```{r results = "asis"}
 au_meaning %>% 
   filter(AU_number %in% unique(au_tidy$AU)) %>% 
-  dplyr::select(AU_meaning) %>% 
-  kable()
+  rename("AU-number" = "AU_number", "AU-meaning" = "AU_meaning") %>% 
+  dplyr::select(`AU-meaning`) %>% as.data.frame() %>% 
+  knitLatex::xTab(booktabs = TRUE, caption.top = "\\label{tab:au_meaning} The meaning of all the action unit estimated")
 ```
 
+## Model estimation result 
+
+```{r results = "asis"}
+knitLatex::lTab(format(as.data.frame(lsmean_obj_2) %>% filter(!is.na(prob)) %>% dplyr::select(-df), digits = 2), booktabs = TRUE, caption.firsthead = "\\label{tab:result_2} model result 2")
+```
+
+
+```{r results = "asis"}
+knitLatex::lTab(format(as.data.frame(lsmean_obj_3) %>% filter(!is.na(prob)) %>% dplyr::select(-df), digits = 2), booktabs = TRUE, caption.firsthead = "\\label{tab:result_3} model result 3")
+```
 
