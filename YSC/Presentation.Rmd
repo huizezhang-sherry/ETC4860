@@ -1,0 +1,121 @@
+---
+title: "Exploration of Judicial Facial Expression in Videos and Transcripts of Legal Proceedings"
+author: 
+- "Huize Zhang"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    css: ["presdefault.css"]
+    lib_dir: libs
+    nature:
+      ratio: '4:3'
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+editor_options: 
+  chunk_output_type: console
+---
+
+### Can we predict the outcome of an appeal based on facial expressions on the Justices?
+
+[![A video for fun](images/video_photo.png)](https://www.youtube.com/watch?v=Ae7uKzin0GA)
+
+
+---
+class: inverse, center, middle
+
+# Background
+
+---
+# Recent legal studies on judicial behaviour
+
+Justices are expected to be neutral in the courtroom, but they can be unaware they are making facial expressions. 
+
+- Chan (2018): 
+  
+ - from video and audio recordings on the United States Supreme Court
+ 
+ - used general image processing methods, but not face recognition
+
+- Tutton et al. (2018): 
+
+  - from transcript and audiovisual recordings on Australian High Court
+  
+  - manually recorded Judicial expressions from videos and the corresponding transcript.
+
+---
+# Face Recognition
+
+- **Paul Ekman** analysed facial actions and expressions, leading to the Facial Action Coding System (FACS)
+
+
+- Decomposition of facial muscles
+
+
+.pull-left[
+
+Example: AU_2
+
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+library(knitr)
+library(ggplot2)
+include_graphics("images/AU2-right-only.gif")
+```
+]
+
+
+.pull-right[
+
+Example: AU_15
+
+```{r echo = FALSE}
+include_graphics("images/AU15.gif")
+```
+]
+
+- Kovalchik & Reid (2018) utilise OpenFace to study the emotion of professional tennis players in the Australian Open grand slam matches (OUR MOTIVATION)
+
+---
+
+class: inverse, center, middle
+
+# Data Collection
+
+---
+
+## Video Processing (I have done this)
+
+```{r echo = FALSE, fig.align="center"}
+include_graphics("images/workflow.png")
+```
+
+### 4601 faces and 711 facial variables!
+
+---
+class: middle, center
+
+### Collected Data
+
+```{r echo = FALSE, warning=  FALSE}
+include_graphics("images/dataframe.png")
+
+```
+
+---
+class: inverse, center, middle
+
+#  Results
+
+
+---
+
+
+class: center, middle
+
+# Acknowledgement
+
+I would like to express my gratitude to Di Cook, Russell Symth and Stephanie Kobakian for helping me throughout the project.
+
+Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
+
+
