@@ -38,16 +38,15 @@
 \hypertarget{ch:intro}{%
 \chapter{Introduction}\label{ch:intro}}
 
+\hypertarget{statement-of-topic}{%
+\section{Statement of topic}\label{statement-of-topic}}
+
 Decisions by courtroom Justices have been discussed broadly in the legal literature. Gender, political views and religious background of both the Justices and counsel in the case potentially influence the decisions. This paper will explore the facial behaviour of the Justices during hearings with the objective of being to assess whether it can help to predict outcomes. Audio Visual(AV) recordings and case transcripts will be computationally processed and analysed to examine the decisions of each Justice.
 
 \hypertarget{motivation}{%
 \section{Motivation}\label{motivation}}
 
-\textcite{tutton2018judicial} attempted to utilize the AV technology, which is made available online by the High Court of Australia \autocite{highcourtau}. They visually inspect of the videos to highlight when Justices depart from the expected norms of judicial conduct. To better understand the emotion status and therefore the departure of the emotional behaviour, more advanced technologies could be applied. An example is to use OpenFace \autocite*{baltrusaitis2018openface} technology, which provides information on emotions exhibited by the Justices. This technique has been applied by \textcite{kovalchik2018going} on professional tennis players during Grand Slam matches. That study demonstrated the potential to predict the outcome of High Court appeals based on Justices' demeanour utilising contemporary tools and emotion tagging techniques.
-
-Judge need to be impartial in their work but we know this is not true - people will have their own experience and opinion they bring into the court. we could infrence some of their decision based on their polictial party, the talks they give adn also from their facial expression. Observing facila expression by commentary is subjective, thus wwe need a more objective way to understand the facail expresson of the jduge, which in the end will help us to undersstand their decisions.
-
-People have attempted to predict the decisions of the Justices for centuries using some judge characteristics. Thsis days, people start to incorporate more on court information i.e.~av recording and transcript into the prediction. Manually observing the av recording could lead to subjective result of the facial behaviour of the justices and this motivates us to use a more objective facial recognition technology to analysis the facial expression of the justices and potentially improve the prediction of judge decision.
+People have attempted to predict the decisions of the Justices in the past century using judge characteristics i.e.~Gender, political views, religious background. More recently, scholars\autocites{Shullman2004illusion}{chen2018justice} have been using on-court information (i.e.~AV recording, transcript, language used by the Justices) to predict the decision of the Justices using the U.S. Supreme Court data. On-court information has also been used to study data from High Court of Australia. \textcite{tutton2018judicial} has used an ethnographic approach to present a observational study of judicial behaviour based on watching the audio footage. Manually observing the AV recordings could lead to subjective evaluation of facial expression and this motivates us to build upon \textcite{tutton2018judicial}'s work to employ facial recognition technology to study the facial expression of the justices, which will provide a more objective result than \textcite{tutton2018judicial}.
 
 \hypertarget{literature-review}{%
 \section{Literature review}\label{literature-review}}
@@ -57,30 +56,28 @@ The literature summary is divided into two parts: (1) current work in legal stud
 \hypertarget{legal-study-from-a-behaviour-perspective}{%
 \subsection{Legal study from a behaviour perspective}\label{legal-study-from-a-behaviour-perspective}}
 
-People have attempted to predict the decisions of the Justices for centuries. \textcite{judicalguid} present the following code of conduct:
+There is a large law \& economics and political science literature that attempts to predict how judges will vote in court cases. Much of this focuses on the characteristics of the judge i.e.~gender, political views, religious background and characteristics of the parties in the case i.e.~gender or race of the defendant in criminal cases \autocites{Stuart1962}{Peter1984}{Combining1987}{Susan1988}{Steffensmeier2001}{Kulik2003}.
+
+Moving from static information of the judge and parties involved, more studies start to incorporate the language used by the judge on the court to predict the decision of the Justices. \textcite{black2011emotions} has study the use of pleasant and unpleasant language by the Justices and \textcite{Shullman2004illusion} and \textcite{johnson2009inquiring} have studied the effect of frequency and content of Justices' questions. \textcite{epstein2010inferring} use a regression analysis with the number of questions asked by the Justices used to infer the winning party in a case.
+
+More recent legal study has focused on the usage of emotion and vocal characteristics of the Justices to predict the judge's vots. Although \textcite{judicalguid} present the following code of conduct:
 
 \begin{quote}
 It is important for judges to maintain a standard of behaviour in court that is consistent with the status of judicial office and does not diminish the confidence of litigants in particular, and the public in general, in the ability, the integrity, the impartiality and the independence of the judge.
 \end{quote}
 
-This impartiality should be clear in judicial demeanour \autocites{tutton2018judicial}{goffman1956nature}. Paul Ekman \autocite{ekman1991invited} suggests that from a behavioural perspective, some facial and vocal inflections are often unbeknown to the speakers themselves . Many scholars have exploited this in studying the court outcomes through the language and words used by the Justices in the court \autocite{Shullman2004illusion} and vocal and facial characteristics of the Justices \autocite{chen2018justice}.
+and this impartiality has been highlighted in judicial demeanour by \textcite{tutton2018judicial} and \textcite{goffman1956nature}, Paul Ekman \textcite{ekman1991invited} suggests that from a behavioural perspective, some facial and vocal inflections are often unbeknown to the speakers themselves. \textcite{chen2016perceived}; \textcite{chen2017covering} and \textcite{schubert1992observing} have studied the emotion of the Justices from vocal characteristics and suggest that these vocal characteristics, especially perceived masculinity is strongly correlated with the court outcomes. \textcite{dietrich2019emotional} has used a multilevel logistic model with random effects to suggest that subconscious vocal inflections contain information that is not available from text.
 
-There are also existing works to understand the emotion of the Justices from a linguistic perspective and suggest some factors that could be useful to indicate how the Justices' vote and thus the court outcome. These factors include the use of pleasant and unpleasant language by \textcite{black2011emotions}, the frequency and content of Justices' questions by \textcite{Shullman2004illusion} and \textcite{johnson2009inquiring}. \textcite{epstein2010inferring} use a regression analysis with the number of questions asked by the Justices used to infer the winning party in a case.
+Moreover, a more sizeable study by \textcite{chen2018justice} have incorporated both vocal and image information of the judge into a machine learning model to predict the court votes using the U.S. Supreme Court data from 1946-2014. He found that image features improved prediction of case outcomes from 64\% to 69\% and audio features improved prediction of case outcomes from 67\% to 69\%. This demonstrate the potential of incorporating facial information to understand the decision of the Justices.
 
-Other scholars \autocites{chen2016perceived}{chen2017covering}{schubert1992observing} have studied the emotion of the Justices from vocal characteristics and suggest that these vocal characteristics, especially perceived masculinity is strongly correlated with the court outcomes. \textcite{dietrich2019emotional} uses a multilevel logistic model with random effects to suggest that subconscious vocal inflections contain information that is not available from text.
-
-Chen \autocite*{chen2018justice} employed both vocal and facial characteristics to predict the court votes using Supreme Court data from 1946-2014. The audio clips are first preprocessed to get the Mel-frequency Cepstral Coefficients (MFCC) and then applied to a random forest model. The image features are extracted using a Histogram of Oriented Gradients (HOG) method. More specific facial recognition software is readily available to extract human facial features and these facial recognition technologies have not yet been applied to the legal proceedings.
-
-Most of the literature is conducted using the U.S. Supreme Court Database and less studies have been conducted using Australian High Court data. \textcite{tutton2018judicial} have used an ethnographic approach to study the transcript and AV recordings in the High Court of Australia but the study is conducted in an observational manner via matching the Justices' distinct behaviour with the transcript.
+The literature mentioned above is mostly conducted using the U.S. Supreme Court Database and less studies have been conducted using Australian High Court data. \textcite{tutton2018judicial} has used an ethnographic approach to study the judicial demeanour in the High Court of Australia and it is the first of its kind to use transcript and AV recordings in Australia study. The study found that Justices present a detached facial demeanour during the court in most of the time while some human display of emotions i.e.~laughter and humour have also been captured by the scholars. Tutton's work has confirmed the potential of using image information to understanding the Justices as in Chen's study, while the ethnographic approach could be biased and lead to subjective results when different people are observing the videos. Thus, building upon Tutton's study, my work fills the gap of producing objective result via utilising facial recognition technology.
 
 \hypertarget{facial-recognition}{%
 \subsection{Facial recognition}\label{facial-recognition}}
 
-An anatomical analysis of facial action \autocite{ekman1976measuring} led to the Facial Action Code (FAC) \autocite{ekman1978} and has been further revised by \textcite{ekman2002facial}. This decomposition of facial muscles is widely used in scientific research. It was applied in competitive sports, specifically tennis by \textcite{kovalchik2018going} who found that the emotion of professional tennis players will have an impact on their performance.
+An anatomical study of the decomposition of facial muscles by \autocite{ekman1976measuring} led to the devlopment of Facial Action Code (FAC) \autocite{ekman1978} and identification of the six universal emotions on human faces. This work has been further revised as \autocite{paulekmangroup} and has laid a solid foundation for analysing facial expression and developing facial recognition softwares for researchers \autocites{Kobayashi1992}{huang1997}{lien2000}{Kappoor2003}{Tong2007}{Cohn2009}{Lucey2010}.
 
-There have been many algorithms created for facial detection and the analysis of their performance when applied to images have been the focus of events like the Audio/Visual Emotion Challenge \autocites{schuller2012avec}{schuller2011avec} and Emotion Recognition In The Wild Challenge and Workshop \autocites{dhall2013emotion}{kahou2013combining}.
-
-Facial recognition software has also been implemented by DeepFace \autocite{taigman2014deepface} from Facebook, and FaceNet \autocite{schroff2015facenet} from Google. OpenFace \autocite{baltrusaitis2018openface} is the first open-sourced face recognition software that provides facial expression detection, including facial landmarking, head pose estimation, eye gaze tracking and facial action unit detection. Along with its previous version (\textcite{baltruvsaitis2016openface}), the OpenFace toolkit has been used in different social research studies including depression classification (\textcite{yang2016decision} and \textcite{nasir2016multimodal}).
+To be able to analysis the facial expression, proper facial recognition technique is needed to first extract faces from images. Facial recognition softwares i.e.~DeepFace \autocite{taigman2014deepface} from Facebook and FaceNet \autocite{schroff2015facenet} from Google have also been developed for face detection. OpenFace \autocite{baltrusaitis2018openface} is the first open-sourced face recognition software that provides facial expression detection, including facial landmarking, head pose estimation, eye gaze tracking and facial action unit detection. The OpenFace toolkit has been used in different area in research including depression classification \autocites{yang2016decision}{nasir2016multimodal}, emotion study \autocites{Pan2018}{Nasir2016}{Huber2018} and even sports analytics \autocite{kovalchik2018going}.
 
 \hypertarget{data-collection}{%
 \chapter{Data Collection}\label{data-collection}}
@@ -326,11 +323,27 @@ Nettle & AU01: Inner brow raiser & AU07: Lid tightener & NA\\
 \hypertarget{model-fit}{%
 \subsection{Model fit}\label{model-fit}}
 
-The first model I use is a generalised linear model with binomial link to understand the presence of the action units. The variables used include the judge, action units and their interactions. The model can be written down as Equation \ref{eq:judge_au}.Judge Edelman and AU01 are selected as the base level.
+The first model I use is a generalised linear model with binomial link to understand the presence of the action units. The variables used include the judge, action units and their interactions. The use of interaction terms allow for the effect of judge to be differed at different action unit level. The model can be written down as Equation \ref{eq:judge_au}.Judge Edelman and AU01 are selected as the base level.
 
 \begin{equation}\label{eq:judge_au}
 P_{ik} = \mu + \alpha_i + \gamma_k + (\alpha\gamma)_{ik}
 \end{equation}
+
+I'm interested to know if the presence score for one pair of judge and action unit is signficiantly different from another pair. Aanalysis of Varaince (ANOVA) test result in Table \ref{tab:anova} shows that there are significant variance for both judge, AU and their interactions. The next step after ANOVA is to test how each level of judge and AU different from another and I use multiple comparison to do this. (manually it will be 861 test to perform since 6 judges and 7 au - using multiple comparison, we can perform this take while control for a relatively low 5\% false positive rate). The estimated coefficient for each judge and AU pair is reported in Table \ref{tab:result_1} along with the upper and lower confidence interval bond. The information in the group column is helpful to understand how one particular pair of judge and au is different from another pair. With compact letter display, the pair with the same letter/number are \emph{NOT} significantly different from each other.
+
+This result is also plotted in Figure \ref{fig:model_1_plot}. Insights:
+
+\begin{itemize}
+\tightlist
+\item
+  Individual difference:
+
+  \begin{itemize}
+  \item
+    Kean and Bell has relatively less AU02: Outer brow raiser presenting
+  \item
+  \end{itemize}
+\end{itemize}
 
 \begin{table}[t]
 
@@ -354,40 +367,38 @@ judge:AU & 15 & 1113.8722 & 15160 & 15805.01\\
 \begin{table}[ht]
 \begin{center}
 \caption{\label{tab:result_1} model result}
-\begin{tabular}{llllllll}
+\begin{tabular}{lllllll}
 \toprule
-judge & AU & prob & SE & df & asymp.LCL & asymp.UCL & .group \\
+judge & AU & prob & SE & df & asymp.LCL & asymp.UCL \\
 \midrule
-Bell & AU14 & 0.15 & 0.0179 & Inf & 0.12 & 0.19 &  1             \\
-Edelman & AU14 & 0.43 & 0.0155 & Inf & 0.40 & 0.46 &   2            \\
-Kiefel & AU15 & 0.44 & 0.0210 & Inf & 0.40 & 0.48 &   2            \\
-Edelman & AU15 & 0.46 & 0.0156 & Inf & 0.43 & 0.49 &   2            \\
-Nettle & AU14 & 0.49 & 0.0201 & Inf & 0.45 & 0.52 &   23           \\
-Kiefel & AU14 & 0.52 & 0.0211 & Inf & 0.48 & 0.56 &   234          \\
-Gageler & AU20 & 0.55 & 0.0177 & Inf & 0.51 & 0.58 &    345         \\
-Gageler & AU14 & 0.62 & 0.0173 & Inf & 0.58 & 0.65 &     456        \\
-Gageler & AU15 & 0.62 & 0.0172 & Inf & 0.59 & 0.66 &      567       \\
-Bell & AU20 & 0.62 & 0.0242 & Inf & 0.57 & 0.67 &     4567       \\
-Keane & AU14 & 0.71 & 0.0227 & Inf & 0.66 & 0.75 &       678      \\
-Bell & AU02 & 0.73 & 0.0223 & Inf & 0.68 & 0.77 &        78      \\
-Nettle & AU20 & 0.74 & 0.0176 & Inf & 0.71 & 0.77 &         8      \\
-Edelman & AU20 & 0.77 & 0.0132 & Inf & 0.74 & 0.79 &         89     \\
-Keane & AU02 & 0.78 & 0.0207 & Inf & 0.74 & 0.82 &         890    \\
-Nettle & AU15 & 0.78 & 0.0166 & Inf & 0.75 & 0.81 &         890    \\
-Kiefel & AU20 & 0.84 & 0.0154 & Inf & 0.81 & 0.87 &          90    \\
-Gageler & AU02 & 0.85 & 0.0125 & Inf & 0.83 & 0.88 &           0A   \\
-Bell & AU15 & 0.86 & 0.0176 & Inf & 0.82 & 0.89 &          90A   \\
-Keane & AU15 & 0.87 & 0.0170 & Inf & 0.83 & 0.90 &           0A   \\
-Keane & AU20 & 0.93 & 0.0131 & Inf & 0.90 & 0.95 &            AB  \\
-Edelman & AU02 & 0.95 & 0.0069 & Inf & 0.93 & 0.96 &             B  \\
-Kiefel & AU02 & 0.95 & 0.0091 & Inf & 0.93 & 0.97 &             B  \\
-Nettle & AU02 & 1.00 & 0.0028 & Inf & 0.99 & 1.00 &              C \\
+Edelman & AU02 & 0.95 & 0.0069 & Inf & 0.93 & 0.96 \\
+Bell & AU02 & 0.73 & 0.0223 & Inf & 0.68 & 0.77 \\
+Gageler & AU02 & 0.85 & 0.0125 & Inf & 0.83 & 0.88 \\
+Keane & AU02 & 0.78 & 0.0207 & Inf & 0.74 & 0.82 \\
+Kiefel & AU02 & 0.95 & 0.0091 & Inf & 0.93 & 0.97 \\
+Nettle & AU02 & 1.00 & 0.0028 & Inf & 0.99 & 1.00 \\
+Edelman & AU14 & 0.43 & 0.0155 & Inf & 0.40 & 0.46 \\
+Bell & AU14 & 0.15 & 0.0179 & Inf & 0.12 & 0.19 \\
+Gageler & AU14 & 0.62 & 0.0173 & Inf & 0.58 & 0.65 \\
+Keane & AU14 & 0.71 & 0.0227 & Inf & 0.66 & 0.75 \\
+Kiefel & AU14 & 0.52 & 0.0211 & Inf & 0.48 & 0.56 \\
+Nettle & AU14 & 0.49 & 0.0201 & Inf & 0.45 & 0.52 \\
+Edelman & AU15 & 0.46 & 0.0156 & Inf & 0.43 & 0.49 \\
+Bell & AU15 & 0.86 & 0.0176 & Inf & 0.82 & 0.89 \\
+Gageler & AU15 & 0.62 & 0.0172 & Inf & 0.59 & 0.66 \\
+Keane & AU15 & 0.87 & 0.0170 & Inf & 0.83 & 0.90 \\
+Kiefel & AU15 & 0.44 & 0.0210 & Inf & 0.40 & 0.48 \\
+Nettle & AU15 & 0.78 & 0.0166 & Inf & 0.75 & 0.81 \\
+Edelman & AU20 & 0.77 & 0.0132 & Inf & 0.74 & 0.79 \\
+Bell & AU20 & 0.62 & 0.0242 & Inf & 0.57 & 0.67 \\
+Gageler & AU20 & 0.55 & 0.0177 & Inf & 0.51 & 0.58 \\
+Keane & AU20 & 0.93 & 0.0131 & Inf & 0.90 & 0.95 \\
+Kiefel & AU20 & 0.84 & 0.0154 & Inf & 0.81 & 0.87 \\
+Nettle & AU20 & 0.74 & 0.0176 & Inf & 0.71 & 0.77 \\
 \bottomrule
 \end{tabular}
 \end{center}
 \end{table}
-
-I'm interested to know if the presence score for one pair of judge and action unit is signficiantly different from another pair. Aanalysis of Varaince (ANOVA) test result in Table \ref{tab:anova} shows that there are significant variance for both judge, AU and their interactions. The next step after ANOVA is to test how each level of judge and AU different from another and I use multiple comparison to do this. (manually it will be 861 test to perform since 6 judges and 7 au - using multiple comparison, we can perform this take while control for a relatively low 5\% false positive rate). The estimated coefficient for each judge and AU pair is reported in Table \ref{tab:result_1} along with the upper and lower confidence interval bond. The information in the group column is helpful to understand how one particular pair of judge and au is different from another pair. With compact letter display, the pair with the same letter/number are \emph{NOT} significantly different from each other. This result is also plotted in Figure \ref{fig:model_1_plot}.
 
 \begin{figure}
 \includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-9-1} \caption{THis is the graphical representation of model1\label{fig:model_1_plot}}\label{fig:unnamed-chunk-9}
@@ -396,7 +407,14 @@ I'm interested to know if the presence score for one pair of judge and action un
 \hypertarget{presence-by-videos}{%
 \subsection{Presence by videos}\label{presence-by-videos}}
 
-Apart from visualising the general presence score for all the action units, I'm also interested in the break down statistics by video (\(P_{ijk}\)). This is computed as \[P_{ijk} = \frac{\sum_{t}X_{ijtk}}{T_j}\] for the four most common action units: AU02, AU14, AU15, AU20 and plotted in Figure \ref{fig:common_video}. From this plot, we can observe that some of the judge are have relatively stable display of action unit throughout different videos (i.e.~Edelman and Nettle), while Gagaler seems to be highly reactive to some cases (i.e.~OKS).
+Apart from visualising the general presence score for all the action units, I'm also interested in the break down statistics by video (\(P_{ijk}\)). This is computed as \[P_{ijk} = \frac{\sum_{t}X_{ijtk}}{T_j}\] for the four most common action units: AU02, AU14, AU15, AU20 and plotted in Figure \ref{fig:common_video}. From this plot, we can observe that
+
+\begin{itemize}
+\item
+  some of the judge are have relatively stable display of action unit throughout different videos (i.e.~Edelman and Nettle),
+\item
+  while Gagaler seems to be highly reactive to some cases (i.e.~OKS, Nauru\_a, Nauru\_b).
+\end{itemize}
 
 \begin{figure}
 \includegraphics[width=1\linewidth]{thesis_files/figure-latex/unnamed-chunk-10-1} \caption{Average presence of the four most common action units for each judge by video\label{fig:common_video}}\label{fig:unnamed-chunk-10}
@@ -405,26 +423,27 @@ Apart from visualising the general presence score for all the action units, I'm 
 \hypertarget{model-fit-1}{%
 \subsection{Model fit}\label{model-fit-1}}
 
-The second model as shown in Equation \ref{eq:judge_video} is estimated to understand the interaction effect between judge and video.
+The second model as shown in Equation \ref{eq:judge_video} is estimated to understand the interaction effect between judge and video while taking into account the main effect of judge, video and action unit and other pair wise interactions.
 
 \begin{equation}\label{eq:judge_video}
 P_{ijk} = \mu + \alpha_i + \beta_j +\gamma_k + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)+{jk}
 \end{equation}
 
-Building upon the previous model, we incorporate the effect of videos in this model. There are three main effects of judge, video and action unit in the model. As from model 1, judge will behave differently in different action units, thus we add the interaction term of judge and action unit to allow for this change. We also incorporate the interaction term between judge and video, which allows the effect of judge to change at each video level. The interaciton term for video and action unit is also added because this allows different videos to have different present score for each different action unit.
+Building upon the previous model, we incorporate the effect of videos in this model. There are three main effects of judge, video and action unit in the model. We also incorporate the interaction term between judge and video, which allows the effect of judge to change at each video level. The interaciton term for video and action unit is also added because this allows different videos to have different present score for each different action unit.
 
 The estimated coefficients are presented in Table \ref{tab:result_2}
 
 What we could find from Figure \ref{fig:model_2_plot}
 
 \begin{itemize}
-\tightlist
 \item
   Judge Edelman, Keane and Kiefel behave relatively consistent throughout all the videos. Judge Gageler is also consistent throughout the trails except for video OKS.
 \item
-  Judge Nettle seems to have two different ``status''
+  The interval band for Gageler in case OKS is very different from those in other videos - consistent with exploratory data analysis
 \item
-  Judge Bell behaves quite differently in the three videos she participates
+  Judge Bell behaves quite differently in the three videos she participates - consistent with EDA
+\item
+  Judge Edelman has one in OKS for AU14 being pretty different -\textgreater{} consistent with EDA
 \end{itemize}
 
 \begin{figure}
