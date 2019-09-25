@@ -1,0 +1,19 @@
+
+# Background
+
+Legal studies have been tried to predict court outcome from the last century. Early study has been conducted using judge charcteristics for example, gender, religious background and political view. Moving from that, more recent studies in the U.S. have been found to use on-court information to make this prediction. Some of these information include the use of language by judge, the facial expression by judge and voice by judge. 
+
+Rather than focusing on prediction, the work using Australia data is still at the stage to understand the facial expression of the Justices. In 2018,  Tutton has produced a study of the demanour of the judge using AV recordings from the High Court of Australia. In their study, the facial expressions of the judge were recorded manually when the videos were played. This observational approach of analysing videos could be  subjective when different people are observing the same videos. This motivates me to study the facial expression of the judge via an more objective approach by using facial recognition technology. 
+
+## Data 
+
+The source data for this research is the AV recordings publicly available from the High Court of Australia. A sequence of procedure has been employed to obtain the facial related variables of the Justices and they are summarised in the flowchart below. 
+
+After downloading the videos using the command line tool youtub-dl,  we use ffmpeg to chop the video at a rate of one frame per minute, which gives us more than a thousand image frames. 
+
+The next step is to extract all the faces from these images. Because the Justices are remain sitted in the same position through out the hearing, I can locate the x and y coordinates of the judges and use that to crop all the image frames from the same videos. From our one thousand image frames, we finally get nearly 5 thousand face images. 
+
+These faces are all sent to OpenFace, an open sourced software for facial behaviour analysis and I get a csv file that contains 711 facial variables for each of face images. All these csv files are then processed to add index for video, frame and justice ID. Metatdata is also added to indicate whether the appellent or the respondent is speaking. 
+
+
+
