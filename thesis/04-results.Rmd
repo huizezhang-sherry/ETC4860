@@ -118,17 +118,26 @@ model_dt <- au_tidy %>%
 
 ### Model fit
 
-The first model I use is a generalised linear model with binomial link to understand the presence of the action units. The variables used include the judge, action units and their interactions. The model can be written down as Equation \ref{eq:judge_au}.Judge Edelman and AU01 are selected as the base level. 
+The first model I use is a generalised linear model with binomial link to understand the presence of the action units. The variables used include the judge, action units and their interactions. The use of interaction terms allow for the effect of judge to be differed at different action unit level. The model can be written down as Equation \ref{eq:judge_au}.Judge Edelman and AU01 are selected as the base level. 
 
 
 \begin{equation}\label{eq:judge_au}
 P_{ik} = \mu + \alpha_i + \gamma_k + (\alpha\gamma)_{ik}
 \end{equation}
 
+I'm interested to know if the presence score for one pair of judge and action unit is signficiantly different from another pair. Aanalysis of Varaince (ANOVA) test result in Table \ref{tab:anova} shows that there are significant variance for both judge, AU and their interactions. The next step after ANOVA is to test how each level of judge and AU different from another and I use multiple comparison to do this. (manually it will be `r 42*41/2` test to perform since 6 judges and 7 au - using multiple comparison, we can perform this take while control for a relatively low 5% false positive rate). The estimated coefficient for each judge and AU pair is reported in Table \ref{tab:result_1} along with the upper and lower confidence interval bond. The information in the group column is helpful to understand how one particular pair of judge and au is different from another pair. With compact letter display, the pair with the same letter/number are *NOT* significantly different from each other. 
+
+This result is also plotted in Figure \ref{fig:model_1_plot}. Insights:
+
+- Individual difference: 
+  - Kean and Bell has relatively less AU02: Outer brow raiser presenting
+  - 
+
+
 
 ```{r model_1}
 model_dt_1 <- model_dt %>% 
-  filter(AU %in% c("AU02", "AU14", "AU15", "AU20"))
+  filter(AU %in% c("AU02", "AU20", "AU15","AU14"))
 
 binomial_model_1 <- glm(presence ~ judge*AU, 
                         family = binomial(link = "logit"),  
@@ -140,65 +149,41 @@ anova(binomial_model_1) %>% kable(caption = "\\label{tab:anova}ANOVA result")
 ```
 
 ```{r model_1_response, results = "asis"}
-lsmean_obj_1 <-  lsmeans(binomial_model_1, ~judge*AU)
-result_1 <- multcomp::cld(lsmean_obj_1, alpha = 0.05, type = "response") 
+lsmean_obj_1 <-  emmeans(binomial_model_1, ~judge*AU, type = "response")
+#result_1 <- multcomp::cld(lsmean_obj_1, alpha = 0.05, type = "response") 
 
-knitLatex::xTab(format(as.data.frame(result_1), digits = 2), booktabs = TRUE, caption.top = "\\label{tab:result_1} model result")
+knitLatex::xTab(format(as.data.frame(lsmean_obj_1), digits = 2), booktabs = TRUE, caption.top = "\\label{tab:result_1} model result")
 ```
 
-I'm interested to know if the presence score for one pair of judge and action unit is signficiantly different from another pair. Aanalysis of Varaince (ANOVA) test result in Table \ref{tab:anova} shows that there are significant variance for both judge, AU and their interactions. The next step after ANOVA is to test how each level of judge and AU different from another and I use multiple comparison to do this. (manually it will be `r 42*41/2` test to perform since 6 judges and 7 au - using multiple comparison, we can perform this take while control for a relatively low 5% false positive rate). The estimated coefficient for each judge and AU pair is reported in Table \ref{tab:result_1} along with the upper and lower confidence interval bond. The information in the group column is helpful to understand how one particular pair of judge and au is different from another pair. With compact letter display, the pair with the same letter/number are *NOT* significantly different from each other. This result is also plotted in Figure \ref{fig:model_1_plot}. 
-
 ```{r fig.cap = "THis is the graphical representation of model1\\label{fig:model_1_plot}"}
-type <- result_1$.group%>% 
-  str_trim(side = "both") %>% 
-  str_split(pattern = "")
-
-group <- result_1 %>% 
-  dplyr::select(judge, AU) %>% 
-  mutate(type = type) %>%
-  unnest(type) %>% 
-  group_by(judge, AU) %>% 
-  mutate(type = case_when(type == "0" ~ "10",
-                          type == "A" ~ "11",
-                          type == "B" ~ "12",
-                          type == "C" ~ "13",
-                          TRUE ~ type),
-         type = as.numeric(type)) %>% 
-  summarise(average_group = mean(type))
-
-result_1 %>% 
-  left_join(group, by = c("judge", "AU")) %>% 
+lsmean_obj_1 %>% 
+  as.data.frame() %>% 
   left_join(au_meaning, by = c("AU" = "AU_number")) %>% 
-  mutate(AU = as.factor(AU)) %>% 
-  ggplot(aes(x = fct_reorder(judge,prob),y = prob,
-             label = average_group, col = as.factor(average_group))) +
-  geom_point() +
-  geom_errorbar(aes(ymin = asymp.LCL,ymax = asymp.UCL), width = 0.2) + 
-  ggrepel::geom_text_repel(aes(label = average_group)) + 
-  facet_wrap(vars(AU_meaning), nrow = 2) + 
-  theme(legend.position = "none") + 
-  coord_flip() + 
-  xlab("judge")
+  as.data.frame()%>%   
+  filter(!is.na(df)) %>% 
+  ggplot(aes(x= judge, y = prob)) + 
+  geom_point() + 
+  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL), width = 0.2) + 
+  facet_wrap(vars(AU_meaning))  + 
+  coord_flip()
 
 ```
 
 
 ### Presence by videos
 
-Apart from visualising the general presence score for all the action units, I'm also interested in the break down statistics by video ($P_{ijk}$). This is computed as $$P_{ijk} = \frac{\sum_{t}X_{ijtk}}{T_j}$$ for the four most common action units: AU02, AU14, AU15, AU20 and plotted in Figure \ref{fig:common_video}. From this plot, we can observe that some of the judge are have relatively stable display of action unit throughout different videos (i.e. Edelman and Nettle), while Gagaler seems to be highly reactive to some cases (i.e. OKS). 
+Apart from visualising the general presence score for all the action units, I'm also interested in the break down statistics by video ($P_{ijk}$). This is computed as $$P_{ijk} = \frac{\sum_{t}X_{ijtk}}{T_j}$$ for the four most common action units: AU02, AU14, AU15, AU20 and plotted in Figure \ref{fig:common_video}. From this plot, we can observe that 
+
+- some of the judge are have relatively stable display of action unit throughout different videos (i.e. Edelman and Nettle), 
+
+- while Gagaler seems to be highly reactive to some cases (i.e. OKS, Nauru_a, Nauru_b). 
 
 ```{r fig.cap="Average presence of the four most common action units for each judge by video\\label{fig:common_video}"}
-most_common_subset <- most_common %>% 
-  filter(most_common == 1) %>% 
-  mutate(index = paste0(judge,AU))
-
 more_presence <- au_tidy %>% 
   group_by(judge,AU, video) %>% 
   summarise(avg_presence = mean(presence)) %>% 
   filter(avg_presence != "NaN") %>% 
   arrange(-avg_presence) %>% 
-  mutate(index = paste0(judge,AU)) %>% 
-  filter(index %in% most_common_subset$index) %>% 
   ungroup(judge) %>% 
   left_join(au_meaning, by = c("AU" = "AU_number")) %>% 
   mutate(AU = as.factor(AU))
@@ -216,13 +201,13 @@ more_presence %>%
 
 ### Model fit
 
-The second model as shown in Equation \ref{eq:judge_video} is estimated to understand the interaction effect between judge and video. 
+The second model as shown in Equation \ref{eq:judge_video} is estimated to understand the interaction effect between judge and video while taking into account the main effect of judge, video and action unit and other pair wise interactions. 
 
 \begin{equation}\label{eq:judge_video}
 P_{ijk} = \mu + \alpha_i + \beta_j +\gamma_k + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)+{jk}
 \end{equation}
 
-Building upon the previous model, we incorporate the effect of videos in this model. There are three main effects of judge, video and action unit in the model. As from model 1, judge will behave differently in different action units, thus we add the interaction term of judge and action unit to allow for this change. We also incorporate the interaction term between judge and video, which allows the effect of judge to change at each video level. The interaciton term for video and action unit is also added because this allows different videos to have different present score for each different action unit. 
+Building upon the previous model, we incorporate the effect of videos in this model. There are three main effects of judge, video and action unit in the model.  We also incorporate the interaction term between judge and video, which allows the effect of judge to change at each video level. The interaciton term for video and action unit is also added because this allows different videos to have different present score for each different action unit. 
 
 The estimated coefficients are presented in Table \ref{tab:result_2}
 
@@ -230,8 +215,10 @@ The estimated coefficients are presented in Table \ref{tab:result_2}
 What we could find from Figure \ref{fig:model_2_plot}
 
 - Judge Edelman, Keane and Kiefel behave relatively consistent throughout all the videos. Judge Gageler is also consistent throughout the trails except for video OKS. 
-- Judge Nettle seems to have two different "status"
-- Judge Bell behaves quite differently in the three videos she participates
+- The interval band for Gageler in case OKS is very different from those in other videos - consistent with exploratory data analysis
+- Judge Bell behaves quite differently in the three videos she participates - consistent with EDA
+
+- Judge Edelman has one in OKS for AU14 being pretty different -> consistent with EDA
 
 
 ```{r model_2, results = "asis"}
@@ -242,21 +229,23 @@ binomial_model_2 <- glm(presence ~ judge*video + judge*AU + video*AU,
                         family = binomial(link = "logit"),  
                         data = model_dt_2)
 
-lsmean_obj_2 <- lsmeans(binomial_model_2, c("judge", "video", "AU"), 
+lsmean_obj_2 <- emmeans(binomial_model_2, c("judge", "video", "AU"), 
                          type = "response") 
 ```
 
 ```{r fig.cap="This is the graphical representaion for model 2\\label{fig:model_2_plot}"}
 lsmean_obj_2 %>% 
-  as.data.frame()%>%   
+  as.data.frame()%>%
   filter(!is.na(df)) %>% 
+  mutate(judge = fct_relevel(judge, c("Edelman", "Keane", "Kiefel", "Nettle", "Gageler", "Bell"))) %>% 
   ggplot(aes(x= fct_relevel(video, c("Nauru_a", "Nauru_b", "Rinehart_a",
                                "Rinehart_b", "McKell", "OKS", "Parkes")), 
                             y = prob)) + 
   geom_point() + 
   geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL), width = 0.2) + 
   facet_grid(AU ~ judge, scales = "free") + 
-  theme(axis.text.x = element_text(angle = 30, hjust = 1))
+  theme(axis.text.x = element_text(angle = 30, hjust = 1)) + 
+  xlab("video")
 ```      
 
 
@@ -284,7 +273,7 @@ model_dt_3 <- model_dt %>%
 
 binomial_model_3 <- glm(presence ~ judge*speaker + video*judge + AU*judge + video*AU, family = "binomial",  data = model_dt_3)
 
-lsmean_obj_3 <-  lsmeans(binomial_model_3, 
+lsmean_obj_3 <-  emmeans(binomial_model_3, 
                          c("judge", "video", "AU", "speaker") , 
                          type = "response")
 ```
