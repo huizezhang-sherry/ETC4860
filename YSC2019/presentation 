@@ -1,9 +1,20 @@
+Hi Everyone, Today I will be talking about exploring the judicial facial expression in videos of legal proceedings. 
 
 # Background
 
-Legal studies have been tried to predict court outcome from the last century. Early study has been conducted using judge charcteristics for example, gender, religious background and political view. Moving from that, more recent studies in the U.S. have been found to use on-court information to make this prediction. Some of these information include the use of language by judge, the facial expression by judge and voice by judge. 
+There are many videos of legal proceedings that are made available in the High Court of Australia website and here is a fraction of them.
 
-Rather than focusing on prediction, the work using Australia data is still at the stage to understand the facial expression of the Justices. In 2018,  Tutton has produced a study of the demanour of the judge using AV recordings from the High Court of Australia. In their study, the facial expressions of the judge were recorded manually when the videos were played. This observational approach of analysing videos could be  subjective when different people are observing the same videos. This motivates me to study the facial expression of the judge via an more objective approach by using facial recognition technology. 
+[play video]
+
+As we can see, apart from what the Justices say, there's another source of data that we can get from these videos. They are the facial expressions and we are interested to see how these facial patterns could be used to understand the Justices and further to understand their decision of the cases.
+
+The Justices are expected to behave impartially in the courtroom. However, there are studies showed that speakers themselves can be unaware of some facial and vocal expressions of themselves. 
+
+In 2018,  Tutton has studied the judicial demenaur of the judge using transcript and AV recordings. In their study, the facial expressions of the judge were recorded manually when the videos were played. This observational approach of analysing videos could be  subjective when different people are observing the same videos. This motivates me to study the facial expression of the judge via an more objective approach by using facial recognition technology. 
+
+## Face recognition 
+THe facial recognition technology these days are based on Paul Ekman's study of facial action coding system. Action units are fundamental unit of human facial muscles. Here we have two examples of them. Action unit 2 is the raising of outer eyebrow and actio nunit 15 is the lip corner depressor. Dsescribing face using this FACS  has been widely used in human emotion reserach.
+
 
 ## Data 
 
@@ -11,9 +22,17 @@ The source data for this research is the AV recordings publicly available from t
 
 After downloading the videos using the command line tool youtub-dl,  we use ffmpeg to chop the video at a rate of one frame per minute, which gives us more than a thousand image frames. 
 
-The next step is to extract all the faces from these images. Because the Justices are remain sitted in the same position through out the hearing, I can locate the x and y coordinates of the judges and use that to crop all the image frames from the same videos. From our one thousand image frames, we finally get nearly 5 thousand face images. 
+The next step is to extract all the faces from these images. Because the Justices are remain sitted in the same position through out the hearing, I can locate the x and y coordinates of the judges and use that to crop all the image frames from the same videos. From our one thousand image frames, we finally get  4 thousand and 6 hundred face images. 
 
-These faces are all sent to OpenFace, an open sourced software for facial behaviour analysis and I get a csv file that contains 711 facial variables for each of face images. All these csv files are then processed to add index for video, frame and justice ID. Metatdata is also added to indicate whether the appellent or the respondent is speaking. 
+These faces are all sent to OpenFace, an open sourced software for facial behaviour analysis. For each of the face image, I get one csv file that contains 711 facial variables. All these csv files are then processed to add metadata. 
+
+Our final data format looks like this. We have judge_id, video_id, frame_id and speakers for each of the action unit. Presence score and intensity score are available for every combination.  
 
 
 
+
+-----
+Legal studies have been tried to predict court outcome from the last century. Early study has been conducted using judge charcteristics for example, gender, religious background and political view. Moving from that, more recent studies in the U.S. have been found to use on-court information to make this prediction. Some of these information include the use of language by judge, the facial expression by judge and voice by judge. 
+
+
+Rather than focusing on prediction, the work using Australia data is still at the stage to understand the facial expression of the Justices.
