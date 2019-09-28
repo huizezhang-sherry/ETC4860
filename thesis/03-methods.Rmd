@@ -5,4 +5,71 @@ knit: "bookdown::render_book"
 
 # Methods
 
-Here you need to write about the analytical methods that you are using
+## Notation
+
+Let $\mathbf{X}$ be a matrix of predictors, and $\mathbf{Y}$ variable in our case is bivariate matrix of response variables, including a binary indicator of presence/absence and a numeric value measuring intensity, of facial action unit, where 
+
+- $X_1$ indicates `judge` with six categories $i = 1,2, \cdots, 6$
+
+- $X_2$ indicates `video` for each of the seven cases, $j = 1,2, \cdots, 7$
+
+- $X_3$ indicates action unit containing `r length(unique(au_tidy$AU))` possible facial expression.  
+
+- $X_4$ indicates `speaker`, either the appellant or respondent, $l=1,2$
+
+- $X_5$ indicates `frame` corresponding to time, $t = 1,2, \cdots, T_j$
+
+Note that $t$ could be considered a time variable, but because images are taken at 1 minute intervals, temporal dependence is unlikely to exist. Rather this should be considered an independent observation. 
+
+A full, main effects model for the data might be expressed as:
+
+$$Y_{ijkl} = \mu + \alpha_i + \beta_j + \gamma_k + \delta_l + \varepsilon_{ijkl}$$ 
+
+\noindent and we would be interested in interactions between judge, case, action unit and speaker. An alternative model structure, is to treat each action unit individually, and fit separate models. 
+
+Also, let $P_{jitkl}$ represent the response variable presence, and $I_{jitkl}$ represent the second response variable intensity. This notation will be helpful for defining the plots and models explained in this section.
+
+## Modelling
+
+### Model 1: action unit
+
+The first model I use is a generalised linear model with binomial link to understand the presence of the action units. The variables used include the judge, action units and their interactions. The use of interaction terms allow for the effect of judge to be differed at different action unit level. The model can be written down as Equation \ref{eq:judge_au}. Judge Edelman and AU01 are selected as the base level. 
+
+
+\begin{equation}\label{eq:judge_au}
+P_{ik} = \mu + \alpha_i + \gamma_k + (\alpha\gamma)_{ik}
+\end{equation}
+
+Based on this model structure, I can understand whether different factor level of action units have different effects on the same judges via ANOVA test. Analysis of Variance (ANOVA) test [reference] allows us to see if collectively, different factor levels of judge and action unit are the same or different ($\alpha_1 = \alpha_2 = \cdots = \alpha_6$). However, it doesn't explain which factor level causes this difference and thus we need multiple comparison. 
+
+### simultaneous comparisons 
+
+Rather than doing *one* hypothesis testing on if two statistics are (significantly) different or not, we are interested comparing if multiple statistics under the same family are the same or different. Under the first model, the family is each action unit, that is, we want to compare that for the same judge, whether the percentage of appearance of action units are the same or different.  P-value and confidence interval are both tools for quantifying uncertainty of estimation. However, in the context of multiple comparison, adjustment need to be made for thesis statistics to be meaningful. 
+
+Testing significance based on the usage of p-value has been long criticised for its interpretation. Researchers can erroneously conclude significance due to p-value being less than 0.05 without discussing the false positive/negative rate. [add reference: (Yates, 1951; Savage, 1957; Rozeboom, 1960; Gardner and Altman, 1986; Simon, 1986; Bulpitt, 1987)]. The correct interpretation for a p-value being less than 0.05 is the estimated quantity are significant subject to 5% of false positive rate. This indicates, if the test is performed multiple times, then 5% of the chance we would conclude the two means are significantly different but they are actually not. 
+
+This is especially a problem when there are a large number of tests need to be performed simultaneously and the consequence of false positive rate is huge. In our context, the judges are expected to be impartial while we believe they may have some facial expressions during the hearing because they could be unbeknown to the speakers. It would be an concern if we don't control the false positive rate, which occurs when the judges didn't expression a facial expression but we claim they do. Bonferroni and Benjamini–Hochberg adjustment are created to reduce the false positive rate at the cost of relatively cheap false negative rate. In both methods, the critical value of 0.05 is adjusted based on the number of simultaneous test and an assumption of independent test is made. <!-- For example, say there are 100 mean need to be compared, for us to conclude a particular mean is significant, we need a p-value to be less than the adjusted critical value: `0.05/100` (0.05/100) - maybe we dont need this for example.  -->[need some reference on both adjustment: http://www.biostathandbook.com/multiplecomparisons.html] 
+
+A better method to present the same result is through reporting the confidence interval and then comparing if intervals overlap with each other [some reference on the preference of confidence interval for doing comparison]. 
+
+
+
+
+
+### Model 2 - Video
+
+The second model as shown in Equation \ref{eq:judge_video} is estimated to understand the interaction effect between judge and video while taking into account the main effect of judge, video and action unit and other pair wise interactions. 
+
+\begin{equation}\label{eq:judge_video}
+P_{ijk} = \mu + \alpha_i + \beta_j +\gamma_k + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk}
+\end{equation}
+
+Building upon the previous model, we incorporate the effect of videos in this model. There are three main effects of judge, video and action unit in the model.  We also incorporate the interaction term between judge and video, which allows the effect of judge to change at each video level. The interaction term for video and action unit is also added because this allows different videos to have different present score for each different action unit. 
+
+### Model 3 - Appellant & respondent
+
+The third model as shown in Equation \ref{eq:judge_speaker} is estimated to understand the interaction effect between judge and speaking party. 
+
+\begin{equation}\label{eq:judge_speaker}
+P_{ijkl} = \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\delta)_{il}
+\end{equation}
