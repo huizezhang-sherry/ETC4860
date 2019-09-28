@@ -204,7 +204,7 @@ more_presence %>%
 The second model as shown in Equation \ref{eq:judge_video} is estimated to understand the interaction effect between judge and video while taking into account the main effect of judge, video and action unit and other pair wise interactions. 
 
 \begin{equation}\label{eq:judge_video}
-P_{ijk} = \mu + \alpha_i + \beta_j +\gamma_k + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)+{jk}
+P_{ijk} = \mu + \alpha_i + \beta_j +\gamma_k + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk}
 \end{equation}
 
 Building upon the previous model, we incorporate the effect of videos in this model. There are three main effects of judge, video and action unit in the model.  We also incorporate the interaction term between judge and video, which allows the effect of judge to change at each video level. The interaciton term for video and action unit is also added because this allows different videos to have different present score for each different action unit. 
@@ -240,7 +240,7 @@ lsmean_obj_2 %>%
   mutate(judge = fct_relevel(judge, c("Edelman", "Keane", "Kiefel", "Nettle", "Gageler", "Bell"))) %>% 
   ggplot(aes(x= fct_relevel(video, c("Nauru_a", "Nauru_b", "Rinehart_a",
                                "Rinehart_b", "McKell", "OKS", "Parkes")), 
-                            y = prob)) + 
+                            y = prob, col= video)) + 
   geom_point() + 
   geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL), width = 0.2) + 
   facet_grid(AU ~ judge, scales = "free") + 
@@ -258,7 +258,7 @@ lsmean_obj_2 %>%
 The third model as shown in Equation \ref{eq:judge_speaker} is estimated to understand the interaction effect between judge and speaking party. 
 
 \begin{equation}\label{eq:judge_speaker}
-P_{ijk} = \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\delta)_{il}
+P_{ijkl} = \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\delta)_{il}
 \end{equation}
 
 The estimated coefficients are presented in Table \ref{tab:result_3}
@@ -287,6 +287,46 @@ lsmean_obj_3 %>%
   geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL), width = 0.2) + 
   facet_grid(judge ~ AU, scales = "free_y") + 
   theme(axis.text.x = element_text(angle = 30, hjust = 1))
+```
+
+```{r}
+lsmean_obj_3 %>% 
+  as.data.frame()%>%
+  filter(!is.na(df)) %>% 
+  mutate(judge = fct_relevel(judge, c("Edelman", "Keane", "Kiefel", 
+                                      "Nettle", "Gageler", "Bell"))) %>% 
+  ggplot(aes(x= fct_relevel(video, c("Nauru_a", "Nauru_b", "Rinehart_a",
+                                     "Rinehart_b", "McKell", "OKS",
+                                     "Parkes")), 
+                            y = prob, 
+             col = video)) + 
+  geom_point() + 
+  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL), width = 0.2) + 
+  facet_grid(AU ~ judge, scales = "free") + 
+  theme(axis.text.x = element_text(angle = 30, hjust = 1)) + 
+  xlab("video")
+```
+
+
+
+```{r fig.cap = "THis is the graphical representation of model3_2\\label{fig:model_3_plot2}"}
+
+lsmean_obj_3 %>% 
+  as.data.frame()%>%
+  filter(!is.na(df)) %>% 
+  mutate(judge = fct_relevel(judge, c("Edelman", "Keane", "Kiefel", 
+                                      "Nettle", "Gageler", "Bell"))) %>% 
+  ggplot(aes(x= fct_relevel(video, c("Nauru_a", "Nauru_b", "Rinehart_a",
+                                     "Rinehart_b", "McKell", "OKS",
+                                     "Parkes")), 
+                            y = prob, 
+             col = speaker)) + 
+  geom_point() + 
+  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL), width = 0.2) + 
+  facet_grid(AU ~ judge, scales = "free") + 
+  theme(axis.text.x = element_text(angle = 30, hjust = 1)) + 
+  xlab("video")
+
 ```
 
 
