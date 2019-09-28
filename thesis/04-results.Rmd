@@ -5,26 +5,6 @@ knit: "bookdown::render_book"
 
 # Results
 
-## Notation
-
-Let $\mathbf{X}$ be a matrix of predictors, and $\mathbf{Y}$ variable in our case is bivariate matrix of response variables, including a binary indicator of presence/absence and a numeric value measuring intensity, of facial action unit, where 
-
-- $X_1$ indicates `judge` with six categories $i = 1,2, \cdots, 6$
-- $X_2$ indicates `video` for each of the seven cases, $j = 1,2, \cdots, 7$
-- $X_3$ indicates action unit containing `r length(unique(au_tidy$AU))` possible facial expression.  
-- $X_4$ indicates `speaker`, either the appellant or respondent, $l=1,2$
-- $X_5$ indicates `frame` corresponding to time, $t = 1,2, \cdots, T_j$
-
-Note that $t$ could be considered a time variable, but because images are taken at 1 minute intervals, temporal dependence is unlikely to exist. Rather this should be considered an independent observation. 
-
-A full, main effects model for the data might be expressed as:
-
-$$Y_{ijkl} = \mu + \alpha_i + \beta_j + \gamma_k + \delta_l + \varepsilon_{ijkl}$$ 
-
-\noindent and we would be interested in interactions between judge, case, action unit and who is speaking. An alternative model structure, is to treat each action unit individually, and fit separate models. 
-
-Also, let $P_{jitkl}$ represent the response variable presence, and $I_{jitkl}$ represent the second response variable intensity. This notation will be helpful for defining the plots and models explained in this section.
-
 
 ## Action unit: Presence
 
@@ -74,7 +54,7 @@ It can be seen that some of the action units are common across almost all the ju
 - AU15 (Lip Corner Depressor) 
 - AU14 (Dimpler)
 
-AU02 makes a contribution to surprise, which is a positive attitude showing that judges are interested in a particular moment [@ekman2002facial]. According to [@ekman2002facial], AU14 indicates boredom and AU15 shows confusion. Along with other action units that presented with high frequency in a particular judge but not all (summarised in Table \ref{tab:other_highf}), the emotions judges displayed in the courtroom can be summarised into three categories, described in Table \ref{tab:three_category} along with the featured action units. 
+According to @ekman2002facial, AU02 makes a contribution to surprise, which is a positive attitude showing that judges are interested in a particular moment. AU14 indicates boredom and AU15 shows confusion. Along with other action units that presented with high frequency in a particular judge but not all (summarised in Table \ref{tab:other_highf}), the emotions judges displayed in the courtroom can be summarised into three categories, described in Table \ref{tab:three_category} along with the featured action units. 
 
 
 ```{r}
@@ -84,7 +64,6 @@ tibble::tibble(emotion = c("Surprise", "Boredom", "Confusion"),
                                           "AU07, AU15, AU23")) %>% 
   kable(caption = "\\label{tab:three_category} Summarised emotions and featured action units")
 ```
-
 
 
 ```{r}
@@ -116,22 +95,12 @@ model_dt <- au_tidy %>%
 ```
 
 
-### Model fit
+### Interaction between judge and action unit
 
-The first model I use is a generalised linear model with binomial link to understand the presence of the action units. The variables used include the judge, action units and their interactions. The use of interaction terms allow for the effect of judge to be differed at different action unit level. The model can be written down as Equation \ref{eq:judge_au}.Judge Edelman and AU01 are selected as the base level. 
+Analysis of Variance (ANOVA) test result in Table \ref{tab:anova} shows that there are significant variance for both judge, AU and their interactions and thus it is necessary to perform multiple comparison to determine how does each level of action unit differ for different judges. The estimated coefficient for each judge and AU pair is reported in Table \ref{tab:result_1} along with the upper and lower confidence interval bond. This result is also plotted in Figure \ref{fig:model_1_plot} for visual inspection.
 
 
-\begin{equation}\label{eq:judge_au}
-P_{ik} = \mu + \alpha_i + \gamma_k + (\alpha\gamma)_{ik}
-\end{equation}
-
-I'm interested to know if the presence score for one pair of judge and action unit is signficiantly different from another pair. Aanalysis of Varaince (ANOVA) test result in Table \ref{tab:anova} shows that there are significant variance for both judge, AU and their interactions. The next step after ANOVA is to test how each level of judge and AU different from another and I use multiple comparison to do this. (manually it will be `r 42*41/2` test to perform since 6 judges and 7 au - using multiple comparison, we can perform this take while control for a relatively low 5% false positive rate). The estimated coefficient for each judge and AU pair is reported in Table \ref{tab:result_1} along with the upper and lower confidence interval bond. The information in the group column is helpful to understand how one particular pair of judge and au is different from another pair. With compact letter display, the pair with the same letter/number are *NOT* significantly different from each other. 
-
-This result is also plotted in Figure \ref{fig:model_1_plot}. Insights:
-
-- Individual difference: 
-  - Kean and Bell has relatively less AU02: Outer brow raiser presenting
-  - 
+<!-- The information in the group column is helpful to understand how one particular pair of judge and au is different from another pair. With compact letter display, the pair with the same letter/number are *NOT* significantly different from each other.  -->
 
 
 
@@ -142,41 +111,37 @@ model_dt_1 <- model_dt %>%
 binomial_model_1 <- glm(presence ~ judge*AU, 
                         family = binomial(link = "logit"),  
                         data = model_dt_1)
-```
 
-```{r anova}
-anova(binomial_model_1) %>% kable(caption = "\\label{tab:anova}ANOVA result")
+emmean_obj_1 <-  emmeans(binomial_model_1, ~judge*AU, type = "response")
+int_1 <- confint(emmean_obj_1, adjust = "bonferroni")
+
+# result_1 <- multcomp::cld(lsmean_obj_1, alpha = 0.05, type = "response") 
 ```
 
 ```{r model_1_response, results = "asis"}
-lsmean_obj_1 <-  emmeans(binomial_model_1, ~judge*AU, type = "response")
-#result_1 <- multcomp::cld(lsmean_obj_1, alpha = 0.05, type = "response") 
-
-knitLatex::xTab(format(as.data.frame(lsmean_obj_1), digits = 2), booktabs = TRUE, caption.top = "\\label{tab:result_1} model result")
+knitLatex::xTab(format(as.data.frame(int_1), digits = 2), booktabs = TRUE, caption.top = "\\label{tab:result_1} model result")
 ```
 
 ```{r fig.cap = "THis is the graphical representation of model1\\label{fig:model_1_plot}"}
-lsmean_obj_1 %>% 
-  as.data.frame() %>% 
+int_1 %>% 
   left_join(au_meaning, by = c("AU" = "AU_number")) %>% 
-  as.data.frame()%>%   
+  as_tibble()%>%   
   filter(!is.na(df)) %>% 
-  ggplot(aes(x= judge, y = prob)) + 
+  ggplot(aes(x= fct_relevel(AU, c("AU20", "AU15", "AU14", "AU02")), 
+             y = prob, fill = AU)) + 
   geom_point() + 
   geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL), width = 0.2) + 
-  facet_wrap(vars(AU_meaning))  + 
-  coord_flip()
-
+  facet_wrap(vars(judge))  + 
+  coord_flip() + 
+  xlab("AU") + 
+  theme(legend.position = "none")
 ```
 
 
 ### Presence by videos
 
-Apart from visualising the general presence score for all the action units, I'm also interested in the break down statistics by video ($P_{ijk}$). This is computed as $$P_{ijk} = \frac{\sum_{t}X_{ijtk}}{T_j}$$ for the four most common action units: AU02, AU14, AU15, AU20 and plotted in Figure \ref{fig:common_video}. From this plot, we can observe that 
+Apart from visualising the general presence score for all the action units, I'm also interested in the break down statistics by video ($P_{ijk}$). This is computed as $$P_{ijk} = \frac{\sum_{t}X_{ijtk}}{T_j}$$ for the four most common action units: AU02, AU14, AU15, AU20 and plotted in Figure \ref{fig:common_video}. From this plot, we can observe that Gageler and Bell seems to have a larger fluctuation across videos than others, especially for case OKS. This "visual" difference is only a preliminary result we observe from the plot, more solid statistical method need to be employed to validate the fluctuation shows statistical difference.
 
-- some of the judge are have relatively stable display of action unit throughout different videos (i.e. Edelman and Nettle), 
-
-- while Gagaler seems to be highly reactive to some cases (i.e. OKS, Nauru_a, Nauru_b). 
 
 ```{r fig.cap="Average presence of the four most common action units for each judge by video\\label{fig:common_video}"}
 more_presence <- au_tidy %>% 
@@ -196,29 +161,15 @@ more_presence %>%
   geom_point() + 
   facet_wrap(vars(AU_meaning),scales = "free_x") + 
   theme(axis.text.x = element_text(angle = 30, hjust = 1))
-
 ```
 
-### Model fit
+### Interaction between judge and video
 
-The second model as shown in Equation \ref{eq:judge_video} is estimated to understand the interaction effect between judge and video while taking into account the main effect of judge, video and action unit and other pair wise interactions. 
+The estimated coefficients for the second model are presented in Table \ref{tab:result_2} in the Appendix. Visual representation of the estimated result is shown in Figure \ref{fig:model_2_plot}. We can observe that Judge Edelman, Keane and Kiefel behave relatively consistent throughout all the videos since all the intervals for the same judge, same action unit but different videos overlaps after bonferroni adjustment. This would indicates in these videos, these judges would have similar thinking or reaction towards the evidence and argument presented by the barristers.  
 
-\begin{equation}\label{eq:judge_video}
-P_{ijk} = \mu + \alpha_i + \beta_j +\gamma_k + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk}
-\end{equation}
+Judge Gageler seems to have a large fluctuate of his facial expressions in video OKS and his response is significantly different from those in other cases for AU15 and AU20. This shows consistency with our exploratory data analysis where Gageler tends to show a higher proportion of presence for action units in case OKS. 
 
-Building upon the previous model, we incorporate the effect of videos in this model. There are three main effects of judge, video and action unit in the model.  We also incorporate the interaction term between judge and video, which allows the effect of judge to change at each video level. The interaciton term for video and action unit is also added because this allows different videos to have different present score for each different action unit. 
-
-The estimated coefficients are presented in Table \ref{tab:result_2}
-
-
-What we could find from Figure \ref{fig:model_2_plot}
-
-- Judge Edelman, Keane and Kiefel behave relatively consistent throughout all the videos. Judge Gageler is also consistent throughout the trails except for video OKS. 
-- The interval band for Gageler in case OKS is very different from those in other videos - consistent with exploratory data analysis
-- Judge Bell behaves quite differently in the three videos she participates - consistent with EDA
-
-- Judge Edelman has one in OKS for AU14 being pretty different -> consistent with EDA
+Our result validates the exploratory data analysis that the difference between case OKS and Parkes for Bell are significant in action unit 14, 15 and 20. Since the confidence interval doesn't overlap for these two videos. The difference between case McKell and OKS are not significance after the Bonferroni adjustment and this indicates the difference we see before in Figure \ref{fig:common_video} is more likely due to randomness rather than the true underlying difference between the two videos. From a legal perspective, this would show that Bell is addressing the cases with different responses. However, this different approach of responding by the judge doesn't indicate the biasness of the judge in the courtroom but the individuality of different judge approaching to cases. 
 
 
 ```{r model_2, results = "asis"}
@@ -229,20 +180,23 @@ binomial_model_2 <- glm(presence ~ judge*video + judge*AU + video*AU,
                         family = binomial(link = "logit"),  
                         data = model_dt_2)
 
-lsmean_obj_2 <- emmeans(binomial_model_2, c("judge", "video", "AU"), 
+emmean_obj_2 <- emmeans(binomial_model_2, c("judge", "video", "AU"), 
                          type = "response") 
+
+int_2 <- confint(emmean_obj_2, adjust = "bonferroni")
 ```
 
 ```{r fig.cap="This is the graphical representaion for model 2\\label{fig:model_2_plot}"}
-lsmean_obj_2 %>% 
-  as.data.frame()%>%
+int_2 %>% 
   filter(!is.na(df)) %>% 
   mutate(judge = fct_relevel(judge, c("Edelman", "Keane", "Kiefel", "Nettle", "Gageler", "Bell"))) %>% 
   ggplot(aes(x= fct_relevel(video, c("Nauru_a", "Nauru_b", "Rinehart_a",
                                "Rinehart_b", "McKell", "OKS", "Parkes")), 
-                            y = prob, col= video)) + 
-  geom_point() + 
-  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL), width = 0.2) + 
+                            y = prob,  group = judge)) + 
+  geom_point(aes(col= video)) + 
+  geom_line(alpha = 0.5) + 
+  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL, col= video), 
+                width = 0.2) + 
   facet_grid(AU ~ judge, scales = "free") + 
   theme(axis.text.x = element_text(angle = 30, hjust = 1)) + 
   xlab("video")
@@ -253,19 +207,10 @@ lsmean_obj_2 %>%
 #ggplot(au_model_2_aug, aes(x=.fitted, y=.resid)) + geom_point()
 ```
 
-### Appellant vs. Respondent 
+### Interaction between judge and speaking parties
 
-The third model as shown in Equation \ref{eq:judge_speaker} is estimated to understand the interaction effect between judge and speaking party. 
-
-\begin{equation}\label{eq:judge_speaker}
-P_{ijkl} = \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\delta)_{il}
-\end{equation}
-
-The estimated coefficients are presented in Table \ref{tab:result_3}
-
-What we could find from Figure \ref{fig:model_3_plot}
+The estimated coefficients are presented in Table \ref{tab:result_3} and we could find from Figure \ref{fig:model_3_plot} that the video-wise difference between judge still persist and the speaker-wise difference is not significant even before bomferroni adjustment. This result would be a validation that on the high court level, the judges are behaving impartial to different speaking parties. 
   
-- Judges are behaving pretty similar when different parties are talking
 
 ```{r model_3, results = "asis"}
 model_dt_3 <- model_dt %>% 
@@ -273,60 +218,24 @@ model_dt_3 <- model_dt %>%
 
 binomial_model_3 <- glm(presence ~ judge*speaker + video*judge + AU*judge + video*AU, family = "binomial",  data = model_dt_3)
 
-lsmean_obj_3 <-  emmeans(binomial_model_3, 
+emmean_obj_3 <-  emmeans(binomial_model_3, 
                          c("judge", "video", "AU", "speaker") , 
                          type = "response")
+
+int_3 <- confint(emmean_obj_3,  adjust = "bonferroni")
 ```
 
 ```{r fig.cap = "THis is the graphical representation of model3\\label{fig:model_3_plot}"}
-lsmean_obj_3 %>% 
-  as.data.frame()%>%   
+int_3 %>% 
   filter(!is.na(df)) %>% 
-  ggplot(aes(x= video, y = prob, col = speaker)) + 
-  geom_point() + 
-  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL), width = 0.2) + 
-  facet_grid(judge ~ AU, scales = "free_y") + 
-  theme(axis.text.x = element_text(angle = 30, hjust = 1))
-```
-
-```{r}
-lsmean_obj_3 %>% 
-  as.data.frame()%>%
-  filter(!is.na(df)) %>% 
-  mutate(judge = fct_relevel(judge, c("Edelman", "Keane", "Kiefel", 
-                                      "Nettle", "Gageler", "Bell"))) %>% 
   ggplot(aes(x= fct_relevel(video, c("Nauru_a", "Nauru_b", "Rinehart_a",
-                                     "Rinehart_b", "McKell", "OKS",
-                                     "Parkes")), 
-                            y = prob, 
-             col = video)) + 
+                               "Rinehart_b", "McKell", "OKS", "Parkes")), 
+             y = prob, col = speaker)) + 
   geom_point() + 
   geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL), width = 0.2) + 
-  facet_grid(AU ~ judge, scales = "free") + 
+  facet_grid(AU ~ fct_relevel(judge, c("Edelman", "Keane", "Kiefel", "Nettle", "Gageler", "Bell")), scales = "free_x") + 
   theme(axis.text.x = element_text(angle = 30, hjust = 1)) + 
   xlab("video")
-```
-
-
-
-```{r fig.cap = "THis is the graphical representation of model3_2\\label{fig:model_3_plot2}"}
-
-lsmean_obj_3 %>% 
-  as.data.frame()%>%
-  filter(!is.na(df)) %>% 
-  mutate(judge = fct_relevel(judge, c("Edelman", "Keane", "Kiefel", 
-                                      "Nettle", "Gageler", "Bell"))) %>% 
-  ggplot(aes(x= fct_relevel(video, c("Nauru_a", "Nauru_b", "Rinehart_a",
-                                     "Rinehart_b", "McKell", "OKS",
-                                     "Parkes")), 
-                            y = prob, 
-             col = speaker)) + 
-  geom_point() + 
-  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL), width = 0.2) + 
-  facet_grid(AU ~ judge, scales = "free") + 
-  theme(axis.text.x = element_text(angle = 30, hjust = 1)) + 
-  xlab("video")
-
 ```
 
 
@@ -375,7 +284,7 @@ Mean intensity score ($I_{ik}$) of each action unit for each of the judge is com
 
 - AU20 (Lip Stretcher)
 - AU07 (Lid Tightener)
-- AU04 (Brow Lowerer)
+- AU04 (Brow Lower)
 
 AU04 also belongs to the confusion category as AU07. This could help to understand that judges are more likely to express a stronger confusing expression than other emotions. 
 
