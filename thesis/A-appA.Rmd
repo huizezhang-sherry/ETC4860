@@ -30,12 +30,17 @@ au_meaning %>%
 
 ## Model estimation result 
 
-```{r results = "asis"}
-knitLatex::lTab(format(as.data.frame(lsmean_obj_2) %>% filter(!is.na(prob)) %>% dplyr::select(-df), digits = 2), booktabs = TRUE, caption.firsthead = "\\label{tab:result_2} model result 2")
+```{r anova}
+anova(binomial_model_1, test="Chisq") %>% kable(caption = "\\label{tab:anova}ANOVA result")
 ```
 
 
 ```{r results = "asis"}
-knitLatex::lTab(format(as.data.frame(lsmean_obj_3) %>% filter(!is.na(prob)) %>% dplyr::select(-df), digits = 2), booktabs = TRUE, caption.firsthead = "\\label{tab:result_3} model result 3")
+knitLatex::lTab(format(int_2 %>% filter(!is.na(prob)) %>% dplyr::select(-df), digits = 2), booktabs = TRUE, caption.firsthead = "\\label{tab:result_2} model result 2")
+```
+
+
+```{r results = "asis"}
+knitLatex::lTab(format(int_3 %>% filter(!is.na(prob)) %>% dplyr::select(-df), digits = 2), booktabs = TRUE, caption.firsthead = "\\label{tab:result_3} model result 3")
 ```
 
