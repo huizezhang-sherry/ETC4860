@@ -78,14 +78,12 @@ include_graphics("../images/AU15.gif")
 
 class: inverse, center, middle
 
-# Data Collection
+# Video Processing
 
 ---
 
-## Video Processing
-
-```{r echo = FALSE, fig.align="center", fig_height = 3.8, fig_width = 6.3}
-include_graphics("../images/workflow.png", dpi = 128)
+```{r echo = FALSE, fig.align="center"}
+include_graphics("../images/workflow.png")
 ```
 
 ### 4601 faces and 711 facial variables!
@@ -109,41 +107,53 @@ class: inverse, center, middle
 
 ## Notation: 
 
-- $X_1$ indicates `judge` with six categories $i = 1,2, \cdots, 6$
+|Variable|Range|
+|---|----|
+|Judge| $i = 1,2, \cdots, 6$ |
+|Video| $j = 1,2, \cdots, 7$ |
+|Action unit|`r length(unique(au_tidy$AU))` possible facial expression|
+|Speaker|either the appellant or respondent, $l=1,2$|
+|Frame| $t = 1,2, \cdots, T_j$ |
+|Presence |The binary $Y$ variable:  $P_{ijkl}$|
 
-- $X_2$ indicates `video` for each of the seven cases, $j = 1,2, \cdots, 7$
 
-- $X_3$ indicates action unit containing `r length(unique(au_tidy$AU))` possible facial expression.  
-
-- $X_4$ indicates `speaker`, either the appellant or respondent, $l=1,2$
-
-- $X_5$ indicates `frame` corresponding to time, $t = 1,2, \cdots, T_j$
+<!-- - $X_1$ indicates `judge` with six categories $i = 1,2, \cdots, 6$ -->
+<!-- - $X_2$ indicates `video` for each of the seven cases, $j = 1,2, \cdots, 7$ -->
+<!-- - $X_3$ indicates action unit containing `r length(unique(au_tidy$AU))` possible facial expression.   -->
+<!-- - $X_4$ indicates `speaker`, either the appellant or respondent, $l=1,2$ -->
+<!-- - $X_5$ indicates `frame` corresponding to time, $t = 1,2, \cdots, T_j$ -->
+<!-- - $P_{ijkl}$ indicates the binary `presence` variable  -->
 
 Main effects model: 
 
-$$Y_{ijkl} = \mu + \alpha_i + \beta_j + \gamma_k + \delta_l + \varepsilon_{ijkl}$$ 
+$$P_{ijkl} = \mu + \alpha_i + \beta_j + \gamma_k + \delta_l + \varepsilon_{ijkl}$$ 
 
 ---
 
 ## Modelling:
 
-\begin{equation}
-P_{ijkl} = \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\delta)_{il}
-\end{equation}
+GLM model with binomial link: 
 
-Allow interaction between judge (`i`) and 
+\begin{aligned}
+P_{ijkl} &= \frac{e^{\eta_{ijkl}}}{1 + e^{\eta_{ijkl}}} \\
+\eta_{ijkl} &= \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\delta)_{il} + \varepsilon_{ijkl} \\
+\end{aligned}
 
-- video (`j`)
-- action  unit (`k`)
-- speaker (`l`)
 
-and interaction between video $\times$ action unit. 
+Do the Justices' expression differ
+
+- from one case to another?
+
+- when different parties were speaking? 
+
+Method: 
+
+- See if the confidence interval, after correcting for multiple comparison of the mean overlaps 
 
 ---
 class: inverse, center, middle
 
 #  Result
-
 
 ---
 
@@ -160,18 +170,21 @@ binomial_model_2 <- glm(presence ~ judge*video + judge*AU + video*AU,
                         family = binomial(link = "logit"),  
                         data = model_dt_2)
 
-lsmean_obj_2 <- emmeans(binomial_model_2, c("judge", "video", "AU"), 
+emmean_obj_2 <- emmeans(binomial_model_2, c("judge", "video", "AU"), 
                          type = "response") 
 
-lsmean_obj_2 %>% 
-  as.data.frame()%>%
+int_2 <- confint(emmean_obj_2, adjust = "bonferroni")
+
+int_2 %>% 
   filter(!is.na(df)) %>% 
   mutate(judge = fct_relevel(judge, c("Edelman", "Keane", "Kiefel", "Nettle", "Gageler", "Bell"))) %>% 
   ggplot(aes(x= fct_relevel(video, c("Nauru-a", "Nauru-b", "Rinehart-a",
                                "Rinehart-b", "McKell", "OKS", "Parkes")), 
-                            y = prob, col= video)) + 
-  geom_point() + 
-  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL), width = 0.2) + 
+                            y = prob,  group = judge)) + 
+  geom_point(aes(col= video)) + 
+  geom_line(alpha = 0.5, lty = "dashed") + 
+  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL, col= video), 
+                width = 0.2) + 
   facet_grid(AU ~ judge, scales = "free") + 
   theme(axis.text.x = element_text(angle = 30, hjust = 1)) + 
   xlab("video")
@@ -185,23 +198,19 @@ model_dt_3 <- model_dt %>%
 
 binomial_model_3 <- glm(presence ~ judge*speaker + video*judge + AU*judge + video*AU, family = "binomial",  data = model_dt_3)
 
-lsmean_obj_3 <-  emmeans(binomial_model_3, 
+emmean_obj_3 <-  emmeans(binomial_model_3, 
                          c("judge", "video", "AU", "speaker") , 
                          type = "response")
+int_3 <- confint(emmean_obj_3,  adjust = "bonferroni")
 
-lsmean_obj_3 %>% 
-  as.data.frame()%>%
+int_3 %>% 
   filter(!is.na(df)) %>% 
-  mutate(judge = fct_relevel(judge, c("Edelman", "Keane", "Kiefel", 
-                                      "Nettle", "Gageler", "Bell"))) %>% 
   ggplot(aes(x= fct_relevel(video, c("Nauru-a", "Nauru-b", "Rinehart-a",
-                                     "Rinehart-b", "McKell", "OKS",
-                                     "Parkes")), 
-                            y = prob, 
-             col = speaker)) + 
+                               "Rinehart-b", "McKell", "OKS", "Parkes")), 
+             y = prob, col = speaker)) + 
   geom_point() + 
   geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL), width = 0.2) + 
-  facet_grid(AU ~ judge, scales = "free") + 
+  facet_grid(AU ~ fct_relevel(judge, c("Edelman", "Keane", "Kiefel", "Nettle", "Gageler", "Bell")), scales = "free_x") + 
   theme(axis.text.x = element_text(angle = 30, hjust = 1)) + 
   xlab("video")
 ```

@@ -26,7 +26,31 @@ The next step is to extract all the faces from these images. Because the Justice
 
 These faces are all sent to OpenFace, an open sourced software for facial behaviour analysis. For each of the face image, I get one csv file that contains 711 facial variables. All these csv files are then processed to add metadata. 
 
-Our final data format looks like this. We have judge_id, video_id, frame_id and speakers for each of the action unit. Presence score and intensity score are available for every combination.  
+Our final data format looks like this. We have judge_id, video_id, frame_id and speakers for each of the action unit. Presence score and intensity score are available for every observation.  
+
+
+## Method
+
+Before moving into the modelling, let's first define the notation in this project. In our sample, we have six different judges, seven different cases and 18 different action units. Speaker is a binary variable that indicating whether the appellent or the respondent is speaking. There is also a time frame variable t that depends on the length of the video. The y variable is the binary present score, which has value of one if an action unit is present and zero otherwise. Thus, a main effect model without the interactions can be written down as on the screen.
+
+There are a few more steps to do before reaching to our full model. Based on our exploratory data analysis, we want to allow for different action units for the same judge to have different present score, thus we add the interactions between judge and action unit. Based on the same reason, we also add the interactions between judge and video, judge and speaker, case and action unit.
+
+By having this model, we are now able to answer the following two questions. Do the justices' expression differ from case to case and Do the justices' expression differ when different parties are speaking. 
+
+To do this, we compute the estimates of the presence score for each unique combination of judge, video, action unit and speaker, along with the confidence intervals. Because we are computing the confidence intervals for all estimates at once, adjustment need to be made to ensure the overall type I error is less than 0.05. 
+
+
+## Result 
+
+We can observe that Judge Edelman, Keane and Kiefel behave relatively consistent throughout all the videos since all the intervals for the same judge, same action unit but different videos overlaps after bonferroni adjustment. 
+
+Judge Gageler seems to have a large fluctuate of his facial expressions in video OKS and his response is significantly different from those in other cases for AU15 and AU20. This shows consistency with our exploratory data analysis where Gageler tends to show a higher proportion of presence for action units in case OKS. 
+
+Our result validates the exploratory data analysis that the difference between case OKS and Parkes for Bell are significant in action unit 14, 15 and 20. Since the confidence interval doesn't overlap for these two videos. The difference between case McKell and OKS are not significance after the Bonferroni adjustment and this indicates the difference we see before in Figure \ref{fig:common_video} is more likely due to randomness rather than the true underlying difference between the two videos. From a legal perspective, this would show that Bell is addressing the cases with different responses. However, this different approach of responding by the judge doesn't indicate the biasness of the judge in the courtroom but the individuality of different judge approaching to cases. 
+
+
+The result for speaker effect shows that the video-wise difference between judge still persist and the speaker-wise difference is not significant. This result would be a validation that on the high court level, the judges are behaving impartial to different speaking parties. 
+
 
 
 
