@@ -21,7 +21,8 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE, 
                       warning = FALSE, 
                       message = FALSE,
-                      cache = TRUE)
+                      cache = TRUE, 
+                      fig.path = "Figures/")
 
 library(knitr)
 library(ggplot2)
@@ -209,7 +210,7 @@ class: inverse, center, middle
 
 ---
 
-```{r echo = FALSE, message = FALSE, warning = FALSE, fig.height=9, fig.width=12}
+```{r video-plot, echo = FALSE, message = FALSE, warning = FALSE, fig.height=9, fig.width=12}
 model_dt <- au_tidy %>% 
   ungroup(judge) %>% 
   mutate(judge = fct_relevel(judge, "Edelman"), 
@@ -244,7 +245,7 @@ int_2 %>%
 
 ---
 
-```{r echo = FALSE, message = FALSE, warning = FALSE, fig.height=9, fig.width=12}
+```{r speaker-plot, echo = FALSE, message = FALSE, warning = FALSE, fig.height=9, fig.width=12}
 model_dt_3 <- model_dt %>% 
   filter(AU %in% c("AU02", "AU14", "AU20","AU15")) 
 
