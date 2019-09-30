@@ -1,12 +1,13 @@
 ---
 title: "Exploration of Judicial Facial Expression in Videos of Legal Proceedings"
-author: 
-- "Huize Zhang"
+author: "Sherry Zhang" 
+institution: "Monash University"
 date: "`r Sys.Date()`"
 output:
   xaringan::moon_reader:
     css: ["presdefault.css"]
     lib_dir: libs
+    seal: FALSE
     nature:
       ratio: '4:3'
       highlightStyle: github
@@ -16,6 +17,31 @@ editor_options:
   chunk_output_type: console
 ---
 
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, 
+                      warning = FALSE, 
+                      message = FALSE,
+                      cache = TRUE)
+
+library(knitr)
+library(ggplot2)
+library(emmeans)
+library(tidyverse)
+load("../raw_data/au_tidy.rda")
+load("../raw_data/au_meaning.rda")
+```
+
+class: title-slide, center, middle
+
+# `r rmarkdown::metadata$title`
+
+### `r rmarkdown::metadata$author` 
+
+### [`r icon::fa_twitter()`](https:://twitter.com/huizezhangsh) huizezhangsh [`r icon::fa_github()`](https:://github.com/huizezhang-sherry) huizezhang-sherry
+
+###`r rmarkdown::metadata$institution`
+
+---
 
 [![A video for fun](../images/video_photo.png)](https://www.youtube.com/watch?v=Ae7uKzin0GA)
 
@@ -52,12 +78,6 @@ This motivates me to study the facial expression of the judge via an more object
 AU02 -	Outer eyebrow raiser
 
 ```{r echo = FALSE, message = FALSE, warning = FALSE}
-library(knitr)
-library(ggplot2)
-library(emmeans)
-library(tidyverse)
-load("../raw_data/au_tidy.rda")
-load("../raw_data/au_meaning.rda")
 include_graphics("../images/AU2-right-only.gif")
 ```
 ]
@@ -82,9 +102,41 @@ class: inverse, center, middle
 
 ---
 
-```{r echo = FALSE, fig.align="center"}
-include_graphics("../images/workflow.png")
+```{r echo = FALSE, fig.align="center", out.height="500px", out.width= "900px"}
+include_graphics("../images/workflow_1 (0).png")
 ```
+
+---
+
+```{r echo = FALSE, fig.align="center", out.height="500px", out.width= "900px"}
+include_graphics("../images/workflow_1 (1).png")
+```
+
+---
+
+```{r echo = FALSE, fig.align="center", out.height="500px", out.width= "900px"}
+include_graphics("../images/workflow_1 (2).png")
+```
+
+---
+
+```{r echo = FALSE, fig.align="center", out.height="500px", out.width= "900px"}
+include_graphics("../images/workflow_1 (3).png")
+```
+
+---
+
+```{r echo = FALSE, fig.align="center", out.height="500px", out.width= "900px"}
+include_graphics("../images/workflow_1 (4).png")
+```
+
+---
+
+```{r echo = FALSE, fig.align="center", out.height="500px", out.width= "900px"}
+include_graphics("../images/workflow_1 (5).png")
+```
+
+--
 
 ### 4601 faces and 711 facial variables!
 
