@@ -13,13 +13,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 library(tidyverse)
-library(purrr)
-library(ggplot2)
 library(boot)
-library(forcats)
 
 load("raw_data/court.rda")
-load("raw_data/au.rda")
+load("raw_data/au_imputed.rda")
 ```
 
 
@@ -27,20 +24,20 @@ load("raw_data/au.rda")
 
 set.seed(10000)
 
-mean.fun <- function(data,index){
+max.fun <- function(data,index){
     val <-  data$value[index] 
-    return(mean(val))
+    return(max(val))
   }
 
 boot_sim_intensity <- function(judge){
-  dt <- au %>% 
-    filter(judge_id ==judge, AU01_r != "NA") %>% 
-    select(AU01_r: AU45_r,  judge_id : speaker) %>% 
+  dt <- au_imputed %>% 
+    filter(judge_id == judge) %>% 
+    select(judge_id: frame_id, speaker, ends_with("r")) %>% 
     gather(AU, value, -c(judge_id: speaker)) %>% 
     group_by(AU) 
     
   sim <- map(split(dt,dt$AU), function(x){
-    boot.obj <- boot(x, mean.fun, R = 1000)
+    boot.obj <- boot(x, max.fun, R = 1000)
     ci <- boot.ci(boot.obj, conf = c(0, 0.95), type = "perc")
   })
   
@@ -55,64 +52,47 @@ boot_sim_intensity <- function(judge){
   return(sim_result)
 }
 
-au_sim_bell <- boot_sim_intensity("Bell")
-au_sim_gordon <- boot_sim_intensity("Gordon") 
-au_sim_gordon <- boot_sim_intensity("Gordon") 
+judge_id = list("Keane","Gageler","Nettle","Edelman")
 
-
-judge_id = list("Bell","Keane","Kiefel","Gageler","Nettle","Gordon","Edelman")
 sim_result_int <- map_df(judge_id, function(x){
   boot_sim_intensity(x) %>% 
     mutate(judge_id = x)
   })
 
+save(sim_result_int, file = "raw_data/sim_result.rda")
+
 
 ```
 
 ```{r}
-au_aggregate_int <- au %>% 
-  filter(AU01_c != "NA") %>% 
-  group_by(judge_id) %>% 
-  right_join(sample_size) %>% 
-  summarise_at(vars(AU01_r: AU45_r), .funs = mean) %>% 
-  gather(AU, mean_agg, -judge_id) 
+load("raw_data/au_aggregate.rda")
+load("raw_data/count.rda")
+load("raw_data/au_video.rda")
+load("raw_data/sim_result.rda")
 
-au_video_int <- au %>% 
-  filter(AU01_c != "NA") %>% 
-  select(AU01_r: AU45_r, judge_id: speaker) %>% 
-  group_by(judge_id, video_id) %>% 
-  summarise_at(vars(AU01_r: AU45_r), mean) %>%
-  gather(AU, mean_ind, -judge_id, -video_id) %>% 
-  right_join(sample_size)
+sim_result_aug <- au_imputed %>% 
+  filter(judge_id %in% c("Keane","Gageler","Nettle","Edelman")) %>% 
+  select(judge_id: frame_id, speaker, ends_with("r")) %>% 
+  gather(AU, value, -c(judge_id: frame_id, speaker)) %>% 
+  left_join(sim_result_int) %>% 
+  mutate(AU = as.factor(AU),
+         outliners = as.factor(ifelse(value > sim_low, 1,0))) 
 
-count_int <- au  %>% 
-  select(AU01_r: AU45_r, judge_id: speaker) %>% 
-  group_by(judge_id) %>% 
-  right_join(sample_size) %>%
-  summarise(count = n())
-```
-
-```{r}
-ci_intensity <- au_aggregate_int %>% 
-  left_join(count_int) %>% 
-  left_join(sim_result_int, by = c("judge_id", "AU")) %>%
-  left_join(au_video_int, by = c("judge_id", "AU")) %>% 
-  ungroup() %>% 
-  mutate(outliners = as.factor(ifelse(mean_ind > sim_low, 
-                                      ifelse(mean_ind < sim_high, 0, 1), 1)))
-
-
-save(ci_intensity, file = "raw_data/ci_intensity.rda")
-
-ci_count %>%
-  mutate(AU = as.factor(AU)) %>% 
-  ggplot(aes(mean_agg, AU)) + 
+sim_result_aug %>% 
+  ggplot(aes(x = sim_mean, 
+             y = tidytext::reorder_within(AU, by = sim_mean, 
+                                      within = judge_id, sep = "_"))) +
+  geom_point(aes(x = value, col = outliners)) +
+  facet_wrap(vars(judge_id), scales = "free") + 
   geom_errorbarh(aes(xmin = sim_low, xmax = sim_high), col = "gray") + 
-  facet_wrap(vars(judge_id)) + 
-  geom_point(aes(x = mean_ind, y = AU, col = outliners))
+  
+  scale_y_discrete(labels = function(x) word(x, start = 1, sep = "_")) + 
+  ylab("AU")
 
 ```
 
+
+# Anomaly detection
 ```{r}
 
 by_index <- au %>%

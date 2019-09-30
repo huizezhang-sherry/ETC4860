@@ -241,10 +241,11 @@ sim_boot_vis <- ci_count %>%
   ylab("AU") + 
   ggtitle("Mean percentage appearance - bootstapping")
 
-gridExtra::grid.arrange(sim_boot_vis, sim_bino_vis, nrow = 1)
+# comparing boot and bino simulation they are very similar 
+# gridExtra::grid.arrange(sim_boot_vis, sim_bino_vis, nrow = 1)
+# g <- gridExtra::arrangeGrob(sim_boot_vis, sim_bino_vis, nrow = 1)
+ggsave("images/sim_result_vis.png", sim_boot_vis)
 
-ggsave("images/sim_result_vis.png")
-# bootstrap interval is indeed wider than those simulated from binomial 
 ```
 
 
