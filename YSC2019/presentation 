@@ -2,74 +2,99 @@ Hi Everyone, Today I will be talking about exploring the judicial facial express
 
 # Background
 
-There are many videos of legal proceedings that are made available in the High Court of Australia website and here is a fraction of them.
+The videos of legal proceedings are available for cases in the High Court of Australia, and can be found on their website.
+
+Here is a sample from XXX.
 
 [play video]
 
-As we can see, apart from what the Justices say, there's another source of data that we can get from these videos. They are the facial expressions and we are interested to see how these facial patterns could be used to understand the Justices and further to understand their decision of the cases.
+The Justices are expected to appear impartial in the courtroom. Can you keep a straight face? Its hard not to react emotionally sometimes. 
 
-The Justices are expected to behave impartially in the courtroom. However, there are studies showed that speakers themselves can be unaware of some facial and vocal expressions of themselves. 
+There have been many studies into facial and vocal expressions of judges, based on court transcripts, or empirical studies. 
 
-In 2018,  Tutton has studied the judicial demenaur of the judge using transcript and AV recordings. In their study, the facial expressions of the judge were recorded manually when the videos were played. This observational approach of analysing videos could be  subjective when different people are observing the same videos. This motivates me to study the facial expression of the judge via an more objective approach by using facial recognition technology. 
+In Australia, Tutton, Mark and Roach Anlau published a paper in 2018 detailing their empirical study of transcripts and AV recordings of judges in High Court cases. They found found that the judges behaved with a detached demeanour. Their video analysis was done with manual annotation. 
+
+With the easy availability of facial recognition software it is interesting to automatically collect data on the judges facial expression. This is what I have done, and I have analysed facial expressions of the 6 high court judges in 7 videos of court cases. 
 
 ## Face recognition 
-THe facial recognition technology these days are based on Paul Ekman's study of facial action coding system. Action units are fundamental unit of human facial muscles. Here we have two examples of them. Action unit 2 is the raising of outer eyebrow and actio nunit 15 is the lip corner depressor. Dsescribing face using this FACS  has been widely used in human emotion reserach.
+
+The face recognition technology groups movements of facial landmarks into 45 action units. There are many more variables created including where the eyes are looking, and facial landmarks, but we focus only on the action units.
+
+Here is an explanation of two action units.
+
+Action unit 2 is the raising of outer eyebrow. This might be associated with surprise. 
+
+Action unit 15 is the lip corner depressor. This might be associated with disgust.
 
 
-## Data 
+## Data collection
 
-The source data for this research is the AV recordings publicly available from the High Court of Australia. A sequence of procedure has been employed to obtain the facial related variables of the Justices and they are summarised in the flowchart below. 
+The flowchart here shows the steps to collecting the data.
 
-After downloading the videos using the command line tool youtub-dl,  we use ffmpeg to chop the video at a rate of one frame per minute, which gives us more than a thousand image frames. 
+The first step to collecting the data is to process the videos. The videos are downloaded from youtube, and chopped into a set of images extracted at 1 minute intervals. This produces 1000 frames. The face recognition is conducted on these still images. 
 
-The next step is to extract all the faces from these images. Because the Justices are remain sitted in the same position through out the hearing, I can locate the x and y coordinates of the judges and use that to crop all the image frames from the same videos. From our one thousand image frames, we finally get  4 thousand and 6 hundred face images. 
+Faces are extracted from each image. Because the Justices are remain seated in the same position through out the hearing, their faces can be easily extract cropping a fixed region of the image. This yields 4600 images total, and it allows us to separately process data for each judge.
 
-These faces are all sent to OpenFace, an open sourced software for facial behaviour analysis. For each of the face image, I get one csv file that contains 711 facial variables. All these csv files are then processed to add metadata. 
+The images are all processed with the face recognition software which tags each face with the facial action unit presence and intensity, along with many other variables like landmarks and eye focus. 
 
-Our final data format looks like this. We have judge_id, video_id, frame_id and speakers for each of the action unit. Presence score and intensity score are available for every observation.  
+The information is collected into one csv file that contains 711 facial variables. 
 
+One additional step is that the text transcripts were analysed to extract times when the appellant and respondent were addressing the judges. 
+
+## Data format 
+
+The final data looks like this. Columns contain judge_id, video_id, frame_id, speakers (appellant or respondent), action unit, and presence/absence of the action unit, and intensity score for the action unit.  
 
 ## Method
 
-Before moving into the modelling, let's first define the notation in this project. In our sample, we have six different judges, seven different cases and 18 different action units. Speaker is a binary variable that indicating whether the appellent or the respondent is speaking. There is also a time frame variable t that depends on the length of the video. The y variable is the binary present score, which has value of one if an action unit is present and zero otherwise. Thus, a main effect model without the interactions can be written down as on the screen.
+The judges facial expressions are modelled using a generalised linear model. 
 
-There are a few more steps to do before reaching to our full model. Based on our exploratory data analysis, we want to allow for different action units for the same judge to have different present score, thus we add the interactions between judge and action unit. Based on the same reason, we also add the interactions between judge and video, judge and speaker, case and action unit.
+In the sample, we have 6 different judges, 7 different cases and 18 different action units. 
 
-By having this model, we are now able to answer the following two questions. Do the justices' expression differ from case to case and Do the justices' expression differ when different parties are speaking. 
+Speaker is a binary variable that indicating whether the appellant or the respondent is speaking. 
 
-To do this, we compute the estimates of the presence score for each unique combination of judge, video, action unit and speaker, along with the confidence intervals. Because we are computing the confidence intervals for all estimates at once, adjustment need to be made to ensure the overall type I error is less than 0.05. 
+There is also a time variable indicating the 1 minute intervals. 
+
+The response variable used for this model is the binary presence variable, indicating whether the action unit is observed or not. 
+
+alpha_i, beta_j, gamma_k and delta_l represent the effect of judge, video, action unit and speaker, respectively
+
+The interaction term between judge (alpha) and video (beta_j) allows different judges to react differently in different videos. Similarly for judge and action unit, judge and speaker, and action unit and speaker. 
+
+
+With the model, we are able to answer the following two questions: Do the justices' expression differ from case to case and Do the justices' expression differ when different parties are speaking. 
+
+After the model fit, multiple comparisons are conducted to compare specific effects.
 
 
 ## Result 
 
-We can observe that Judge Edelman, Keane and Kiefel behave relatively consistent throughout all the videos since all the intervals for the same judge, same action unit but different videos overlaps after bonferroni adjustment. 
 
-Judge Gageler seems to have a large fluctuate of his facial expressions in video OKS and his response is significantly different from those in other cases for AU15 and AU20. This shows consistency with our exploratory data analysis where Gageler tends to show a higher proportion of presence for action units in case OKS. 
+This is a plot of the 95% confidence intervals computed by multiple comparison of the means after the model fitting. Bonferroni adjustments were made.
 
-Our result validates the exploratory data analysis that the difference between case OKS and Parkes for Bell are significant in action unit 14, 15 and 20. Since the confidence interval doesn't overlap for these two videos. The difference between case McKell and OKS are not significance after the Bonferroni adjustment and this indicates the difference we see before in Figure \ref{fig:common_video} is more likely due to randomness rather than the true underlying difference between the two videos. From a legal perspective, this would show that Bell is addressing the cases with different responses. However, this different approach of responding by the judge doesn't indicate the biasness of the judge in the courtroom but the individuality of different judge approaching to cases. 
+Proportion of frames where the action unit was present is plotted against video. The facets show judge in the columns, and four main action units on the rows. Colour represents video. 
 
+Note that, each case may have different judges. Not all judges sit on each case.
 
-The result for speaker effect shows that the video-wise difference between judge still persist and the speaker-wise difference is not significant. This result would be a validation that on the high court level, the judges are behaving impartial to different speaking parties. 
+There are so many possible findings to report. Here are the main ones. 
 
+The facial expressions of Judge Edelman, Keane and Kiefel bare relatively consistent throughout all the videos. 
 
+Judge Gageler react differently in the OKS case, on several action units. 
 
-
-
------
-Legal studies have been tried to predict court outcome from the last century. Early study has been conducted using judge charcteristics for example, gender, religious background and political view. Moving from that, more recent studies in the U.S. have been found to use on-court information to make this prediction. Some of these information include the use of language by judge, the facial expression by judge and voice by judge. 
-
-
-Rather than focusing on prediction, the work using Australia data is still at the stage to understand the facial expression of the Justices.
+Bell also has more expression on several action units for the OKS case.
 
 
+## Summary of results
 
+Our results mostly validate Tutton et al (2018) that the judges appear impartial, with the exception of Gageler and Bell for the OKS case.
 
-Do the Justices' expression differ
+An important emphasis of this work is that "Facial recognition analysis of the videos provides a way to objectively assess judicial behaviour."
 
-- from one case to another?
+## Packages used in the research include
 
-- when different parties were speaking? 
+This is the list of software and R packages used for this work.
 
-Method: 
+# Acknowledgement
 
-- See if the confidence interval, after correcting for multiple comparison of the mean overlaps 
+Thank you for listening

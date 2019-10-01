@@ -61,14 +61,14 @@ Judges are expected to be impartial in expressions presented to court.
 
 Tutton, Mack, Roach Anleu (2018):
 
-- data collection: manual tagging of video footage of Australian High Court
+- *data collection*: manual tagging of video footage of Australian High Court
 
-- finding: judges present an impersonal or detached demeanour
+- *finding*: judges present an impersonal or detached demeanour
 
 
 --
 
-Does automatic tagging of expressions using face recognition technology agree with this finding?
+**Does automatic tagging of expressions using face recognition technology agree with this finding?**
 
 
 
@@ -81,7 +81,7 @@ Does automatic tagging of expressions using face recognition technology agree wi
 - **Paul Ekman**: Facial Action Coding System (FACS)
 
 
-- **Action units**: fundamental units of human facial muscles. 
+- **Action units**: fundamental units of human facial muscles, total of 45. 
 
 
 .pull-left[
@@ -103,7 +103,7 @@ include_graphics("../images/AU15.gif")
 ```
 ]
 
- - widely used in facial recognition software development and human emotion researches
+ - widely used in facial recognition software development and human emotion research
 
 ---
 
@@ -205,9 +205,15 @@ where
 
 - $\mu$ sets an overall mean
 
-- $\alpha_i$, $\beta_j$, $\gamma_k$ and $\delta_l$ includes the effect of different judges, video, action unit and speaker
+- $\alpha_i$, $\beta_j$, $\gamma_k$ and $\delta_l$ represent the effect of different judges, video, action unit and speaker, respectively
 
-- The interaction term between judge ( $\alpha_i$) and video( $\beta_j$) allows different judges to react differently in different videos
+- The interaction term between judge ( $\alpha_i$) and video ( $\beta_j$) allows different judges to react differently in different videos. Similarly for judge and action unit, judge and speaker, and action unit and speaker. 
+
+--
+
+ **Do the justices' expression differ from case to case?**
+ **Do the justices' expression differ when different parties are speaking?**
+
 
 
 ---
@@ -255,7 +261,7 @@ int_2 %>%
 ```
 
 ---
-## Discussion
+## Summary of results
 
 - Generally the judges expressions are the same regardless of video
 
@@ -263,11 +269,19 @@ int_2 %>%
 
 - Gageler and Bell reacted strongly to the OKS case, but Edelman and Keane did not
 
+
+
+**Our results mostly validate Tutton et al (2018) that the judges appear impartial, with the exception of Gageler and Bell for the OKS case.**
+
+--
+
+**Facial recognition analysis of the videos provides a way to objectively assess judicial behaviour.** 
+
 ---
 
 ## Packages used in the research include: 
 
-- [**tidyverse**](https://CRAN.R-project.org/package=tidyverse) for data manipulation and plotting
+- [**tidyverse**](https://CRAN.R-project.org/package=tidyverse) suite of R packages for data manipulation and plotting
 
 - [**emmeans**](https://CRAN.R-project.org/package=emmeans) for producing customised model output 
 
@@ -275,7 +289,7 @@ int_2 %>%
 
 - [**ffmpeg**](https://www.ffmpeg.org/) for video processing
 
-- [**Taipan**](https://github.com/srkobakian/taipan) for image annotation
+- [**taipan**](https://github.com/srkobakian/taipan) R package for image annotation
 
 - [**ImageMagick**](https://imagemagick.org/index.php) for image processing
 
@@ -284,9 +298,9 @@ int_2 %>%
 ---
 class: center, middle
 
-# Acknowledgement
+# Acknowledgements
 
-I would like to express my gratitude to Di Cook and Russell Symth for supervising, Stephanie Kobakian and Stuart Lee for helping me throughout the project.
+I would like to express my gratitude to Di Cook and Russell Symth for supervising this work, and Stephanie Kobakian and Stuart Lee for helping me throughout the project.
 
 
 Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
