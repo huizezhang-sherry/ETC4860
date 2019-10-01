@@ -261,13 +261,21 @@ int_2 %>%
 ```
 
 ---
-## Discussion
+## Summary of results
 
 - Generally the judges expressions are the same regardless of video
 
 - Nettle always has a raised outer eyebrow (AU02)
 
 - Gageler and Bell reacted strongly to the OKS case, but Edelman and Keane did not
+
+
+
+**Our results mostly validate Tutton et al (2018) that the judges appear impartial, with the exception of Gageler and Bell for the OKS case.**
+
+--
+
+**Facial recognition analysis of the videos provides a way to objectively assess judicial behaviour.** 
 
 ---
 
