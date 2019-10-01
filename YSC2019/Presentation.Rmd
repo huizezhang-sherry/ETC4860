@@ -61,14 +61,14 @@ Judges are expected to be impartial in expressions presented to court.
 
 Tutton, Mack, Roach Anleu (2018):
 
-- data collection: manual tagging of video footage of Australian High Court
+- *data collection*: manual tagging of video footage of Australian High Court
 
-- finding: judges present an impersonal or detached demeanour
+- *finding*: judges present an impersonal or detached demeanour
 
 
 --
 
-Does automatic tagging of expressions using face recognition technology agree with this finding?
+**Does automatic tagging of expressions using face recognition technology agree with this finding?**
 
 
 
@@ -81,7 +81,7 @@ Does automatic tagging of expressions using face recognition technology agree wi
 - **Paul Ekman**: Facial Action Coding System (FACS)
 
 
-- **Action units**: fundamental units of human facial muscles. 
+- **Action units**: fundamental units of human facial muscles, total of 45. 
 
 
 .pull-left[
@@ -103,7 +103,7 @@ include_graphics("../images/AU15.gif")
 ```
 ]
 
- - widely used in facial recognition software development and human emotion researches
+ - widely used in facial recognition software development and human emotion research
 
 ---
 

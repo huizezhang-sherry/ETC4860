@@ -17,6 +17,9 @@ In Australia, Tutton, Mark and Roach Anlau published a paper in 2018 detailing t
 With the easy availability of facial recognition software it is interesting to automatically collect data on the judges facial expression. This is what I have done, and I have analysed facial expressions of the 6 high court judges in 7 videos of court cases. 
 
 ## Face recognition 
+
+The face recognition technology groups movements of facial landmarks into 
+
 THe facial recognition technology these days are based on Paul Ekman's study of facial action coding system. Action units are fundamental unit of human facial muscles. Here we have two examples of them. Action unit 2 is the raising of outer eyebrow and actio nunit 15 is the lip corner depressor. Dsescribing face using this FACS  has been widely used in human emotion reserach.
 
 
