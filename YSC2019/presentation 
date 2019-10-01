@@ -69,18 +69,20 @@ After the model fit, multiple comparisons are conducted to compare specific effe
 
 ## Result 
 
-We can observe that Judge Edelman, Keane and Kiefel behave relatively consistent throughout all the videos since all the intervals for the same judge, same action unit but different videos overlaps after bonferroni adjustment. 
 
-Judge Gageler seems to have a large fluctuate of his facial expressions in video OKS and his response is significantly different from those in other cases for AU15 and AU20. This shows consistency with our exploratory data analysis where Gageler tends to show a higher proportion of presence for action units in case OKS. 
+This is a plot of the 95% confidence intervals computed by multiple comparison of the means after the model fitting. Bonferroni adjustments were made.
 
-Our result validates the exploratory data analysis that the difference between case OKS and Parkes for Bell are significant in action unit 14, 15 and 20. Since the confidence interval doesn't overlap for these two videos. The difference between case McKell and OKS are not significance after the Bonferroni adjustment and this indicates the difference we see before in Figure \ref{fig:common_video} is more likely due to randomness rather than the true underlying difference between the two videos. From a legal perspective, this would show that Bell is addressing the cases with different responses. However, this different approach of responding by the judge doesn't indicate the biasness of the judge in the courtroom but the individuality of different judge approaching to cases. 
+Proportion of frames where the action unit was present is plotted against video. The facets show judge in the columns, and four main action units on the rows. Colour represents video. 
 
+Note that, each case may have different judges. Not all judges sit on each case.
 
-The result for speaker effect shows that the video-wise difference between judge still persist and the speaker-wise difference is not significant. This result would be a validation that on the high court level, the judges are behaving impartial to different speaking parties. 
+There are so many possible findings to report. Here are the main ones. 
 
+The facial expressions of Judge Edelman, Keane and Kiefel bare relatively consistent throughout all the videos. 
 
+Judge Gageler react differently in the OKS case, on several action units. 
 
-
+Bell also has more expression on several action units for the OKS case.
 
 -----
 Legal studies have been tried to predict court outcome from the last century. Early study has been conducted using judge charcteristics for example, gender, religious background and political view. Moving from that, more recent studies in the U.S. have been found to use on-court information to make this prediction. Some of these information include the use of language by judge, the facial expression by judge and voice by judge. 

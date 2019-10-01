@@ -209,10 +209,10 @@ where
 
 - The interaction term between judge ( $\alpha_i$) and video ( $\beta_j$) allows different judges to react differently in different videos. Similarly for judge and action unit, judge and speaker, and action unit and speaker. 
 
----
+--
 
-- **Do the justices' expression differ from case to case?**
-- **Do the justices' expression differ when different parties are speaking?**
+ **Do the justices' expression differ from case to case?**
+ **Do the justices' expression differ when different parties are speaking?**
 
 
 
