@@ -35,7 +35,7 @@ case[1:5] <- "Nauru_a"
 
 people[6:10] <- list("GAGELER", "NETTLE","EDELMAN", "KENNETT", "GILBERT")
 role[6:10] <- c("Chief Justice","Justice","Justice", "Respondent","Appellant")
-outcome[6:10] <- c("Respondent", "Respondent","Respondent", "win", "lose")
+outcome[6:10] <- c("Respondent", "Respondent","Respondent", "lose", "wine")
 case[6:10] <- "Nauru_b"
 
 people[11:17] <-c("BELL", "GAGELER", "KEANE", "GORDON", "EDELMAN", "JORDAN","ABRAHAM") 
@@ -51,7 +51,7 @@ case[18:24] <- "OKS"
 
 people[25:31] <-c("KIEFEL", "BELL","KEANE", "GORDON", "EDELMAN", "WILLIAMS","GLEESON") 
 role[25:31] <- c("Chief Justice","Justice","Justice", "Justice","Justice", "Respondent","Appellant")
-outcome[25:31] <-  c("Respondent", "Respondent","Respondent", "Respondent","Respondent", "win", "lose")
+outcome[25:31] <-  c("Respondent", "Respondent","Respondent", "Respondent","Respondent", "lose", "win")
 case[25:31] <- "Parkes"
 
 
