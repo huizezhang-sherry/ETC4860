@@ -2,15 +2,19 @@ Hi Everyone, Today I will be talking about exploring the judicial facial express
 
 # Background
 
-There are many videos of legal proceedings that are made available in the High Court of Australia website and here is a fraction of them.
+The videos of legal proceedings are available for cases in the High Court of Australia, and can be found on their website.
+
+Here is a sample from XXX.
 
 [play video]
 
-As we can see, apart from what the Justices say, there's another source of data that we can get from these videos. They are the facial expressions and we are interested to see how these facial patterns could be used to understand the Justices and further to understand their decision of the cases.
+The Justices are expected to appear impartial in the courtroom. Can you keep a straight face? Its hard not to react emotionally sometimes. 
 
-The Justices are expected to behave impartially in the courtroom. However, there are studies showed that speakers themselves can be unaware of some facial and vocal expressions of themselves. 
+There have been many studies into facial and vocal expressions of judges, based on court transcripts, or empirical studies. 
 
-In 2018,  Tutton has studied the judicial demenaur of the judge using transcript and AV recordings. In their study, the facial expressions of the judge were recorded manually when the videos were played. This observational approach of analysing videos could be  subjective when different people are observing the same videos. This motivates me to study the facial expression of the judge via an more objective approach by using facial recognition technology. 
+In Australia, Tutton, Mark and Roach Anlau published a paper in 2018 detailing their empirical study of transcripts and AV recordings of judges in High Court cases. They found found that the judges behaved with a detached demeanour. Their video analysis was done with manual annotation. 
+
+With the easy availability of facial recognition software it is interesting to automatically collect data on the judges facial expression. This is what I have done, and I have analysed facial expressions of the 6 high court judges in 7 videos of court cases. 
 
 ## Face recognition 
 THe facial recognition technology these days are based on Paul Ekman's study of facial action coding system. Action units are fundamental unit of human facial muscles. Here we have two examples of them. Action unit 2 is the raising of outer eyebrow and actio nunit 15 is the lip corner depressor. Dsescribing face using this FACS  has been widely used in human emotion reserach.
