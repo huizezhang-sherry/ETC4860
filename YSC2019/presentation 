@@ -60,3 +60,16 @@ Legal studies have been tried to predict court outcome from the last century. Ea
 
 
 Rather than focusing on prediction, the work using Australia data is still at the stage to understand the facial expression of the Justices.
+
+
+
+
+Do the Justices' expression differ
+
+- from one case to another?
+
+- when different parties were speaking? 
+
+Method: 
+
+- See if the confidence interval, after correcting for multiple comparison of the mean overlaps 

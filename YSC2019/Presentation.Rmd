@@ -22,12 +22,17 @@ knitr::opts_chunk$set(echo = TRUE,
                       warning = FALSE, 
                       message = FALSE,
                       cache = TRUE, 
-                      fig.path = "Figures/")
+                      fig.path = "Figures/", 
+                      out.height = "500px", 
+                      out.width = "700px", 
+                      results = "asis")
 
 library(knitr)
 library(ggplot2)
 library(emmeans)
 library(tidyverse)
+library(extrafont)
+
 load("../raw_data/au_tidy.rda")
 load("../raw_data/au_meaning.rda")
 ```
@@ -51,17 +56,22 @@ class: title-slide, center, middle
 ---
 # Recent legal studies on judicial behaviour
 
-- Tutton et al. (2018): 
 
-  - studied judicial demenaur
-  
-  - Facial expressions were recorded manually  
-  
-  - This observational approach 
-  
-  - subjective when different people are observing the same videos
+Judges are expected to be impartial in expressions presented to court. 
 
-This motivates me to study the facial expression of the judge via an more objective approach by using facial recognition technology. 
+Tutton, Mack, Roach Anleu (2018):
+
+- data collection: manual tagging of video footage of Australian High Court
+
+- finding: judges present an impersonal or detached demeanour
+
+
+--
+
+Does automatic tagging of expressions using face recognition technology agree with this finding?
+
+
+
 
 
 ---
@@ -78,7 +88,7 @@ This motivates me to study the facial expression of the judge via an more object
 
 AU02 -	Outer eyebrow raiser
 
-```{r echo = FALSE, message = FALSE, warning = FALSE}
+```{r echo = FALSE, out.height="200px", out.width="350px"}
 include_graphics("../images/AU2-right-only.gif")
 ```
 ]
@@ -88,12 +98,12 @@ include_graphics("../images/AU2-right-only.gif")
 
 AU15 - Lip corner depressor
 
-```{r echo = FALSE}
+```{r echo = FALSE, out.height="200px", out.width="350px"}
 include_graphics("../images/AU15.gif")
 ```
 ]
 
- - widely used in facial recognition software development and human emotion reseraches
+ - widely used in facial recognition software development and human emotion researches
 
 ---
 
@@ -103,37 +113,37 @@ class: inverse, center, middle
 
 ---
 
-```{r echo = FALSE, fig.align="center", out.height="500px", out.width= "900px"}
+```{r echo = FALSE, fig.align="center"}
 include_graphics("../images/workflow_1 (0).png")
 ```
 
 ---
 
-```{r echo = FALSE, fig.align="center", out.height="500px", out.width= "900px"}
+```{r echo = FALSE, fig.align="center"}
 include_graphics("../images/workflow_1 (1).png")
 ```
 
 ---
 
-```{r echo = FALSE, fig.align="center", out.height="500px", out.width= "900px"}
+```{r echo = FALSE, fig.align="center"}
 include_graphics("../images/workflow_1 (2).png")
 ```
 
 ---
 
-```{r echo = FALSE, fig.align="center", out.height="500px", out.width= "900px"}
+```{r echo = FALSE, fig.align="center"}
 include_graphics("../images/workflow_1 (3).png")
 ```
 
 ---
 
-```{r echo = FALSE, fig.align="center", out.height="500px", out.width= "900px"}
+```{r echo = FALSE, fig.align="center"}
 include_graphics("../images/workflow_1 (4).png")
 ```
 
 ---
 
-```{r echo = FALSE, fig.align="center", out.height="500px", out.width= "900px"}
+```{r echo = FALSE, fig.align="center",}
 include_graphics("../images/workflow_1 (5).png")
 ```
 
@@ -177,9 +187,7 @@ class: inverse, center, middle
 <!-- - $X_5$ indicates `frame` corresponding to time, $t = 1,2, \cdots, T_j$ -->
 <!-- - $P_{ijkl}$ indicates the binary `presence` variable  -->
 
-Main effects model: 
 
-$$P_{ijkl} = \mu + \alpha_i + \beta_j + \gamma_k + \delta_l + \varepsilon_{ijkl}$$ 
 
 ---
 
@@ -189,19 +197,18 @@ GLM model with binomial link:
 
 \begin{aligned}
 P_{ijkl} &= \frac{e^{\eta_{ijkl}}}{1 + e^{\eta_{ijkl}}} \\
-\eta_{ijkl} &= \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\delta)_{il} + \varepsilon_{ijkl} \\
+\eta_{ijkl} &= \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\delta)_{il} + \varepsilon_{ijkl}
 \end{aligned}
 
+<br>
+where
 
-Do the Justices' expression differ
+- $\mu$ sets an overall mean
 
-- from one case to another?
+- $\alpha_i$, $\beta_j$, $\gamma_k$ and $\delta_l$ includes the effect of different judges, video, action unit and speaker
 
-- when different parties were speaking? 
+- The interaction term between judge ( $\alpha_i$) and video( $\beta_j$) allows different judges to react differently in different videos
 
-Method: 
-
-- See if the confidence interval, after correcting for multiple comparison of the mean overlaps 
 
 ---
 class: inverse, center, middle
@@ -210,7 +217,7 @@ class: inverse, center, middle
 
 ---
 
-```{r video-plot, echo = FALSE, message = FALSE, warning = FALSE, fig.height=9, fig.width=12}
+```{r video-plot, echo = FALSE, message = FALSE, warning = FALSE, fig.width=16, fig.height=9}
 model_dt <- au_tidy %>% 
   ungroup(judge) %>% 
   mutate(judge = fct_relevel(judge, "Edelman"), 
@@ -239,35 +246,40 @@ int_2 %>%
   geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL, col= video), 
                 width = 0.2) + 
   facet_grid(AU ~ judge, scales = "free") + 
-  theme(axis.text.x = element_text(angle = 30, hjust = 1)) + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, size= 15),
+        legend.position = "bottom", 
+        axis.text = element_text(size = 15), 
+        strip.text.x = element_text(size = 15),
+        strip.text.y = element_text(size = 15)) + 
   xlab("video")
 ```
 
 ---
+## Discussion
 
-```{r speaker-plot, echo = FALSE, message = FALSE, warning = FALSE, fig.height=9, fig.width=12}
-model_dt_3 <- model_dt %>% 
-  filter(AU %in% c("AU02", "AU14", "AU20","AU15")) 
+- Generally the judges expressions are the same regardless of video
 
-binomial_model_3 <- glm(presence ~ judge*speaker + video*judge + AU*judge + video*AU, family = "binomial",  data = model_dt_3)
+- Nettle always has a raised outer eyebrow (AU02)
 
-emmean_obj_3 <-  emmeans(binomial_model_3, 
-                         c("judge", "video", "AU", "speaker") , 
-                         type = "response")
-int_3 <- confint(emmean_obj_3,  adjust = "bonferroni")
+- Gageler and Bell reacted strongly to the OKS case, but Edelman and Keane did not
 
-int_3 %>% 
-  filter(!is.na(df)) %>% 
-  ggplot(aes(x= fct_relevel(video, c("Nauru-a", "Nauru-b", "Rinehart-a",
-                               "Rinehart-b", "McKell", "OKS", "Parkes")), 
-             y = prob, col = speaker)) + 
-  geom_point() + 
-  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL), width = 0.2) + 
-  facet_grid(AU ~ fct_relevel(judge, c("Edelman", "Keane", "Kiefel", "Nettle", "Gageler", "Bell")), scales = "free_x") + 
-  theme(axis.text.x = element_text(angle = 30, hjust = 1)) + 
-  xlab("video")
-```
+---
 
+## Packages used in the research include: 
+
+- [**tidyverse**](https://CRAN.R-project.org/package=tidyverse) for data manipulation and plotting
+
+- [**emmeans**](https://CRAN.R-project.org/package=emmeans) for producing customised model output 
+
+- [**youtube-dl**](https://ytdl-org.github.io/youtube-dl/index.html) for video downloading
+
+- [**ffmpeg**](https://www.ffmpeg.org/) for video processing
+
+- [**Taipan**](https://github.com/srkobakian/taipan) for image annotation
+
+- [**ImageMagick**](https://imagemagick.org/index.php) for image processing
+
+- [**OpenFace**](https://github.com/TadasBaltrusaitis/OpenFace) for facial recognition
 
 ---
 class: center, middle
@@ -275,6 +287,7 @@ class: center, middle
 # Acknowledgement
 
 I would like to express my gratitude to Di Cook and Russell Symth for supervising, Stephanie Kobakian and Stuart Lee for helping me throughout the project.
+
 
 Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
 
