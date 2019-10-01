@@ -281,7 +281,7 @@ int_2 %>%
 
 ## Packages used in the research include: 
 
-- [**tidyverse**](https://CRAN.R-project.org/package=tidyverse) for data manipulation and plotting
+- [**tidyverse**](https://CRAN.R-project.org/package=tidyverse) suite of R packages for data manipulation and plotting
 
 - [**emmeans**](https://CRAN.R-project.org/package=emmeans) for producing customised model output 
 
@@ -289,7 +289,7 @@ int_2 %>%
 
 - [**ffmpeg**](https://www.ffmpeg.org/) for video processing
 
-- [**Taipan**](https://github.com/srkobakian/taipan) for image annotation
+- [**taipan**](https://github.com/srkobakian/taipan) R package for image annotation
 
 - [**ImageMagick**](https://imagemagick.org/index.php) for image processing
 
@@ -300,7 +300,7 @@ class: center, middle
 
 # Acknowledgement
 
-I would like to express my gratitude to Di Cook and Russell Symth for supervising, Stephanie Kobakian and Stuart Lee for helping me throughout the project.
+I would like to express my gratitude to Di Cook and Russell Symth for supervising this work, and Stephanie Kobakian and Stuart Lee for helping me throughout the project.
 
 
 Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).

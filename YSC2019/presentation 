@@ -91,21 +91,10 @@ Our results mostly validate Tutton et al (2018) that the judges appear impartial
 
 An important emphasis of this work is that "Facial recognition analysis of the videos provides a way to objectively assess judicial behaviour."
 
------
-Legal studies have been tried to predict court outcome from the last century. Early study has been conducted using judge charcteristics for example, gender, religious background and political view. Moving from that, more recent studies in the U.S. have been found to use on-court information to make this prediction. Some of these information include the use of language by judge, the facial expression by judge and voice by judge. 
+## Packages used in the research include
 
+This is the list of software and R packages used for this work.
 
-Rather than focusing on prediction, the work using Australia data is still at the stage to understand the facial expression of the Justices.
+# Acknowledgement
 
-
-
-
-Do the Justices' expression differ
-
-- from one case to another?
-
-- when different parties were speaking? 
-
-Method: 
-
-- See if the confidence interval, after correcting for multiple comparison of the mean overlaps 
+Thank you for listening
