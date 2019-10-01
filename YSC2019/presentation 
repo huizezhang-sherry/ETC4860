@@ -27,17 +27,23 @@ Action unit 2 is the raising of outer eyebrow. This might be associated with sur
 Action unit 15 is the lip corner depressor. This might be associated with disgust.
 
 
-## Data 
+## Data collection
 
-The source data for this research is the AV recordings publicly available from the High Court of Australia. A sequence of procedure has been employed to obtain the facial related variables of the Justices and they are summarised in the flowchart below. 
+The flowchart here shows the steps to collecting the data.
 
-After downloading the videos using the command line tool youtub-dl,  we use ffmpeg to chop the video at a rate of one frame per minute, which gives us more than a thousand image frames. 
+The first step to collecting the data is to process the videos. The videos are downloaded from youtube, and chopped into a set of images extracted at 1 minute intervals. This produces 1000 frames. The face recognition is conducted on these still images. 
 
-The next step is to extract all the faces from these images. Because the Justices are remain sitted in the same position through out the hearing, I can locate the x and y coordinates of the judges and use that to crop all the image frames from the same videos. From our one thousand image frames, we finally get  4 thousand and 6 hundred face images. 
+Faces are extracted from each image. Because the Justices are remain seated in the same position through out the hearing, their faces can be easily extract cropping a fixed region of the image. This yields 4600 images total, and it allows us to separately process data for each judge.
 
-These faces are all sent to OpenFace, an open sourced software for facial behaviour analysis. For each of the face image, I get one csv file that contains 711 facial variables. All these csv files are then processed to add metadata. 
+The images are all processed with the face recognition software which tags each face with the facial action unit presence and intensity, along with many other variables like landmarks and eye focus. 
 
-Our final data format looks like this. We have judge_id, video_id, frame_id and speakers for each of the action unit. Presence score and intensity score are available for every observation.  
+The information is collected into one csv file that contains 711 facial variables. 
+
+One additional step is that the text transcripts were analysed to extract times when the appellant and respondent were addressing the judges. 
+
+## Data format 
+
+The final data looks like this. Columns contain judge_id, video_id, frame_id, speakers (appellant or respondent), action unit, and presence/absence of the action unit, and intensity score for the action unit.  
 
 
 ## Method
