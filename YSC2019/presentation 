@@ -12,7 +12,7 @@ The Justices are expected to appear impartial in the courtroom. Can you keep a s
 
 There have been many studies into facial and vocal expressions of judges, based on court transcripts, or empirical studies. 
 
-In Australia, Tutton, Mark and Roach Anlau published a paper in 2018 detailing their empirical study of transcripts and AV recordings of judges in High Court cases. They found found that the judges behaved with a detached demeanour. Their video analysis was done with manual annotation. 
+In Australia, Tutton, Mack and Roach Anlau published a paper in 2018 detailing their empirical study of transcripts and AV recordings of judges in High Court cases. They found that the judges behaved with a detached demeanour. Their video analysis was done with manual annotation. 
 
 With the easy availability of facial recognition software it is interesting to automatically collect data on the judges facial expression. This is what I have done, and I have analysed facial expressions of the 6 high court judges in 7 videos of court cases. 
 
@@ -31,7 +31,7 @@ Action unit 15 is the lip corner depressor. This might be associated with disgus
 
 The flowchart here shows the steps to collecting the data.
 
-The first step to collecting the data is to process the videos. The videos are downloaded from youtube, and chopped into a set of images extracted at 1 minute intervals. This produces 1000 frames. The face recognition is conducted on these still images. 
+The first step to collecting the data is to process the videos. The videos are downloaded from the high Court of Australia website, and chopped into a set of images extracted at 1 minute intervals. This produces 1000 frames. The face recognition is conducted on these still images. 
 
 Faces are extracted from each image. Because the Justices are remain seated in the same position through out the hearing, their faces can be easily extract cropping a fixed region of the image. This yields 4600 images total, and it allows us to separately process data for each judge.
 
@@ -43,7 +43,7 @@ One additional step is that the text transcripts were analysed to extract times 
 
 ## Data format 
 
-The final data looks like this. Columns contain judge_id, video_id, frame_id, speakers (appellant or respondent), action unit, and presence/absence of the action unit, and intensity score for the action unit.  
+The final data looks like this. Columns contain judge_id, video_id, frame_id, speakers (appellant or respondent), action unit being analysed, and presence/absence of the action unit, and intensity score for the action unit.  
 
 ## Method
 
@@ -72,17 +72,17 @@ After the model fit, multiple comparisons are conducted to compare specific effe
 
 This is a plot of the 95% confidence intervals computed by multiple comparison of the means after the model fitting. Bonferroni adjustments were made.
 
-Proportion of frames where the action unit was present is plotted against video. The facets show judge in the columns, and four main action units on the rows. Colour represents video. 
+The x axis represents video and y axis represents the proportion of frames in each video where the action unit was present. The facets show judge in the columns, and four main action units on the rows. Colour represents video. 
 
 Note that, each case may have different judges. Not all judges sit on each case.
 
 There are so many possible findings to report. Here are the main ones. 
 
-The facial expressions of Judge Edelman, Keane and Kiefel bare relatively consistent throughout all the videos. 
+The facial expressions of Judge Edelman, Keane and Kiefel were relatively consistent throughout all the videos they participated. 
 
-Judge Gageler react differently in the OKS case, on several action units. 
+Judge Gageler reacted differently in the OKS case, on the four main action units. 
 
-Bell also has more expression on several action units for the OKS case.
+In the same OKS case, Judge Bell also shows each expression with a higher proportion. 
 
 
 ## Summary of results

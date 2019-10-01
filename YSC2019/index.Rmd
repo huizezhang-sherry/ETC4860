@@ -223,7 +223,7 @@ class: inverse, center, middle
 
 ---
 
-```{r video-plot, echo = FALSE, message = FALSE, warning = FALSE, fig.width=16, fig.height=9}
+```{r video-plot, echo = FALSE, message = FALSE, warning = FALSE, fig.width=16, fig.height=12, out.width="100%", out.height="100%"}
 model_dt <- au_tidy %>% 
   ungroup(judge) %>% 
   mutate(judge = fct_relevel(judge, "Edelman"), 
@@ -247,17 +247,21 @@ int_2 %>%
   ggplot(aes(x= fct_relevel(video, c("Nauru-a", "Nauru-b", "Rinehart-a",
                                "Rinehart-b", "McKell", "OKS", "Parkes")), 
                             y = prob,  group = judge)) + 
-  geom_point(aes(col= video)) + 
+  geom_point(aes(col= video), size = 2) + 
   geom_line(alpha = 0.5, lty = "dashed") + 
   geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL, col= video), 
-                width = 0.2) + 
+                width = 0.2, size = 2) + 
   facet_grid(AU ~ judge, scales = "free") + 
-  theme(axis.text.x = element_text(angle = 90, hjust = 1, size= 15),
-        legend.position = "bottom", 
-        axis.text = element_text(size = 15), 
-        strip.text.x = element_text(size = 15),
-        strip.text.y = element_text(size = 15)) + 
-  xlab("video")
+  theme(legend.position = "bottom", 
+        legend.text = element_text(size = 30),
+        axis.title = element_text(size=  40),
+        axis.text.x = element_text(angle = 90, hjust = 1, size= 25),
+        axis.text = element_text(size = 30), 
+        strip.text.x = element_text(size = 30),
+        strip.text.y = element_text(size = 30)) + 
+  xlab("video") + 
+  ylab("Proportion")
+  
 ```
 
 ---

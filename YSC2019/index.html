@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Exploration of Judicial Facial Expression in Videos of Legal Proceedings</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Sherry Zhang" />
+    <meta name="date" content="2019-10-01" />
+    <link href="libs/font-awesome-5.3.1/css/fontawesome-all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="presdefault.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+class: title-slide, center, middle
+
+# Exploration of Judicial Facial Expression in Videos of Legal Proceedings
+
+### Sherry Zhang 
+
+### [<i class="fab  fa-twitter "></i>](https:://twitter.com/huizezhangsh) huizezhangsh [<i class="fab  fa-github "></i>](https:://github.com/huizezhang-sherry) huizezhang-sherry
+
+###Monash University
+
+---
+
+[![A video for fun](../images/video_photo.png)](https://www.youtube.com/watch?v=Ae7uKzin0GA)
+
+### Are the justices facial expression revealing the outcome of the case?
+
+---
+# Recent legal studies on judicial behaviour
+
+
+Judges are expected to be impartial in expressions presented to court. 
+
+Tutton, Mack, Roach Anleu (2018):
+
+- *data collection*: manual tagging of video footage of Australian High Court
+
+- *finding*: judges present an impersonal or detached demeanour
+
+
+--
+
+**Does automatic tagging of expressions using face recognition technology agree with this finding?**
+
+
+
+
+
+---
+# Face Recognition
+
+
+- **Paul Ekman**: Facial Action Coding System (FACS)
+
+
+- **Action units**: fundamental units of human facial muscles, total of 45. 
+
+
+.pull-left[
+
+AU02 -	Outer eyebrow raiser
+
+&lt;img src="../images/AU2-right-only.gif" width="350px" height="200px" /&gt;
+]
+
+
+.pull-right[
+
+AU15 - Lip corner depressor
+
+&lt;img src="../images/AU15.gif" width="350px" height="200px" /&gt;
+]
+
+ - widely used in facial recognition software development and human emotion research
+
+---
+
+class: inverse, center, middle
+
+# Video Processing
+
+---
+
+&lt;img src="../images/workflow_1 (0).png" width="700px" height="500px" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="../images/workflow_1 (1).png" width="700px" height="500px" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="../images/workflow_1 (2).png" width="700px" height="500px" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="../images/workflow_1 (3).png" width="700px" height="500px" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="../images/workflow_1 (4).png" width="700px" height="500px" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="../images/workflow_1 (5).png" width="700px" height="500px" style="display: block; margin: auto;" /&gt;
+
+--
+
+### 4601 faces and 711 facial variables!
+
+---
+class: middle, center
+
+
+&lt;img src="../images/long.png" width="700px" height="500px" /&gt;
+
+---
+class: inverse, center, middle
+
+#  Method
+
+
+---
+
+## Notation: 
+
+|Variable|Range|
+|---|----|
+|Judge| `\(i = 1,2, \cdots, 6\)` |
+|Video| `\(j = 1,2, \cdots, 7\)` |
+|Action unit|18 possible facial expression|
+|Speaker|either the appellant or respondent, `\(l=1,2\)`|
+|Frame| `\(t = 1,2, \cdots, T_j\)` |
+|Presence |The binary `\(Y\)` variable:  `\(P_{ijkl}\)`|
+
+
+&lt;!-- - `\(X_1\)` indicates `judge` with six categories `\(i = 1,2, \cdots, 6\)` --&gt;
+&lt;!-- - `\(X_2\)` indicates `video` for each of the seven cases, `\(j = 1,2, \cdots, 7\)` --&gt;
+&lt;!-- - `\(X_3\)` indicates action unit containing 18 possible facial expression.   --&gt;
+&lt;!-- - `\(X_4\)` indicates `speaker`, either the appellant or respondent, `\(l=1,2\)` --&gt;
+&lt;!-- - `\(X_5\)` indicates `frame` corresponding to time, `\(t = 1,2, \cdots, T_j\)` --&gt;
+&lt;!-- - `\(P_{ijkl}\)` indicates the binary `presence` variable  --&gt;
+
+
+
+---
+
+## Modelling:
+
+GLM model with binomial link: 
+
+`\begin{aligned}
+P_{ijkl} &amp;= \frac{e^{\eta_{ijkl}}}{1 + e^{\eta_{ijkl}}} \\
+\eta_{ijkl} &amp;= \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\delta)_{il} + \varepsilon_{ijkl}
+\end{aligned}`
+
+&lt;br&gt;
+where
+
+- `\(\mu\)` sets an overall mean
+
+- `\(\alpha_i\)`, `\(\beta_j\)`, `\(\gamma_k\)` and `\(\delta_l\)` represent the effect of different judges, video, action unit and speaker, respectively
+
+- The interaction term between judge ( `\(\alpha_i\)`) and video ( `\(\beta_j\)`) allows different judges to react differently in different videos. Similarly for judge and action unit, judge and speaker, and action unit and speaker. 
+
+--
+
+ **Do the justices' expression differ from case to case?**
+ **Do the justices' expression differ when different parties are speaking?**
+
+
+
+---
+class: inverse, center, middle
+
+#  Result
+
+---
+
+&lt;img src="Figures/video-plot-1.png" width="100%" height="100%" /&gt;
+
+---
+## Summary of results
+
+- Generally the judges expressions are the same regardless of video
+
+- Nettle always has a raised outer eyebrow (AU02)
+
+- Gageler and Bell reacted strongly to the OKS case, but Edelman and Keane did not
+
+
+
+**Our results mostly validate Tutton et al (2018) that the judges appear impartial, with the exception of Gageler and Bell for the OKS case.**
+
+--
+
+**Facial recognition analysis of the videos provides a way to objectively assess judicial behaviour.** 
+
+---
+
+## Packages used in the research include: 
+
+- [**tidyverse**](https://CRAN.R-project.org/package=tidyverse) suite of R packages for data manipulation and plotting
+
+- [**emmeans**](https://CRAN.R-project.org/package=emmeans) for producing customised model output 
+
+- [**youtube-dl**](https://ytdl-org.github.io/youtube-dl/index.html) for video downloading
+
+- [**ffmpeg**](https://www.ffmpeg.org/) for video processing
+
+- [**taipan**](https://github.com/srkobakian/taipan) R package for image annotation
+
+- [**ImageMagick**](https://imagemagick.org/index.php) for image processing
+
+- [**OpenFace**](https://github.com/TadasBaltrusaitis/OpenFace) for facial recognition
+
+---
+class: center, middle
+
+# Acknowledgements
+
+I would like to express my gratitude to Di Cook and Russell Symth for supervising this work, and Stephanie Kobakian and Stuart Lee for helping me throughout the project.
+
+
+Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "4:3",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
