@@ -298,7 +298,7 @@ int_2 %>%
 ---
 class: center, middle
 
-# Acknowledgement
+# Acknowledgements
 
 I would like to express my gratitude to Di Cook and Russell Symth for supervising this work, and Stephanie Kobakian and Stuart Lee for helping me throughout the project.
 
