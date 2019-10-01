@@ -47,6 +47,8 @@ class: title-slide, center, middle
 
 ###`r rmarkdown::metadata$institution`
 
+### https://judgeface.netlify.com/ysc2019
+
 ---
 
 [![A video for fun](../images/video_photo.png)](https://www.youtube.com/watch?v=Ae7uKzin0GA)
