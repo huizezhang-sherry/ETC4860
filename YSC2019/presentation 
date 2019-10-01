@@ -18,9 +18,13 @@ With the easy availability of facial recognition software it is interesting to a
 
 ## Face recognition 
 
-The face recognition technology groups movements of facial landmarks into 
+The face recognition technology groups movements of facial landmarks into 45 action units. There are many more variables created including where the eyes are looking, and facial landmarks, but we focus only on the action units.
 
-THe facial recognition technology these days are based on Paul Ekman's study of facial action coding system. Action units are fundamental unit of human facial muscles. Here we have two examples of them. Action unit 2 is the raising of outer eyebrow and actio nunit 15 is the lip corner depressor. Dsescribing face using this FACS  has been widely used in human emotion reserach.
+Here is an explanation of two action units.
+
+Action unit 2 is the raising of outer eyebrow. This might be associated with surprise. 
+
+Action unit 15 is the lip corner depressor. This might be associated with disgust.
 
 
 ## Data 
