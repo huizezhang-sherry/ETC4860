@@ -8,17 +8,45 @@ knit: "bookdown::render_book"
 
 ## List of videos used in the project
 
-|Case|Name|AV recording link|
-|----|--|----|
-|The Republic of Nauru v WET040 [No. 2] [2018] HCA 60|`Nauru_a`|http://www.hcourt.gov.au/cases/cases-av/av-2018-11-07a|
-|TTY167 v Republic of Nauru [2018] HCA 61|`Nauru_b`|http://www.hcourt.gov.au/cases/cases-av/av-2018-11-07b|
-|Rinehart v Hancock Prospecting Pty Ltd [2019] HCA 13|`Rinehart_a`|http://www.hcourt.gov.au/cases/cases-av/av-2018-11-13|
-|Rinehart v Hancock Prospecting Pty Ltd [2019] HCA 13|`Rinehart_b`|http://www.hcourt.gov.au/cases/cases-av/av-2018-11-14a|
-|Parkes Shire Council v South West Helicopters Pty Limited [2019] HCA 14|`Parkes`|http://www.hcourt.gov.au/cases/cases-av/av-2018-11-14b|
-|McKell v The Queen [2019] HCA 5|`McKell`|http://www.hcourt.gov.au/cases/cases-av/av-2018-12-07|
-|OKS v Western Australia [2019] HCA 10|`OKS`|http://www.hcourt.gov.au/cases/cases-av/av-2019-02-14|
+```{r results = "asis"}
+tibble::tibble(Case = c("The Republic of Nauru v WET040 [No. 2] [2018] HCA 60", 
+                        "TTY167 v Republic of Nauru [2018] HCA 61", 
+                        "Rinehart v Hancock Prospecting Pty Ltd [2019] HCA 13", 
+                        "Rinehart v Hancock Prospecting Pty Ltd [2019] HCA 13", 
+                        "Parkes Shire Council v South West Helicopters Pty Limited [2019] HCA 14",
+                        "McKell v The Queen [2019] HCA 5",
+                        "OKS v Western Australia [2019] HCA 10"), 
+               Names = c("Nauru-a", "Nauru-b", "Rinehart-a", 
+                         "Rinehart-b", "Parkes", "McKell", "OKS"), 
+               Link = c("http://www.hcourt.gov.au/cases/cases-av/av-2018-11-07a",
+                         "http://www.hcourt.gov.au/cases/cases-av/av-2018-11-07b",
+                         "http://www.hcourt.gov.au/cases/cases-av/av-2018-11-13",
+                         "http://www.hcourt.gov.au/cases/cases-av/av-2018-11-14a",
+                         "ttp://www.hcourt.gov.au/cases/cases-av/av-2018-11-14b",
+                         "http://www.hcourt.gov.au/cases/cases-av/av-2018-12-07",
+                         "http://www.hcourt.gov.au/cases/cases-av/av-2019-02-14"),
+               Judge = c("Nettle, Gageler, Edelman",
+                         "Nettle, Gageler, Edelman",
+                         "Gordon, Gageler, Bell, Keane, Edelman",
+                         "Gordon, Keane, Bell, Gageler, Edelman",
+                         "Gordon, Bell, Kiefel, Keane, Edelman",
+                         "Gordon, Gageler, Kiefel, Nettle, Edelman",
+                         "Gageler, Kiefel, Nettle, Edelman")) %>% 
+  knitLatex::xTab(booktabs = TRUE, caption.top = "\\label{tab:case-info} Information on the cases used in the project")
+```
 
-Table: Details of videos processed.
+
+<!-- |Case|Name|AV recording link|Judge| -->
+<!-- |---|--|----|---| -->
+<!-- |The Republic of Nauru v WET040 [No. 2] [2018] HCA 60|`Nauru_a`|http://www.hcourt.gov.au/cases/cases-av/av-2018-11-07a|Nettle, Gageler, Edelman| -->
+<!-- |TTY167 v Republic of Nauru [2018] HCA 61|`Nauru_b`|http://www.hcourt.gov.au/cases/cases-av/av-2018-11-07b|Nettle, Gageler, Edelman| -->
+<!-- |Rinehart v Hancock Prospecting Pty Ltd [2019] HCA 13|`Rinehart_a`|http://www.hcourt.gov.au/cases/cases-av/av-2018-11-13|Gordon, Gageler, Bell, Keane, Edelman| -->
+<!-- |Rinehart v Hancock Prospecting Pty Ltd [2019] HCA 13|`Rinehart_b`|http://www.hcourt.gov.au/cases/cases-av/av-2018-11-14a|Gordon, Keane, Bell, Gageler, Edelman| -->
+<!-- |Parkes Shire Council v South West Helicopters Pty Limited [2019] HCA 14|`Parkes`|http://www.hcourt.gov.au/cases/cases-av/av-2018-11-14b|Gordon, Bell, Kiefel, Keane, Edelman| -->
+<!-- |McKell v The Queen [2019] HCA 5|`McKell`|http://www.hcourt.gov.au/cases/cases-av/av-2018-12-07|Gordon, Gageler, Kiefel, Nettle, Edelman| -->
+<!-- |OKS v Western Australia [2019] HCA 10|`OKS`|http://www.hcourt.gov.au/cases/cases-av/av-2019-02-14|Gordon, Gageler, Kiefel, Nettle, Edelman| -->
+
+<!-- Table: Details of videos processed. -->
 
 ## List of the name of ction units
 

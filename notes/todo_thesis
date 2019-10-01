@@ -1,16 +1,9 @@
 p.1. How does  Kovalchik & Reid show the 'potential' to apply OpenFace to the Justices?  And you don't use it to predict outcomes
 
-In the appendix (on p. 25) in column 1 - give the proper citations to the cases eg the first one is The Republic of Nauru v WET040 [No. 2] [2018] HCA 60.
-
-In the appendix, also add a column giving the names of the Justices who heard the case
-
-In Section 2.1, explain why you focused on these seven cases
 
 p. 6 - 'a full description of the output variables can be found here'. - where? 
 
 How about regressing presence (of a facial expression) on dummies for each judge, dummies for the case + a dummy for whether the counsel for the appellant or respondent is speaking.
-
-In a second model interact dummies for the judge with whether appellant/respondent dummy.
 
 In a third model. take the  three or five most common AUs and teat AU1=1, AU2=1, AU14=1 etc as the dependent variable to see if there are differences across AUs
 
