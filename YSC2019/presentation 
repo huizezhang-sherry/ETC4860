@@ -45,16 +45,26 @@ One additional step is that the text transcripts were analysed to extract times 
 
 The final data looks like this. Columns contain judge_id, video_id, frame_id, speakers (appellant or respondent), action unit, and presence/absence of the action unit, and intensity score for the action unit.  
 
-
 ## Method
 
-Before moving into the modelling, let's first define the notation in this project. In our sample, we have six different judges, seven different cases and 18 different action units. Speaker is a binary variable that indicating whether the appellent or the respondent is speaking. There is also a time frame variable t that depends on the length of the video. The y variable is the binary present score, which has value of one if an action unit is present and zero otherwise. Thus, a main effect model without the interactions can be written down as on the screen.
+The judges facial expressions are modelled using a generalised linear model. 
 
-There are a few more steps to do before reaching to our full model. Based on our exploratory data analysis, we want to allow for different action units for the same judge to have different present score, thus we add the interactions between judge and action unit. Based on the same reason, we also add the interactions between judge and video, judge and speaker, case and action unit.
+In the sample, we have 6 different judges, 7 different cases and 18 different action units. 
 
-By having this model, we are now able to answer the following two questions. Do the justices' expression differ from case to case and Do the justices' expression differ when different parties are speaking. 
+Speaker is a binary variable that indicating whether the appellant or the respondent is speaking. 
 
-To do this, we compute the estimates of the presence score for each unique combination of judge, video, action unit and speaker, along with the confidence intervals. Because we are computing the confidence intervals for all estimates at once, adjustment need to be made to ensure the overall type I error is less than 0.05. 
+There is also a time variable indicating the 1 minute intervals. 
+
+The response variable used for this model is the binary presence variable, indicating whether the action unit is observed or not. 
+
+alpha_i, beta_j, gamma_k and delta_l represent the effect of judge, video, action unit and speaker, respectively
+
+The interaction term between judge (alpha) and video (beta_j) allows different judges to react differently in different videos. Similarly for judge and action unit, judge and speaker, and action unit and speaker. 
+
+
+With the model, we are able to answer the following two questions: Do the justices' expression differ from case to case and Do the justices' expression differ when different parties are speaking. 
+
+After the model fit, multiple comparisons are conducted to compare specific effects.
 
 
 ## Result 
