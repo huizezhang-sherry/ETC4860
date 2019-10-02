@@ -14,7 +14,7 @@ There have been many studies into facial and vocal expressions of judges, based 
 
 In Australia, Tutton et al 	published a paper in 2018 detailing their empirical study of transcripts and AV recordings of judges in High Court cases. They found that the judges behaved with a detached demeanour. Their video analysis was done with manual annotation. 
 
-With the easy availability of facial recognition software it is interesting to automatically collect data on the facial expression of the judges. This is what I have done, and I have analysed facial expressions edof the 6 high court judges in 7 videos of court cases. 
+With the easy availability of facial recognition software it is interesting to automatically collect data on the facial expression of the judges. This is what I have done, and I have analysed facial expressions of the 6 high court judges in 7 videos of court cases. 
 
 ## Face recognition 
 
