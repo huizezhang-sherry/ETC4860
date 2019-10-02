@@ -1,22 +1,24 @@
-Hi Everyone, Today I will be talking about exploring the judicial facial expression in videos of legal proceedings. 
+Hi Everyone, Today I will be talking about exploring the judicial facial expression in videos of legal proceedings. You can go to this link to find my slides. 
 
 # Background
 
-The videos of legal proceedings are available for cases in the High Court of Australia, and can be found on their website.
+The videos of legal proceedings are available from the High Court of Australia, and 
 
-Here is a sample from XXX.
+Here is a sample from The republic of Nauru v WET040.
 
 [play video]
 
-The Justices are expected to appear impartial in the courtroom. Can you keep a straight face? Its hard not to react emotionally sometimes. 
+The Justices are expected to appear impartial in the courtroom. However, can you keep a straight face? Its hard not to react emotionally sometimes. 
 
 There have been many studies into facial and vocal expressions of judges, based on court transcripts, or empirical studies. 
 
-In Australia, Tutton, Mack and Roach Anlau published a paper in 2018 detailing their empirical study of transcripts and AV recordings of judges in High Court cases. They found that the judges behaved with a detached demeanour. Their video analysis was done with manual annotation. 
+In Australia, Tutton et al 	published a paper in 2018 detailing their empirical study of transcripts and AV recordings of judges in High Court cases. They found that the judges behaved with a detached demeanour. Their video analysis was done with manual annotation. 
 
-With the easy availability of facial recognition software it is interesting to automatically collect data on the judges facial expression. This is what I have done, and I have analysed facial expressions of the 6 high court judges in 7 videos of court cases. 
+With the easy availability of facial recognition software it is interesting to automatically collect data on the facial expression of the judges. This is what I have done, and I have analysed facial expressions edof the 6 high court judges in 7 videos of court cases. 
 
 ## Face recognition 
+
+The facial recognition technology is based on the Facial action Coding System of Paul Ekman. 
 
 The face recognition technology groups movements of facial landmarks into 45 action units. There are many more variables created including where the eyes are looking, and facial landmarks, but we focus only on the action units.
 
@@ -29,11 +31,11 @@ Action unit 15 is the lip corner depressor. This might be associated with disgus
 
 ## Data collection
 
-The flowchart here shows the steps to collecting the data.
+The flowchart I'm going to show you outlines the steps to collecting the data.
 
-The first step to collecting the data is to process the videos. The videos are downloaded from the high Court of Australia website, and chopped into a set of images extracted at 1 minute intervals. This produces 1000 frames. The face recognition is conducted on these still images. 
+The first step to collect the data is to process the videos. The videos are downloaded from the high Court of Australia website, and chopped into a set of images extracted at 1 minute intervals. This produces 1000 frames. The face recognition is conducted on these still images. 
 
-Faces are extracted from each image. Because the Justices are remain seated in the same position through out the hearing, their faces can be easily extract cropping a fixed region of the image. This yields 4600 images total, and it allows us to separately process data for each judge.
+Faces are extracted from each image. Because the Justices are remain seated in the same position through out the hearing, their faces can be easily extracted by cropping a fixed region of the image. This yields 4600 images total. 
 
 The images are all processed with the face recognition software which tags each face with the facial action unit presence and intensity, along with many other variables like landmarks and eye focus. 
 
@@ -47,8 +49,6 @@ The final data looks like this. Columns contain judge_id, video_id, frame_id, sp
 
 ## Method
 
-The judges facial expressions are modelled using a generalised linear model. 
-
 In the sample, we have 6 different judges, 7 different cases and 18 different action units. 
 
 Speaker is a binary variable that indicating whether the appellant or the respondent is speaking. 
@@ -56,6 +56,8 @@ Speaker is a binary variable that indicating whether the appellant or the respon
 There is also a time variable indicating the 1 minute intervals. 
 
 The response variable used for this model is the binary presence variable, indicating whether the action unit is observed or not. 
+
+The judges facial expressions are modelled using a generalised linear model. 
 
 alpha_i, beta_j, gamma_k and delta_l represent the effect of judge, video, action unit and speaker, respectively
 

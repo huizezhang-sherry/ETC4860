@@ -83,7 +83,7 @@ Tutton, Mack, Roach Anleu (2018):
 - **Paul Ekman**: Facial Action Coding System (FACS)
 
 
-- **Action units**: fundamental units of human facial muscles, total of 45. 
+- it groups movements of facial landmarks into 45 **action units** 
 
 
 .pull-left[
