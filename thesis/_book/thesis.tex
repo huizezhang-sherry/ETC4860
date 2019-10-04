@@ -85,12 +85,12 @@ To be able to analysis the facial expression, proper facial recognition techniqu
 \hypertarget{data-processing}{%
 \section{Data Processing}\label{data-processing}}
 
-The source data for this research project is the AV recordings publicly available from the High Court of Australia \autocite{highcourtau}. Multiple procedures need to be performed to obtain the dataset.
+The source data for this research project is the AV recordings publicly available from the High Court of Australia \autocite{highcourtau}. Due to the requirement of resolution (more than 30px for face detection) of OpenFace, we picked up seven cases from 2018 that have less than seven judges as the sample videos for our dataset. A full list of video being processed can be found in Table \ref{tab:case-info} in the Appendix.
 
-The workflow for extracting numerical data from the videos can be found in Figure \ref{fig:workflow}. Youtube-dl \autocite{youtube-dl} has been used to download videos from the High Court of Australia\autocite{highcourtau} and the list of videos used in this research project is documented in the Appendix. Image frames are extracted from the videos for every minute via ffmpeg \autocite{ffmpeg}, resulting in 1021 image frames (252 frames from \texttt{Nauru} videos and 769 frames from other five videos). Taipan \autocite{Taipan} is then used to find the x-y coordinates of the location of the Justices in each image frame. ImageMagick \autocite{ImageMagick} is then used to crop the face of each Justice from each image frame that is taken from each video where three Justices present in \texttt{Nauru} videos and five Justices in other videos. The resulting 4601 cropped images (252 image frames from \texttt{Nauru} videos where three Justices are presented and 769 image frames from other videos where five justices are presented) are then sent to OpenFace \autocite{baltrusaitis2018openface} to produce the variables for facial landmarking, head pose, eye gaze and facial action unit. This step is performed via the docker platform. The resulting outputs from OpenFace are individual comma-separated values (csv) files for each of the 4601 faces considered and processing is done in R to combine all the separate csv files into a final dataframe with appropriate index of \texttt{frame\_id}, \texttt{judge\_id} and \texttt{video\_id}.
+Multiple procedures need to be performed to obtain the numerical value of facial variables from the source videos. The entire workflow has been plotted in Figure \ref{fig:workflow}. Youtube-dl \autocite{youtube-dl} has been used to download videos from the High Court of Australia\autocite{highcourtau}. Image frames are extracted from the videos for every minute via ffmpeg \autocite{ffmpeg}, resulting in 1021 image frames (252 frames from \texttt{Nauru} videos and 769 frames from other five videos). Taipan \autocite{Taipan} is then used to find the x-y coordinates of the location of the Justices in each image frame. ImageMagick \autocite{ImageMagick} is followed to crop the face of each Justice from each image frame that is taken from each video where three Justices present in \texttt{Nauru} videos and five Justices in other videos. The resulting 4601 cropped images are then sent to OpenFace \autocite{baltrusaitis2018openface} to produce the variables for facial landmarking, head pose, eye gaze and facial action unit. This step is performed via the docker platform. The resulting outputs from OpenFace are individual comma-separated values (csv) files for each of the 4601 faces considered and processing is done in R to combine all the separate csv files into a final dataframe with appropriate index of \texttt{frame}, \texttt{judg} and \texttt{video}.
 
 \begin{figure}
-\includegraphics[width=1\linewidth]{figures/workflow} \caption{data processing workflow \label{fig:workflow}}\label{fig:unnamed-chunk-1}
+\includegraphics[width=1\linewidth]{figures/workflow} \caption{workflow for video and image processing \label{fig:workflow}}\label{fig:unnamed-chunk-1}
 \end{figure}
 
 \hypertarget{variable-description}{%
@@ -239,17 +239,6 @@ P_{ik} = \mu + \alpha_i + \gamma_k + (\alpha\gamma)_{ik}
 
 Based on this model structure, I can understand whether different factor level of action units have different effects on the same judges via ANOVA test. Analysis of Variance (ANOVA) test {[}reference{]} allows us to see if collectively, different factor levels of judge and action unit are the same or different (\(\alpha_1 = \alpha_2 = \cdots = \alpha_6\)). However, it doesn't explain which factor level causes this difference and thus we need multiple comparison.
 
-\hypertarget{simultaneous-comparisons}{%
-\subsection{simultaneous comparisons}\label{simultaneous-comparisons}}
-
-Rather than doing \emph{one} hypothesis testing on if two statistics are (significantly) different or not, we are interested comparing if multiple statistics under the same family are the same or different. Under the first model, the family is each action unit, that is, we want to compare that for the same judge, whether the percentage of appearance of action units are the same or different. P-value and confidence interval are both tools for quantifying uncertainty of estimation. However, in the context of multiple comparison, adjustment need to be made for thesis statistics to be meaningful.
-
-Testing significance based on the usage of p-value has been long criticised for its interpretation. Researchers can erroneously conclude significance due to p-value being less than 0.05 without discussing the false positive/negative rate. {[}add reference: (Yates, 1951; Savage, 1957; Rozeboom, 1960; Gardner and Altman, 1986; Simon, 1986; Bulpitt, 1987){]}. The correct interpretation for a p-value being less than 0.05 is the estimated quantity are significant subject to 5\% of false positive rate. This indicates, if the test is performed multiple times, then 5\% of the chance we would conclude the two means are significantly different but they are actually not.
-
-This is especially a problem when there are a large number of tests need to be performed simultaneously and the consequence of false positive rate is huge. In our context, the judges are expected to be impartial while we believe they may have some facial expressions during the hearing because they could be unbeknown to the speakers. It would be an concern if we don't control the false positive rate, which occurs when the judges didn't expression a facial expression but we claim they do. Bonferroni and Benjamini--Hochberg adjustment are created to reduce the false positive rate at the cost of relatively cheap false negative rate. In both methods, the critical value of 0.05 is adjusted based on the number of simultaneous test and an assumption of independent test is made. {[}need some reference on both adjustment: \url{http://www.biostathandbook.com/multiplecomparisons.html}{]}
-
-A better method to present the same result is through reporting the confidence interval and then comparing if intervals overlap with each other {[}some reference on the preference of confidence interval for doing comparison{]}.
-
 \hypertarget{model-2---video}{%
 \subsection{Model 2 - Video}\label{model-2---video}}
 
@@ -269,6 +258,20 @@ The third model as shown in Equation \ref{eq:judge_speaker} is estimated to unde
 \begin{equation}\label{eq:judge_speaker}
 P_{ijkl} = \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\delta)_{il}
 \end{equation}
+
+\hypertarget{multiple-comparisons}{%
+\section{Multiple Comparisons}\label{multiple-comparisons}}
+
+Testing significance based on the usage of p-value has been long criticised for its interpretation. Researchers can erroneously conclude significance becuase of p-value being less than 0.05 without discussing the false positive/negative rate. {[}add reference: (Yates, 1951; Savage, 1957; Rozeboom, 1960; Gardner and Altman, 1986; Simon, 1986; Bulpitt, 1987){]}. The correct interpretation for a p-value being less than 0.05 is that the estimated quantity are significant subject to 5\% of false positive rate. This indicates,
+if 100 tests are conducted simultaneously, we would expect around 5 variables being significant purly due to randomness.
+
+This is especially a problem in our context when comparing the intensity score for all the available (judge, video, AU, speaker) pairs. The judges are expected to be impartial while we believe they may have some facial expressions during the hearing because they could be unbeknown to the speakers. It would be an concern if we don't control the false positive rate, which occurs when the judges didn't expression a facial expression but we claim they do.
+
+Bonferroni adjustment \autocites{rupert2012simultaneous}{efron2016computer} is a method to reduce the false positive rate at the cost of relatively cheap false negative rate. In the context of large scale (\(N\)) hypothesis tests, rather than concluding signficance at \(\alpha\)\% for each individual test, Bonferroni method adjusts the critical value to \(\alpha/N\)\% for each single test. In this sense, Bonferroni adjustment controls the family-wise error rate at level \(\alpha\).
+
+In both methods, the critical value of 0.05 is adjusted based on the number of simultaneous test and an assumption of independent test is made. {[}need some reference on both adjustment: \url{http://www.biostathandbook.com/multiplecomparisons.html}{]}
+
+A better method to present the same result is through reporting the confidence interval and then comparing if intervals overlap with each other {[}some reference on the preference of confidence interval for doing comparison{]}.
 
 \hypertarget{results}{%
 \chapter{Results}\label{results}}
@@ -520,79 +523,27 @@ We filter out the points have intensity greater than 2 (at least ``slight'' as p
 \hypertarget{additional-stuff}{%
 \chapter{Additional stuff}\label{additional-stuff}}
 
-\begin{longtable}[]{@{}lll@{}}
-\caption{Details of videos processed.}\tabularnewline
+\hypertarget{list-of-videos-used-in-the-project}{%
+\section{List of videos used in the project}\label{list-of-videos-used-in-the-project}}
+
+\begin{table}[ht]
+\begin{center}
+\caption{\label{tab:case-info} Information on the cases used in the project}
+\begin{tabular}{llll}
 \toprule
-\begin{minipage}[b]{0.42\columnwidth}\raggedright
-Case\strut
-\end{minipage} & \begin{minipage}[b]{0.14\columnwidth}\raggedright
-Name\strut
-\end{minipage} & \begin{minipage}[b]{0.35\columnwidth}\raggedright
-AV recording link\strut
-\end{minipage}\tabularnewline
+Case & Names & Link & Judge \\
 \midrule
-\endfirsthead
-\toprule
-\begin{minipage}[b]{0.42\columnwidth}\raggedright
-Case\strut
-\end{minipage} & \begin{minipage}[b]{0.14\columnwidth}\raggedright
-Name\strut
-\end{minipage} & \begin{minipage}[b]{0.35\columnwidth}\raggedright
-AV recording link\strut
-\end{minipage}\tabularnewline
-\midrule
-\endhead
-\begin{minipage}[t]{0.42\columnwidth}\raggedright
-Republic of Nauru v. WET040\strut
-\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright
-\texttt{Nauru\_a}\strut
-\end{minipage} & \begin{minipage}[t]{0.35\columnwidth}\raggedright
-\url{http://www.hcourt.gov.au/cases/cases-av/av-2018-11-07a}\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.42\columnwidth}\raggedright
-TTY167 v. Republic of Nauru\strut
-\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright
-\texttt{Nauru\_b}\strut
-\end{minipage} & \begin{minipage}[t]{0.35\columnwidth}\raggedright
-\url{http://www.hcourt.gov.au/cases/cases-av/av-2018-11-07b}\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.42\columnwidth}\raggedright
-Rinehart \& Anor v. Hancock Prospecting Pty Ltd \& Ors on 13 Nov 18\strut
-\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright
-\texttt{Rinehart\_a}\strut
-\end{minipage} & \begin{minipage}[t]{0.35\columnwidth}\raggedright
-\url{http://www.hcourt.gov.au/cases/cases-av/av-2018-11-13}\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.42\columnwidth}\raggedright
-Rinehart \& Anor v. Hancock Prospecting Pty Ltd \& Ors on 14 Nov 18\strut
-\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright
-\texttt{Rinehart\_b}\strut
-\end{minipage} & \begin{minipage}[t]{0.35\columnwidth}\raggedright
-\url{http://www.hcourt.gov.au/cases/cases-av/av-2018-11-14a}\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.42\columnwidth}\raggedright
-Parkes Shire Council v. South West Helicopters Pty Limited\strut
-\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright
-\texttt{Parkes}\strut
-\end{minipage} & \begin{minipage}[t]{0.35\columnwidth}\raggedright
-\url{http://www.hcourt.gov.au/cases/cases-av/av-2018-11-14b}\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.42\columnwidth}\raggedright
-McKell v. The Queen\strut
-\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright
-\texttt{McKell}\strut
-\end{minipage} & \begin{minipage}[t]{0.35\columnwidth}\raggedright
-\url{http://www.hcourt.gov.au/cases/cases-av/av-2018-12-07}\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.42\columnwidth}\raggedright
-OKS v. The State of Western Australia\strut
-\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright
-\texttt{OKS}\strut
-\end{minipage} & \begin{minipage}[t]{0.35\columnwidth}\raggedright
-\url{http://www.hcourt.gov.au/cases/cases-av/av-2019-02-14}\strut
-\end{minipage}\tabularnewline
+The Republic of Nauru v WET040 [No. 2] [2018] HCA 60 & Nauru-a & http://www.hcourt.gov.au/cases/cases-av/av-2018-11-07a & Nettle, Gageler, Edelman \\
+TTY167 v Republic of Nauru [2018] HCA 61 & Nauru-b & http://www.hcourt.gov.au/cases/cases-av/av-2018-11-07b & Nettle, Gageler, Edelman \\
+Rinehart v Hancock Prospecting Pty Ltd [2019] HCA 13 & Rinehart-a & http://www.hcourt.gov.au/cases/cases-av/av-2018-11-13 & Gordon, Gageler, Bell, Keane, Edelman \\
+Rinehart v Hancock Prospecting Pty Ltd [2019] HCA 13 & Rinehart-b & http://www.hcourt.gov.au/cases/cases-av/av-2018-11-14a & Gordon, Keane, Bell, Gageler, Edelman \\
+Parkes Shire Council v South West Helicopters Pty Limited [2019] HCA 14 & Parkes & ttp://www.hcourt.gov.au/cases/cases-av/av-2018-11-14b & Gordon, Bell, Kiefel, Keane, Edelman \\
+McKell v The Queen [2019] HCA 5 & McKell & http://www.hcourt.gov.au/cases/cases-av/av-2018-12-07 & Gordon, Gageler, Kiefel, Nettle, Edelman \\
+OKS v Western Australia [2019] HCA 10 & OKS & http://www.hcourt.gov.au/cases/cases-av/av-2019-02-14 & Gageler, Kiefel, Nettle, Edelman \\
 \bottomrule
-\end{longtable}
+\end{tabular}
+\end{center}
+\end{table}
 
 \hypertarget{list-of-the-name-of-ction-units}{%
 \section{List of the name of ction units}\label{list-of-the-name-of-ction-units}}

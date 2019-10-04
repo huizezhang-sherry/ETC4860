@@ -42,19 +42,6 @@ P_{ik} = \mu + \alpha_i + \gamma_k + (\alpha\gamma)_{ik}
 
 Based on this model structure, I can understand whether different factor level of action units have different effects on the same judges via ANOVA test. Analysis of Variance (ANOVA) test [reference] allows us to see if collectively, different factor levels of judge and action unit are the same or different ($\alpha_1 = \alpha_2 = \cdots = \alpha_6$). However, it doesn't explain which factor level causes this difference and thus we need multiple comparison. 
 
-### simultaneous comparisons 
-
-Rather than doing *one* hypothesis testing on if two statistics are (significantly) different or not, we are interested comparing if multiple statistics under the same family are the same or different. Under the first model, the family is each action unit, that is, we want to compare that for the same judge, whether the percentage of appearance of action units are the same or different.  P-value and confidence interval are both tools for quantifying uncertainty of estimation. However, in the context of multiple comparison, adjustment need to be made for thesis statistics to be meaningful. 
-
-Testing significance based on the usage of p-value has been long criticised for its interpretation. Researchers can erroneously conclude significance due to p-value being less than 0.05 without discussing the false positive/negative rate. [add reference: (Yates, 1951; Savage, 1957; Rozeboom, 1960; Gardner and Altman, 1986; Simon, 1986; Bulpitt, 1987)]. The correct interpretation for a p-value being less than 0.05 is the estimated quantity are significant subject to 5% of false positive rate. This indicates, if the test is performed multiple times, then 5% of the chance we would conclude the two means are significantly different but they are actually not. 
-
-This is especially a problem when there are a large number of tests need to be performed simultaneously and the consequence of false positive rate is huge. In our context, the judges are expected to be impartial while we believe they may have some facial expressions during the hearing because they could be unbeknown to the speakers. It would be an concern if we don't control the false positive rate, which occurs when the judges didn't expression a facial expression but we claim they do. Bonferroni and Benjamini–Hochberg adjustment are created to reduce the false positive rate at the cost of relatively cheap false negative rate. In both methods, the critical value of 0.05 is adjusted based on the number of simultaneous test and an assumption of independent test is made. <!-- For example, say there are 100 mean need to be compared, for us to conclude a particular mean is significant, we need a p-value to be less than the adjusted critical value: `0.05/100` (0.05/100) - maybe we dont need this for example.  -->[need some reference on both adjustment: http://www.biostathandbook.com/multiplecomparisons.html] 
-
-A better method to present the same result is through reporting the confidence interval and then comparing if intervals overlap with each other [some reference on the preference of confidence interval for doing comparison]. 
-
-
-
-
 
 ### Model 2 - Video
 
@@ -73,3 +60,25 @@ The third model as shown in Equation \ref{eq:judge_speaker} is estimated to unde
 \begin{equation}\label{eq:judge_speaker}
 P_{ijkl} = \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\delta)_{il}
 \end{equation}
+
+## Multiple Comparisons 
+
+<!-- [may be go to discussion???]Rather than doing *one* hypothesis testing on if two statistics are (significantly) different or not, we are interested comparing if multiple statistics under the same family are the same or different. Under the first model, the family is each action unit, that is, we want to compare that for the same judge, whether the percentage of appearance of action units are the same or different.  P-value and confidence interval are both tools for quantifying uncertainty of estimation. However, in the context of multiple comparison, adjustment need to be made for thesis statistics to be meaningful.  -->
+
+Testing significance based on the usage of p-value has been long criticised for its interpretation. Researchers can erroneously conclude significance becuase of p-value being less than 0.05 without discussing the false positive/negative rate. [add reference: (Yates, 1951; Savage, 1957; Rozeboom, 1960; Gardner and Altman, 1986; Simon, 1986; Bulpitt, 1987)]. The correct interpretation for a p-value being less than 0.05 is that the estimated quantity are significant subject to 5% of false positive rate. This indicates,
+if 100 tests are conducted simultaneously, we would expect around 5 variables being significant purly due to randomness. 
+
+This is especially a problem in our context when comparing the intensity score for all the available (judge, video, AU, speaker) pairs.  The judges are expected to be impartial while we believe they may have some facial expressions during the hearing because they could be unbeknown to the speakers. It would be an concern if we don't control the false positive rate, which occurs when the judges didn't expression a facial expression but we claim they do. 
+
+
+
+
+Bonferroni adjustment [@rupert2012simultaneous; @efron2016computer] is a method to reduce the false positive rate at the cost of relatively cheap false negative rate. In the context of large scale ($N$) hypothesis tests, rather than concluding signficance at $\alpha$% for each individual test, Bonferroni method adjusts the critical value to $\alpha/N$% for each single test. In this sense, Bonferroni adjustment controls the family-wise error rate at level $\alpha$. 
+
+
+
+In both methods, the critical value of 0.05 is adjusted based on the number of simultaneous test and an assumption of independent test is made. <!-- For example, say there are 100 mean need to be compared, for us to conclude a particular mean is significant, we need a p-value to be less than the adjusted critical value: `0.05/100` (0.05/100) - maybe we dont need this for example.  -->[need some reference on both adjustment: http://www.biostathandbook.com/multiplecomparisons.html] 
+
+A better method to present the same result is through reporting the confidence interval and then comparing if intervals overlap with each other [some reference on the preference of confidence interval for doing comparison]. 
+
+
