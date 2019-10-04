@@ -1,32 +1,47 @@
 Hi Everyone, Today I will be talking about exploring the judicial facial expression in videos of legal proceedings. You can go to this link to follow my talk. 
 
+---
+
 # Background
 
-The videos of legal proceedings are available from the High Court of Australia, and 
-
-Here is a sample from The republic of Nauru v WET040.
+The videos of legal proceedings are available from the High Court of Australia, and here is a sample from The republic of Nauru v WET040.
 
 [play video]
+
+---
 
 The Justices are expected to appear impartial in the courtroom. However, can you keep a straight face? Its hard not to react emotionally sometimes. 
 
 There have been many studies into facial and vocal expressions of judges, based on court transcripts, or empirical studies. 
 
-In Australia, Tutton et al 	published a paper in 2018 detailing their empirical study of transcripts and AV recordings of judges in High Court cases. They found that the judges behaved with a detached demeanour. Their video analysis was done with manual annotation. 
+Chen published a paper in 2018 named Is Justice really blind? And it is also deaf. He processed the image of the attorneys before appearing on the US Supreme Court. Audio information is also included in Chen's data to classify if the supreme court judge would affirm or reverse a lowcourt decision. Chen found that both the image and audio data improve the classification accuracy of case outcome. 
 
-With the easy availability of facial recognition software it is interesting to automatically collect data on the facial expression of the judges. This is what I have done, and I have analysed facial expressions of the 6 high court judges in 7 videos of court cases. 
+-- 
+
+In Australia, Tutton et al used the transcripts and AV recordings of judges during the hearing to study the emtion of the judges in the High Court of Australia. They found that the judges behaved with a detached demeanour. Their video analysis was done with manual annotation. 
+
+--
+
+With the easy availability of facial recognition software it is interesting to automatically collect data on the facial expression of the human. In 2018, Kovalchik and Reid had used facial recognition software to study how the performance of professional tennis players is affected by their emotions in the Australian Open matches. 
+
+---
+
+In my research, I have completed the following tasks to study the emotion of the Justices from the High Court of Australia. 
+
+I have extracted the facial expression of the justices from the videos. I have analysed the text transcript of the hearing to get the information of speakers. I then statistically model teh judges facial expression using the data I processed to oebjectively study the emtion of the Justices. I want to find out, do my result agree or disagree with Tutton's findings, that the justices are appearing impartial. 
+
+---
 
 ## Face recognition 
 
-The facial recognition technology is based on the Facial action Coding System by Paul Ekman. 
-
-It groups movements of facial landmarks into 45 action units. 
+The facial recognition technology is based on the Facial action Coding System by Paul Ekman. It groups movements of facial landmarks into 45 action units. 
 Here is an explanation of two action units.
 
 Action unit 2 is the raising of outer eyebrow. This might be associated with surprise. 
 
 Action unit 15 is the lip corner depressor. This might be associated with disgust.
 
+---
 
 ## Data collection
 
@@ -42,9 +57,12 @@ The information is collected into one csv file that contains 711 facial variable
 
 One additional step is to analyse the transcript to extract times when the appellant and respondent were addressing the judges. 
 
-## Data format 
+---
 
-The final data looks like this. We have judge_id, video_id, frame_id, speakers (appellant or respondent), action unit being analysed, and presence/absence of the action unit, and intensity score for the action unit.  
+The collected dataset contains 7 videos of 6 judges and 18 action units. Other facial variables obtained includes the coordinates of 68 face landmarks and 56 eye landmarks. In total, I processed 1000 image frames and 4600 faces. 
+---
+
+The final data format looks like this. We have judge_id, video_id, frame_id for each face. Speakers (appellant or respondent) is extracted from the text trascript. There are 18 action units and presence/absence of the action unit, and intensity score for the action unit.  
 
 ## Method
 
@@ -94,6 +112,18 @@ In the same OKS case, Judge Bell also shows each expression with a higher propor
 Our results mostly validate Tutton et al (2018) that the judges appear impartial, with the exception of Gageler and Bell for the OKS case.
 
 An important emphasis of this work is that "Facial recognition analysis of the videos provides a way to objectively assess judicial behaviour."
+
+
+---
+
+I will now briefly discuss some of the caveats of my work. The current image frames are extracted at every 1 minute interval. However, we would expect some facial expression may only last for a few second. Thus more frequent time interval could be used for getting more precise facial information of the judges. 
+
+In my work, 7 videos are being processed into the facial recognition software and more videos could be processed in the workflow I layed out to get more robust results. The reason for me not processing more videos is because the resolution of publicly available vidoes from the high court has only 720 pixels while the facial recognition software requires at least 30 pixels for a face to be detected. This means that our software will have some problems detecting faces from videos that have 7 judges. 
+
+However, my work has established a workflow for extracting facial expressions of human from videos. All the scripts are available from my github repo. 
+
+
+---
 
 ## Packages used in the research include
 
