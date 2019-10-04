@@ -4,7 +4,7 @@ knit: "bookdown::render_book"
 
 \appendix
 
-# Additional stuff
+# Appendix
 
 ## List of videos used in the project
 

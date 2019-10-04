@@ -9,6 +9,30 @@ link-citations: yes
 knit: "bookdown::render_book"
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, 
+                      message=FALSE, 
+                      cache=TRUE, 
+                      warning = FALSE,
+                      out.width="100%", 
+                      fig.width=10, 
+                      fig.height=7, 
+                      fig.align = "center", 
+                      fig.path = "figures/")
+
+# Load any R packages you need here
+library(forecast)
+library(tidyverse)
+library(ggpubr)
+library(knitr)
+library(lsmeans)
+library(multcomp)
+
+load("data/au_tidy.rda")
+load("data/most_common.rda")
+load("data/au_imputed_old.rda")
+load("data/au_meaning.rda")
+```
 <!-- 
 Edit these lines as appropriate.
 The actual thesis content is in several Rmd files.

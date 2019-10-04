@@ -17,7 +17,7 @@ include_graphics("figures/workflow.png", dpi = 128)
 
 ## Variable description
 
-OpenFace provides more than 711 variables measuring different aspect of a given face and a full description of the output variables can be found [here](https://github.com/TadasBaltrusaitis/OpenFace/wiki/Action-Units). This outlines the difficulty of this project: no existing models will present accurate prediction and inference using 700+ variables - how can we incorporate these information to say about the facial expressions of the Justices during the hearings? 
+OpenFace provides more than 711 variables measuring different aspects of a given face and a full description of the output variables can be found in @baltrusaitis2018openface. This outlines the difficulty of this project: no existing models will present accurate prediction and inference using 700+ variables - how can we incorporate these information to say about the facial expressions of the Justices during the hearings? 
 
 I conduct some exploratory data analysis on one video: `Nauru_a` and find the 700+ variables can be classified as follows with some insights
 
@@ -29,7 +29,7 @@ I conduct some exploratory data analysis on one video: `Nauru_a` and find the 70
  
  - **Landmarking**: landmarking variables for face and eyes. Landmarking variables allows me to plot the face of the judge in a particular frame. More work could be done to explore the usefulness of landmarking variables. 
  
- - **Action Unit**: Action units are used to describe facial expressions. [this website](https://imotions.com/blog/facial-action-coding-system/) provides a good animation on each action unit. The action unit has intensity measures ending with `_c` and presence measures ending with `_r`. These variables will be the focus of my project and a reference study of using action units to detect human emotion by Kovalchik can be found [here](http://www.sloansportsconference.com/wp-content/uploads/2018/02/2005.pdf). 
+ - **Action Unit**: Action units are used to describe facial expressions. The action unit has intensity measures ending with `_c` and presence measures ending with `_r`. 
 
 ## Data format
 
