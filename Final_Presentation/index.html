@@ -24,7 +24,7 @@ class: title-slide, center, middle
 
 ###Monash University
 
-### https://judgeface.netlify.com/ysc2019
+### https://judgeface.netlify.com/Final_Presentation
 
 ---
 
@@ -39,7 +39,7 @@ class: title-slide, center, middle
 
 - Chen (2018) 
     - Is Justice really blind? And it is also deaf?
-    - **Data collection**: Still images extracted from videos of US Supreme Court, voice audio, augment data on judges (gender, political views, past voting)
+    - **Data collection**: images of lawyers *before* appearing on the Supreme Court, voice audio, augment data on judges and case characteristics 
     - **Finding**: Image and vocal data improved accuracy of predicting case outcome
 --
 
@@ -48,6 +48,7 @@ class: title-slide, center, middle
     - **Data collection**: Manual tagging of video footage of Australian High Court
     - **Finding**: judges present an impersonal or detached demeanour
 --
+
 - Kovalchik and Reid (2018)
     - Use automatic tagging of expressions from facial recognition software to study emotion of tennis players in professional matches, focusing on effect on performance
 
@@ -55,19 +56,23 @@ class: title-slide, center, middle
 ---
 # My research
 
-- Extract facial expression data from videos of High Court of Australia
+- Extract facial expression data of the Justices from videos of High Court of Australia
+
 --
 
 - Merge with data from text transcript
+
 --
 
 - Statistically model judges facial expressions
+
 --
 
-- Provides an objective source of data to study the problem
+- Provide an **objective** source of data to study the problem
+
 --
 
-- Do the results agree or disagree with Tutton's findings, that judges are appearing impartial?
+- Do the results agree or disagree with Tutton's findings, that the justices are appearing impartial?
 
 ---
 # Face Recognition
@@ -131,14 +136,19 @@ class: inverse, center, middle
 ### 4601 faces and 711 facial variables.
 
 ---
+class: middle, center 
 
 # Collected data
 
-- **7 videos**
-- **6 judges**
-- **18 action units**
-- 68 landmarks 
-- 1000 total frames, 4600 faces
+####**7 videos**
+
+####**6 judges**
+
+####**18 action units**
+
+####68 face landmarks, 56 eye landmarks
+
+####1000 total frames, 4600 faces
 
 ---
 class: middle, center
@@ -241,20 +251,25 @@ Future work where you talk about intensity modeling
 
 ---
 
-Caveats about work: 
+# Caveats about my work: 
 
-- more frequent intervals
-- more videos
+More frequent interval: 
+- current frame extraction is conducted on 1 minute interval
+- more frequent time interval i.e. 5 second,  could be used for more precise emtions
 
-Software provided to do this
+More videos
+- 7 videos are processed in the facial recognition software
+- more videos could be processed if higher resolution videos are accessible
+
+My work has established a workflow for extracting facial expressions of human from videos. All the scripts are available from my github repo: 
+
+#### https:://github.com/huizezhang-sherry/ETC4860 
+
 
 ---
 
 ## Packages used in the research: 
 
-- [**tidyverse**](https://CRAN.R-project.org/package=tidyverse) suite of R packages for data manipulation and plotting
-
-- [**emmeans**](https://CRAN.R-project.org/package=emmeans) for producing customised model output 
 
 - [**youtube-dl**](https://ytdl-org.github.io/youtube-dl/index.html) for video downloading
 
@@ -266,6 +281,11 @@ Software provided to do this
 
 - [**OpenFace**](https://github.com/TadasBaltrusaitis/OpenFace) for facial recognition
 
+- [**tidyverse**](https://CRAN.R-project.org/package=tidyverse) suite of R packages for data manipulation and plotting
+
+- [**emmeans**](https://CRAN.R-project.org/package=emmeans) for producing customised model output 
+
+
 ---
 class: center, middle
 
@@ -275,6 +295,12 @@ I would like to express my gratitude to Di Cook and Russell Symth for supervisin
 
 
 Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
+
+---
+
+## Image processing: Chen (2018)
+
+&lt;img src="/Users/huizezhang/Documents/Commerce/Honours/ETC4860/images/HOG.png" width="500px" height="500px" style="display: block; margin: auto;" /&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

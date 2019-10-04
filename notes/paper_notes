@@ -1,0 +1,20 @@
+Chen (2018): Is Justice really blind? And it is also deaf? 
+	- image features and audio features improve the prediction of Supreme Court case outcomes from 67% to 69% (notice that it is case outcome but not judge votes.)
+	- classification problem: 
+		- 1: the justice reversed: the decision of the lowercourt is overtuned
+		- 0: the justice affirmed: the decision of the lowercourt is upheld
+	- use outsourced, labeled database to build a facial trait model
+		- has face databased with human labelled scale for 40 traits (confidence, happiness etc)
+		- use HOG to vectorised the image into 1 *12800 vector
+		- use PCA to reduce the dimension to the top 100 principal component 
+		- build a ridge regression model for each of the 40 selected traits
+	- image collection method:
+		- collect images of lawyers
+		- locate the faces from image 
+		- crop and resize the images to capture the faces
+		- apply HOG to the images and vectorise pixel matrix and PCA 
+		- predict the score for each trait via the ridge regression model built using the human labelled face database before
+
+
+
+

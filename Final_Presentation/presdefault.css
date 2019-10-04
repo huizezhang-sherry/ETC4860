@@ -7,6 +7,14 @@ body {
   font-family: 'Lato';
   font-weight: normal;
 }
+
+body h4 {
+  font-family: 'Lato';
+  font-weight: normal; 
+  font-size: 1.6em;
+  color:#f92672;
+}
+
 .footnote {
   position: absolute;
   bottom: 3em;
