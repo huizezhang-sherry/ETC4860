@@ -30,30 +30,44 @@ class: title-slide, center, middle
 
 [![A video for fun](../images/video_photo.png)](https://www.youtube.com/watch?v=Ae7uKzin0GA)
 
-### Are the justices facial expression revealing the outcome of the case?
+### Are the justices' facial expressions revealing the outcome of the case?
 
 ---
-# Recent legal studies on judicial behaviour
+# Previous work
 
+**Judges are expected to be impartial in expressions presented to court.** 
 
-Judges are expected to be impartial in expressions presented to court. 
-
-Tutton, Mack, Roach Anleu (2018):
-
-- empirical study of transcripts and AV recordings of judges in High Court cases
-
-- *data collection*: manual tagging of video footage of Australian High Court
-
-- *finding*: judges present an impersonal or detached demeanour
-
-
+- Chen (2018) 
+    - Is Justice really blind? And it is also deaf?
+    - **Data collection**: Still images extracted from videos of US Supreme Court, voice audio, augment data on judges (gender, political views, past voting)
+    - **Finding**: Image and vocal data improved accuracy of predicting case outcome
 --
 
-**Does automatic tagging of expressions using face recognition technology agree with this finding?**
+- Tutton, Mack, Roach Anleu (2018)
+    - Empirical study of transcripts and AV recordings of judges in High Court cases
+    - **Data collection**: Manual tagging of video footage of Australian High Court
+    - **Finding**: judges present an impersonal or detached demeanour
+--
+- Kovalchik and Reid (2018)
+    - Use automatic tagging of expressions from facial recognition software to study emotion of tennis players in professional matches, focusing on effect on performance
 
 
+---
+# My research
 
+- Extract facial expression data from videos of High Court of Australia
+--
 
+- Merge with data from text transcript
+--
+
+- Statistically model judges facial expressions
+--
+
+- Provides an objective source of data to study the problem
+--
+
+- Do the results agree or disagree with Tutton's findings, that judges are appearing impartial?
 
 ---
 # Face Recognition
@@ -114,7 +128,17 @@ class: inverse, center, middle
 
 --
 
-### 4601 faces and 711 facial variables!
+### 4601 faces and 711 facial variables.
+
+---
+
+# Collected data
+
+- **7 videos**
+- **6 judges**
+- **18 action units**
+- 68 landmarks 
+- 1000 total frames, 4600 faces
 
 ---
 class: middle, center
@@ -177,11 +201,18 @@ where
  **Do the justices' expression differ when different parties are speaking?**
 
 
-
 ---
 class: inverse, center, middle
 
 #  Result
+
+---
+
+Model summary, and F test result
+
+---
+
+Explain multiple coomparisons
 
 ---
 
@@ -206,7 +237,20 @@ class: inverse, center, middle
 
 ---
 
-## Packages used in the research include: 
+Future work where you talk about intensity modeling
+
+---
+
+Caveats about work: 
+
+- more frequent intervals
+- more videos
+
+Software provided to do this
+
+---
+
+## Packages used in the research: 
 
 - [**tidyverse**](https://CRAN.R-project.org/package=tidyverse) suite of R packages for data manipulation and plotting
 
