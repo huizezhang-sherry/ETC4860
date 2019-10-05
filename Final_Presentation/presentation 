@@ -64,39 +64,52 @@ The collected dataset contains 7 videos of 6 judges and 18 action units. Other f
 
 The final data format looks like this. We have judge_id, video_id, frame_id for each face. Speakers (appellant or respondent) is extracted from the text trascript. There are 18 action units and presence/absence of the action unit, and intensity score for the action unit.  
 
+---
+
 ## Method
 
-In the sample, we have 6 different judges, 7 different cases and 18 different action units. 
-
-Speaker is a binary variable that indicating whether the appellant or the respondent is speaking. 
-
-There is also a time variable indicating the 1 minute intervals. 
+To be able to model the facial expression of the judge, the following notations are defined. $i$ is the subscript for judge and can take value from 1 to 6 for our 6 different judges. Video is represented by $j$ subscript and have 7 distinct values. Action unit is represented by $k$, speakers is subsripted by $l$. There is also a time variable indicating the 1 minute interval. 
 
 The response variable used for this model is the binary presence variable, indicating whether the action unit is observed or not. 
 
+---
 
 ## Modelling
 
-The judges facial expressions are modelled using a generalised linear model. 
+The judges facial expressions are modelled using a binomail model with logit link. 
 
-alpha_i, beta_j, gamma_k and delta_l represent the effect of judge, video, action unit and speaker, respectively
+alpha_i, beta_j, gamma_k and delta_l represent the main effect of judge, video, action unit and speaker, respectively.
 
-The interaction term between judge (alpha) and video (beta_j) allows different judges to react differently in different videos. Similarly for judge and action unit, judge and speaker, and action unit and speaker. 
+The interaction term between judge (alpha) and video (beta_j) allows different judges to react differently in different videos. Similarly we have interactions between judge and action unit, judge and speaker, and action unit and speaker. [Maybe more explanation on the interaction terms??] 
 
+--
 
-With the model, we are able to answer the following two questions: Do the justices' expression differ from case to case and Do the justices' expression differ when different parties are speaking. 
+With the model, we are able to answer the following two questions: Do the  expression of the justices differ from case to case and Do the expression of the justices differ when different parties are speaking. 
 
-After the model fit, multiple comparisons are conducted to compare specific effects.
-
+---
 
 ## Result 
 
+Here I present the first 10 rows of the model summary output. However, this summary has a problem in interpretation. Because we include the intereaction terms in the model, this output doesn't allow us to explicitly interpret the estimates. To overcome this, I calculate the estimated marginal mean. 
 
-This is a plot of the 95% confidence intervals computed by multiple comparison of the means after the model fitting. Bonferroni adjustments were made.
+
+---
+Estimated marginal mean is defined over a pre-defined reference grid. In our model, the reference grid is created via the three way interactions of the 6 judges, 7 videos and 4 main action units and exclude the interactions that do not exist. For example, Judge Bell doesnt participated in case Nauru-a, so there will not be an interaction of judge bell and case nauru-a. [maybe here I should memtion it is an unbalanced data??]
+
+[Do i need to explain how is the estimate calculated??]
+Take 0.93 as an example. Because we use Edelman, McKell and AU02 as the base level for our factors. The only relevant estimate from the previous table is the intercept, which is 2.61. Supply this to the link function for the binomial model will give 0.93, which is the estimated marginal mean. 
+
+---
+
+The question we want to answer is a simultaneous inference problem since we want to compare the pairwise estimated marginal mean under the same judge. Thus the confidence interval need to be adjusted to control the confidence for the whole judge group to be 95%. To do this, I use Bonferroni adjustment. [Do I need to further explain how does bonferroni adjustment do this??? Maybe put as an appendix slide??]
+
+---
+
+I then plot the 95% confidence intervals computed by multiple comparison of the means after the model fitting.
 
 The x axis represents video and y axis represents the proportion of frames in each video where the action unit was present. The facets show judge in the columns, and four main action units on the rows. Colour represents video. 
 
-Note that, each case may have different judges. Not all judges sit on each case.
+Note that, since we have an unbalanced dataset, each case may have different judges.
 
 There are so many possible findings to report. Here are the main ones. 
 
@@ -106,6 +119,7 @@ Judge Gageler reacted differently in the OKS case, on the four main action units
 
 In the same OKS case, Judge Bell also shows each expression with a higher proportion. 
 
+---
 
 ## Summary of results
 
@@ -113,10 +127,17 @@ Our results mostly validate Tutton et al (2018) that the judges appear impartial
 
 An important emphasis of this work is that "Facial recognition analysis of the videos provides a way to objectively assess judicial behaviour."
 
+---
+
+# Future work
+
+In the future, more work could be done to model the intensity score of the aciton units. When plotting the histogram of the intensity for each judge, we can see that most of the intensity score is quite low and near zero. a zero inflated model would be able to handle this type of data. 
 
 ---
 
-I will now briefly discuss some of the caveats of my work. The current image frames are extracted at every 1 minute interval. However, we would expect some facial expression may only last for a few second. Thus more frequent time interval could be used for getting more precise facial information of the judges. 
+# Caveats
+
+Now, I will now briefly discuss some of the caveats of my work. The current image frames are extracted at every 1 minute interval. However, we would expect some facial expression may only last for a few second. Thus more frequent time interval could be used for getting more precise facial information of the judges. 
 
 In my work, 7 videos are being processed into the facial recognition software and more videos could be processed in the workflow I layed out to get more robust results. The reason for me not processing more videos is because the resolution of publicly available vidoes from the high court has only 720 pixels while the facial recognition software requires at least 30 pixels for a face to be detected. This means that our software will have some problems detecting faces from videos that have 7 judges. 
 
@@ -134,4 +155,3 @@ This is the list of software and R packages used for this work.
 Thank you for listening
 
 
-here are many more variables created including where the eyes are looking, and facial landmarks, but we focus only on the action units.

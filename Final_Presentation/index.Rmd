@@ -32,6 +32,7 @@ library(ggplot2)
 library(emmeans)
 library(tidyverse)
 library(extrafont)
+library(broom)
 
 load("../raw_data/au_tidy.rda")
 load("../raw_data/au_meaning.rda")
@@ -56,7 +57,7 @@ class: title-slide, center, middle
 ### Are the justices' facial expressions revealing the outcome of the case?
 
 ---
-# Previous work
+## Previous work
 
 **Judges are expected to be impartial in expressions presented to court.** 
 
@@ -111,7 +112,7 @@ class: title-slide, center, middle
 
 AU02 -	Outer eyebrow raiser
 
-```{r echo = FALSE, out.height="200px", out.width="350px"}
+```{r AU02, echo = FALSE, out.height="200px", out.width="350px"}
 include_graphics("../images/AU2-right-only.gif")
 ```
 ]
@@ -121,7 +122,7 @@ include_graphics("../images/AU2-right-only.gif")
 
 AU15 - Lip corner depressor
 
-```{r echo = FALSE, out.height="200px", out.width="350px"}
+```{r AU15, echo = FALSE, out.height="200px", out.width="350px"}
 include_graphics("../images/AU15.gif")
 ```
 ]
@@ -136,37 +137,37 @@ class: inverse, center, middle
 
 ---
 
-```{r echo = FALSE, fig.align="center"}
+```{r workflow_1, echo = FALSE, fig.align="center"}
 include_graphics("../images/workflow_1 (0).png")
 ```
 
 ---
 
-```{r echo = FALSE, fig.align="center"}
+```{r workflow_2, echo = FALSE, fig.align="center"}
 include_graphics("../images/workflow_1 (1).png")
 ```
 
 ---
 
-```{r echo = FALSE, fig.align="center"}
+```{r workflow_3, echo = FALSE, fig.align="center"}
 include_graphics("../images/workflow_1 (2).png")
 ```
 
 ---
 
-```{r echo = FALSE, fig.align="center"}
+```{r workflow_4, echo = FALSE, fig.align="center"}
 include_graphics("../images/workflow_1 (3).png")
 ```
 
 ---
 
-```{r echo = FALSE, fig.align="center"}
+```{r workflow_5, echo = FALSE, fig.align="center"}
 include_graphics("../images/workflow_1 (4).png")
 ```
 
 ---
 
-```{r echo = FALSE, fig.align="center",}
+```{r workflow_6, echo = FALSE, fig.align="center",}
 include_graphics("../images/workflow_1 (5).png")
 ```
 
@@ -193,7 +194,7 @@ class: middle, center
 class: middle, center
 
 
-```{r echo = FALSE, warning=  FALSE}
+```{r data-format, echo = FALSE, warning=  FALSE}
 include_graphics("../images/long.png")
 
 ```
@@ -212,8 +213,8 @@ class: inverse, center, middle
 |---|----|
 |Judge| $i = 1,2, \cdots, 6$ |
 |Video| $j = 1,2, \cdots, 7$ |
-|Action unit|`r length(unique(au_tidy$AU))` possible facial expression|
-|Speaker|either the appellant or respondent, $l=1,2$|
+|Action unit| $k = 1, 2, \cdots, `r length(unique(au_tidy$AU))`$ possible facial expression|
+|Speaker| $l = 1,2$: either the appellant or respondents|
 |Frame| $t = 1,2, \cdots, T_j$ |
 |Presence |The binary $Y$ variable:  $P_{ijkl}$|
 
@@ -231,26 +232,24 @@ class: inverse, center, middle
 
 ## Modelling:
 
-GLM model with binomial link: 
+Binomial model with logit link: 
 
 \begin{aligned}
 P_{ijkl} &= \frac{e^{\eta_{ijkl}}}{1 + e^{\eta_{ijkl}}} \\
 \eta_{ijkl} &= \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\delta)_{il} + \varepsilon_{ijkl}
 \end{aligned}
 
-<br>
 where
 
 - $\mu$ sets an overall mean
 
-- $\alpha_i$, $\beta_j$, $\gamma_k$ and $\delta_l$ represent the effect of different judges, video, action unit and speaker, respectively
+- $\alpha_i$, $\beta_j$, $\gamma_k$ and $\delta_l$ represent the main effect of judges, video, action unit and speaker, respectively
 
 - The interaction term between judge ( $\alpha_i$) and video ( $\beta_j$) allows different judges to react differently in different videos. Similarly for judge and action unit, judge and speaker, and action unit and speaker. 
 
 --
 
- **Do the justices' expression differ from case to case?**
- **Do the justices' expression differ when different parties are speaking?**
+**Do the justices' expression differ from case to case?** **Do the justices' expression differ when different parties are speaking?**
 
 
 ---
@@ -260,15 +259,9 @@ class: inverse, center, middle
 
 ---
 
-Model summary, and F test result
+### Model summary and F test result
 
----
-
-Explain multiple coomparisons
-
----
-
-```{r video-plot, echo = FALSE, message = FALSE, warning = FALSE, fig.width=16, fig.height=12, out.width="100%", out.height="100%"}
+```{r summary-table, echo = FALSE}
 model_dt <- au_tidy %>% 
   ungroup(judge) %>% 
   mutate(judge = fct_relevel(judge, "Edelman"), 
@@ -281,10 +274,51 @@ binomial_model_2 <- glm(presence ~ judge*video + judge*AU + video*AU,
                         family = binomial(link = "logit"),  
                         data = model_dt_2)
 
+tidy(binomial_model_2) %>% 
+  head(10) %>% 
+  kable(format = "html", digits = 2)
+
+#glance(binomial_model_2) %>% kable(format = "html", digits = 2)
+```
+
+
+---
+
+### Estimated Marginal Mean (EMM)
+
+```{r emmean, echo = FALSE}
 emmean_obj_2 <- emmeans(binomial_model_2, c("judge", "video", "AU"), 
                          type = "response") 
 
+emmean_obj_2 %>% 
+  as.data.frame() %>% 
+  filter(!is.na(prob)) %>% 
+  select(-df) %>% 
+  head(10) %>% 
+  kable(format = "html", digits = 2) %>% 
+  kableExtra::column_spec(4, background = "#FFC0CB")
+```
+
+---
+
+### Simultaneous confidence interval 
+
+```{r ci-adjustment, echo = FALSE}
 int_2 <- confint(emmean_obj_2, adjust = "bonferroni")
+
+int_2 %>% 
+  as.data.frame() %>% 
+  filter(!is.na(prob)) %>% 
+  select(-df) %>% 
+  head(10) %>% 
+  kable(format = "html", digits = 2) %>% 
+  kableExtra::column_spec(c(6,7), background = "#FFC0CB")
+```
+ 
+
+---
+
+```{r model-plot, echo = FALSE, message = FALSE, warning = FALSE, fig.width=16, fig.height=12, out.width="100%", out.height="100%"}
 
 int_2 %>% 
   filter(!is.na(df)) %>% 
@@ -310,7 +344,7 @@ int_2 %>%
 ```
 
 ---
-## Summary of results
+# Discussion
 
 - Generally the judges expressions are the same regardless of video
 
@@ -328,7 +362,40 @@ int_2 %>%
 
 ---
 
-Future work where you talk about intensity modeling
+# Future work
+
+- Model intensity score: zero inflated model
+
+```{r intensity, echo = FALSE, fig.height=10, fig.width=13}
+au_intensity_all <- au_tidy %>% 
+  mutate(is_intense = ifelse(intensity >= 2, 1, 0))  
+
+# intensity plot
+# p1 <- au_intensity_all %>%
+#  ggplot(aes(x = judge, y = intensity, color = judge)) +
+#  geom_boxplot(coef = 100) +
+#  facet_wrap(vars(video), scales = "free_x") +
+#  theme(axis.text.x = element_text(angle = 30, hjust = 1),
+#        legend.position = "none")
+
+# the plot magnify the box
+# au_intensity_all %>% 
+#   ggplot(aes(x = judge, y = intensity, color = judge)) + 
+#   geom_boxplot(coef = 100) + 
+#   facet_wrap(vars(video), scales = "free_x") + 
+#   theme(axis.text.x = element_text(angle = 30, hjust = 1), 
+#         legend.position = "none") + 
+#   scale_y_sqrt()
+
+model_dt %>% 
+  ggplot(aes(x = intensity)) + 
+  geom_histogram() + 
+  facet_wrap(vars(judge)) + 
+  theme(axis.text = element_text(size = 30), 
+        strip.text = element_text(size = 30), 
+        axis.title = element_text(size = 30))
+```
+
 
 ---
 
@@ -349,7 +416,7 @@ My work has established a workflow for extracting facial expressions of human fr
 
 ---
 
-## Packages used in the research: 
+# Packages used in the research: 
 
 
 - [**youtube-dl**](https://ytdl-org.github.io/youtube-dl/index.html) for video downloading
@@ -381,7 +448,7 @@ Slides created via the R package [**xaringan**](https://github.com/yihui/xaringa
 
 ## Image processing: Chen (2018)
 
-```{r out.width="500px", fig.align= "center"}
-include_graphics(here::here("images", "HOG.png"))
+```{r HOG, echo = FALSE, out.width="500px", fig.align= "center"}
+include_graphics("../images/HOG.png")
 ```
 

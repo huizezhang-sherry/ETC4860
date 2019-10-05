@@ -4,8 +4,9 @@
     <title>Exploration of Judicial Facial Expression in Videos of Legal Proceedings</title>
     <meta charset="utf-8" />
     <meta name="author" content="Sherry Zhang" />
-    <meta name="date" content="2019-10-04" />
+    <meta name="date" content="2019-10-05" />
     <link href="libs/font-awesome-5.3.1/css/fontawesome-all.min.css" rel="stylesheet" />
+    <script src="libs/kePrint-0.0.1/kePrint.js"></script>
     <link rel="stylesheet" href="presdefault.css" type="text/css" />
   </head>
   <body>
@@ -33,7 +34,7 @@ class: title-slide, center, middle
 ### Are the justices' facial expressions revealing the outcome of the case?
 
 ---
-# Previous work
+## Previous work
 
 **Judges are expected to be impartial in expressions presented to court.** 
 
@@ -170,8 +171,8 @@ class: inverse, center, middle
 |---|----|
 |Judge| `\(i = 1,2, \cdots, 6\)` |
 |Video| `\(j = 1,2, \cdots, 7\)` |
-|Action unit|18 possible facial expression|
-|Speaker|either the appellant or respondent, `\(l=1,2\)`|
+|Action unit| `\(k = 1, 2, \cdots, 18\)` possible facial expression|
+|Speaker| `\(l = 1,2\)`: either the appellant or respondents|
 |Frame| `\(t = 1,2, \cdots, T_j\)` |
 |Presence |The binary `\(Y\)` variable:  `\(P_{ijkl}\)`|
 
@@ -189,26 +190,24 @@ class: inverse, center, middle
 
 ## Modelling:
 
-GLM model with binomial link: 
+Binomial model with logit link: 
 
 `\begin{aligned}
 P_{ijkl} &amp;= \frac{e^{\eta_{ijkl}}}{1 + e^{\eta_{ijkl}}} \\
 \eta_{ijkl} &amp;= \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\delta)_{il} + \varepsilon_{ijkl}
 \end{aligned}`
 
-&lt;br&gt;
 where
 
 - `\(\mu\)` sets an overall mean
 
-- `\(\alpha_i\)`, `\(\beta_j\)`, `\(\gamma_k\)` and `\(\delta_l\)` represent the effect of different judges, video, action unit and speaker, respectively
+- `\(\alpha_i\)`, `\(\beta_j\)`, `\(\gamma_k\)` and `\(\delta_l\)` represent the main effect of judges, video, action unit and speaker, respectively
 
 - The interaction term between judge ( `\(\alpha_i\)`) and video ( `\(\beta_j\)`) allows different judges to react differently in different videos. Similarly for judge and action unit, judge and speaker, and action unit and speaker. 
 
 --
 
- **Do the justices' expression differ from case to case?**
- **Do the justices' expression differ when different parties are speaking?**
+**Do the justices' expression differ from case to case?** **Do the justices' expression differ when different parties are speaking?**
 
 
 ---
@@ -218,18 +217,320 @@ class: inverse, center, middle
 
 ---
 
-Model summary, and F test result
+### Model summary and F test result
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; term &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; estimate &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; std.error &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; (Intercept) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.61 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.22 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11.91 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; judgeBell &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.69 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.26 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -6.60 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; judgeGageler &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.79 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.22 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -3.61 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; judgeKeane &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.80 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.25 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -7.06 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; judgeKiefel &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.01 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.26 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.02 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.98 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; judgeNettle &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.22 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.68 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.75 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; videoNauru-a &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.41 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.37 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.17 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; videoNauru-b &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.50 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.35 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.44 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.15 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; videoOKS &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.15 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.40 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.38 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.71 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; videoParkes &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.02 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.22 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.59 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
 
 ---
 
-Explain multiple coomparisons
+### Estimated Marginal Mean (EMM)
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; judge &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; video &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; AU &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; prob &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; SE &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; asymp.LCL &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; asymp.UCL &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Edelman &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; McKell &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.93 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.01 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.90 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.95 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Bell &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; McKell &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.71 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.03 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.64 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.78 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Gageler &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; McKell &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.86 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.02 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.81 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.90 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Keane &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; McKell &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.69 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.04 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.62 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.76 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Edelman &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Nauru-a &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.95 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.01 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.93 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.97 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Gageler &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Nauru-a &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.85 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.03 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.80 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.90 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Nettle &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Nauru-a &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 1.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.99 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.00 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Edelman &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Nauru-b &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.96 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.01 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.92 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.98 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Gageler &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Nauru-b &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.88 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.03 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.81 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.92 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Nettle &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Nauru-b &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 1.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.99 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.00 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 
 ---
 
-&lt;img src="Figures/video-plot-1.png" width="100%" height="100%" /&gt;
+### Simultaneous confidence interval 
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; judge &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; video &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; AU &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; prob &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; SE &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; asymp.LCL &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; asymp.UCL &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Edelman &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; McKell &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.93 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.01 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.86 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.97 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Bell &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; McKell &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.71 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.03 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.58 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.82 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Gageler &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; McKell &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.86 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.02 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.75 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.93 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Keane &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; McKell &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.69 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.04 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.55 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.80 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Edelman &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Nauru-a &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.95 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.01 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.89 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.98 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Gageler &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Nauru-a &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.85 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.03 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.73 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.92 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Nettle &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Nauru-a &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.96 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 1.00 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Edelman &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Nauru-b &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.96 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.01 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.88 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.99 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Gageler &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Nauru-b &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.88 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.03 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.73 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.95 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Nettle &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Nauru-b &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.97 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 1.00 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+ 
 
 ---
-## Summary of results
+
+&lt;img src="Figures/model-plot-1.png" width="100%" height="100%" /&gt;
+
+---
+# Discussion
 
 - Generally the judges expressions are the same regardless of video
 
@@ -247,7 +548,12 @@ Explain multiple coomparisons
 
 ---
 
-Future work where you talk about intensity modeling
+# Future work
+
+- Model intensity score: zero inflated model
+
+&lt;img src="Figures/intensity-1.png" width="700px" height="500px" /&gt;
+
 
 ---
 
@@ -268,7 +574,7 @@ My work has established a workflow for extracting facial expressions of human fr
 
 ---
 
-## Packages used in the research: 
+# Packages used in the research: 
 
 
 - [**youtube-dl**](https://ytdl-org.github.io/youtube-dl/index.html) for video downloading
@@ -300,7 +606,7 @@ Slides created via the R package [**xaringan**](https://github.com/yihui/xaringa
 
 ## Image processing: Chen (2018)
 
-&lt;img src="/Users/huizezhang/Documents/Commerce/Honours/ETC4860/images/HOG.png" width="500px" height="500px" style="display: block; margin: auto;" /&gt;
+&lt;img src="../images/HOG.png" width="500px" height="500px" style="display: block; margin: auto;" /&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
