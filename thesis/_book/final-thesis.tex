@@ -329,8 +329,34 @@ The third model as shown in Equation \ref{eq:judge_speaker} is estimated to unde
 P_{ijkl} = \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\delta)_{il}
 \end{equation}
 
+\hypertarget{interaction-effect}{%
+\section{Interaction effect}\label{interaction-effect}}
+
+using only the main effect has long been criticised \autocite[\textcite{meyer1991misinterpretation}, \textcite{ottenbacher1991interpretation}]{martinez2015analysing}
+
+In our context, the inclusion of more interactions will be helpful to explain the Presence score. However, the number of interactions is bounded by the degree of freedom we have. We will need to select the most important interactions to include while leave the less important ones.
+
+\hypertarget{estimated-marginal-mean-emm}{%
+\section{Estimated Marginal Mean (EMM)}\label{estimated-marginal-mean-emm}}
+
+Estimated Marginal Mean (Sometimes called least square mean) is the prediction from a linear model over a defined reference grid.
+
+\begin{itemize}
+\item
+  see the calculation of emm when presented with unbalanced data: weight is for averaging over a continuous variable, which is irrelevant for our study -\textgreater{} dont have to adjust weight
+\item
+  typically the tests and confidence intervals are asymptotic. Thus the df column for tabular results will be Inf.{[}have a look at the confidence interval for glm: \url{https://cran.r-project.org/web/packages/emmeans/vignettes/models.html}{]}
+\end{itemize}
+
 \hypertarget{multiple-comparisons}{%
 \section{Multiple Comparisons}\label{multiple-comparisons}}
+
+\begin{itemize}
+\tightlist
+\item
+  a very important paper on \texttt{multcomp} package: \textcite{hothorn2008simultaneous}
+  other packages do the same thing: \texttt{linearHypothesis}
+\end{itemize}
 
 Testing significance based on the usage of p-value has been long criticised for its interpretation. Researchers can erroneously conclude significance becuase of p-value being less than 0.05 without discussing the false positive/negative rate. {[}add reference: (Yates, 1951; Savage, 1957; Rozeboom, 1960; Gardner and Altman, 1986; Simon, 1986; Bulpitt, 1987){]}. The correct interpretation for a p-value being less than 0.05 is that the estimated quantity are significant subject to 5\% of false positive rate. This indicates,
 if 100 tests are conducted simultaneously, we would expect around 5 variables being significant purly due to randomness.
@@ -481,6 +507,18 @@ Nettle & AU20 & 0.74 & 0.0176 & Inf & 0.68 & 0.79 \\
 \end{center}
 \end{table}
 
+\begin{verbatim}
+## [1] 0.0001276873
+\end{verbatim}
+
+\begin{verbatim}
+## 
+##  Hosmer and Lemeshow goodness of fit (GOF) test
+## 
+## data:  binomial_model_1$y, fitted(binomial_model_1)
+## X-squared = 8.4887e-13, df = 8, p-value = 1
+\end{verbatim}
+
 \begin{figure}
 
 {\centering \includegraphics[width=1\linewidth]{figures/unnamed-chunk-9-1} 
@@ -513,6 +551,40 @@ Judge Gageler seems to have a large fluctuate of his facial expressions in video
 
 Our result validates the exploratory data analysis that the difference between case OKS and Parkes for Bell are significant in action unit 14, 15 and 20. Since the confidence interval doesn't overlap for these two videos. The difference between case McKell and OKS are not significance after the Bonferroni adjustment and this indicates the difference we see before in Figure \ref{fig:common_video} is more likely due to randomness rather than the true underlying difference between the two videos. From a legal perspective, this would show that Bell is addressing the cases with different responses. However, this different approach of responding by the judge doesn't indicate the biasness of the judge in the courtroom but the individuality of different judge approaching to cases.
 
+\begin{verbatim}
+## Analysis of Deviance Table
+## 
+## Model: binomial, link: logit
+## 
+## Response: presence
+## 
+## Terms added sequentially (first to last)
+## 
+## 
+##             Df Deviance Resid. Df Resid. Dev  Pr(>Chi)    
+## NULL                        15183      18900              
+## judge        5   298.54     15178      18602 < 2.2e-16 ***
+## video        6    88.49     15172      18513 < 2.2e-16 ***
+## AU           3  1693.00     15169      16820 < 2.2e-16 ***
+## judge:video 13   181.90     15156      16638 < 2.2e-16 ***
+## judge:AU    15  1148.69     15141      15490 < 2.2e-16 ***
+## video:AU    18    97.25     15123      15392  7.04e-13 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 0.06125016
+\end{verbatim}
+
+\begin{verbatim}
+## 
+##  Hosmer and Lemeshow goodness of fit (GOF) test
+## 
+## data:  binomial_model_2$y, fitted(binomial_model_2)
+## X-squared = 15.647, df = 8, p-value = 0.04773
+\end{verbatim}
+
 \begin{figure}
 
 {\centering \includegraphics[width=1\linewidth]{figures/unnamed-chunk-11-1} 
@@ -527,6 +599,42 @@ Our result validates the exploratory data analysis that the difference between c
 
 The estimated coefficients are presented in Table \ref{tab:result_3} and we could find from Figure \ref{fig:model_3_plot} that the video-wise difference between judge still persist and the speaker-wise difference is not significant even before bomferroni adjustment. This result would be a validation that on the high court level, the judges are behaving impartial to different speaking parties.
 
+Analysis of Deviance Table
+
+Model: binomial, link: logit
+
+Response: presence
+
+Terms added sequentially (first to last)
+
+\begin{verbatim}
+          Df Deviance Resid. Df Resid. Dev  Pr(>Chi)    
+\end{verbatim}
+
+NULL 15183 18900\\
+judge 5 298.54 15178 18602 \textless{} 2.2e-16 \textbf{\emph{
+speaker 1 1.48 15177 18600 0.2237024\\
+video 6 87.14 15171 18513 \textless{} 2.2e-16 }}
+AU 3 1693.02 15168 16820 \textless{} 2.2e-16 \textbf{\emph{
+judge:speaker 5 23.23 15163 16797 0.0003048 }}
+judge:video 13 178.52 15150 16618 \textless{} 2.2e-16 \textbf{\emph{
+judge:AU 15 1151.33 15135 15467 \textless{} 2.2e-16 }}
+video:AU 18 97.35 15117 15370 6.75e-13 ***
+---
+Signif. codes: 0 `\emph{\textbf{' 0.001 '}' 0.01 '}' 0.05 `.' 0.1 ' ' 1
+
+\begin{verbatim}
+## [1] 0.07359228
+\end{verbatim}
+
+\begin{verbatim}
+## 
+##  Hosmer and Lemeshow goodness of fit (GOF) test
+## 
+## data:  binomial_model_3$y, fitted(binomial_model_3)
+## X-squared = 22.58, df = 8, p-value = 0.003948
+\end{verbatim}
+
 \begin{figure}
 
 {\centering \includegraphics[width=1\linewidth]{figures/unnamed-chunk-13-1} 
@@ -535,6 +643,20 @@ The estimated coefficients are presented in Table \ref{tab:result_3} and we coul
 
 \caption{THis is the graphical representation of model3\label{fig:model_3_plot}}\label{fig:unnamed-chunk-13}
 \end{figure}
+
+\hypertarget{summary}{%
+\subsection{Summary}\label{summary}}
+
+\begin{itemize}
+\item
+  Based on the goodness-of-fit test, the p-value of binomial\_model\_3 is slightly greater than 0.05, indicating the model may be a good fit.
+\item
+  However, the hosmer-lemeshow test shows binomial\_model\_1 has p-value = 1, which indicates model\_1 is an adequate fit. other two models has p-value less than 0.05.
+\item
+  ANOVA tests suggest all the variables in model\_1 and model\_2 are significant individually, but speaker in model\_3 is not significant at 5\% significant level.
+\end{itemize}
+
+see if the three-way or four-way interaction works for multcomp package to produce simultaneous CI
 
 \hypertarget{action-unit-intensity}{%
 \section{Action unit: Intensity}\label{action-unit-intensity}}

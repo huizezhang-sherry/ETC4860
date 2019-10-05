@@ -61,7 +61,27 @@ The third model as shown in Equation \ref{eq:judge_speaker} is estimated to unde
 P_{ijkl} = \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\delta)_{il}
 \end{equation}
 
+## Interaction effect 
+
+using only the main effect has long been criticised [@martinez2015analysing, @meyer1991misinterpretation, @ottenbacher1991interpretation]
+
+In our context, the inclusion of more interactions will be helpful to explain the Presence score. However, the number of interactions is bounded by the degree of freedom we have. We will need to select the most important interactions to include while leave the less important ones. 
+
+## Estimated Marginal Mean (EMM)
+
+Estimated Marginal Mean (Sometimes called least square mean) is the prediction from a linear model over a defined reference grid. 
+
+
+- see the calculation of emm when presented with unbalanced data: weight is for averaging over a continuous variable, which is irrelevant for our study -> dont have to adjust weight
+
+- typically the tests and confidence intervals are asymptotic. Thus the df column for tabular results will be Inf.[have a look at the confidence interval for glm: https://cran.r-project.org/web/packages/emmeans/vignettes/models.html]
+
 ## Multiple Comparisons 
+
+- a very important paper on `multcomp` package: @hothorn2008simultaneous
+other packages do the same thing: `linearHypothesis`
+
+
 
 <!-- [may be go to discussion???]Rather than doing *one* hypothesis testing on if two statistics are (significantly) different or not, we are interested comparing if multiple statistics under the same family are the same or different. Under the first model, the family is each action unit, that is, we want to compare that for the same judge, whether the percentage of appearance of action units are the same or different.  P-value and confidence interval are both tools for quantifying uncertainty of estimation. However, in the context of multiple comparison, adjustment need to be made for thesis statistics to be meaningful.  -->
 

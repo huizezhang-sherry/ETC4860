@@ -122,6 +122,16 @@ int_1 <- confint(emmean_obj_1, adjust = "bonferroni")
 knitLatex::xTab(format(as.data.frame(int_1), digits = 2), booktabs = TRUE, caption.top = "\\label{tab:result_1} model result")
 ```
 
+```{r goodness-of-fit-1}
+pchisq(deviance(binomial_model_1), 
+       df.residual(binomial_model_1), lower = FALSE)
+
+library(ResourceSelection)
+hoslem.test(binomial_model_1$y, 
+            fitted(binomial_model_1), 
+            g= 10)
+```
+
 ```{r fig.cap = "THis is the graphical representation of model1\\label{fig:model_1_plot}"}
 int_1 %>% 
   left_join(au_meaning, by = c("AU" = "AU_number")) %>% 
@@ -186,6 +196,21 @@ emmean_obj_2 <- emmeans(binomial_model_2, c("judge", "video", "AU"),
 int_2 <- confint(emmean_obj_2, adjust = "bonferroni")
 ```
 
+```{r goodness-of-fit-2}
+# all the variables are significant
+anova(binomial_model_2, test= "Chisq")
+
+pchisq(deviance(binomial_model_2), 
+       df.residual(binomial_model_2), lower = FALSE)
+
+library(ResourceSelection)
+hoslem.test(binomial_model_2$y, 
+            fitted(binomial_model_2), 
+            g= 10)
+```
+
+
+
 ```{r fig.cap="This is the graphical representaion for model 2\\label{fig:model_2_plot}"}
 int_2 %>% 
   filter(!is.na(df)) %>% 
@@ -222,7 +247,19 @@ emmean_obj_3 <-  emmeans(binomial_model_3,
                          c("judge", "video", "AU", "speaker") , 
                          type = "response")
 
+anova(binomial_model_3, test = "Chisq")
+
 int_3 <- confint(emmean_obj_3,  adjust = "bonferroni")
+```
+
+```{r goodness-of-fit-3}
+pchisq(deviance(binomial_model_3), 
+       df.residual(binomial_model_3), lower = FALSE)
+
+library(ResourceSelection)
+hoslem.test(binomial_model_3$y, 
+            fitted(binomial_model_3), 
+            g= 10)
 ```
 
 ```{r fig.cap = "THis is the graphical representation of model3\\label{fig:model_3_plot}"}
@@ -237,6 +274,18 @@ int_3 %>%
   theme(axis.text.x = element_text(angle = 30, hjust = 1)) + 
   xlab("video")
 ```
+
+### Summary
+
+- Based on the goodness-of-fit test, the p-value of binomial_model_3 is slightly greater than 0.05, indicating the model may be a good fit. 
+
+- However, the hosmer-lemeshow test shows binomial_model_1 has p-value = 1, which indicates model_1 is an adequate fit. other two models has p-value less than 0.05. 
+
+- ANOVA tests suggest all the variables in model_1 and model_2 are significant individually, but speaker in model_3 is not significant at 5% significant level.
+
+see if the three-way or four-way interaction works for multcomp package to produce simultaneous CI
+
+
 
 
 ## Action unit: Intensity
