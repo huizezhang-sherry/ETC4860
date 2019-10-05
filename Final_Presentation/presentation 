@@ -88,12 +88,14 @@ With the model, we are able to answer the following two questions: Do the  expre
 
 ---
 
-## Result 
+# Result 
 
 Here I present the first 10 rows of the model summary output. However, this summary has a problem in interpretation. Because we include the intereaction terms in the model, this output doesn't allow us to explicitly interpret the estimates. To overcome this, I calculate the estimated marginal mean. 
 
-
 ---
+
+## Estimated marginal mean
+
 Estimated marginal mean is defined over a pre-defined reference grid. In our model, the reference grid is created via the three way interactions of the 6 judges, 7 videos and 4 main action units and exclude the interactions that do not exist. For example, Judge Bell doesnt participated in case Nauru-a, so there will not be an interaction of judge bell and case nauru-a. [maybe here I should memtion it is an unbalanced data??]
 
 [Do i need to explain how is the estimate calculated??]
@@ -101,7 +103,15 @@ Take 0.93 as an example. Because we use Edelman, McKell and AU02 as the base lev
 
 ---
 
-The question we want to answer is a simultaneous inference problem since we want to compare the pairwise estimated marginal mean under the same judge. Thus the confidence interval need to be adjusted to control the confidence for the whole judge group to be 95%. To do this, I use Bonferroni adjustment. [Do I need to further explain how does bonferroni adjustment do this??? Maybe put as an appendix slide??]
+## ANOVA
+
+ANOVA test suggests that the varaince of both the main effect and interactions are significant. However, since judge, video and AU are multi-level factors, ANOVA doesnt tell us which level of the variable has variance significantly different from others. Therefore, I apply multiple comparison to adjust the confidence interval. 
+
+---
+
+## Bonferroni 
+
+In multiple comparison, the adjustment to confidence interval is made to ensure the confidence level of the whole group is 95%. In my context, it is to ensure the judge-wise confidence is 95%. To do this, I use Bonferroni adjustment. [Do I need to further explain how does bonferroni adjustment do this??? Maybe put as an appendix slide??]
 
 ---
 

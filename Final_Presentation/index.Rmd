@@ -259,7 +259,7 @@ class: inverse, center, middle
 
 ---
 
-### Model summary and F test result
+# Model summary
 
 ```{r summary-table, echo = FALSE}
 model_dt <- au_tidy %>% 
@@ -277,8 +277,6 @@ binomial_model_2 <- glm(presence ~ judge*video + judge*AU + video*AU,
 tidy(binomial_model_2) %>% 
   head(10) %>% 
   kable(format = "html", digits = 2)
-
-#glance(binomial_model_2) %>% kable(format = "html", digits = 2)
 ```
 
 
@@ -297,6 +295,16 @@ emmean_obj_2 %>%
   head(10) %>% 
   kable(format = "html", digits = 2) %>% 
   kableExtra::column_spec(4, background = "#FFC0CB")
+```
+
+---
+
+# ANOVA F-test
+
+```{r ANOVA, echo = FALSE}
+anova(binomial_model_2, test = "Chisq") %>% 
+  kable(format = "html", digits = 4) %>% 
+  kableExtra::column_spec(6, background = "#FFC0CB")
 ```
 
 ---
@@ -403,7 +411,7 @@ model_dt %>%
 
 More frequent interval: 
 - current frame extraction is conducted on 1 minute interval
-- more frequent time interval i.e. 5 second,  could be used for more precise emtions
+- more frequent time interval i.e. 5 second,  could be used for more precise emotions
 
 More videos
 - 7 videos are processed in the facial recognition software
