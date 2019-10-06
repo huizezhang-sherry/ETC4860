@@ -9,7 +9,7 @@ output:
     lib_dir: libs
     seal: FALSE
     nature:
-      ratio: '4:3'
+      ratio: '16:9'
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
@@ -49,13 +49,13 @@ class: title-slide, center, middle
 ### https://judgeface.netlify.com/Final_Presentation
 
 ---
-
+class: center
 [![A video for fun](../images/video_photo.png)](https://www.youtube.com/watch?v=Ae7uKzin0GA)
 
 ### Are the justices' facial expressions revealing the outcome of the case?
 
 ---
-## Previous work
+# Previous work
 
 **Judges are expected to be impartial in expressions presented to court.** 
 
@@ -72,7 +72,7 @@ class: title-slide, center, middle
 --
 
 - Kovalchik and Reid (2018)
-    - Use automatic tagging of expressions from facial recognition software to study emotion of tennis players in professional matches, focusing on effect on performance
+    - Use automatic tagging of expressions from facial recognition software to study the emotion of tennis players in professional matches, focusing on the effect on performance
 
 
 ---
@@ -82,7 +82,7 @@ class: title-slide, center, middle
 
 --
 
-- Merge with data from text transcript
+- Merge with data from text transcripts
 
 --
 
@@ -247,7 +247,7 @@ where
 
 --
 
-**Do the justices' expression differ from case to case?** **Do the justices' expression differ when different parties are speaking?**
+## **Do the justices' expression differ from case to case?** 
 
 
 ---
@@ -257,8 +257,11 @@ class: inverse, center, middle
 
 ---
 
-# Model summary
 
+
+.pull-left[
+
+## Model summary
 ```{r summary-table, echo = FALSE}
 model_dt <- au_tidy %>% 
   ungroup(judge) %>% 
@@ -277,6 +280,20 @@ tidy(binomial_model_2) %>%
   kable(format = "html", digits = 2)
 ```
 
+]
+
+--
+.pull-right[
+
+## ANOVA 
+
+```{r ANOVA, echo = FALSE}
+Anova(binomial_model_2, type = "III", singular.ok = TRUE) %>% 
+  kable(format = "html", digits = 5) %>% 
+  kableExtra::column_spec(4, background = "#FFC0CB")
+```
+
+]
 
 ---
 
@@ -291,16 +308,6 @@ emmean_obj_2 %>%
   filter(!is.na(prob)) %>% 
   select(-df) %>% 
   head(10) %>% 
-  kable(format = "html", digits = 2) %>% 
-  kableExtra::column_spec(4, background = "#FFC0CB")
-```
-
----
-
-# ANOVA 
-
-```{r ANOVA, echo = FALSE}
-Anova(binomial_model_2, type = "III", singular.ok = TRUE) %>% 
   kable(format = "html", digits = 4) %>% 
   kableExtra::column_spec(4, background = "#FFC0CB")
 ```
@@ -317,14 +324,13 @@ int_2 %>%
   filter(!is.na(prob)) %>% 
   select(-df) %>% 
   head(10) %>% 
-  kable(format = "html", digits = 2) %>% 
+  kable(format = "html", digits = 4) %>% 
   kableExtra::column_spec(c(6,7), background = "#FFC0CB")
 ```
- 
 
 ---
 
-```{r model-plot, echo = FALSE, message = FALSE, warning = FALSE, fig.width=16, fig.height=12, out.width="100%", out.height="100%"}
+```{r model-plot, echo = FALSE, message = FALSE, warning = FALSE, fig.width=16, fig.height=9, out.width="100%", out.height="100%"}
 
 int_2 %>% 
   filter(!is.na(df)) %>% 
@@ -340,10 +346,10 @@ int_2 %>%
   theme(legend.position = "bottom", 
         legend.text = element_text(size = 30),
         axis.title = element_text(size=  40),
+        axis.text = element_text(size = 20),
         axis.text.x = element_text(angle = 90, hjust = 1, size= 25),
-        axis.text = element_text(size = 25), 
-        strip.text.x = element_text(size = 30),
-        strip.text.y = element_text(size = 30)) + 
+        strip.text.x = element_text(size = 20),
+        strip.text.y = element_text(size = 20)) + 
   xlab("video") + 
   ylab("Proportion")
   
@@ -352,46 +358,38 @@ int_2 %>%
 ---
 # Discussion
 
-- Generally the judges expressions are the same regardless of video
+- Generally the judges expressions are the same regardless of the video
 
 - Nettle always has a raised outer eyebrow (AU02)
 
 - Gageler and Bell reacted strongly to the OKS case, but Edelman and Keane did not
 
+--
 
-
-**Our results mostly validate Tutton et al (2018) that the judges appear impartial, with the exception of Gageler and Bell for the OKS case.**
+ **Our results mostly validate Tutton et al (2018) that the judges appear impartial, with the exception of Gageler and Bell for the OKS case.**
 
 --
 
-**Facial recognition analysis of the videos provides a way to objectively assess judicial behaviour.** 
+ #### **Facial recognition analysis of the videos provides a way to *objectively* assess judicial behaviour.** 
 
 ---
 
 # Future work
 
+.pull-left[
+
+- Additional models: model each jduge or action unit separately
+
 - Model intensity score: zero inflated model
 
-```{r intensity, echo = FALSE, fig.height=10, fig.width=13}
+
+]
+
+
+.pull-right[
+```{r intensity, echo = FALSE, fig.height=9, fig.width = 12, out.height="100%", out.width="100%"}
 au_intensity_all <- au_tidy %>% 
   mutate(is_intense = ifelse(intensity >= 2, 1, 0))  
-
-# intensity plot
-# p1 <- au_intensity_all %>%
-#  ggplot(aes(x = judge, y = intensity, color = judge)) +
-#  geom_boxplot(coef = 100) +
-#  facet_wrap(vars(video), scales = "free_x") +
-#  theme(axis.text.x = element_text(angle = 30, hjust = 1),
-#        legend.position = "none")
-
-# the plot magnify the box
-# au_intensity_all %>% 
-#   ggplot(aes(x = judge, y = intensity, color = judge)) + 
-#   geom_boxplot(coef = 100) + 
-#   facet_wrap(vars(video), scales = "free_x") + 
-#   theme(axis.text.x = element_text(angle = 30, hjust = 1), 
-#         legend.position = "none") + 
-#   scale_y_sqrt()
 
 model_dt %>% 
   ggplot(aes(x = intensity)) + 
@@ -402,20 +400,24 @@ model_dt %>%
         axis.title = element_text(size = 30))
 ```
 
+]
+
 
 ---
 
 # Caveats about my work: 
 
-More frequent interval: 
-- current frame extraction is conducted on 1 minute interval
-- more frequent time interval i.e. 5 second,  could be used for more precise emotions
+**More frequent interval**: 
+- current frame extraction is conducted on the 1 minute interval
+- more frequent time interval i.e. 5 second,  could be used to catch more precise emotions
 
-More videos
-- 7 videos are processed in the facial recognition software
+**More videos**
+- 7 videos are processed by the facial recognition software
 - more videos could be processed if higher resolution videos are accessible
 
 My work has established a workflow for extracting facial expressions of human from videos. All the scripts are available from my github repo: 
+
+<center>
 
 #### https:://github.com/huizezhang-sherry/ETC4860 
 
@@ -437,17 +439,17 @@ My work has established a workflow for extracting facial expressions of human fr
 
 - [**tidyverse**](https://CRAN.R-project.org/package=tidyverse) suite of R packages for data manipulation and plotting
 
-- [**emmeans**](https://CRAN.R-project.org/package=emmeans) for estimated marginal mean summary of the GLM model
+- [**emmeans**](https://CRAN.R-project.org/package=emmeans) R package for computing estimated marginal mean 
 
-- [**car**](http://socserv.socsci.mcmaster.ca/jfox/Books/Companion) for type III ANOVA test. 
-
-- [**knitr**](https://yihui.name/knitr/) for pretty table display
+- [**car**](http://socserv.socsci.mcmaster.ca/jfox/Books/Companion) R package for ANOVA test. 
 ---
 class: center, middle
 
 # Acknowledgements
 
-I would like to express my gratitude to Di Cook and Russell Symth for supervising this work, and Stephanie Kobakian and Stuart Lee for helping me throughout the project.
+I would like to express my gratitude to Di Cook and Russell Symth for supervising this work, and 
+
+Stephanie Kobakian and Stuart Lee for ad-hoc helps. 
 
 
 Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
