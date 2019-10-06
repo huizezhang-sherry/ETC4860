@@ -28,13 +28,13 @@ class: title-slide, center, middle
 ### https://judgeface.netlify.com/Final_Presentation
 
 ---
-
+class: center
 [![A video for fun](../images/video_photo.png)](https://www.youtube.com/watch?v=Ae7uKzin0GA)
 
 ### Are the justices' facial expressions revealing the outcome of the case?
 
 ---
-## Previous work
+# Previous work
 
 **Judges are expected to be impartial in expressions presented to court.** 
 
@@ -51,7 +51,7 @@ class: title-slide, center, middle
 --
 
 - Kovalchik and Reid (2018)
-    - Use automatic tagging of expressions from facial recognition software to study emotion of tennis players in professional matches, focusing on effect on performance
+    - Use automatic tagging of expressions from facial recognition software to study the emotion of tennis players in professional matches, focusing on the effect on performance
 
 
 ---
@@ -61,7 +61,7 @@ class: title-slide, center, middle
 
 --
 
-- Merge with data from text transcript
+- Merge with data from text transcripts
 
 --
 
@@ -207,7 +207,7 @@ where
 
 --
 
-**Do the justices' expression differ from case to case?** **Do the justices' expression differ when different parties are speaking?**
+## **Do the justices' expression differ from case to case?** 
 
 
 ---
@@ -217,8 +217,11 @@ class: inverse, center, middle
 
 ---
 
-# Model summary
 
+
+.pull-left[
+
+## Model summary
 &lt;table&gt;
  &lt;thead&gt;
   &lt;tr&gt;
@@ -303,6 +306,63 @@ class: inverse, center, middle
 &lt;/tbody&gt;
 &lt;/table&gt;
 
+]
+
+--
+.pull-right[
+
+## ANOVA 
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; LR Chisq &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Df &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Pr(&amp;gt;Chisq) &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; judge &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 66.47176 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0e+00 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; video &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 32.48889 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 1e-05 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; AU &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 306.84092 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0e+00 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; judge:video &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 213.81631 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 13 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0e+00 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; judge:AU &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1029.84644 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 15 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0e+00 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; video:AU &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 97.25174 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 18 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0e+00 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+]
 
 ---
 
@@ -325,166 +385,91 @@ class: inverse, center, middle
    &lt;td style="text-align:left;"&gt; Edelman &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; McKell &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.93 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.01 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.90 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.95 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.9313 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0140 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8982 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.9541 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Bell &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; McKell &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.71 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.03 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.64 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.78 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.7140 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0341 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.6428 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.7759 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Gageler &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; McKell &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.86 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.02 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.81 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.90 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.8597 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0242 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8053 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.9007 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Keane &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; McKell &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.69 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.04 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.62 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.76 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.6921 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0350 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.6196 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.7562 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Edelman &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Nauru-a &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.95 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.01 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.93 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.97 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.9531 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0113 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.9254 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.9709 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Gageler &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Nauru-a &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.85 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.03 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.80 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.90 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.8527 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0256 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.7953 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8961 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Nettle &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Nauru-a &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 1.00 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.99 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.00 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.9955 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0028 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.9851 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.9986 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Edelman &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Nauru-b &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.96 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.01 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.92 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.98 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.9572 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0126 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.9243 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.9761 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Gageler &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Nauru-b &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.88 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.03 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.81 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.92 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.8770 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0285 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8095 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.9229 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Nettle &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Nauru-b &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 1.00 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.99 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.00 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
----
-
-# ANOVA F-test
-
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Df &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Deviance &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Resid. Df &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Resid. Dev &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Pr(&amp;gt;Chi) &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; NULL &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 15183 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 18900.38 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; NA &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; judge &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 298.5383 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 15178 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 18601.84 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; video &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 88.4909 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 15172 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 18513.35 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; AU &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1693.0012 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 15169 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 16820.35 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; judge:video &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 13 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 181.9038 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 15156 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 16638.45 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; judge:AU &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 15 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1148.6917 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 15141 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 15489.76 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; video:AU &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 18 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 97.2517 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 15123 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 15392.50 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.9975 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0016 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.9912 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.9993 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -510,95 +495,94 @@ class: inverse, center, middle
    &lt;td style="text-align:left;"&gt; Edelman &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; McKell &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.93 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.01 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.86 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.97 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.9313 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0140 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.8599 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.9676 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Bell &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; McKell &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.71 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.03 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.58 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.82 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.7140 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0341 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.5770 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.8204 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Gageler &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; McKell &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.86 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.02 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.75 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.93 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8597 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0242 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.7478 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.9268 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Keane &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; McKell &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.69 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.04 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.55 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.80 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.6921 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0350 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.5536 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.8029 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Edelman &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Nauru-a &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.95 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.01 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.89 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.98 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.9531 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0113 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.8909 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.9806 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Gageler &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Nauru-a &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.85 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.03 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.73 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.92 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8527 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0256 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.7349 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.9236 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Nettle &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Nauru-a &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.00 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.96 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 1.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.9955 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0028 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.9600 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.9995 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Edelman &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Nauru-b &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.96 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.01 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.88 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.99 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.9572 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0126 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.8800 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.9855 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Gageler &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Nauru-b &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.88 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.03 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.73 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.95 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8770 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0285 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.7327 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.9488 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Nettle &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Nauru-b &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; AU02 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.00 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.97 &lt;/td&gt;
-   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 1.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.9975 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0016 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.9745 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: #FFC0CB !important;"&gt; 0.9998 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
- 
 
 ---
 
@@ -607,42 +591,55 @@ class: inverse, center, middle
 ---
 # Discussion
 
-- Generally the judges expressions are the same regardless of video
+- Generally the judges expressions are the same regardless of the video
 
 - Nettle always has a raised outer eyebrow (AU02)
 
 - Gageler and Bell reacted strongly to the OKS case, but Edelman and Keane did not
 
+--
 
-
-**Our results mostly validate Tutton et al (2018) that the judges appear impartial, with the exception of Gageler and Bell for the OKS case.**
+ **Our results mostly validate Tutton et al (2018) that the judges appear impartial, with the exception of Gageler and Bell for the OKS case.**
 
 --
 
-**Facial recognition analysis of the videos provides a way to objectively assess judicial behaviour.** 
+ #### **Facial recognition analysis of the videos provides a way to *objectively* assess judicial behaviour.** 
 
 ---
 
 # Future work
 
+.pull-left[
+
+- Additional models: model each jduge or action unit separately
+
 - Model intensity score: zero inflated model
 
-&lt;img src="Figures/intensity-1.png" width="700px" height="500px" /&gt;
+
+]
+
+
+.pull-right[
+&lt;img src="Figures/intensity-1.png" width="100%" height="100%" /&gt;
+
+]
 
 
 ---
 
 # Caveats about my work: 
 
-More frequent interval: 
-- current frame extraction is conducted on 1 minute interval
-- more frequent time interval i.e. 5 second,  could be used for more precise emotions
+**More frequent interval**: 
+- current frame extraction is conducted on the 1 minute interval
+- more frequent time interval i.e. 5 second,  could be used to catch more precise emotions
 
-More videos
-- 7 videos are processed in the facial recognition software
+**More videos**
+- 7 videos are processed by the facial recognition software
 - more videos could be processed if higher resolution videos are accessible
 
 My work has established a workflow for extracting facial expressions of human from videos. All the scripts are available from my github repo: 
+
+&lt;center&gt;
 
 #### https:://github.com/huizezhang-sherry/ETC4860 
 
@@ -664,15 +661,17 @@ My work has established a workflow for extracting facial expressions of human fr
 
 - [**tidyverse**](https://CRAN.R-project.org/package=tidyverse) suite of R packages for data manipulation and plotting
 
-- [**emmeans**](https://CRAN.R-project.org/package=emmeans) for producing customised model output 
+- [**emmeans**](https://CRAN.R-project.org/package=emmeans) R package for computing estimated marginal mean 
 
-
+- [**car**](http://socserv.socsci.mcmaster.ca/jfox/Books/Companion) R package for ANOVA test. 
 ---
 class: center, middle
 
 # Acknowledgements
 
-I would like to express my gratitude to Di Cook and Russell Symth for supervising this work, and Stephanie Kobakian and Stuart Lee for helping me throughout the project.
+I would like to express my gratitude to Di Cook and Russell Symth for supervising this work, and 
+
+Stephanie Kobakian and Stuart Lee for ad-hoc helps. 
 
 
 Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
@@ -686,7 +685,7 @@ Slides created via the R package [**xaringan**](https://github.com/yihui/xaringa
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
-"ratio": "4:3",
+"ratio": "16:9",
 "highlightStyle": "github",
 "highlightLines": true,
 "countIncrementalSlides": false

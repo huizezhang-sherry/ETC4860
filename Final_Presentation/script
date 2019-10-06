@@ -101,7 +101,7 @@ The ANOVA summary says that the judge, video and AU are all significant, but it 
 
 ---
 
-## Bonferroni 
+## simultaneous confidence interval
 
 In multiple comparison, the adjustment to confidence interval is made to ensure the confidence level of the whole group is 95%. In my context, it is to ensure the judge-wise confidence is 95%. To do this, I use Bonferroni adjustment. [Do I need to further explain how does bonferroni adjustment do this??? Maybe put as an appendix slide?? Just in the appendix]
 
