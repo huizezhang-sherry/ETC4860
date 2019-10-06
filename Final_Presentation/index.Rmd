@@ -235,8 +235,8 @@ class: inverse, center, middle
 Binomial model with logit link: 
 
 \begin{aligned}
-P_{ijkl} &= \frac{e^{\eta_{ijkl}}}{1 + e^{\eta_{ijkl}}} \\
-\eta_{ijkl} &= \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\delta)_{il} + \varepsilon_{ijkl}
+P_{ijklt} &= \frac{e^{\eta_{ijklt}}}{1 + e^{\eta_{ijklt}}} \\
+\eta_{ijklt} &= \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\delta)_{il} + \varepsilon_{ijklt}
 \end{aligned}
 
 where
