@@ -76,6 +76,23 @@ Estimated Marginal Mean (Sometimes called least square mean) is the prediction f
 
 - typically the tests and confidence intervals are asymptotic. Thus the df column for tabular results will be Inf.[have a look at the confidence interval for glm: https://cran.r-project.org/web/packages/emmeans/vignettes/models.html]
 
+## ANOVA 
+
+- a very technical explanation the computation of ANOVA: http://users.stat.umn.edu/~helwig/notes/aov2-Notes.pdf
+
+- ANOVA is an F test telling us if the model without a term is significantly different from another. 
+
+- there are three types of anova used for calculating the sum of square for covariate with interactions. Type I takes a sequential approach and the order of factor to test will potentially affect the result. Type II ANOVA tests the main effect of a covariate after controlling for other covariate. This approach is recommended if the interactions are not significant. Type III ANOVA tests the main effect of a covariate after controllign for other covariate and the interactions. It is better than Type II if the interactions are significant. 
+
+- there are different packages in R does anova test: `anova()` and `drop1()` from base R and`Anova()` from `car` package. `anova()` from base R provide the type I test and `drop1()` is for type II test, while `Anova()`from `car` package allows for both type II and III via a `type` argument. `aov` from `states` package is specific for balanced data. 
+
+- in our study, all the three give the same answer and suggest all the variables are significant. 
+
+- `singular.ok = TRUE` need ot specify for `Anova()` when `type = "III"` because the interaciton terms will cause perfect collenarity. Therefore, 2 df is taken from `judge`.
+
+- However, in out context where the variables are multi-level factors, it does tell us which level or levels cause the difference. therefore, we need multiple comparison to compare each factor level. 
+
+
 ## Multiple Comparisons 
 
 - a very important paper on `multcomp` package: @hothorn2008simultaneous
