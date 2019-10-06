@@ -28,11 +28,9 @@ knitr::opts_chunk$set(echo = FALSE,
                       results = "asis")
 
 library(knitr)
-library(ggplot2)
 library(emmeans)
 library(tidyverse)
-library(extrafont)
-library(broom)
+library(car)
 
 load("../raw_data/au_tidy.rda")
 load("../raw_data/au_meaning.rda")
@@ -299,12 +297,12 @@ emmean_obj_2 %>%
 
 ---
 
-# ANOVA F-test
+# ANOVA 
 
 ```{r ANOVA, echo = FALSE}
-anova(binomial_model_2, test = "Chisq") %>% 
+Anova(binomial_model_2, type = "III", singular.ok = TRUE) %>% 
   kable(format = "html", digits = 4) %>% 
-  kableExtra::column_spec(6, background = "#FFC0CB")
+  kableExtra::column_spec(4, background = "#FFC0CB")
 ```
 
 ---
@@ -439,9 +437,11 @@ My work has established a workflow for extracting facial expressions of human fr
 
 - [**tidyverse**](https://CRAN.R-project.org/package=tidyverse) suite of R packages for data manipulation and plotting
 
-- [**emmeans**](https://CRAN.R-project.org/package=emmeans) for producing customised model output 
+- [**emmeans**](https://CRAN.R-project.org/package=emmeans) for estimated marginal mean summary of the GLM model
 
+- [**car**](http://socserv.socsci.mcmaster.ca/jfox/Books/Companion) for type III ANOVA test. 
 
+- [**knitr**](https://yihui.name/knitr/) for pretty table display
 ---
 class: center, middle
 
