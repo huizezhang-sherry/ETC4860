@@ -14,11 +14,11 @@ The Justices are expected to appear impartial in the courtroom. However, can you
 
 There have been many studies into facial and vocal expressions of judges, based on court transcripts, or empirical studies. 
 
-Chen published a paper in 2018 named Is Justice really blind? And it is also deaf. He processed the image of the attorneys before appearing on the US Supreme Court. Audio information is also included in Chen's data to classify if the supreme court judge would affirm or reverse a lowcourt decision. Chen found that both the image and audio data improve the classification accuracy of case outcome. 
+Chen published a paper in 2018 named Is Justice really blind? And it is also deaf. He processed the image of the attorneys before appearing on the US Supreme Court. Audio information is also included in Chen's data to classify if the supreme court judge would affirm or reverse a low court decision. Chen found that both the image and audio data improve the classification accuracy of case outcome. 
 
 -- 
 
-In Australia, Tutton et al used the transcripts and AV recordings of judges during the hearing to study the emtion of the judges in the High Court of Australia. They found that the judges behaved with a detached demeanour. Their video analysis was done with manual annotation. 
+In Australia, Tutton et al used the transcripts and AV recordings of judges during the hearing to study the emotion of the judges in the High Court of Australia. They found that the judges behaved with a detached demeanour. Their video analysis was done with manual annotation. 
 
 --
 
@@ -28,7 +28,7 @@ With the easy availability of facial recognition software it is interesting to a
 
 In my research, I have completed the following tasks to study the emotion of the Justices from the High Court of Australia. 
 
-I have extracted the facial expression of the justices from the videos. I have analysed the text transcript of the hearing to get the information of speakers. I then statistically model teh judges facial expression using the data I processed to oebjectively study the emtion of the Justices. I want to find out, do my result agree or disagree with Tutton's findings, that the justices are appearing impartial. 
+I have extracted the facial expression of the justices from the videos. I have analysed the text transcript of the hearing to get the information of speakers. I then statistically model the judges facial expression using the data I processed to objectively study the emotion of the Justices. I want to find out, do my result agree or disagree with Tutton's findings, that the justices are appearing impartial. 
 
 ---
 
@@ -62,13 +62,13 @@ One additional step is to analyse the transcript to extract times when the appel
 The collected dataset contains 7 videos of 6 judges and 18 action units. Other facial variables obtained includes the coordinates of 68 face landmarks and 56 eye landmarks. In total, I processed 1000 image frames and 4600 faces. 
 ---
 
-The final data format looks like this. We have judge_id, video_id, frame_id for each face. Speakers (appellant or respondent) is extracted from the text trascript. There are 18 action units and presence/absence of the action unit, and intensity score for the action unit.  
+The final data format looks like this. We have judge_id, video_id, frame_id for each face. Speakers (appellant or respondent) is extracted from the text transcript. There are 18 action units and presence/absence of the action unit, and intensity score for the action unit.  
 
 ---
 
 ## Method
 
-To be able to model the facial expression of the judge, the following notations are defined. $i$ is the subscript for judge and can take value from 1 to 6 for our 6 different judges. Video is represented by $j$ subscript and have 7 distinct values. Action unit is represented by $k$, speakers is subsripted by $l$. There is also a time variable indicating the 1 minute interval. 
+To be able to model the facial expression of the judge, the following notations are defined. $i$ is the subscript for judge and can take value from 1 to 6 for our 6 different judges. Video is represented by $j$ subscript and have 7 distinct values. Action unit is represented by $k$, speakers is subscripted by $l$. There is also a time variable indicating the 1 minute interval. 
 
 The response variable used for this model is the binary presence variable, indicating whether the action unit is observed or not. 
 
@@ -90,18 +90,18 @@ With the model, we are able to answer the following two questions: Do the  expre
 
 # Result 
 
-Here I present the first 10 rows of the model summary output. Because we include the intereaction terms in the model, this output doesn't allow us to explicitly interpret the estimates. To overcome this, I will talk about the post-model anlaysis shortly. 
+Here I present the first 10 rows of the model summary output. Because we include the interaction terms in the model, this output doesn't allow us to explicitly interpret the estimates. To overcome this, I will talk about the post-model analysis shortly. 
 
 --
 ## ANOVA
 
-The ANOVA test suggests that the varaince of both the main effect and interactions are significant. However, since judge, video and AU are multi-level factors, ANOVA doesnt tell us which level of the variable has variance significantly different from others. Therefore, I apply multiple comparison to adjust the confidence interval. 
+The ANOVA test suggests that the variance of both the main effect and interactions are significant. However, since judge, video and AU are multi-level factors, ANOVA doesn't tell us which level of the variable has variance significantly different from others. Therefore, I apply multiple comparison to adjust the confidence interval. 
 
 ---
 
 ## Estimated marginal mean
 
-As I mentioned before, the interpretation with the previous model summary is problematic, I calculate the estimated marginal mean over a pre-defined reference grid. In our model, the reference grid is created via the three way interactions of the 6 judges, 7 videos and 4 main action units and exclude the interactions that do not exist. For example, Judge Bell doesnt participated in case Nauru-a, so there will not be an interaction of judge bell and case nauru-a. 
+As I mentioned before, the interpretation with the previous model summary is problematic, I calculate the estimated marginal mean over a pre-defined reference grid. In our model, the reference grid is created via the three way interactions of the 6 judges, 7 videos and 4 main action units and exclude the interactions that do not exist. For example, Judge Bell doesn't participated in case Nauru-a, so there will not be an interaction of judge bell and case nauru-a. 
 
 [Do i need to explain how is the estimate calculated??]
 Take 0.93 as an example. Because we use Edelman, McKell and AU02 as the base level for our factors. The only relevant estimate from the previous table is the intercept, which is 2.61. Supply this to the link function for the binomial model will give 0.93, which is the estimated marginal mean. 
@@ -146,7 +146,7 @@ Now, I will now briefly discuss the future work and some of the caveats of my wo
 In the future, additional modelling could be done to model the presence separately for each judge. [need more stuff here]
 
 
-More work could also be done to model the intensity score of the aciton units. When plotting the histogram of the intensity for each judge, we can see that most of the intensity score is quite low and near zero. a zero inflated model would be able to handle this type of data. 
+More work could also be done to model the intensity score of the action units. When plotting the histogram of the intensity for each judge, we can see that most of the intensity score is quite low and near zero. a zero inflated model would be able to handle this type of data. 
 
 ---
 
@@ -154,7 +154,7 @@ More work could also be done to model the intensity score of the aciton units. W
 
 There are two concerns the current work. Firstly, the image frames are extracted at every 1 minute interval. However, we would expect some facial expressions may only last for a few second. Thus more frequent time interval could be used to get more precise facial information of the judges. 
 
-In my work, 7 videos are being processed into the facial recognition software.  More videos could be processed in the workflow I layed out to get more robust results. The reason for me not processing more videos is because the resolution of publicly available vidoes from the high court has only 720 pixels while the facial recognition software requires at least 30 pixels for a face to be detected. 
+In my work, 7 videos are being processed into the facial recognition software.  More videos could be processed in the workflow I layed out to get more robust results. The reason for me not processing more videos is because the resolution of publicly available videos from the high court has only 720 pixels while the facial recognition software requires at least 30 pixels for a face to be detected. 
 
 However, my work has established a workflow for extracting facial expressions of human from videos. All the scripts are available from my github repo. 
 
