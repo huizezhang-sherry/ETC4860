@@ -31,6 +31,7 @@ library(knitr)
 library(emmeans)
 library(tidyverse)
 library(car)
+library(broom)
 
 load("../raw_data/au_tidy.rda")
 load("../raw_data/au_meaning.rda")
