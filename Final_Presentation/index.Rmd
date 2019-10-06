@@ -383,6 +383,8 @@ int_2 %>%
 
 - Model intensity score: zero inflated model
 
+- More study on multiple comparison
+
 
 ]
 
@@ -463,3 +465,14 @@ Slides created via the R package [**xaringan**](https://github.com/yihui/xaringa
 include_graphics("../images/HOG.png")
 ```
 
+---
+
+## Bonferroni adjustment
+
+- Bonferroni adjustment is a method to deal with multiple comparisons. 
+
+- If multiple hypotheses are tested simultaneously, the <span style="color:#f92672">type I error (False positive rate)</span> increases.
+
+- Therefore, Bonferroni adjustment rejects the null hypothesis at <span style="color:#f92672"> $p=\frac{\alpha}{m}$ </span>, so that the family wise error rate is $\le \alpha$
+
+- In confidence interval, each individual interval will be computed with confidence:<span style="color:#f92672"> $1 - \frac{\alpha}{m}$ </span>

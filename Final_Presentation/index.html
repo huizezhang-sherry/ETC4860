@@ -615,6 +615,8 @@ class: inverse, center, middle
 
 - Model intensity score: zero inflated model
 
+- More study on multiple comparison
+
 
 ]
 
@@ -681,6 +683,18 @@ Slides created via the R package [**xaringan**](https://github.com/yihui/xaringa
 ## Image processing: Chen (2018)
 
 &lt;img src="../images/HOG.png" width="500px" height="500px" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Bonferroni adjustment
+
+- Bonferroni adjustment is a method to deal with multiple comparisons. 
+
+- If multiple hypotheses are tested simultaneously, the &lt;span style="color:#f92672"&gt;type I error (False positive rate)&lt;/span&gt; increases.
+
+- Therefore, Bonferroni adjustment rejects the null hypothesis at &lt;span style="color:#f92672"&gt; `\(p=\frac{\alpha}{m}\)` &lt;/span&gt;, so that the family wise error rate is `\(\le \alpha\)`
+
+- In confidence interval, each individual interval will be computed with confidence:&lt;span style="color:#f92672"&gt; `\(1 - \frac{\alpha}{m}\)` &lt;/span&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
