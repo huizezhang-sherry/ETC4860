@@ -97,7 +97,7 @@ model_dt <- au_tidy %>%
 
 ### Interaction between judge and action unit
 
-Analysis of Variance (ANOVA) test result in Table \ref{tab:anova} shows that there are significant variance for both judge, AU and their interactions and thus it is necessary to perform multiple comparison to determine how does each level of action unit differ for different judges. The estimated coefficient for each judge and AU pair is reported in Table \ref{tab:result_1} along with the upper and lower confidence interval bond. This result is also plotted in Figure \ref{fig:model_1_plot} for visual inspection.
+Analysis of Variance (ANOVA) test result shows that there are significant variance for both judge, AU and their interactions and thus it is necessary to perform multiple comparison to determine how does each level of action unit differ for different judges. The estimated coefficient for each judge and AU pair is reported in Table \ref{tab:result_1} along with the upper and lower confidence interval bond. This result is also plotted in Figure \ref{fig:model_1_plot} for visual inspection.
 
 
 <!-- The information in the group column is helpful to understand how one particular pair of judge and au is different from another pair. With compact letter display, the pair with the same letter/number are *NOT* significantly different from each other.  -->
@@ -122,17 +122,23 @@ int_1 <- confint(emmean_obj_1, adjust = "bonferroni")
 knitLatex::xTab(format(as.data.frame(int_1), digits = 2), booktabs = TRUE, caption.top = "\\label{tab:result_1} model result")
 ```
 
-```{r goodness-of-fit-1}
-pchisq(deviance(binomial_model_1), 
-       df.residual(binomial_model_1), lower = FALSE)
-
-library(ResourceSelection)
-hoslem.test(binomial_model_1$y, 
-            fitted(binomial_model_1), 
-            g= 10)
+```{r anova, results = "asis"}
+# Anova(binomial_model_1, type = "III", singular.ok = TRUE) %>% 
+#   kable(digits = 5) 
 ```
 
-```{r fig.cap = "THis is the graphical representation of model1\\label{fig:model_1_plot}"}
+
+```{r goodness-of-fit-1}
+# pchisq(deviance(binomial_model_1), 
+#        df.residual(binomial_model_1), lower = FALSE)
+# 
+# library(ResourceSelection)
+# hoslem.test(binomial_model_1$y, 
+#             fitted(binomial_model_1), 
+#             g= 10)
+```
+
+```{r fig.cap = "This is the graphical representation of model1\\label{fig:model_1_plot}"}
 int_1 %>% 
   left_join(au_meaning, by = c("AU" = "AU_number")) %>% 
   as_tibble()%>%   
@@ -197,16 +203,17 @@ int_2 <- confint(emmean_obj_2, adjust = "bonferroni")
 ```
 
 ```{r goodness-of-fit-2}
-# all the variables are significant
-anova(binomial_model_2, test= "Chisq")
-
-pchisq(deviance(binomial_model_2), 
-       df.residual(binomial_model_2), lower = FALSE)
-
-library(ResourceSelection)
-hoslem.test(binomial_model_2$y, 
-            fitted(binomial_model_2), 
-            g= 10)
+# # all the variables are significant
+# Anova(binomial_model_2, type = "III", singular.ok = TRUE) %>% 
+#   kable(format = "html", digits = 5)
+# 
+# pchisq(deviance(binomial_model_2), 
+#        df.residual(binomial_model_2), lower = FALSE)
+# 
+# library(ResourceSelection)
+# hoslem.test(binomial_model_2$y, 
+#             fitted(binomial_model_2), 
+#             g= 10)
 ```
 
 
@@ -234,7 +241,7 @@ int_2 %>%
 
 ### Interaction between judge and speaking parties
 
-The estimated coefficients are presented in Table \ref{tab:result_3} and we could find from Figure \ref{fig:model_3_plot} that the video-wise difference between judge still persist and the speaker-wise difference is not significant even before bomferroni adjustment. This result would be a validation that on the high court level, the judges are behaving impartial to different speaking parties. 
+The estimated coefficients are presented in Table \ref{tab:result_3} and we could find from Figure \ref{fig:model_3_plot} that the video-wise difference between judge still persist and the speaker-wise difference is not significant even before bonferroni adjustment. This result would be a validation that on the high court level, the judges are behaving impartial to different speaking parties. 
   
 
 ```{r model_3, results = "asis"}
@@ -247,19 +254,21 @@ emmean_obj_3 <-  emmeans(binomial_model_3,
                          c("judge", "video", "AU", "speaker") , 
                          type = "response")
 
-anova(binomial_model_3, test = "Chisq")
+# Anova(binomial_model_3, type = "III", singular.ok = TRUE) %>% 
+#   kable(digits = 5)
+  
 
 int_3 <- confint(emmean_obj_3,  adjust = "bonferroni")
 ```
 
 ```{r goodness-of-fit-3}
-pchisq(deviance(binomial_model_3), 
-       df.residual(binomial_model_3), lower = FALSE)
-
-library(ResourceSelection)
-hoslem.test(binomial_model_3$y, 
-            fitted(binomial_model_3), 
-            g= 10)
+# pchisq(deviance(binomial_model_3), 
+#        df.residual(binomial_model_3), lower = FALSE)
+# 
+# library(ResourceSelection)
+# hoslem.test(binomial_model_3$y, 
+#             fitted(binomial_model_3), 
+#             g= 10)
 ```
 
 ```{r fig.cap = "THis is the graphical representation of model3\\label{fig:model_3_plot}"}
@@ -277,13 +286,13 @@ int_3 %>%
 
 ### Summary
 
-- Based on the goodness-of-fit test, the p-value of binomial_model_3 is slightly greater than 0.05, indicating the model may be a good fit. 
+<!-- - Based on the goodness-of-fit test, the p-value of binomial_model_3 is slightly greater than 0.05, indicating the model may be a good fit.  -->
 
-- However, the hosmer-lemeshow test shows binomial_model_1 has p-value = 1, which indicates model_1 is an adequate fit. other two models has p-value less than 0.05. 
+<!-- - However, the hosmer-lemeshow test shows binomial_model_1 has p-value = 1, which indicates model_1 is an adequate fit. other two models has p-value less than 0.05.  -->
 
-- ANOVA tests suggest all the variables in model_1 and model_2 are significant individually, but speaker in model_3 is not significant at 5% significant level.
+<!-- - ANOVA tests suggest all the variables in model_1 and model_2 are significant individually, but speaker in model_3 is not significant at 5% significant level. -->
 
-see if the three-way or four-way interaction works for multcomp package to produce simultaneous CI
+<!-- see if the three-way or four-way interaction works for `multcomp` package to produce simultaneous CI -->
 
 
 

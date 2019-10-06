@@ -33,7 +33,7 @@
 
 {\setstretch{1.2}\sf\tighttoc\doublespacing}
 
-\clearpage\pagenumbering{arabic}\setcounter{page}{0}
+\pagenumbering{arabic}\setcounter{page}{0}
 
 \hypertarget{acknowledgements}{%
 \chapter*{Acknowledgements}\label{acknowledgements}}
@@ -51,26 +51,17 @@ I hereby declare that this thesis contains no material which has been accepted f
 \chapter*{Abstract}\label{abstract}}
 \addcontentsline{toc}{chapter}{Abstract}
 
+Decisions by courtroom Justices have been discussed broadly in the legal literature. Gender, political views and religious background of both the Justices and counsel in the case potentially influence the decisions. This paper will explore the facial behaviour of the Justices during hearings with the objective of being to assess whether it can help to predict outcomes. Audio Visual(AV) recordings and case transcripts will be computationally processed and analysed to examine the decisions of each Justice.
+
 \clearpage\pagenumbering{arabic}\setcounter{page}{1}
 
 \hypertarget{ch:intro}{%
 \chapter{Introduction}\label{ch:intro}}
 
-\hypertarget{background}{%
-\section{Background}\label{background}}
+\hypertarget{background-and-motivation}{%
+\section{Background and motivation}\label{background-and-motivation}}
 
-(placeholder)
-
-\hypertarget{statement-of-topic}{%
-\section{Statement of topic}\label{statement-of-topic}}
-
-(may go to abstract)
-Decisions by courtroom Justices have been discussed broadly in the legal literature. Gender, political views and religious background of both the Justices and counsel in the case potentially influence the decisions. This paper will explore the facial behaviour of the Justices during hearings with the objective of being to assess whether it can help to predict outcomes. Audio Visual(AV) recordings and case transcripts will be computationally processed and analysed to examine the decisions of each Justice.
-
-\hypertarget{motivation}{%
-\section{Motivation}\label{motivation}}
-
-People have attempted to predict the decisions of the Justices in the past century using judge characteristics i.e.~Gender, political views, religious background. More recently, scholars\autocites{Shullman2004illusion}{chen2018justice} have been using more information from media(i.e.~AV recording, transcript, language used by the Justices) to predict the case outcome using the U.S. Supreme Court data. On-court information has also been used to study data from High Court of Australia. \textcite{tutton2018judicial} has used an ethnographic approach to present a observational study of judicial behaviour based on watching the audio footage. Manually observing the AV recordings could lead to subjective evaluation of facial expression and this motivates us to build upon \textcite{tutton2018judicial}'s work to employ facial recognition technology to study the facial expression of the justices, which will provide a more objective result than \textcite{tutton2018judicial}.
+People have attempted to predict the decisions of the Justices in the past century using judge characteristics i.e.~Gender, political views, religious background. More recently, scholars\autocites{Shullman2004illusion}{chen2018justice} have been using more information from media(i.e.~AV recording, transcript, language used by the Justices) to predict the case outcome using the U.S. Supreme Court data. On-court information has also been used to study data from High Court of Australia. \textcite{tutton2018judicial} has used an ethnographic approach to present a observational study of judicial behaviour based on watching the audio footage. Manually observing the AV recordings could lead to subjective evaluation of facial expression and this motivates us \emph{to build upon \textcite{tutton2018judicial}'s work to employ facial recognition technology to study the facial expression of the justices, which will provide a more objective result than \textcite{tutton2018judicial}}.
 
 \hypertarget{literature-review}{%
 \section{Literature review}\label{literature-review}}
@@ -84,7 +75,7 @@ There is a large law \& economics and political science literature that attempts
 
 Moving from static information of the judge and parties involved, more studies start to incorporate the language used by the judge on the court to predict the decision of the Justices. \textcite{black2011emotions} has study the use of pleasant and unpleasant language by the Justices and \textcite{Shullman2004illusion} and \textcite{johnson2009inquiring} have studied the effect of frequency and content of Justices' questions. \textcite{epstein2010inferring} use a regression analysis with the number of questions asked by the Justices used to infer the winning party in a case.
 
-More recent legal study has focused on the usage of emotion and vocal characteristics of the Justices to predict the judge's vots. Although \textcite{judicalguid} present the following code of conduct:
+More recent legal study has focused on the usage of emotion and vocal characteristics of the Justices to predict the judge's votes. Although \textcite{judicalguid} present the following code of conduct:
 
 \begin{quote}
 It is important for judges to maintain a standard of behaviour in court that is consistent with the status of judicial office and does not diminish the confidence of litigants in particular, and the public in general, in the ability, the integrity, the impartiality and the independence of the judge.
@@ -99,50 +90,9 @@ The literature mentioned above is mostly conducted using the U.S. Supreme Court 
 \hypertarget{facial-recognition}{%
 \subsection{Facial recognition}\label{facial-recognition}}
 
-An anatomical study of the decomposition of facial muscles by \autocite{ekman1976measuring} led to the devlopment of Facial Action Code (FAC) \autocite{ekman1978} and identification of the six universal emotions on human faces. This work has been further revised as \autocite{paulekmangroup} and has laid a solid foundation for analysing facial expression and developing facial recognition softwares for researchers \autocites{Kobayashi1992}{huang1997}{lien2000}{Kappoor2003}{Tong2007}{Cohn2009}{Lucey2010}.
+An anatomical study of the decomposition of facial muscles by \autocite{ekman1976measuring} led to the development of Facial Action Code (FAC) \autocite{ekman1978} and identification of the six universal emotions on human faces. This work has been further revised as \autocite{paulekmangroup} and has laid a solid foundation for analysing facial expression and developing facial recognition software for researchers \autocites{Kobayashi1992}{huang1997}{lien2000}{Kappoor2003}{Tong2007}{Cohn2009}{Lucey2010}.
 
-To be able to analysis the facial expression, proper facial recognition technique is needed to first extract faces from images. Facial recognition softwares i.e.~DeepFace \autocite{taigman2014deepface} from Facebook and FaceNet \autocite{schroff2015facenet} from Google have also been developed for face detection. OpenFace \autocite{baltrusaitis2018openface} is the first open-sourced face recognition software that provides facial expression detection, including facial landmarking, head pose estimation, eye gaze tracking and facial action unit detection. The OpenFace toolkit has been used in different area in research including depression classification \autocites{yang2016decision}{nasir2016multimodal}, emotion study \autocites{Pan2018}{Nasir2016}{Huber2018} and even sports analytics \autocite{kovalchik2018going}.
-
-\hypertarget{research-question}{%
-\section{Research Question}\label{research-question}}
-
-(placeholder)
-
-\begin{itemize}
-\item
-  Extract facial expression data of the Justices from videos of High Court of Australia
-\item
-  Merge with data from text transcript
-\item
-  Statistically model judges facial expressions
-\item
-  Provide an \textbf{objective} source of data to study the problem
-\item
-  Do the results agree or disagree with Tutton's findings, that the justices are appearing impartial?
-\end{itemize}
-
-Two questions can be explained by the model:
-
-\begin{itemize}
-\tightlist
-\item
-  Do the justices' expression differ from case to case?
-\item
-  Do the justices' expression differ when different parties are speaking?
-\end{itemize}
-
-The aim of this study is to use facial recognition technology to detect judicial thinking and thus their decisions. There are four specific objectives:
-• Read in video streams and convert into a numerical data format.
-• Perform data quality checks to investigate video and data quality.
-• Exploratory data analysis of the facial expression, trascript variables and outcomes.
-• Explore models to predict the appeal outcomes based on facial expression and text analysis.
-
-\hypertarget{significance}{%
-\section{Significance}\label{significance}}
-
-(placeholder)
-
-Facial recognition analysis of the videos provides a way to \textbf{objectively} and \textbf{automatically} assess judicial behaviour.
+To be able to analysis the facial expression, proper facial recognition technique is needed to first extract faces from images. Facial recognition software i.e.~DeepFace \autocite{taigman2014deepface} from Facebook and FaceNet \autocite{schroff2015facenet} from Google have also been developed for face detection. OpenFace \autocite{baltrusaitis2018openface} is the first open-sourced face recognition software that provides facial expression detection, including facial landmarking, head pose estimation, eye gaze tracking and facial action unit detection. The OpenFace toolkit has been used in different area in research including depression classification \autocites{yang2016decision}{nasir2016multimodal}, emotion study \autocites{Pan2018}{Nasir2016}{Huber2018} and even sports analytics. \autocite{kovalchik2018going}.
 
 \hypertarget{data-collection}{%
 \chapter{Data Collection}\label{data-collection}}
@@ -299,18 +249,18 @@ Also, let \(P_{jitkl}\) represent the response variable presence, and \(I_{jitkl
 \section{Modelling}\label{modelling}}
 
 \hypertarget{model-1-action-unit}{%
-\subsection{Model 1: action unit}\label{model-1-action-unit}}
+\subsection{Model 1: Action unit}\label{model-1-action-unit}}
 
-The first model I use is a generalised linear model with binomial link to understand the presence of the action units. The variables used include the judge, action units and their interactions. The use of interaction terms allow for the effect of judge to be differed at different action unit level. The model can be written down as Equation \ref{eq:judge_au}. Judge Edelman and AU01 are selected as the base level.
+The first model I use is a generalised linear model with binomial link to understand the presence of the action units. The variables used include the judge, action units and their interactions. The use of interaction terms allow for the effect of judge to be differed at different action unit level. The model can be written down as Equation \ref{eq:judge_au}.
 
 \begin{equation}\label{eq:judge_au}
 P_{ik} = \mu + \alpha_i + \gamma_k + (\alpha\gamma)_{ik}
 \end{equation}
 
-Based on this model structure, I can understand whether different factor level of action units have different effects on the same judges via ANOVA test. Analysis of Variance (ANOVA) test {[}reference{]} allows us to see if collectively, different factor levels of judge and action unit are the same or different (\(\alpha_1 = \alpha_2 = \cdots = \alpha_6\)). However, it doesn't explain which factor level causes this difference and thus we need multiple comparison.
+Based on this model structure, I can understand whether different factor level of action units have different effects on the same judges via ANOVA test.
 
-\hypertarget{model-2---video}{%
-\subsection{Model 2 - Video}\label{model-2---video}}
+\hypertarget{model-2-video}{%
+\subsection{Model 2: Video}\label{model-2-video}}
 
 The second model as shown in Equation \ref{eq:judge_video} is estimated to understand the interaction effect between judge and video while taking into account the main effect of judge, video and action unit and other pair wise interactions.
 
@@ -320,8 +270,8 @@ P_{ijk} = \mu + \alpha_i + \beta_j +\gamma_k + (\alpha\beta)_{ij} + (\alpha\gamm
 
 Building upon the previous model, we incorporate the effect of videos in this model. There are three main effects of judge, video and action unit in the model. We also incorporate the interaction term between judge and video, which allows the effect of judge to change at each video level. The interaction term for video and action unit is also added because this allows different videos to have different present score for each different action unit.
 
-\hypertarget{model-3---appellant-respondent}{%
-\subsection{Model 3 - Appellant \& respondent}\label{model-3---appellant-respondent}}
+\hypertarget{model-3-speaker}{%
+\subsection{Model 3: Speaker}\label{model-3-speaker}}
 
 The third model as shown in Equation \ref{eq:judge_speaker} is estimated to understand the interaction effect between judge and speaking party.
 
@@ -329,45 +279,23 @@ The third model as shown in Equation \ref{eq:judge_speaker} is estimated to unde
 P_{ijkl} = \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\delta)_{il}
 \end{equation}
 
-\hypertarget{interaction-effect}{%
-\section{Interaction effect}\label{interaction-effect}}
-
-using only the main effect has long been criticised \autocite[\textcite{meyer1991misinterpretation}, \textcite{ottenbacher1991interpretation}]{martinez2015analysing}
-
 In our context, the inclusion of more interactions will be helpful to explain the Presence score. However, the number of interactions is bounded by the degree of freedom we have. We will need to select the most important interactions to include while leave the less important ones.
 
+\hypertarget{anova}{%
+\subsection{ANOVA}\label{anova}}
+
+\hypertarget{post-model-analysis}{%
+\section{Post-Model Analysis}\label{post-model-analysis}}
+
 \hypertarget{estimated-marginal-mean-emm}{%
-\section{Estimated Marginal Mean (EMM)}\label{estimated-marginal-mean-emm}}
+\subsection{Estimated Marginal Mean (EMM)}\label{estimated-marginal-mean-emm}}
 
 Estimated Marginal Mean (Sometimes called least square mean) is the prediction from a linear model over a defined reference grid.
 
-\begin{itemize}
-\item
-  see the calculation of emm when presented with unbalanced data: weight is for averaging over a continuous variable, which is irrelevant for our study -\textgreater{} dont have to adjust weight
-\item
-  typically the tests and confidence intervals are asymptotic. Thus the df column for tabular results will be Inf.{[}have a look at the confidence interval for glm: \url{https://cran.r-project.org/web/packages/emmeans/vignettes/models.html}{]}
-\end{itemize}
-
 \hypertarget{multiple-comparisons}{%
-\section{Multiple Comparisons}\label{multiple-comparisons}}
+\subsection{Multiple Comparisons}\label{multiple-comparisons}}
 
-\begin{itemize}
-\tightlist
-\item
-  a very important paper on \texttt{multcomp} package: \textcite{hothorn2008simultaneous}
-  other packages do the same thing: \texttt{linearHypothesis}
-\end{itemize}
-
-Testing significance based on the usage of p-value has been long criticised for its interpretation. Researchers can erroneously conclude significance becuase of p-value being less than 0.05 without discussing the false positive/negative rate. {[}add reference: (Yates, 1951; Savage, 1957; Rozeboom, 1960; Gardner and Altman, 1986; Simon, 1986; Bulpitt, 1987){]}. The correct interpretation for a p-value being less than 0.05 is that the estimated quantity are significant subject to 5\% of false positive rate. This indicates,
-if 100 tests are conducted simultaneously, we would expect around 5 variables being significant purly due to randomness.
-
-This is especially a problem in our context when comparing the intensity score for all the available (judge, video, AU, speaker) pairs. The judges are expected to be impartial while we believe they may have some facial expressions during the hearing because they could be unbeknown to the speakers. It would be an concern if we don't control the false positive rate, which occurs when the judges didn't expression a facial expression but we claim they do.
-
-Bonferroni adjustment \autocites{rupert2012simultaneous}{efron2016computer} is a method to reduce the false positive rate at the cost of relatively cheap false negative rate. In the context of large scale (\(N\)) hypothesis tests, rather than concluding signficance at \(\alpha\)\% for each individual test, Bonferroni method adjusts the critical value to \(\alpha/N\)\% for each single test. In this sense, Bonferroni adjustment controls the family-wise error rate at level \(\alpha\).
-
-In both methods, the critical value of 0.05 is adjusted based on the number of simultaneous test and an assumption of independent test is made. {[}need some reference on both adjustment: \url{http://www.biostathandbook.com/multiplecomparisons.html}{]}
-
-A better method to present the same result is through reporting the confidence interval and then comparing if intervals overlap with each other {[}some reference on the preference of confidence interval for doing comparison{]}.
+Bonferroni adjustment \autocite{rupert2012simultaneous} is a method to reduce the false positive rate at the cost of relatively cheap false negative rate. In the context of large scale (\(N\)) hypothesis tests, rather than concluding significance at \(\alpha\)\% for each individual test, Bonferroni method adjusts the critical value to \(\alpha/N\)\% for each single test. In this sense, Bonferroni adjustment controls the family-wise error rate at level \(\alpha\).
 
 \hypertarget{results}{%
 \chapter{Results}\label{results}}
@@ -469,7 +397,7 @@ Nettle & AU01: Inner brow raiser & AU07: Lid tightener & NA\\
 \hypertarget{interaction-between-judge-and-action-unit}{%
 \subsection{Interaction between judge and action unit}\label{interaction-between-judge-and-action-unit}}
 
-Analysis of Variance (ANOVA) test result in Table \ref{tab:anova} shows that there are significant variance for both judge, AU and their interactions and thus it is necessary to perform multiple comparison to determine how does each level of action unit differ for different judges. The estimated coefficient for each judge and AU pair is reported in Table \ref{tab:result_1} along with the upper and lower confidence interval bond. This result is also plotted in Figure \ref{fig:model_1_plot} for visual inspection.
+Analysis of Variance (ANOVA) test result shows that there are significant variance for both judge, AU and their interactions and thus it is necessary to perform multiple comparison to determine how does each level of action unit differ for different judges. The estimated coefficient for each judge and AU pair is reported in Table \ref{tab:result_1} along with the upper and lower confidence interval bond. This result is also plotted in Figure \ref{fig:model_1_plot} for visual inspection.
 
 \begin{table}[ht]
 \begin{center}
@@ -507,25 +435,13 @@ Nettle & AU20 & 0.74 & 0.0176 & Inf & 0.68 & 0.79 \\
 \end{center}
 \end{table}
 
-\begin{verbatim}
-## [1] 0.0001276873
-\end{verbatim}
-
-\begin{verbatim}
-## 
-##  Hosmer and Lemeshow goodness of fit (GOF) test
-## 
-## data:  binomial_model_1$y, fitted(binomial_model_1)
-## X-squared = 8.4887e-13, df = 8, p-value = 1
-\end{verbatim}
-
 \begin{figure}
 
 {\centering \includegraphics[width=1\linewidth]{figures/unnamed-chunk-9-1} 
 
 }
 
-\caption{THis is the graphical representation of model1\label{fig:model_1_plot}}\label{fig:unnamed-chunk-9}
+\caption{This is the graphical representation of model1\label{fig:model_1_plot}}\label{fig:unnamed-chunk-9}
 \end{figure}
 
 \hypertarget{presence-by-videos}{%
@@ -551,40 +467,6 @@ Judge Gageler seems to have a large fluctuate of his facial expressions in video
 
 Our result validates the exploratory data analysis that the difference between case OKS and Parkes for Bell are significant in action unit 14, 15 and 20. Since the confidence interval doesn't overlap for these two videos. The difference between case McKell and OKS are not significance after the Bonferroni adjustment and this indicates the difference we see before in Figure \ref{fig:common_video} is more likely due to randomness rather than the true underlying difference between the two videos. From a legal perspective, this would show that Bell is addressing the cases with different responses. However, this different approach of responding by the judge doesn't indicate the biasness of the judge in the courtroom but the individuality of different judge approaching to cases.
 
-\begin{verbatim}
-## Analysis of Deviance Table
-## 
-## Model: binomial, link: logit
-## 
-## Response: presence
-## 
-## Terms added sequentially (first to last)
-## 
-## 
-##             Df Deviance Resid. Df Resid. Dev  Pr(>Chi)    
-## NULL                        15183      18900              
-## judge        5   298.54     15178      18602 < 2.2e-16 ***
-## video        6    88.49     15172      18513 < 2.2e-16 ***
-## AU           3  1693.00     15169      16820 < 2.2e-16 ***
-## judge:video 13   181.90     15156      16638 < 2.2e-16 ***
-## judge:AU    15  1148.69     15141      15490 < 2.2e-16 ***
-## video:AU    18    97.25     15123      15392  7.04e-13 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-\end{verbatim}
-
-\begin{verbatim}
-## [1] 0.06125016
-\end{verbatim}
-
-\begin{verbatim}
-## 
-##  Hosmer and Lemeshow goodness of fit (GOF) test
-## 
-## data:  binomial_model_2$y, fitted(binomial_model_2)
-## X-squared = 15.647, df = 8, p-value = 0.04773
-\end{verbatim}
-
 \begin{figure}
 
 {\centering \includegraphics[width=1\linewidth]{figures/unnamed-chunk-11-1} 
@@ -597,43 +479,7 @@ Our result validates the exploratory data analysis that the difference between c
 \hypertarget{interaction-between-judge-and-speaking-parties}{%
 \subsection{Interaction between judge and speaking parties}\label{interaction-between-judge-and-speaking-parties}}
 
-The estimated coefficients are presented in Table \ref{tab:result_3} and we could find from Figure \ref{fig:model_3_plot} that the video-wise difference between judge still persist and the speaker-wise difference is not significant even before bomferroni adjustment. This result would be a validation that on the high court level, the judges are behaving impartial to different speaking parties.
-
-Analysis of Deviance Table
-
-Model: binomial, link: logit
-
-Response: presence
-
-Terms added sequentially (first to last)
-
-\begin{verbatim}
-          Df Deviance Resid. Df Resid. Dev  Pr(>Chi)    
-\end{verbatim}
-
-NULL 15183 18900\\
-judge 5 298.54 15178 18602 \textless{} 2.2e-16 \textbf{\emph{
-speaker 1 1.48 15177 18600 0.2237024\\
-video 6 87.14 15171 18513 \textless{} 2.2e-16 }}
-AU 3 1693.02 15168 16820 \textless{} 2.2e-16 \textbf{\emph{
-judge:speaker 5 23.23 15163 16797 0.0003048 }}
-judge:video 13 178.52 15150 16618 \textless{} 2.2e-16 \textbf{\emph{
-judge:AU 15 1151.33 15135 15467 \textless{} 2.2e-16 }}
-video:AU 18 97.35 15117 15370 6.75e-13 ***
----
-Signif. codes: 0 `\emph{\textbf{' 0.001 '}' 0.01 '}' 0.05 `.' 0.1 ' ' 1
-
-\begin{verbatim}
-## [1] 0.07359228
-\end{verbatim}
-
-\begin{verbatim}
-## 
-##  Hosmer and Lemeshow goodness of fit (GOF) test
-## 
-## data:  binomial_model_3$y, fitted(binomial_model_3)
-## X-squared = 22.58, df = 8, p-value = 0.003948
-\end{verbatim}
+The estimated coefficients are presented in Table \ref{tab:result_3} and we could find from Figure \ref{fig:model_3_plot} that the video-wise difference between judge still persist and the speaker-wise difference is not significant even before bonferroni adjustment. This result would be a validation that on the high court level, the judges are behaving impartial to different speaking parties.
 
 \begin{figure}
 
@@ -646,17 +492,6 @@ Signif. codes: 0 `\emph{\textbf{' 0.001 '}' 0.01 '}' 0.05 `.' 0.1 ' ' 1
 
 \hypertarget{summary}{%
 \subsection{Summary}\label{summary}}
-
-\begin{itemize}
-\item
-  Based on the goodness-of-fit test, the p-value of binomial\_model\_3 is slightly greater than 0.05, indicating the model may be a good fit.
-\item
-  However, the hosmer-lemeshow test shows binomial\_model\_1 has p-value = 1, which indicates model\_1 is an adequate fit. other two models has p-value less than 0.05.
-\item
-  ANOVA tests suggest all the variables in model\_1 and model\_2 are significant individually, but speaker in model\_3 is not significant at 5\% significant level.
-\end{itemize}
-
-see if the three-way or four-way interaction works for multcomp package to produce simultaneous CI
 
 \hypertarget{action-unit-intensity}{%
 \section{Action unit: Intensity}\label{action-unit-intensity}}
@@ -776,24 +611,97 @@ However, this work has established a workflow for extracting facial expressions 
 \hypertarget{list-of-videos-used-in-the-project}{%
 \section{List of videos used in the project}\label{list-of-videos-used-in-the-project}}
 
-\begin{table}[ht]
-\begin{center}
-\caption{\label{tab:case-info} Information on the cases used in the project}
-\begin{tabular}{llll}
+\begin{longtable}[]{@{}llll@{}}
+\caption{Details of videos processed.}\tabularnewline
 \toprule
-Case & Names & Link & Judge \\
+\begin{minipage}[b]{0.22\columnwidth}\raggedright
+Case\strut
+\end{minipage} & \begin{minipage}[b]{0.15\columnwidth}\raggedright
+Name\strut
+\end{minipage} & \begin{minipage}[b]{0.30\columnwidth}\raggedright
+AV recording link\strut
+\end{minipage} & \begin{minipage}[b]{0.22\columnwidth}\raggedright
+Judge\strut
+\end{minipage}\tabularnewline
 \midrule
-The Republic of Nauru v WET040 [No. 2] [2018] HCA 60 & Nauru-a & http://www.hcourt.gov.au/cases/cases-av/av-2018-11-07a & Nettle, Gageler, Edelman \\
-TTY167 v Republic of Nauru [2018] HCA 61 & Nauru-b & http://www.hcourt.gov.au/cases/cases-av/av-2018-11-07b & Nettle, Gageler, Edelman \\
-Rinehart v Hancock Prospecting Pty Ltd [2019] HCA 13 & Rinehart-a & http://www.hcourt.gov.au/cases/cases-av/av-2018-11-13 & Gordon, Gageler, Bell, Keane, Edelman \\
-Rinehart v Hancock Prospecting Pty Ltd [2019] HCA 13 & Rinehart-b & http://www.hcourt.gov.au/cases/cases-av/av-2018-11-14a & Gordon, Keane, Bell, Gageler, Edelman \\
-Parkes Shire Council v South West Helicopters Pty Limited [2019] HCA 14 & Parkes & ttp://www.hcourt.gov.au/cases/cases-av/av-2018-11-14b & Gordon, Bell, Kiefel, Keane, Edelman \\
-McKell v The Queen [2019] HCA 5 & McKell & http://www.hcourt.gov.au/cases/cases-av/av-2018-12-07 & Gordon, Gageler, Kiefel, Nettle, Edelman \\
-OKS v Western Australia [2019] HCA 10 & OKS & http://www.hcourt.gov.au/cases/cases-av/av-2019-02-14 & Gageler, Kiefel, Nettle, Edelman \\
+\endfirsthead
+\toprule
+\begin{minipage}[b]{0.22\columnwidth}\raggedright
+Case\strut
+\end{minipage} & \begin{minipage}[b]{0.15\columnwidth}\raggedright
+Name\strut
+\end{minipage} & \begin{minipage}[b]{0.30\columnwidth}\raggedright
+AV recording link\strut
+\end{minipage} & \begin{minipage}[b]{0.22\columnwidth}\raggedright
+Judge\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.22\columnwidth}\raggedright
+The Republic of Nauru v WET040 {[}No.~2{]} {[}2018{]} HCA 60\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright
+\texttt{Nauru\_a}\strut
+\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
+\url{http://www.hcourt.gov.au/cases/cases-av/av-2018-11-07a}\strut
+\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright
+Nettle, Gageler, Edelman\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.22\columnwidth}\raggedright
+TTY167 v Republic of Nauru {[}2018{]} HCA 61\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright
+\texttt{Nauru\_b}\strut
+\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
+\url{http://www.hcourt.gov.au/cases/cases-av/av-2018-11-07b}\strut
+\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright
+Nettle, Gageler, Edelman\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.22\columnwidth}\raggedright
+Rinehart v Hancock Prospecting Pty Ltd {[}2019{]} HCA 13\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright
+\texttt{Rinehart\_a}\strut
+\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
+\url{http://www.hcourt.gov.au/cases/cases-av/av-2018-11-13}\strut
+\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright
+Gordon, Gageler, Bell, Keane, Edelman\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.22\columnwidth}\raggedright
+Rinehart v Hancock Prospecting Pty Ltd {[}2019{]} HCA 13\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright
+\texttt{Rinehart\_b}\strut
+\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
+\url{http://www.hcourt.gov.au/cases/cases-av/av-2018-11-14a}\strut
+\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright
+Gordon, Keane, Bell, Gageler, Edelman\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.22\columnwidth}\raggedright
+Parkes Shire Council v South West Helicopters Pty Limited {[}2019{]} HCA 14\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright
+\texttt{Parkes}\strut
+\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
+\url{http://www.hcourt.gov.au/cases/cases-av/av-2018-11-14b}\strut
+\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright
+Gordon, Bell, Kiefel, Keane, Edelman\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.22\columnwidth}\raggedright
+McKell v The Queen {[}2019{]} HCA 5\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright
+\texttt{McKell}\strut
+\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
+\url{http://www.hcourt.gov.au/cases/cases-av/av-2018-12-07}\strut
+\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright
+Gordon, Gageler, Kiefel, Nettle, Edelman\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.22\columnwidth}\raggedright
+OKS v Western Australia {[}2019{]} HCA 10\strut
+\end{minipage} & \begin{minipage}[t]{0.15\columnwidth}\raggedright
+\texttt{OKS}\strut
+\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
+\url{http://www.hcourt.gov.au/cases/cases-av/av-2019-02-14}\strut
+\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright
+Gordon, Gageler, Kiefel, Nettle, Edelman\strut
+\end{minipage}\tabularnewline
 \bottomrule
-\end{tabular}
-\end{center}
-\end{table}
+\end{longtable}
 
 \hypertarget{list-of-the-name-of-ction-units}{%
 \section{List of the name of ction units}\label{list-of-the-name-of-ction-units}}
@@ -830,25 +738,6 @@ AU45: Blink \\
 
 \hypertarget{model-estimation-result}{%
 \section{Model estimation result}\label{model-estimation-result}}
-
-\begin{table}
-
-\caption{\label{tab:anova}\label{tab:anova}ANOVA result}
-\centering
-\begin{tabular}[t]{l|r|r|r|r|r}
-\hline
-  & Df & Deviance & Resid. Df & Resid. Dev & Pr(>Chi)\\
-\hline
-NULL & NA & NA & 15183 & 18900.38 & NA\\
-\hline
-judge & 5 & 298.5383 & 15178 & 18601.84 & 0\\
-\hline
-AU & 3 & 1682.9621 & 15175 & 16918.88 & 0\\
-\hline
-judge:AU & 15 & 1113.8722 & 15160 & 15805.01 & 0\\
-\hline
-\end{tabular}
-\end{table}
 
 \begin{center}
 \begin{longtable}{lllllll}

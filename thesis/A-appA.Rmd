@@ -8,7 +8,7 @@ knit: "bookdown::render_book"
 
 ## List of videos used in the project
 
-```{r results = "asis"}
+```{r results = "asis", eval = FALSE}
 tibble::tibble(Case = c("The Republic of Nauru v WET040 [No. 2] [2018] HCA 60", 
                         "TTY167 v Republic of Nauru [2018] HCA 61", 
                         "Rinehart v Hancock Prospecting Pty Ltd [2019] HCA 13", 
@@ -36,17 +36,17 @@ tibble::tibble(Case = c("The Republic of Nauru v WET040 [No. 2] [2018] HCA 60",
 ```
 
 
-<!-- |Case|Name|AV recording link|Judge| -->
-<!-- |---|--|----|---| -->
-<!-- |The Republic of Nauru v WET040 [No. 2] [2018] HCA 60|`Nauru_a`|http://www.hcourt.gov.au/cases/cases-av/av-2018-11-07a|Nettle, Gageler, Edelman| -->
-<!-- |TTY167 v Republic of Nauru [2018] HCA 61|`Nauru_b`|http://www.hcourt.gov.au/cases/cases-av/av-2018-11-07b|Nettle, Gageler, Edelman| -->
-<!-- |Rinehart v Hancock Prospecting Pty Ltd [2019] HCA 13|`Rinehart_a`|http://www.hcourt.gov.au/cases/cases-av/av-2018-11-13|Gordon, Gageler, Bell, Keane, Edelman| -->
-<!-- |Rinehart v Hancock Prospecting Pty Ltd [2019] HCA 13|`Rinehart_b`|http://www.hcourt.gov.au/cases/cases-av/av-2018-11-14a|Gordon, Keane, Bell, Gageler, Edelman| -->
-<!-- |Parkes Shire Council v South West Helicopters Pty Limited [2019] HCA 14|`Parkes`|http://www.hcourt.gov.au/cases/cases-av/av-2018-11-14b|Gordon, Bell, Kiefel, Keane, Edelman| -->
-<!-- |McKell v The Queen [2019] HCA 5|`McKell`|http://www.hcourt.gov.au/cases/cases-av/av-2018-12-07|Gordon, Gageler, Kiefel, Nettle, Edelman| -->
-<!-- |OKS v Western Australia [2019] HCA 10|`OKS`|http://www.hcourt.gov.au/cases/cases-av/av-2019-02-14|Gordon, Gageler, Kiefel, Nettle, Edelman| -->
+|Case|Name|AV recording link|Judge|
+|---|--|----|---|
+|The Republic of Nauru v WET040 [No. 2] [2018] HCA 60|`Nauru_a`|http://www.hcourt.gov.au/cases/cases-av/av-2018-11-07a|Nettle, Gageler, Edelman|
+|TTY167 v Republic of Nauru [2018] HCA 61|`Nauru_b`|http://www.hcourt.gov.au/cases/cases-av/av-2018-11-07b|Nettle, Gageler, Edelman|
+|Rinehart v Hancock Prospecting Pty Ltd [2019] HCA 13|`Rinehart_a`|http://www.hcourt.gov.au/cases/cases-av/av-2018-11-13|Gordon, Gageler, Bell, Keane, Edelman|
+|Rinehart v Hancock Prospecting Pty Ltd [2019] HCA 13|`Rinehart_b`|http://www.hcourt.gov.au/cases/cases-av/av-2018-11-14a|Gordon, Keane, Bell, Gageler, Edelman|
+|Parkes Shire Council v South West Helicopters Pty Limited [2019] HCA 14|`Parkes`|http://www.hcourt.gov.au/cases/cases-av/av-2018-11-14b|Gordon, Bell, Kiefel, Keane, Edelman|
+|McKell v The Queen [2019] HCA 5|`McKell`|http://www.hcourt.gov.au/cases/cases-av/av-2018-12-07|Gordon, Gageler, Kiefel, Nettle, Edelman|
+|OKS v Western Australia [2019] HCA 10|`OKS`|http://www.hcourt.gov.au/cases/cases-av/av-2019-02-14|Gordon, Gageler, Kiefel, Nettle, Edelman|
 
-<!-- Table: Details of videos processed. -->
+Table: Details of videos processed.
 
 ## List of the name of ction units
 
@@ -59,10 +59,6 @@ au_meaning %>%
 ```
 
 ## Model estimation result 
-
-```{r anova}
-anova(binomial_model_1, test="Chisq") %>% kable(caption = "\\label{tab:anova}ANOVA result")
-```
 
 
 ```{r results = "asis"}

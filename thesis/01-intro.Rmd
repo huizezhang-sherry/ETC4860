@@ -5,18 +5,9 @@ knit: "bookdown::render_book"
 
 # Introduction {#ch:intro}
 
-## Background
+## Background and motivation
 
-(placeholder)
-
-## Statement of topic 
-
-(may go to abstract)
-Decisions by courtroom Justices have been discussed broadly in the legal literature. Gender, political views and religious background of both the Justices and counsel in the case potentially influence the decisions. This paper will explore the facial behaviour of the Justices during hearings with the objective of being to assess whether it can help to predict outcomes. Audio Visual(AV) recordings and case transcripts will be computationally processed and analysed to examine the decisions of each Justice. 
-
-## Motivation
-
-People have attempted to predict the decisions of the Justices in the past  century using judge characteristics i.e. Gender, political views, religious background. More recently, scholars[@Shullman2004illusion; @chen2018justice] have been using more information from media(i.e. AV recording, transcript, language used by the Justices) to predict the case outcome using the U.S. Supreme Court data. On-court information has also been used to study data from High Court of Australia. @tutton2018judicial has used an ethnographic approach to present a observational study of judicial behaviour based on watching the audio footage. Manually observing the AV recordings could lead to subjective evaluation of facial expression and this motivates us to build upon @tutton2018judicial's work to employ facial recognition technology to study the facial expression of the justices, which will provide a more objective result than @tutton2018judicial.
+People have attempted to predict the decisions of the Justices in the past  century using judge characteristics i.e. Gender, political views, religious background. More recently, scholars[@Shullman2004illusion; @chen2018justice] have been using more information from media(i.e. AV recording, transcript, language used by the Justices) to predict the case outcome using the U.S. Supreme Court data. On-court information has also been used to study data from High Court of Australia. @tutton2018judicial has used an ethnographic approach to present a observational study of judicial behaviour based on watching the audio footage. Manually observing the AV recordings could lead to subjective evaluation of facial expression and this motivates us *to build upon @tutton2018judicial's work to employ facial recognition technology to study the facial expression of the justices, which will provide a more objective result than @tutton2018judicial*.
  
 ## Literature review
 
@@ -28,7 +19,7 @@ There is a large law & economics and political science literature that attempts 
 
 Moving from static information of the judge and parties involved, more studies start to incorporate the language used by the judge on the court to predict the decision of the Justices. @black2011emotions has study the use of pleasant and unpleasant language by the Justices and @Shullman2004illusion and @johnson2009inquiring have studied the effect of frequency and content of Justices' questions. @epstein2010inferring use a regression analysis with the number of questions asked by the Justices used to infer the winning party in a case. 
 
-More recent legal study has focused on the usage of emotion and vocal characteristics of the Justices to predict the judge's vots. Although @judicalguid present the following code of conduct:
+More recent legal study has focused on the usage of emotion and vocal characteristics of the Justices to predict the judge's votes. Although @judicalguid present the following code of conduct:
 
 >It is important for judges to maintain a standard of behaviour in court that is consistent with the status of judicial office and does not diminish the confidence of litigants in particular, and the public in general, in the ability, the integrity, the impartiality and the independence of the judge. 
 
@@ -42,41 +33,41 @@ The literature mentioned above is mostly conducted using the U.S. Supreme Court 
 
 ### Facial recognition
 
-An anatomical study of the decomposition of facial muscles by [@ekman1976measuring] led to the devlopment of Facial Action Code (FAC) [@ekman1978] and identification of the six universal emotions on human faces. This work has been further revised as [@paulekmangroup] and has laid a solid foundation for analysing facial expression and developing facial recognition softwares for researchers [@Kobayashi1992; @huang1997; @lien2000; @Kappoor2003; @Tong2007; @Cohn2009; @Lucey2010]. 
+An anatomical study of the decomposition of facial muscles by [@ekman1976measuring] led to the development of Facial Action Code (FAC) [@ekman1978] and identification of the six universal emotions on human faces. This work has been further revised as [@paulekmangroup] and has laid a solid foundation for analysing facial expression and developing facial recognition software for researchers [@Kobayashi1992; @huang1997; @lien2000; @Kappoor2003; @Tong2007; @Cohn2009; @Lucey2010]. 
 
-To be able to analysis the facial expression, proper facial recognition technique is needed to first extract faces from images. Facial recognition softwares i.e. DeepFace [@taigman2014deepface] from Facebook and FaceNet [@schroff2015facenet] from Google have also been developed for face detection. OpenFace [@baltrusaitis2018openface] is the first open-sourced face recognition software that provides facial expression detection, including facial landmarking, head pose estimation, eye gaze tracking and facial action unit detection. The OpenFace toolkit has been used in different area in research including depression classification [@yang2016decision; @nasir2016multimodal], emotion study [@Pan2018; @Nasir2016; @Huber2018] and even sports analytics [@kovalchik2018going].
+To be able to analysis the facial expression, proper facial recognition technique is needed to first extract faces from images. Facial recognition software i.e. DeepFace [@taigman2014deepface] from Facebook and FaceNet [@schroff2015facenet] from Google have also been developed for face detection. OpenFace [@baltrusaitis2018openface] is the first open-sourced face recognition software that provides facial expression detection, including facial landmarking, head pose estimation, eye gaze tracking and facial action unit detection. The OpenFace toolkit has been used in different area in research including depression classification [@yang2016decision; @nasir2016multimodal], emotion study [@Pan2018; @Nasir2016; @Huber2018] and even sports analytics. [@kovalchik2018going].
 
-## Research Question 
+<!-- ## Research Question  -->
 
-(placeholder)
+<!-- (placeholder) -->
 
-- Extract facial expression data of the Justices from videos of High Court of Australia
+<!-- - Extract facial expression data of the Justices from videos of High Court of Australia -->
 
-- Merge with data from text transcript
+<!-- - Merge with data from text transcript -->
 
-- Statistically model judges facial expressions
+<!-- - Statistically model judges facial expressions -->
 
-- Provide an **objective** source of data to study the problem
+<!-- - Provide an **objective** source of data to study the problem -->
 
-- Do the results agree or disagree with Tutton's findings, that the justices are appearing impartial?
+<!-- - Do the results agree or disagree with Tutton's findings, that the justices are appearing impartial? -->
 
-Two questions can be explained by the model: 
+<!-- Two questions can be explained by the model:  -->
 
-- Do the justices' expression differ from case to case? 
-- Do the justices' expression differ when different parties are speaking?
-
-
-The aim of this study is to use facial recognition technology to detect judicial thinking and thus their decisions. There are four specific objectives:
-• Read in video streams and convert into a numerical data format.
-• Perform data quality checks to investigate video and data quality.
-• Exploratory data analysis of the facial expression, trascript variables and outcomes.
-• Explore models to predict the appeal outcomes based on facial expression and text analysis.
+<!-- - Do the justices' expression differ from case to case?  -->
+<!-- - Do the justices' expression differ when different parties are speaking? -->
 
 
+<!-- The aim of this study is to use facial recognition technology to detect judicial thinking and thus their decisions. There are four specific objectives: -->
+<!-- • Read in video streams and convert into a numerical data format. -->
+<!-- • Perform data quality checks to investigate video and data quality. -->
+<!-- • Exploratory data analysis of the facial expression, transcript variables and outcomes. -->
+<!-- • Explore models to predict the appeal outcomes based on facial expression and text analysis. -->
 
 
-## Significance 
 
-(placeholder)
 
-Facial recognition analysis of the videos provides a way to **objectively** and **automatically** assess judicial behaviour.
+<!-- ## Significance  -->
+
+<!-- (placeholder) -->
+
+<!-- Facial recognition analysis of the videos provides a way to **objectively** and **automatically** assess judicial behaviour. -->

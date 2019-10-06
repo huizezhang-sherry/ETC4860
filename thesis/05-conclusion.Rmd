@@ -7,6 +7,7 @@ knit: "bookdown::render_book"
 
 ## Discussion
 
+<!-- (placeholder) -->
 
 ## Limitation
 
@@ -17,3 +18,8 @@ In my work, seven videos are being processed into the facial recognition softwar
 However, this work has established a workflow for extracting facial expressions of human from videos. As long as more higher resolution videos are available, facial variables can be extracted via the same fashion. 
 
 ## Future work
+
+<!-- - Additional models: model each jduge or action unit separately -->
+
+<!-- - Model intensity score: zero inflated model -->
+
