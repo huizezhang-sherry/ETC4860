@@ -157,8 +157,8 @@ au_imputed_old <- au_intensity %>%
 save(au_imputed_old, file = "raw_data/au_imputed_old.rda") 
 
 au_imputed <- au_imputed_old %>% 
-  group_by(judge_id) %>% 
-  gather(AU_label, value, -c(judge_id, video_id, frame_id, speaker)) %>% 
+  group_by(judge) %>% 
+  gather(AU_label, value, -c(judge, video, frame, speaker)) %>% 
   separate(AU_label, c("AU", "suffix")) %>% 
   spread(suffix, value) %>% 
   rename(presence = c, intensity = r) 
@@ -200,12 +200,9 @@ au_tidy <- au_imputed %>%
     presence ==0 & intensity <1 ~ 0, 
   )) %>% 
   ungroup() %>% 
-  mutate(judge_id = as.factor(judge_id), 
+  mutate(judge = as.factor(judge), 
          speaker = as.factor(speaker), 
-         AU = as.factor(AU)) %>% 
-  rename(judge = judge_id, 
-         video = video_id,
-         frame = frame_id)
+         AU = as.factor(AU)) 
 
 save(au_tidy, file = "raw_data/au_tidy.rda")
 ```
