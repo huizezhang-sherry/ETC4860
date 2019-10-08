@@ -43,72 +43,62 @@ class: title-slide, center, middle
 
 ### `r rmarkdown::metadata$author` 
 
-### [`r icon::fa_twitter()`](https:://twitter.com/huizezhangsh) huizezhangsh [`r icon::fa_github()`](https:://github.com/huizezhang-sherry) huizezhang-sherry
-
-###`r rmarkdown::metadata$institution`
+<br>
 
 ### https://judgeface.netlify.com/Final_Presentation
 
 ---
 class: center
-[![A video for fun](../images/video_photo.png)](https://www.youtube.com/watch?v=Ae7uKzin0GA)
+[![A video for fun](../images/video_photo.png)](../nauru_a.mp4)
 
 ### Are the justices' facial expressions revealing the outcome of the case?
 
 ---
 # Previous work
 
-**Judges are expected to be impartial in expressions presented to court.** 
+**Judges are expected to behave impartial in the courtroom** 
 
 - Chen (2018) 
     - Is Justice really blind? And it is also deaf?
-    - **Data collection**: images of lawyers *before* appearing on the Supreme Court, voice audio, augment data on judges and case characteristics 
+    - **Data collection**: images of attorney *before* appearing on the Supreme Court, vocal information, augment data on judges and case characteristics 
     - **Finding**: Image and vocal data improved accuracy of predicting case outcome
+
 --
 
 - Tutton, Mack, Roach Anleu (2018)
     - Empirical study of transcripts and AV recordings of judges in High Court cases
     - **Data collection**: Manual tagging of video footage of Australian High Court
     - **Finding**: judges present an impersonal or detached demeanour
---
+
+---
+class: middle
 
 - Kovalchik and Reid (2018)
     - Use automatic tagging of expressions from facial recognition software to study the emotion of tennis players in professional matches, focusing on the effect on performance
 
-
 ---
+class: inverse, middle
 # My research
 
-- Extract facial expression data of the Justices from videos of High Court of Australia
+###  <class: style="color:#f92672">**Provide an objective source of data to study the expression of judges**</span>
 
---
+###  <class: style="color:#f92672">**Do the results agree or disagree with Tutton's findings, that the justices are appearing impartial?** </span>
 
-- Merge with data from text transcripts
 
---
-
-- Statistically model judges facial expressions
-
---
-
-- Provide an **objective** source of data to study the problem
-
---
-
-- Do the results agree or disagree with Tutton's findings, that the justices are appearing impartial?
 
 ---
+
 # Face Recognition
 
 
 - **Paul Ekman**: Facial Action Coding System (FACS)
 
 
-- it groups movements of facial landmarks into 45 **action units** 
+- it groups movements of facial muscles into 45 **action units** 
 
 
 .pull-left[
-
+<center>
 AU02 -	Outer eyebrow raiser
 
 ```{r AU02, echo = FALSE, out.height="200px", out.width="350px"}
@@ -118,7 +108,7 @@ include_graphics("../images/AU2-right-only.gif")
 
 
 .pull-right[
-
+<center>
 AU15 - Lip corner depressor
 
 ```{r AU15, echo = FALSE, out.height="200px", out.width="350px"}
@@ -126,62 +116,79 @@ include_graphics("../images/AU15.gif")
 ```
 ]
 
- - widely used in software development and human emotion research
+
+
 
 ---
+class: inverse, middle
 
-class: inverse, center, middle
+# What I've done 
 
-# Video Processing
+- <span: style="font-size:20pt">Extract facial expression data of the Justices from videos of High Court of Australia </span>
+
+
+- <span: style="font-size:20pt">Merge with data from text transcripts</span>
+
+
+- <span: style="font-size:20pt">Statistically model judges facial expressions</span>
 
 ---
+class: inverse, middle, center
 
-```{r workflow_1, echo = FALSE, fig.align="center"}
+# Data Collection
+
+---
+class:middle
+
+```{r workflow_0, echo = FALSE, fig.align="center",fig.width=16, fig.height=9, out.height="90%", out.width="90%"}
+include_graphics("../images/workflow_1 (5).png")
+```
+
+---
+class:middle
+```{r workflow_1, echo = FALSE, fig.align="center", fig.width=16, fig.height=9, out.height="90%", out.width="90%"}
 include_graphics("../images/workflow_1 (0).png")
 ```
 
 ---
-
-```{r workflow_2, echo = FALSE, fig.align="center"}
+class:middle
+```{r workflow_2, echo = FALSE, fig.align="center", fig.width=16, fig.height=9, out.height="90%", out.width="90%"}
 include_graphics("../images/workflow_1 (1).png")
 ```
 
 ---
-
-```{r workflow_3, echo = FALSE, fig.align="center"}
+class:middle
+```{r workflow_3, echo = FALSE, fig.align="center", fig.width=16, fig.height=9, out.height="90%", out.width="90%"}
 include_graphics("../images/workflow_1 (2).png")
 ```
 
 ---
-
-```{r workflow_4, echo = FALSE, fig.align="center"}
+class:middle
+```{r workflow_4, echo = FALSE, fig.align="center", fig.width=16, fig.height=9, out.height="90%", out.width="90%"}
 include_graphics("../images/workflow_1 (3).png")
 ```
 
 ---
-
-```{r workflow_5, echo = FALSE, fig.align="center"}
+class:middle
+```{r workflow_5, echo = FALSE, fig.align="center", fig.width=16, fig.height=9, out.height="90%", out.width="90%"}
 include_graphics("../images/workflow_1 (4).png")
 ```
 
 ---
+class:middle
 
-```{r workflow_6, echo = FALSE, fig.align="center",}
+```{r workflow_6, echo = FALSE, fig.align="center",fig.width=16, fig.height=9, out.height="90%", out.width="90%"}
 include_graphics("../images/workflow_1 (5).png")
 ```
-
---
-
-### 4601 faces and 711 facial variables.
 
 ---
 class: middle, center 
 
 # Collected data
 
-####**7 videos**
-
 ####**6 judges**
+
+####**7 videos**
 
 ####**18 action units**
 
@@ -194,8 +201,7 @@ class: middle, center
 
 
 ```{r data-format, echo = FALSE, warning=  FALSE}
-include_graphics("../images/long.png")
-
+au_tidy %>% filter(judge == "Edelman", video == "McKell") %>% head(15) %>% select(-intensity) %>% kable(format = "html")
 ```
 
 ---
@@ -212,9 +218,8 @@ class: inverse, center, middle
 |---|----|
 |Judge| $i = 1,2, \cdots, 6$ |
 |Video| $j = 1,2, \cdots, 7$ |
-|Action unit| $k = 1, 2, \cdots, `r length(unique(au_tidy$AU))`$ possible facial expression|
+|Action unit| $k = 1, 2, \cdots, `r length(unique(au_tidy$AU))`$ possible facial expressions|
 |Speaker| $l = 1,2$: either the appellant or respondents|
-|Frame| $t = 1,2, \cdots, T_j$ |
 |Presence |The binary $Y$ variable:  $P_{ijkl}$|
 
 
@@ -225,17 +230,17 @@ class: inverse, center, middle
 <!-- - $X_5$ indicates `frame` corresponding to time, $t = 1,2, \cdots, T_j$ -->
 <!-- - $P_{ijkl}$ indicates the binary `presence` variable  -->
 
-
-
 ---
+
+
 
 ## Modelling:
 
 Binomial model with logit link: 
 
 \begin{aligned}
-P_{ijklt} &= \frac{e^{\eta_{ijklt}}}{1 + e^{\eta_{ijklt}}} \\
-\eta_{ijklt} &= \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\delta)_{il} + \varepsilon_{ijklt}
+P_{ijkl} &= \frac{e^{\eta_{ijkl}}}{1 + e^{\eta_{ijkl}}} \\
+\eta_{ijkl} &= \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\delta)_{il} + \varepsilon_{ijkl}
 \end{aligned}
 
 where
@@ -248,7 +253,7 @@ where
 
 --
 
-## **Do the justices' expression differ from case to case?** 
+## **Do the justices' expressions differ from case to case?** 
 
 
 ---
@@ -258,10 +263,7 @@ class: inverse, center, middle
 
 ---
 
-
-
 .pull-left[
-
 ## Model summary
 ```{r summary-table, echo = FALSE}
 model_dt <- au_tidy %>% 
@@ -278,100 +280,123 @@ binomial_model_2 <- glm(presence ~ judge*video + judge*AU + video*AU,
 
 tidy(binomial_model_2) %>% 
   head(10) %>% 
-  kable(format = "html", digits = 2)
-```
+  kable(format = "html", digits = 4)
 
+```
 ]
 
---
 .pull-right[
-
 ## ANOVA 
-
 ```{r ANOVA, echo = FALSE}
 Anova(binomial_model_2, type = "III", singular.ok = TRUE) %>% 
-  kable(format = "html", digits = 5) %>% 
+  kable(format = "html", digits = 2) %>% 
   kableExtra::column_spec(4, background = "#FFC0CB")
 ```
 
+
+<br>
+Traditional estimates (left) are not interpretable: use Estimated Marginal Mean (EMM)
+
+ANOVA doesn't specifically tell us which means are different from each other.
+
 ]
+
 
 ---
 
-### Estimated Marginal Mean (EMM)
+## Post-model analysis - multiple comparison
 
-```{r emmean, echo = FALSE}
+.left-column[
+The adjustment is made to ensure the confidence level of the whole group is 95%
+
+each judge-AU group
+
+Bonferroni Adjustment
+
+]
+
+
+.right-column[
+```{r echo = FALSE}
 emmean_obj_2 <- emmeans(binomial_model_2, c("judge", "video", "AU"), 
                          type = "response") 
 
-emmean_obj_2 %>% 
-  as.data.frame() %>% 
-  filter(!is.na(prob)) %>% 
-  select(-df) %>% 
-  head(10) %>% 
-  kable(format = "html", digits = 4) %>% 
-  kableExtra::column_spec(4, background = "#FFC0CB")
-```
-
----
-
-### Simultaneous confidence interval 
-
-```{r ci-adjustment, echo = FALSE}
 int_2 <- confint(emmean_obj_2, adjust = "bonferroni")
 
-int_2 %>% 
-  as.data.frame() %>% 
+int_2 <- confint(emmean_obj_2, by = c("judge", "video"), adjust = "bonferroni") %>% 
+  as.data.frame()
+
+int_2 %>% head(15) %>% 
   filter(!is.na(prob)) %>% 
-  select(-df) %>% 
-  head(10) %>% 
-  kable(format = "html", digits = 4) %>% 
-  kableExtra::column_spec(c(6,7), background = "#FFC0CB")
+  select(-c(df)) %>% 
+  kable(format = "html", digits = 4) 
 ```
+]
 
 ---
 
 ```{r model-plot, echo = FALSE, message = FALSE, warning = FALSE, fig.width=16, fig.height=9, out.width="100%", out.height="100%"}
 
-int_2 %>% 
+
+model_plot <- int_2 %>% 
+  left_join(au_meaning, by = c("AU" = "AU_number")) %>% 
+  select(-Muscle) %>% 
   filter(!is.na(df)) %>% 
-  mutate(judge = fct_relevel(judge, c("Edelman", "Keane", "Kiefel", "Nettle", "Gageler", "Bell"))) %>% 
+  mutate(judge = fct_relevel(judge, c("Edelman", "Keane", "Kiefel", 
+                                      "Nettle", "Gageler", "Bell"))) %>% 
   ggplot(aes(x= fct_relevel(video, c("Nauru-a", "Nauru-b", "Rinehart-a",
                                "Rinehart-b", "McKell", "OKS", "Parkes")), 
                             y = prob,  group = judge)) + 
-  geom_point(aes(col= video), size = 2) + 
+  geom_point(aes(col= video), size = 3, width = 0.2) + 
   geom_line(alpha = 0.5, lty = "dashed") + 
   geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL, col= video), 
                 width = 0.2, size = 2) + 
-  facet_grid(AU ~ judge, scales = "free") + 
-  theme(legend.position = "bottom", 
+  facet_grid(AU_meaning ~ judge, scales = "free",
+             labeller = label_wrap_gen(width = 5)) + 
+  theme(legend.position = "none", 
         legend.text = element_text(size = 30),
         axis.title = element_text(size=  40),
         axis.text = element_text(size = 20),
         axis.text.x = element_text(angle = 90, hjust = 1, size= 25),
         strip.text.x = element_text(size = 20),
-        strip.text.y = element_text(size = 20)) + 
-  xlab("video") + 
+        strip.text.y = element_text(size = 20, angle = 0)) + 
+  xlab("Case") + 
   ylab("Proportion")
-  
+
+model_plot  
 ```
 
 ---
 # Discussion
 
-- Generally the judges expressions are the same regardless of the video
+.pull-left[
 
-- Nettle always has a raised outer eyebrow (AU02)
+- Generally the judges expressions are the same regardless of the video
 
 - Gageler and Bell reacted strongly to the OKS case, but Edelman and Keane did not
 
---
+Validate Tutton et al (2018) that the judges appear impartial, with the exception of Gageler and Bell for the OKS case.
 
- **Our results mostly validate Tutton et al (2018) that the judges appear impartial, with the exception of Gageler and Bell for the OKS case.**
+]
 
---
+.pull-right[
 
- #### **Facial recognition analysis of the videos provides a way to *objectively* assess judicial behaviour.** 
+```{r model-plot_2, echo = FALSE, message = FALSE, warning = FALSE, fig.width=16, fig.height=9, out.width="100%", out.height="100%"}
+
+model_plot
+  
+```
+]
+
+---
+class: inverse, middle
+
+# Contribution
+
+
+- ### <span style="color:#f92672">establish a workflow for extracting facial expressions of human from videos. </span>
+
+- ###<span style="color:#f92672">provide a way to *objectively* assess judicial behaviour. </span>
 
 ---
 
@@ -379,12 +404,13 @@ int_2 %>%
 
 .pull-left[
 
-- Additional models: model each jduge or action unit separately
-
-- Model intensity score: zero inflated model
+- Model intensity score
 
 - More study on multiple comparison
 
+- More frequent time interval: to catch more precise emotions
+
+- More videos to process if higher resolution videos are accessible
 
 ]
 
@@ -406,23 +432,6 @@ model_dt %>%
 ]
 
 
----
-
-# Caveats about my work: 
-
-**More frequent interval**: 
-- current frame extraction is conducted on the 1 minute interval
-- more frequent time interval i.e. 5 second,  could be used to catch more precise emotions
-
-**More videos**
-- 7 videos are processed by the facial recognition software
-- more videos could be processed if higher resolution videos are accessible
-
-My work has established a workflow for extracting facial expressions of human from videos. All the scripts are available from my github repo: 
-
-<center>
-
-#### https:://github.com/huizezhang-sherry/ETC4860 
 
 
 ---
@@ -454,6 +463,8 @@ I would like to express my gratitude to Di Cook and Russell Symth for supervisin
 
 Stephanie Kobakian and Stuart Lee for ad-hoc helps. 
 
+All the scripts are available from my github repo:  https://github.com/huizezhang-sherry/ETC4860 
+
 
 Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
 
@@ -464,6 +475,53 @@ Slides created via the R package [**xaringan**](https://github.com/yihui/xaringa
 ```{r HOG, echo = FALSE, out.width="500px", fig.align= "center"}
 include_graphics("../images/HOG.png")
 ```
+
+---
+
+## Most common action units
+
+
+.left-column[
+
+$$P_{ik} = \frac{\sum_{jt}X_{ijtk}}{\sum_{j = 1}^JT_j}$$
+
+- AU02: outer eyebrow raise
+- AU20: lip stretcher
+- AU15: Lip Corner Depressor
+- AU14: Dimpler
+
+]
+
+.right-column[
+
+```{r echo =FALSE, fig.height=9, fig.width=16}
+most_common <- au_tidy %>% 
+  group_by(judge,AU) %>% 
+  summarise(avg_presence = mean(presence)) %>% 
+  filter(avg_presence != "NaN") %>% 
+  group_by(judge) %>% 
+  arrange(-avg_presence) %>% 
+  mutate(common = row_number()) %>% 
+  mutate(most_common = as_factor(ifelse(common <=5, 1, 0))) %>% 
+  left_join(au_meaning, by = c("AU" = "AU_number")) %>% 
+  mutate(AU = as.factor(AU))
+
+most_common %>% 
+  ggplot(aes(x =  fct_reorder(AU, avg_presence), y = avg_presence,
+             fill = most_common, col = most_common)) + 
+  geom_col() +
+  xlab("AU") + 
+  ylab("Average Presence") + 
+  facet_wrap(vars(judge)) + 
+  coord_flip() + 
+  theme(legend.position = "none", 
+        legend.text = element_text(size = 30),
+        axis.title = element_text(size=  30),
+        axis.text = element_text(size = 20),
+        strip.text.x = element_text(size = 20))
+```
+
+]
 
 ---
 
