@@ -141,7 +141,7 @@ class: inverse, middle, center
 class:middle
 
 ```{r workflow_0, echo = FALSE, fig.align="center",fig.width=16, fig.height=9, out.height="90%", out.width="90%"}
-include_graphics("../images/workflow_1 (5).png")
+include_graphics("../images/workflow_new.png")
 ```
 
 ---
@@ -178,7 +178,7 @@ include_graphics("../images/workflow_1 (4).png")
 class:middle
 
 ```{r workflow_6, echo = FALSE, fig.align="center",fig.width=16, fig.height=9, out.height="90%", out.width="90%"}
-include_graphics("../images/workflow_1 (5).png")
+include_graphics("../images/workflow_1_new.png")
 ```
 
 ---
