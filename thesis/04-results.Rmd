@@ -5,13 +5,13 @@ knit: "bookdown::render_book"
 
 # Results
 
+<!-- ## Action unit: Presence  -->
+## Model 1: Action unit
 
-## Action unit: Presence
 
+### Mean presence score and most common action units 
 
-### Mean presence 
-
-I first compute the average presence ($P_{ik}$) of each action unit for each judge as $$P_{ik} = \frac{\sum_{jt}X_{ijtk}}{\sum_{j = 1}^JT_j}$$ This is then plotted in Figure \ref{fig:mean_presence} to give an overview of the presence of all the action units across all the judge. The order of action unit on the y axis is ranked by the average presence of all the judge. The five most frequent action units are highlighted in blue for each judge and summarised in Table \ref{tab:most_common}
+The average presence ($P_{ik}$) of each action unit is first computed for each judge as $$P_{ik} = \frac{\sum_{jt}X_{ijtk}}{\sum_{j = 1}^JT_j}$$ This is then plotted in Figure \ref{fig:mean_presence} to give an overview of the presence score of all the action units across all the judges. The order of action unit on the y axis is ranked by the average presence of all the judges. The five most frequent action units are highlighted in blue for each judge and summarised in Table \ref{tab:most_common}
 
 ```{r fig.cap="The average presence score of each action unit for each judge, aggregating on video and time. \\label{fig:mean_presence}"}
 # Because each judge has different numbers of frame available, mean is a better way ,than sum/ count,  to discribe the frequency of occurence. 
@@ -39,12 +39,12 @@ most_common %>%
 ```
 
 ```{r}
-knitr::kable(most_common %>% 
-               filter(most_common ==1) %>% 
-               dplyr::select(judge, AU) %>% 
-               mutate(index = row_number()) %>% 
-               spread(judge, AU), 
-             caption = "\\label{tab:most_common}The five most commonly presented action unit for each judge.")
+kable(most_common %>% 
+        filter(most_common ==1) %>% 
+        dplyr::select(judge, AU) %>% 
+        mutate(index = row_number()) %>% 
+        spread(judge, AU), 
+      caption = "\\label{tab:most_common}The five most commonly presented action units for each judge.")
 ```
 
 It can be seen that some of the action units are common across almost all the judges, these includes 
@@ -54,7 +54,7 @@ It can be seen that some of the action units are common across almost all the ju
 - AU15 (Lip Corner Depressor) 
 - AU14 (Dimpler)
 
-According to @ekman2002facial, AU02 makes a contribution to surprise, which is a positive attitude showing that judges are interested in a particular moment. AU14 indicates boredom and AU15 shows confusion. Along with other action units that presented with high frequency in a particular judge but not all (summarised in Table \ref{tab:other_highf}), the emotions judges displayed in the courtroom can be summarised into three categories, described in Table \ref{tab:three_category} along with the featured action units. 
+According to @ekman2002facial, AU02 makes a contribution to surprise, which may be a positive attitude showing that judges are interested in a particular moment. AU14 indicates boredom and AU15 shows confusion. Based on the most common five action units, the emotions judges displayed in the courtroom can be summarised into three categories, described in Table \ref{tab:three_category}, along with the featured action units. 
 
 
 ```{r}
@@ -62,22 +62,22 @@ tibble::tibble(emotion = c("Surprise", "Boredom", "Confusion"),
                `Featured Action Unit` = c("AU01, AU02, AU05", 
                                           "AU14, AU23", 
                                           "AU07, AU15, AU23")) %>% 
-  kable(caption = "\\label{tab:three_category} Summarised emotions and featured action units")
+  kable(caption = "\\label{tab:three_category}Summarised emotions and featured action units")
 ```
 
+<!-- this table may not be useful while add confusion -->
+<!-- ```{r} -->
+<!-- other_highf <- most_common %>%  -->
+<!--   filter(most_common ==1) %>%  -->
+<!--   dplyr::select(-c(common, most_common, avg_presence, Muscle)) %>%  -->
+<!--   filter(!AU %in% c("AU02", "AU20", "AU15", "AU14")) %>%  -->
+<!--   mutate(index = row_number()) %>%  -->
+<!--   dplyr::select(-AU) %>%  -->
+<!--   spread(index, AU_meaning) %>%  -->
+<!--   rename(first = `1`, second = `2`, third = `3`) -->
 
-```{r}
-other_highf <- most_common %>% 
-  filter(most_common ==1) %>% 
-  dplyr::select(-c(common, most_common, avg_presence, Muscle)) %>% 
-  filter(!AU %in% c("AU02", "AU20", "AU15", "AU14")) %>% 
-  mutate(index = row_number()) %>% 
-  dplyr::select(-AU) %>% 
-  spread(index, AU_meaning) %>% 
-  rename(first = `1`, second = `2`, third = `3`)
-
-knitr::kable(other_highf, caption = "\\label{tab:other_highf} Other high frequent action units ")
-```
+<!-- knitr::kable(other_highf, caption = "\\label{tab:other_highf} Other high frequent action units ") -->
+<!-- ``` -->
 
 
 ```{r}
@@ -95,14 +95,9 @@ model_dt <- au_tidy %>%
 ```
 
 
-### Interaction between judge and action unit
+### Model summary
 
-Analysis of Variance (ANOVA) test result shows that there are significant variance for both judge, AU and their interactions and thus it is necessary to perform multiple comparison to determine how does each level of action unit differ for different judges. The estimated coefficient for each judge and AU pair is reported in Table \ref{tab:result_1} along with the upper and lower confidence interval bond. This result is also plotted in Figure \ref{fig:model_1_plot} for visual inspection.
-
-
-<!-- The information in the group column is helpful to understand how one particular pair of judge and au is different from another pair. With compact letter display, the pair with the same letter/number are *NOT* significantly different from each other.  -->
-
-
+The estimated marginal mean is computed in Table \ref{tab:result_1} after modelling.  This output can be easily interpreted as the estimated probability with its confidence interval. For example, the first row can be interpreted as follows: After averaging over all the videos and speaking parties, the estimated mean probability for judge Edelman in action unit AU02 is 0.95, with a 95% confidence interval of [0.92, 0.97]. Notice that  confidence intervals for a generalised linear model is asymmetric around the estimates because the linear symmetric interval of the mean need to be transferred via the inverse of link function to get the confidence interval for the response. 
 
 ```{r model_1}
 model_dt_1 <- model_dt %>% 
@@ -113,51 +108,62 @@ binomial_model_1 <- glm(presence ~ judge*AU,
                         data = model_dt_1)
 
 emmean_obj_1 <-  emmeans(binomial_model_1, ~judge*AU, type = "response")
-int_1 <- confint(emmean_obj_1, adjust = "bonferroni")
+int_1 <- confint(emmean_obj_1, by = "judge",adjust = "bonferroni") %>% as.data.frame() %>% dplyr::select(-df)
 
 # result_1 <- multcomp::cld(lsmean_obj_1, alpha = 0.05, type = "response") 
 ```
 
 ```{r model_1_response, results = "asis"}
-knitLatex::xTab(format(as.data.frame(int_1), digits = 2), booktabs = TRUE, caption.top = "\\label{tab:result_1} model result")
+knitLatex::xTab(format(int_1, digits = 2), booktabs = TRUE, caption.top = "\\label{tab:result_1}Estimated marginal mean summary for Model 1. The confidence interval is adjusted using bonferroni adjustment")
+```
+<!-- A bit more work on  -->
+<!-- 1) how the glm standard error is computed:  -->
+<!-- ```{r} -->
+<!-- o <- glm(y ~ x, data = dat) -->
+<!-- std.er <- sqrt(t(C) %*% vcov(o) %*% C) -->
+<!-- # check if it is the same as pred$se.fit -->
+<!-- pred <- predict(o, newdata = data.frame(x=1.5), se.fit = TRUE) -->
+<!-- ``` -->
+
+<!-- 2) if HC estimator of sigma is needed  -->
+<!-- 3) if adjustment is needed for clusteringstandard error:  -->
+<!-- http://civil.colorado.edu/~balajir/CVEN6833/lectures/GLM-theory-notes.pdf -->
+<!-- http://civil.colorado.edu/~balajir/CVEN6833/lectures/glm-estimation-presentation.pdf -->
+<!-- https://stats.stackexchange.com/questions/332077/glm-standard-errors -->
+
+
+The Type III Analysis of Variance (ANOVA) test is conducted with the result shown in Table \ref{tab:anova}. It can be seen that judge, AU and their interactions are all significance, which validates our choice of Type III instead of Type II ANOVA. 
+
+```{r anova}
+Anova(binomial_model_1, type = "III", singular.ok = TRUE) %>% 
+  format(digits = 2) %>% 
+  kable(caption = "\\label{tab:anova}Type III ANOVA table for model 1. All the variables are significant.")
 ```
 
-```{r anova, results = "asis"}
-# Anova(binomial_model_1, type = "III", singular.ok = TRUE) %>% 
-#   kable(digits = 5) 
-```
+Multiple comparison is then performed and the 95% confidence interval after bonferroni adjustment is plotted in Figure \ref{fig:model1-plot}. This plot shows that the interval for the judges are significantly different from one to another as most of the intervals are not overlapping with each other. This confirms the necessity of including the interaction terms. 
 
-
-```{r goodness-of-fit-1}
-# pchisq(deviance(binomial_model_1), 
-#        df.residual(binomial_model_1), lower = FALSE)
-# 
-# library(ResourceSelection)
-# hoslem.test(binomial_model_1$y, 
-#             fitted(binomial_model_1), 
-#             g= 10)
-```
-
-```{r fig.cap = "This is the graphical representation of model1\\label{fig:model_1_plot}"}
-int_1 %>% 
-  left_join(au_meaning, by = c("AU" = "AU_number")) %>% 
-  as_tibble()%>%   
-  filter(!is.na(df)) %>% 
-  ggplot(aes(x= fct_relevel(AU, c("AU20", "AU15", "AU14", "AU02")), 
-             y = prob, fill = AU)) + 
-  geom_point() + 
-  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL), width = 0.2) + 
-  facet_wrap(vars(judge))  + 
-  coord_flip() + 
-  xlab("AU") + 
+```{r model1-plot, fig.cap="The confidence interval for estimated mearginal mean in model 1"}
+int_1 %>%
+  left_join(au_meaning, by = c("AU" = "AU_number")) %>%
+  as_tibble()%>%
+  filter(!is.na(df)) %>%
+  ggplot(aes(x= fct_relevel(AU, c("AU20", "AU15", "AU14", "AU02")),
+             y = prob, fill = AU)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL), width = 0.2) +
+  facet_wrap(vars(judge))  +
+  coord_flip() +
+  xlab("AU") +
   theme(legend.position = "none")
 ```
 
+\newpage
+
+## Model 2: Video
 
 ### Presence by videos
 
-Apart from visualising the general presence score for all the action units, I'm also interested in the break down statistics by video ($P_{ijk}$). This is computed as $$P_{ijk} = \frac{\sum_{t}X_{ijtk}}{T_j}$$ for the four most common action units: AU02, AU14, AU15, AU20 and plotted in Figure \ref{fig:common_video}. From this plot, we can observe that Gageler and Bell seems to have a larger fluctuation across videos than others, especially for case OKS. This "visual" difference is only a preliminary result we observe from the plot, more solid statistical method need to be employed to validate the fluctuation shows statistical difference.
-
+We are also interested in the main presence score of the judges by video ($P_{ijk}$). This is computed as $$P_{ijk} = \frac{\sum_{t}X_{ijtk}}{T_j}$$ for the four most common action units: AU02, AU14, AU15, AU20 and plotted in Figure \ref{fig:common_video}. From this plot, we can observe that judge Gageler, who is coloured as green, has a much higher proportion of expression in case OKS, especially in action unit 14, 15 and 20. judge Bell, who is coloured red also has large fluctuation in case Parkes for action unit 14 and 20. In the next section, I will model the presence score by incorporating the video information to see if the model tells us the same. 
 
 ```{r fig.cap="Average presence of the four most common action units for each judge by video\\label{fig:common_video}"}
 more_presence <- au_tidy %>% 
@@ -179,13 +185,15 @@ more_presence %>%
   theme(axis.text.x = element_text(angle = 30, hjust = 1))
 ```
 
-### Interaction between judge and video
+### Model summary
 
-The estimated coefficients for the second model are presented in Table \ref{tab:result_2} in the Appendix. Visual representation of the estimated result is shown in Figure \ref{fig:model_2_plot}. We can observe that Judge Edelman, Keane and Kiefel behave relatively consistent throughout all the videos since all the intervals for the same judge, same action unit but different videos overlaps after bonferroni adjustment. This would indicates in these videos, these judges would have similar thinking or reaction towards the evidence and argument presented by the barristers.  
+The estimated marginal mean for the second model are presented in Table \ref{tab:result_2} in the Appendix due to its length. ANOVA test and multiple comparison is conducted as described before. Figure \ref{fig:model2-plot} presents the 95% confidence interval for each estimated marginal mean based on model 2. 
 
-Judge Gageler seems to have a large fluctuate of his facial expressions in video OKS and his response is significantly different from those in other cases for AU15 and AU20. This shows consistency with our exploratory data analysis where Gageler tends to show a higher proportion of presence for action units in case OKS. 
+We can observe that Judge Edelman, Keane and Kiefel behave relatively consistent throughout all the videos since all the intervals overlap with each other after the  bonferroni adjustment. This would indicates in these videos, these judges would have similar thinking or reaction towards the evidence and argument presented by the barristers.  
 
-Our result validates the exploratory data analysis that the difference between case OKS and Parkes for Bell are significant in action unit 14, 15 and 20. Since the confidence interval doesn't overlap for these two videos. The difference between case McKell and OKS are not significance after the Bonferroni adjustment and this indicates the difference we see before in Figure \ref{fig:common_video} is more likely due to randomness rather than the true underlying difference between the two videos. From a legal perspective, this would show that Bell is addressing the cases with different responses. However, this different approach of responding by the judge doesn't indicate the biasness of the judge in the courtroom but the individuality of different judge approaching to cases. 
+Judge Gageler seems to have a large fluctuate of his facial expressions in video OKS and his response is significantly different from those in other cases for action unit 14, 15 and 20. This shows consistency with our exploratory data analysis where Gageler tends to show a higher proportion of presence for action units in case OKS. 
+
+For Judge Bell, her behaviour is much more fluctuate than all other judges. In the same Figure \ref{fig:model2-plot}, Bell shows significantly more expressions in action unit 14, 15 and 20 for case OKS and Parker, which validates the previous exploratory data analysis. From a legal perspective, this would show that Bell is addressing the cases with different responses. However, this different approach of responding by the judge doesn't indicate the biasness of the judge in the courtroom but the individuality of different judge approaching to cases. 
 
 
 ```{r model_2, results = "asis"}
@@ -199,26 +207,10 @@ binomial_model_2 <- glm(presence ~ judge*video + judge*AU + video*AU,
 emmean_obj_2 <- emmeans(binomial_model_2, c("judge", "video", "AU"), 
                          type = "response") 
 
-int_2 <- confint(emmean_obj_2, adjust = "bonferroni")
+int_2 <- confint(emmean_obj_2, by = c("judge", "AU"), adjust = "bonferroni") # the by argument prescribe 
 ```
 
-```{r goodness-of-fit-2}
-# # all the variables are significant
-# Anova(binomial_model_2, type = "III", singular.ok = TRUE) %>% 
-#   kable(format = "html", digits = 5)
-# 
-# pchisq(deviance(binomial_model_2), 
-#        df.residual(binomial_model_2), lower = FALSE)
-# 
-# library(ResourceSelection)
-# hoslem.test(binomial_model_2$y, 
-#             fitted(binomial_model_2), 
-#             g= 10)
-```
-
-
-
-```{r fig.cap="This is the graphical representaion for model 2\\label{fig:model_2_plot}"}
+```{r model2-plot, fig.cap="The confidence interval for estimated mearginal mean in model 2"}
 int_2 %>% 
   filter(!is.na(df)) %>% 
   mutate(judge = fct_relevel(judge, c("Edelman", "Keane", "Kiefel", "Nettle", "Gageler", "Bell"))) %>% 
@@ -230,8 +222,10 @@ int_2 %>%
   geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL, col= video), 
                 width = 0.2) + 
   facet_grid(AU ~ judge, scales = "free") + 
-  theme(axis.text.x = element_text(angle = 30, hjust = 1)) + 
+  theme(axis.text.x = element_text(angle = 30, hjust = 1), 
+        legend.position = "none") + 
   xlab("video")
+
 ```      
 
 
@@ -239,9 +233,12 @@ int_2 %>%
 #ggplot(au_model_2_aug, aes(x=.fitted, y=.resid)) + geom_point()
 ```
 
-### Interaction between judge and speaking parties
+## Model 3: Speaker
+### Model summary
 
-The estimated coefficients are presented in Table \ref{tab:result_3} and we could find from Figure \ref{fig:model_3_plot} that the video-wise difference between judge still persist and the speaker-wise difference is not significant even before bonferroni adjustment. This result would be a validation that on the high court level, the judges are behaving impartial to different speaking parties. 
+The estimated marginal mean are presented in Table \ref{tab:result_3} in the Appendix and plotted in Figure \ref{fig:model3-plot}. We can observe that the video-wise difference between judge still persist and the speaker-wise difference is not significant. This result would be a validation that on the high court level, the judges are behaving impartial to different speaking parties. 
+  
+<!-- - ANOVA tests suggest all the variables in model_1 and model_2 are significant individually, but speaker in model_3 is not significant at 5% significant level. -->
   
 
 ```{r model_3, results = "asis"}
@@ -258,20 +255,10 @@ emmean_obj_3 <-  emmeans(binomial_model_3,
 #   kable(digits = 5)
   
 
-int_3 <- confint(emmean_obj_3,  adjust = "bonferroni")
+int_3 <- confint(emmean_obj_3, by = c("judge", "AU"),adjust = "bonferroni")
 ```
 
-```{r goodness-of-fit-3}
-# pchisq(deviance(binomial_model_3), 
-#        df.residual(binomial_model_3), lower = FALSE)
-# 
-# library(ResourceSelection)
-# hoslem.test(binomial_model_3$y, 
-#             fitted(binomial_model_3), 
-#             g= 10)
-```
-
-```{r fig.cap = "THis is the graphical representation of model3\\label{fig:model_3_plot}"}
+```{r model3-plot, fig.cap = "The confidence interval for estimated mearginal mean in model 3"}
 int_3 %>% 
   filter(!is.na(df)) %>% 
   ggplot(aes(x= fct_relevel(video, c("Nauru_a", "Nauru_b", "Rinehart_a",
@@ -284,15 +271,6 @@ int_3 %>%
   xlab("video")
 ```
 
-### Summary
-
-<!-- - Based on the goodness-of-fit test, the p-value of binomial_model_3 is slightly greater than 0.05, indicating the model may be a good fit.  -->
-
-<!-- - However, the hosmer-lemeshow test shows binomial_model_1 has p-value = 1, which indicates model_1 is an adequate fit. other two models has p-value less than 0.05.  -->
-
-<!-- - ANOVA tests suggest all the variables in model_1 and model_2 are significant individually, but speaker in model_3 is not significant at 5% significant level. -->
-
-<!-- see if the three-way or four-way interaction works for `multcomp` package to produce simultaneous CI -->
 
 
 
