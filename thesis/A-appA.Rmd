@@ -61,12 +61,12 @@ au_meaning %>%
 ## Model estimation result 
 
 
-```{r results = "asis"}
-knitLatex::lTab(format(int_2 %>% filter(!is.na(prob)) %>% dplyr::select(-df), digits = 2), booktabs = TRUE, caption.firsthead = "\\label{tab:result_2} model result 2")
+```{r result-2, results = "asis"}
+knitLatex::lTab(format(int_2 %>% filter(!is.na(prob)) %>% dplyr::select(-df), digits = 2), booktabs = TRUE, caption.firsthead = "model result 2")
 ```
 
 
-```{r results = "asis"}
-knitLatex::lTab(format(int_3 %>% filter(!is.na(prob)) %>% dplyr::select(-df), digits = 2), booktabs = TRUE, caption.firsthead = "\\label{tab:result_3} model result 3")
+```{r result-3, results = "asis"}
+knitLatex::lTab(format(int_3 %>% filter(!is.na(prob)) %>% dplyr::select(-df), digits = 2), booktabs = TRUE, caption.firsthead = "model result 3")
 ```
 
