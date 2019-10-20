@@ -294,8 +294,8 @@ int_2 %>%
 ```      
 
 ```{r}
-binnedplot(fitted(binomial_model_2), 
-           resid(binomial_model_2, type = "response"))
+# binnedplot(fitted(binomial_model_2), 
+#            resid(binomial_model_2, type = "response"))
 
 ```
 
@@ -350,8 +350,8 @@ int_3 %>%
 
 
 ```{r}
-binnedplot(fitted(binomial_model_3), 
-           resid(binomial_model_3, type = "response"))
+# binnedplot(fitted(binomial_model_3), 
+#            resid(binomial_model_3, type = "response"))
 ```
 
 
