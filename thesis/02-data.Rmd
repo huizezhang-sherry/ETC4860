@@ -50,7 +50,7 @@ The data can also be expressed in the long format with action unit being another
 
 ```{r results='asis'}
 long <- au_tidy %>%
-        filter(judge == "Bell", video == "McKell", frame <=2) 
+        filter(judge == "Edelman", video == "McKell", frame <=2) 
 
 knitLatex::xTab(format(as.data.frame(long), digits = 2), booktabs = TRUE, caption.top = "\\label{tab:long} data in long format")
 
@@ -65,5 +65,5 @@ There are two different sets of variables that need imputation. `Presence` is a 
 
 ## Data cleaning
 
-There is a data quality issue coming from the data I get from OpenFace. For some observations, the intensity of the action unit could be high while the present variable has a zero value. This does not make sense since if an action unit has been detected as strong intensity for a judge in a particular frame, it should at least present on the judge's face. Therefore, I adjust for the presence value if the intensity is higher than one. One is being chosen as the threshold value since in Ekman's definition of the intensity of the action unit, a score of one means the action unit is at least slightly present in the judge's face. The adjusted data is stored as `au_tidy` under the `raw_data` folder. 
+There is a data quality issue coming from the data I get from OpenFace. For some observations, the intensity of the action unit is high while the present variable has a zero value. According to @baltrusaitis2018openface, intensity is trained by OpenFace seperately from presence, thus some inconsistency is expected. However, one would expect presence and intensity score should not have too much discrepency. Therefore, I adjust for the presence value if the intensity is higher than one. One is being chosen as the threshold value because in Ekman's definition of the intensity of the action unit, a score of one means the action unit is at least slightly present in the judge's face.
 
