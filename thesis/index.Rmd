@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = FALSE,
                       message=FALSE, 
                       cache=TRUE, 
                       warning = FALSE,
-                      out.width="100%", 
+                      out.width="100%",
                       fig.width=10, 
                       fig.height=7, 
                       fig.align = "center", 
@@ -28,6 +28,8 @@ library(knitr)
 library(emmeans)
 library(multcomp)
 library(car)
+library(kableExtra)
+library(arm)
 
 load("data/au_tidy.rda")
 load("data/most_common.rda")
