@@ -10,13 +10,9 @@ knit: "bookdown::render_book"
 Let $\mathbf{X}$ be a matrix of predictors, and $\mathbf{Y}$ variable in our case is bivariate matrix of response variables, including a binary indicator of presence/absence and a numeric value measuring intensity, of facial action unit, where 
 
 - $X_1$ indicates `judge` with six categories $i = 1,2, \cdots, 6$
-
 - $X_2$ indicates `video` for each of the seven cases, $j = 1,2, \cdots, 7$
-
-- $X_3$ indicates action unit containing `r length(unique(au_tidy$AU))` possible facial expression.  
-
+- $X_3$ indicates action unit containing 18 possible facial expression.  
 - $X_4$ indicates `speaker`, either the appellant or respondent, $l=1,2$
-
 - $X_5$ indicates `frame` corresponding to time, $t = 1,2, \cdots, T_j$
 
 Note that $t$ could be considered a time variable, but because images are taken at 1 minute intervals, temporal dependence is unlikely to exist. Rather this should be considered an independent observation. 
@@ -27,7 +23,12 @@ $$Y_{ijklt} = \mu + \alpha_i + \beta_j + \gamma_k + \delta_l + \varepsilon_{ijkl
 
 \noindent Also, let $P_{jitkl}$ represent the response variable presence, and $I_{jitkl}$ represent the response variable intensity. This notation will be helpful for defining the plots and models explained in this section.
 
-## Modelling
+## Modelling Presence
+
+### Model structure
+
+- why probit or logit? 
+
 
 ### Model 1: Action unit
 
@@ -36,20 +37,22 @@ $$Y_{ijklt} = \mu + \alpha_i + \beta_j + \gamma_k + \delta_l + \varepsilon_{ijkl
 
 <!-- and we would be interested in interactions between judge, case, action unit and speaker. An alternative model structure, is to treat each action unit individually, and fit separate models.  -->
 
-A binomial model with logistic link is first used to model the presence score. Interaction of judge and action unit is included to capture the judge-wise differences for different action units. The is necessary since from the exploratory data analysis, different judges  have different average presence score for different action units. The model can be written down as Equation \ref{eq:judge_au}. 
+A binomial model with logistic link is first used to model the presence score.[https://stats.stackexchange.com/questions/20523/difference-between-logit-and-probit-models#30909] Interaction of judge and action unit is included to capture the judge-wise differences for different action units. The is necessary since from the exploratory data analysis, different judges  have different average presence score for different action units. The model can be written down as Equation \ref{eq:judge_au}. 
 
-\begin{equation}\label{eq:judge_au}
-P_{ik} = \mu + \alpha_i + \gamma_k + (\alpha\gamma)_{ik}
-\end{equation}
+\begin{align}\label{eq:judge_au}
+P_{ik} &= \frac{e^{\eta_{ik}}}{1 + e^{\eta_{ik}}} \\
+\eta_{ik} = \mu + \alpha_i + \gamma_k + (\alpha\gamma)_{ik}
+\end{align}
 
 
 ### Model 2: Video
 
 Build upon the first model, the second model adds the video related main effect and interactions, as shown in Equation \ref{eq:judge_video}. The interactions allow both judge and action unit variables to differ in different videos, which is useful to answer the research questions *whether the judges are behaving same or different across videos*. 
 
-\begin{equation}\label{eq:judge_video}
-P_{ijk} = \mu + \alpha_i + \beta_j +\gamma_k + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk}
-\end{equation}
+\begin{align}\label{eq:judge_video}
+P_{ijk} &= \frac{e^{\eta_{ijk}}}{1 + e^{\eta_{ijk}}} \\
+\eta_{ijk} = \mu + \alpha_i + \beta_j +\gamma_k + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk}
+\end{align}
 
 \noindent 
 
@@ -57,9 +60,10 @@ P_{ijk} = \mu + \alpha_i + \beta_j +\gamma_k + (\alpha\beta)_{ij} + (\alpha\gamm
 
 Build upon the second model, the third model is aimed to capture the speaker-wise effect, that is, *do the expressions of the judges change when different parties are speaking*. The model formula is shown in Equation \ref{eq:judge_speaker}. 
 
-\begin{equation}\label{eq:judge_speaker}
-P_{ijkl} = \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\delta)_{il}
-\end{equation}
+\begin{align}\label{eq:judge_speaker}
+P_{ijkl} &= \frac{e^{\eta_{ijkl}}}{1 + e^{\eta_{ijkl}}} \\
+\eta_{ijkl} = \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\delta)_{il}
+\end{align}
 
 Interactions are still included in this model, but attention need to be paid to ensure the interactions are relevant. Theoretically, we could include speaker with all of the three existing variables (judge, action unit and video), but this would cause the model to run out of degree of freedom given the number of observations we have. Therefore, we only include judge-speaker interaction because it is directly related to the research question of this model. 
 
@@ -69,31 +73,63 @@ Interactions are still included in this model, but attention need to be paid to 
 
 ### Diagnostics 
 
-<!-- not sure if I need a reference for ANOVA -->
-<!-- @book{mcdonald2009handbook, -->
-<!--   title={Handbook of biological statistics}, -->
-<!--   author={McDonald, John H}, -->
-<!--   volume={2}, -->
-<!--   year={2009}, -->
-<!--   publisher={sparky house publishing Baltimore, MD} -->
-<!-- } -->
-
-The analysis of variance (ANOVA) is a statistical method that compares the mean of each treatment level for a variable. Three types of ANOVA test are designed for different purposes. Type I takes a sequential approach to test the significance of variables, thus the order of the variable in the model will potentially affect the ANOVA result. Type II ANOVA tests the main effect of a covariate after controlling for other covariates but not interactions. This approach is recommended if the interactions are not significant. Type III ANOVA tests the main effect of a covariate after controlling for other covariates *and* the interactions. It is better than Type II ANOVA if the interactions are significant. 
+The analysis of variance (ANOVA) [@faraway2016extending; @gelman2006data] is a statistical method that compares the mean of each treatment level for a variable. Three types of ANOVA test are designed for different purposes. Type I takes a sequential approach to test the significance of variables, thus the order of the variable in the model will potentially affect the ANOVA result. Type II ANOVA tests the main effect of a covariate after controlling for other covariates but not interactions. This approach is recommended if the interactions are not significant. Type III ANOVA tests the main effect of a covariate after controlling for other covariates *and* the interactions. It is better than Type II ANOVA if the interactions are significant. 
 
 Different packages in R conduct ANOVA test: `anova()` and `drop()` from base R provides type I and type II tests. `Anova()` from `car` package allows for both type II and III through specifying a `type` argument. `aov()` from `stats` package allows for ANOVA test only for balanced dataset. 
 
 The ANOVA test provide variable significance, which allows us to understand if at least one treatment in the group is significantly different from others. This is useful before proceeds to the multiple comparison procedure, where we are able to talk which treatment(s) are different from others. 
 
+\newpage
 
+## Modelling Intensity 
+
+The histogram of the intensity is plotted in Figure \ref{fig:intensity}. The distribution has a high proportion of zeros with highly skewed continuous position value.  This type of data is the so-called semi-continuous data [@Neelon2019; @twopart2010]. The semi-continous data is modelled in the econometrics literature by the two part model[@cragg1971some; @manning1981two]. In the two part model, the data is viewed to be generated via a sequential modelling technique that is a mixed distribution of 
+
+- a binary (logistic or probit) model of if Y = 0 or not, and 
+- a specific model for the conditional distribution of $y \mid y > 0$. 
+
+The choice of model between two part model and sample selection model is always discussed in the literature. Monte-Carlo simulation studies by different reseraches [@leung1996choice; @duan1984choosing; @manning1987monte] show different results on whether these different classes of model are answering the same or distinct inferential questions. The reason for us to choose two part model rather than sample selction model is because the problem of not being able to observe $Y$ for those observations with selection variable $z = 0$ doesnt exist in our data. In another word, if an action unit is not present for an observation, it doesnt make sense to talk about "intensity score if the action unit is present". Tobit model is not appropriate because the data can't be viewed as normally distributed with negative value censored as zero (meaningless to say negative intensity value). Zero inflated model is not used because it considers two source of zeros in the data while there is no zeros being generated from the second model (only one source of zeros). 
+
+The functional form of the conditional distribution need to be able to capture the highly skewed nature of the non-zero observations. A convention approach is to assume the conditional distribution is a lognormal distribution [@manning1981two; @diehr1999methods]. More recent literature proposes the use of gamma or generalised gamma regression model for the conditional distribution [@twopart2010]. A log transformation on the non-zero data in Figure \ref{fig:intensity} suggests the data is left skewed after the transformation, thus a lognormal distribution may not be able to adequately capture the data. Gamma regression model is chosen to because it could also capture the right skewedness and it is easier to  implement via the glm() function than the generalised gamma distribution. The log link function is used because the canonical inverse link for gamma distribution will cause some estimated marginal mean to be extremely high and thus meaningless for intensity score.  
+
+
+The two part model including video and relevant interactions is written in Equation \ref{eq:two-part1}. The model includes speaker is shown in Equation \ref{eq:two-part2}. 
+
+\begin{align}\label{eq:two-part1}
+\mu_{ijkl}^1 &= \frac{e^{\eta_{ijkl}}}{1 + e^{\eta_{ijkl}}} \\
+\eta{ijk} &= \mu + \alpha_i + \beta_j +\gamma_k + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} \\
+\mu_{ijk}^2 &= \frac{1}{I_{ijk}} \\
+E(I_{ijk} \mid I_{ijk} > 0) &= \mu + \alpha_i + \beta_j +\gamma_k + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk}
+\end{align}
+
+
+\begin{align}\label{eq:two-part2}
+\mu_{ijkl}^1 &= \frac{e^{\eta_{ijkl}}}{1 + e^{\eta_{ijkl}}} \\
+\eta{ijkl} &= \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\delta)_{il} \\
+\mu_{ijkl}^2 &= \frac{1}{I_{ijkl}} \\
+E(I_{ijkl} \mid I_{ijkl} > 0) &= \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\delta)_{il}
+\end{align}
+
+\noindent In the above two models, $\mu_{.}^1$ indicates the mean of the first binomial model and $\mu_{.}^2$ is the mean of the second gamma model. 
+
+
+```{r intensity, fig.cap = "this is the histogram"}
+p1 <- au_tidy %>% ggplot(aes(x = intensity)) + 
+  geom_histogram()
+p2 <- au_tidy %>% filter(intensity != 0) %>% ggplot(aes(x = log(intensity))) + 
+  geom_histogram()
+gridExtra::grid.arrange(p1, p2, nrow = 1)
+```
+
+\newpage
 ## Post-Model Analysis
-
 
 The estimates of variables from the model summary are not particularly useful in our case. This is because firstly,  the estimates of the coefficient are not interpretable in the logistic regression. Secondly, we are interested in whether the mean for each treatment is same or different. Thus estimated marginal mean and multiple comparison is necessary to compute for post-model analysis. 
 
 ### Estimated Marginal Mean (EMM)
 
 
-The estimated marginal mean is the fitted value from a model over a pre-defined reference grid. In our data, the unique combination of judge, video and action unit forms the reference grid. The estimated marginal mean is computed on each grid point as a linear fit of the model, along with standard error and confidence interval. The probability from estimated marginal mean have a nice interpretation as the estimated probability of presence score for a particular combination of action unit, judge and video. This output allows us to compare how the estimated presence probabilities of each judge, video and action unit combination are different or similar from each other. 
+The estimated marginal mean [@gelman2006data] is the fitted value from a model over a pre-defined reference grid. In our data, the unique combination of judge, video and action unit forms the reference grid. The estimated marginal mean is computed on each grid point as a linear fit of the model, along with standard error and confidence interval. The probability from estimated marginal mean have a nice interpretation as the estimated probability of presence score for a particular combination of action unit, judge and video. This output allows us to compare how the estimated presence probabilities of each judge, video and action unit combination are different or similar from each other. 
 
 
 <!-- - good to know that: typically the tests and confidence intervals are asymptotic (because of using z score). Thus the df column for tabular results will be Inf.[have a look at the confidence interval for glm: https://cran.r-project.org/web/packages/emmeans/vignettes/models.html] -->
