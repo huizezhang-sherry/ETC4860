@@ -1,0 +1,357 @@
+---
+chapter: 3
+knit: "bookdown::render_book"
+---
+
+\newpage
+
+## Choose of action unit to include
+
+
+The number of action unit to include in the model is a matter of choice. Including too many action units will cause the model to run out of degree of freedom while too few action units will cause the model not being able to explain an adequate amount of data. Choosing the number of action unit to include ensures the model is parsimonious, that is, a model with the smallest number of variables but with greatest explanatory power. Random effect may be able to deal with large number of factor levels of a variable, but in our context, understanding the presence or intensity score of an action unit that barely present is not particularly of our interest. We are interested in the action units with a certain mean presence (and intensity) for most of the judges. 
+
+I compute the number of action unit for different combination of mean presence level and number of judges and plot the result as a heatmap in Figure \ref{fig:heatmap-presence} [this sentence need to be re-worded]. The bottom left cell with cutpoint of 0.05 and number of judge as 1 can be interepreted as follows. There are 17 action units with at least one judge having mean presence score greater than 0.05.
+
+The choose of number of action unit is similar to choosing the number of principle component based on the proportion of explained varariance in the screen plot from principle component analysis. We can see from the plot that when changing the cutpoint from 0.35 to 0.3 and number of judges from 6 to 5, we have a great increase in the number of action unit. Thus, I choose the cutpoint at 0.3 and number of judge at 5. This allows my model to include seven action units. The included action units are shown in Table \ref{tab:au-presence} along with their meanings and their average presence score are plotted in Figure \ref{fig:selected-au-presence} where the color indicates whether the average percentage is above the 0.3 threshold.  
+
+I perform the procedure on the intensity data with the heatmap can be foudn in \ref{fig:heatmap-intensity}. The choose of intensity is similar to the one for presence data but we also want there to be a certain number of action unit to overlap with the ones for presence [maybe reword this sentense as well?]. Therefore, we choose the cutpoitn at 0.2 and number of judges at 5, which gives six action units to include. The information and average intensity score can be foudn in Table \ref{tab:au-intensity} and Figure \ref{fig:selected-au-intensity} respectively. 
+
+<!-- (0.2, 5), (0.2, 4), (0.25,4), (0.25,5) also valid candidates but want to overlap with the action unit choosen for presence for compare (they only overlap by two AUs) -->
+
+```{r function}
+compute_au_number <- function(cutpoint, num_judge, type){
+
+  if(!type %in% c("intensity", "presence")){
+    warning("type need to be one of intensity and presence")
+    break
+  }
+
+  if(type == "intensity"){
+    most_intense %>% ungroup() %>%
+      filter(mean_intensity > cutpoint) %>% group_by(AU) %>%
+      summarise(count = n()) %>%
+      filter(count >=num_judge) %>% ungroup() %>%
+      pull(AU) %>% length()
+
+  }else{
+    most_common %>% ungroup() %>%
+      filter(avg_presence > cutpoint) %>% group_by(AU) %>%
+      summarise(count = n()) %>%
+      filter(count >=num_judge) %>% ungroup() %>%
+      pull(AU) %>% length()
+  }
+}
+```
+
+```{r heatmap-presence, fig.cap="heatmap for presence"}
+x <- seq(0.05, 0.5, 0.05)
+y <- 1:6
+
+result <- expand.grid(x, y) %>% 
+  as_tibble() %>% 
+  mutate(number = map2(Var1, Var2, compute_au_number,type = "presence")) %>% 
+  unnest(number) %>% 
+  mutate(Var1 = as.factor(Var1),
+         Var2 = as.factor(Var2))
+
+best <- result %>% filter(Var1 == 0.3, Var2 == 5)
+
+result %>% 
+  ggplot(aes(x = Var1, y = Var2, fill = number, col = number)) + 
+  geom_tile() + 
+  geom_text(aes(label = number), col = "white", size = 7) + 
+  geom_tile(data = best,aes(x = Var1, y = Var2),
+            size = 2, fill = NA, col = "red") +
+  xlab("cutpoint") + 
+  ylab("number of judges")
+
+```
+
+```{r au-presence}
+au_presence <- most_common %>% ungroup() %>%
+  filter(avg_presence > 0.25) %>% group_by(AU) %>%
+  summarise(count = n()) %>% filter(count >=5) %>% pull(AU) 
+  
+tibble(AU = as.factor(au_presence)) %>% 
+  left_join(au_meaning, by = c("AU" = "AU_number")) %>% 
+  dplyr::select(AU_meaning) %>% 
+  kable(caption = "The meaning of action units selected for presence modelling")
+  
+```
+
+
+```{r selected-au-presence, fig.cap="The eight action units with at least five judges having average presence score over 25\\%."}
+
+# average presence score for the action unit where at least 5 judges has average presence score greater than 0.25
+most_common %>%
+  filter(AU %in% au_presence) %>%
+  mutate(less = as.factor(ifelse(avg_presence > 0.3, 0, 1))) %>%
+  ggplot(aes(x = AU, y = avg_presence,
+             col = less, fill = less)) +
+  geom_col() +
+  xlab("AU") +
+  ylab("Average Presence") +
+  facet_wrap(vars(judge)) +
+  coord_flip() +
+  theme(legend.position = "none")
+```
+
+
+```{r heatmap-intensity, fig.cap="heatmap for intensity"}
+result <- expand.grid(x, y) %>% 
+  as_tibble() %>% 
+  mutate(number = map2(Var1, Var2, compute_au_number,type = "intensity")) %>% 
+  unnest(number) %>% 
+  mutate(Var1 = as.factor(Var1),
+         Var2 = as.factor(Var2))
+
+best <- result %>% filter(Var1 == 0.2, Var2 == 5)
+
+result %>% 
+  ggplot(aes(x = Var1, y = Var2, fill = number, col = number)) + 
+  geom_tile() + 
+  geom_text(aes(label = number), col = "white", size = 7) + 
+  geom_tile(data = best,aes(x = Var1, y = Var2),
+            size = 2, fill = NA, col = "red") +
+  xlab("cutpoint") + 
+  ylab("number of judges")
+```
+
+
+```{r au-intensity}
+au_intensity <- most_intense %>% ungroup() %>%
+  filter(mean_intensity > 0.15) %>% group_by(AU) %>%
+  summarise(count = n()) %>% filter(count >=5) %>% pull(AU)
+  
+tibble(AU = as.factor(au_intensity)) %>% 
+  left_join(au_meaning, by = c("AU" = "AU_number")) %>% 
+  dplyr::select(AU_meaning) %>% 
+  kable(caption = "The meaning of action units selected for intensity modelling ")
+  
+```
+
+
+```{r selected-au-intensity, fig.cap="selected au."}
+
+# average presence score for the action unit where at least 5 judges has average presence score greater than 0.25
+most_intense %>%
+  filter(AU %in% au_intensity) %>%
+  mutate(less = as.factor(ifelse(mean_intensity > 0.2, 0, 1))) %>%
+  ggplot(aes(x = AU, y = mean_intensity,
+             col = less, fill = less)) +
+  geom_col() +
+  xlab("AU") +
+  ylab("Average Presence") +
+  facet_wrap(vars(judge)) +
+  coord_flip() +
+  theme(legend.position = "none")
+```
+
+
+\newpage
+
+## Modelling result for presence
+
+### Model 1: Action unit
+
+The first model in Equation \ref{eq:judge_au} is estimated and the estimated marginal mean is computed in Table \ref{tab:result_1} afterward. The `prob` column can be interpreted as after averaging over all the videos and speaking parties, the estimated mean probability for judge Edelman in action unit AU02 is 0.95, with a 95% confidence interval of [0.92, 0.97]. Notice that  confidence intervals for a generalised linear model is asymmetric around the estimates because the linear symmetric interval of the mean need to be transferred via the inverse of link function to get the confidence interval for the response. 
+
+The Type III Analysis of Variance (ANOVA) test is conducted with the result shown in Table \ref{tab:anova-1}. It can be seen that judge, AU and their interactions are all significance, which validates our choice of Type III instead of Type II ANOVA, which is better if the interactions are not signifcant. 
+
+Multiple comparison is then performed and the 95% confidence interval after bonferroni adjustment is plotted in Figure \ref{fig:model1-plot}. This plot shows that the intervals for the judges are significantly different from one to another as most of the intervals are not overlapping with each other. This confirms the necessity of including the interaction terms. 
+
+[Lastly talk about residuals] 
+
+```{r}
+model_dt <- au_tidy %>%
+  ungroup(judge) %>%
+  filter(AU %in% au_presence) %>%
+  mutate(judge = fct_relevel(judge, c("Edelman", "Keane", "Kiefel",
+                                      "Nettle", "Gageler", "Bell")),
+         video = fct_relevel(video, c("Nauru-a", "Nauru-b", "Rinehart-a",
+                                      "Rinehart-b", "McKell", "OKS", "Parkes")),
+         AU = fct_relevel(AU, "AU01"))
+```
+
+
+```{r model_1}
+binomial_model_1 <- glm(presence ~ judge*AU,
+                        family = binomial(link = "logit"),
+                        data = model_dt)
+
+emmean_obj_1 <-  emmeans(binomial_model_1, ~judge*AU, type = "response")
+int_1 <- confint(emmean_obj_1, by = "judge",adjust = "bonferroni") %>% as.data.frame() %>% dplyr::select(-df)
+
+
+# result_1 <- multcomp::cld(lsmean_obj_1, alpha = 0.05, type = "response") 
+```
+
+```{r model_1_response, results = "asis"}
+knitLatex::xTab(format(int_1, digits = 2), booktabs = TRUE, caption.top = "\\label{tab:result_1}Estimated marginal mean summary for Model 1. The confidence interval is adjusted using bonferroni adjustment")
+```
+<!-- A bit more work on  -->
+<!-- 1) how the glm standard error is computed:  -->
+<!-- ```{r} -->
+<!-- o <- glm(y ~ x, data = dat) -->
+<!-- std.er <- sqrt(t(C) %*% vcov(o) %*% C) -->
+<!-- # check if it is the same as pred$se.fit -->
+<!-- pred <- predict(o, newdata = data.frame(x=1.5), se.fit = TRUE) -->
+<!-- ``` -->
+
+<!-- 2) if HC estimator of sigma is needed  -->
+<!-- 3) if adjustment is needed for clusteringstandard error:  -->
+<!-- http://civil.colorado.edu/~balajir/CVEN6833/lectures/GLM-theory-notes.pdf -->
+<!-- http://civil.colorado.edu/~balajir/CVEN6833/lectures/glm-estimation-presentation.pdf -->
+<!-- https://stats.stackexchange.com/questions/332077/glm-standard-errors -->
+
+
+```{r anova-1}
+Anova(binomial_model_1, type = "III", singular.ok = TRUE) %>% 
+  format(digits = 2) %>% 
+  kable(caption = "\\label{tab:anova-1}Type III ANOVA table for model 1. All the variables are significant.")
+```
+
+```{r model1-plot, fig.cap="The confidence interval for estimated mearginal mean in model 1"}
+int_1 %>%
+  left_join(au_meaning, by = c("AU" = "AU_number")) %>%
+  as_tibble()%>%
+  filter(!is.na(df)) %>%
+  ggplot(aes(x= AU,y = prob, fill = AU)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL), width = 0.2) +
+  facet_wrap(vars(judge))  +
+  coord_flip() +
+  xlab("AU") +
+  theme(legend.position = "none")
+```
+
+```{r}
+# binnedplot(fitted(binomial_model_1), 
+#            resid(binomial_model_1, type = "response"))
+
+
+# arm:::binned.resids(fitted(binomial_model_1), 
+#                     resid(binomial_model_1, type = "response"), 
+#                     floor(sqrt(length(fitted(binomial_model_1)))))
+
+# arm:::binned.resids(fitted(binomial_model_1), 
+#                     resid(binomial_model_1, type = "response"), 
+#                     floor(sqrt(length(fitted(binomial_model_1)))))
+```
+
+
+
+### Model 2: Video
+
+The estimated marginal mean for the second model are presented in Table \ref{tab:result-2} in the Appendix due to its length. ANOVA test (Tab \ref{tab:anova-2}) and multiple comparison is conducted as described before. Figure \ref{fig:model2-plot} presents the 95% confidence interval for each estimated marginal mean based on model 2. 
+
+We can observe that Judge Edelman, Keane and Kiefel behave relatively consistent throughout all the videos since all the intervals overlap with each other after the  bonferroni adjustment. This would indicates in these videos, these judges would have similar thinking or reaction towards the evidence and argument presented by the barristers.  
+
+Judge Gageler seems to have a large fluctuate of his facial expressions in video OKS and his response is significantly different from those in other cases for action unit 14, 15 and 20. This shows consistency with our exploratory data analysis where Gageler tends to show a higher proportion of presence for action units in case OKS. 
+
+For Judge Bell, her behaviour is much more fluctuate than all other judges. In the same Figure \ref{fig:model2-plot}, Bell shows significantly more expressions in action unit 14, 15 and 20 for case OKS and Parker, which validates the previous exploratory data analysis. From a legal perspective, this would show that Bell is addressing the cases with different responses. However, this different approach of responding by the judge doesn't indicate the biasness of the judge in the courtroom but the individuality of different judge approaching to cases. 
+
+
+```{r model-2, results = "asis"}
+binomial_model_2 <- glm(presence ~ judge*video + judge*AU + video*AU,
+                        family = binomial(link = "logit"),
+                        data = model_dt)
+
+emmean_obj_2 <- emmeans(binomial_model_2, c("judge", "video", "AU"),
+                        type = "response")
+
+int_2 <- confint(emmean_obj_2, by = c("judge", "AU"), adjust = "bonferroni") # the by argument prescribe
+
+```
+
+```{r anova-2}
+Anova(binomial_model_2, type = "III", singular.ok = TRUE) %>% 
+  format(digits = 2) %>% 
+  kable(caption = "\\label{tab:anova-2}Type III ANOVA table for model 2. All the variables are significant.")
+```
+
+```{r model2-plot, fig.cap="The confidence interval for estimated mearginal mean in model 2"}
+int_2 %>% 
+  left_join(au_meaning, by = c("AU" = "AU_number")) %>% 
+  dplyr::select(-Muscle) %>% 
+  filter(!is.na(df)) %>% 
+  mutate(judge = fct_relevel(judge, c("Edelman", "Keane", "Kiefel", 
+                                      "Nettle", "Gageler", "Bell"))) %>% 
+  ggplot(aes(x= fct_relevel(video, c("Nauru_a", "Nauru_b", "Rinehart_a",
+                               "Rinehart_b", "McKell", "OKS", "Parkes")), 
+                            y = prob,  group = judge)) + 
+  geom_point(aes(col= video)) + 
+  geom_line(alpha = 0.5, lty = "dashed") + 
+  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL, col= video), 
+                width = 0.2) + 
+  facet_grid(AU_meaning ~ judge, scales = "free",
+             labeller = label_wrap_gen(width = 5)) + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1), 
+        strip.text.y = element_text(angle = 0),
+        legend.position = "none") + 
+  xlab("video")
+
+```      
+
+```{r}
+binnedplot(fitted(binomial_model_2), 
+           resid(binomial_model_2, type = "response"))
+
+```
+
+
+
+### Model 3: Speaker
+
+The estimated marginal mean are presented in Table \ref{tab:result-3} in the Appendix and plotted in Figure \ref{fig:model3-plot}. ANOVA table in Tab \ref{tab:anova-3} SAYS BLABLABLA. We can observe that the video-wise difference between judge still persist and the speaker-wise difference is not significant. This result would be a validation that on the high court level, the judges are behaving impartial to different speaking parties. 
+  
+<!-- - ANOVA tests suggest all the variables in model_1 and model_2 are significant individually, but speaker in model_3 is not significant at 5% significant level. -->
+  
+
+```{r model_3, results = "asis"}
+binomial_model_3 <- glm(presence ~ judge*speaker + video*judge +
+                          AU*judge + video*AU, family = "binomial",
+                        data = model_dt)
+
+emmean_obj_3 <-  emmeans(binomial_model_3,
+                         c("judge", "AU", "speaker", "video") ,
+                         type = "response",weights = "cell")
+
+# interesting that speaker is not significant, but speaker*judge is
+# given the interactions, speaker is not significant but it still useful because
+# the interactions are significant
+int_3 <- confint(emmean_obj_3, by = c("judge", "AU"),adjust = "bonferroni")
+```
+
+
+```{r anova-3}
+Anova(binomial_model_3, type = "III", singular.ok = TRUE) %>% 
+  format(digits = 2) %>% 
+  kable(caption = "\\label{tab:anova-3}Type III ANOVA table for model 3. NEED TO REWRITE HERE.")
+```
+
+
+```{r model3-plot, fig.cap = "The confidence interval for estimated mearginal mean in model 3"}
+int_3 %>% 
+  filter(!is.na(df)) %>% 
+  ggplot(aes(x= fct_relevel(video, c("Nauru_a", "Nauru_b", "Rinehart_a",
+                               "Rinehart_b", "McKell", "OKS", "Parkes")), 
+             y = prob,group= judge)) + 
+  geom_point(aes(col = speaker),position = position_dodge(width = 0.3)) + 
+  geom_line(alpha = 0.5, lty = "dashed") + 
+  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL, col = speaker), 
+                width = 0.2,position = position_dodge(width = 0.3)) + 
+  facet_grid(AU ~ fct_relevel(judge, c("Edelman", "Keane", "Kiefel", "Nettle", "Gageler", "Bell")), scales = "free") + 
+  theme(axis.text.x = element_text(angle = 30, hjust = 1)) + 
+  xlab("video")
+
+
+```
+
+
+```{r}
+binnedplot(fitted(binomial_model_3), 
+           resid(binomial_model_3, type = "response"))
+```
+
+

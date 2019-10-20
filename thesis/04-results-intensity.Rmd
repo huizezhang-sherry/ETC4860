@@ -1,0 +1,109 @@
+---
+chapter: 3
+knit: "bookdown::render_book"
+---
+
+\newpage
+
+## Modelling result for intensity 
+
+### Model 2: Video
+
+The two part model in equation \ref{eq:two-part1} is estimated for the intensity data. Estimated marginal mean, ANOVA and multiple comparison procedure are performed as modelling presence data. [should I include all ANOVA result?? - they are significant]
+
+The 95% confidence interval plot is presented in Figure \ref{fig:intensity-video}. 
+
+```{r intensity-data}
+model_dt <- au_tidy %>%
+  ungroup(judge) %>%
+  filter(AU %in% au_intensity) %>%
+  mutate(judge = fct_relevel(judge, c("Edelman", "Keane", "Kiefel",
+                                      "Nettle", "Gageler", "Bell")),
+         video = fct_relevel(video, c("Nauru-a", "Nauru-b", "Rinehart-a",
+                                      "Rinehart-b", "McKell", "OKS", "Parkes")),
+         AU = fct_relevel(AU, "AU01"),
+         non_zero = as.factor(ifelse(intensity ==0, 0, 1)))
+
+# model_dt %>% group_by(non_zero) %>%
+#   summarize(count = n(), prop = count/nrow(model_dt))
+```
+
+```{r intensity-model-1}
+m1 <- glm(non_zero ~ judge*video + judge*AU + video*AU,
+          data = model_dt, family = binomial(link = "logit"))
+m2 <- glm(intensity ~ judge*video + judge*AU + video*AU,
+          data = subset(model_dt, non_zero == 1),
+          family = Gamma(link = "log"))
+```
+
+```{r anova-intensity-1}
+# Anova(m2, type = "III", singular.ok = TRUE) %>% 
+#   format(digits = 2) %>% 
+#   kable(caption = "\\label{tab:anova-1}Type III ANOVA table for model 1. All the variables are significant.")
+```
+
+
+```{r intensity-video, fig.cap="The confidence interval for estimated mearginal mean in model 2"}
+
+emmean_m2 <-  emmeans(m2, c("judge", "video", "AU"), type = "response")
+int_2 <- confint(emmean_m2, by = c("judge", "AU"), adjust = "bonferroni") # the by argument prescribe
+
+int_2 %>%
+  left_join(au_meaning, by = c("AU" = "AU_number")) %>%
+  dplyr::select(-Muscle) %>%
+  filter(!is.na(df)) %>%
+  ggplot(aes(x= video,
+             y = response,  group = judge)) +
+  geom_point(aes(col= video)) +
+  geom_line(alpha = 0.5, lty = "dashed") +
+  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL, col= video),
+                width = 0.2) +
+  facet_grid(AU_meaning ~ judge, scales = "free",
+             labeller = label_wrap_gen(width = 5)) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+        strip.text.y = element_text(angle = 0),
+        legend.position = "none") +
+  xlab("video")
+```
+
+### Model 3: Speaker
+
+The two part model in equation \ref{eq:two-part2} is also estimated for the intensity data along with post-analysis procedure being conducted after model estimation. The 95% confidence interval plot is presented in Figure \ref{fig:intensity-speaker}. 
+
+```{r intensity-model-2}
+m1 <- glm(non_zero ~ judge*speaker + video*judge +
+            AU*judge + video*AU, data = model_dt, family = binomial(link = logit))
+m2 <- glm(intensity ~ judge*speaker + video*judge +
+            AU*judge + video*AU,
+          data = subset(model_dt, non_zero == 1), family = Gamma(link = log))
+```
+
+```{r anova-intensity-2}
+# Anova(m2, type = "III", singular.ok = TRUE) %>% 
+#   format(digits = 2) %>% 
+#   kable(caption = "\\label{tab:anova-1}Type III ANOVA table for model 1. All the variables are significant.")
+```
+
+
+```{r intensity-speaker, fig.cap="The confidence interval for estimated mearginal mean in model 2"}
+emmean_m3 <-  emmeans(m2, c("judge", "video", "AU", "speaker"), type = "response")
+int_3 <- confint(emmean_m3, by = c("judge", "AU"), adjust = "bonferroni") # the by argument prescribe
+
+int_3 %>%
+  left_join(au_meaning, by = c("AU" = "AU_number")) %>%
+  dplyr::select(-Muscle) %>%
+  filter(!is.na(df)) %>%
+  ggplot(aes(x= video,y = response,group= judge)) +
+  geom_point(aes(col = speaker),position = position_dodge(width = 0.3)) +
+  geom_line(alpha = 0.5, lty = "dashed") +
+  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL, col = speaker),
+                width = 0.2,position = position_dodge(width = 0.3)) +
+  facet_grid(AU_meaning ~ judge, scales = "free",
+             labeller = label_wrap_gen(width = 5)) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+        strip.text.y = element_text(angle = 0),) +
+  xlab("video")
+```
+
+## Discussion
+
