@@ -12,7 +12,6 @@ knit: "bookdown::render_book"
 The two part model in equation \ref{eq:two-part1} is estimated for the intensity data. Estimated marginal mean, ANOVA and multiple comparison procedure are performed as modelling presence data. [should I include all ANOVA result?? - they are significant]
 
 The 95% confidence interval plot is presented in Figure \ref{fig:intensity-video}. 
-
 ```{r intensity-data}
 model_dt <- au_tidy %>%
   ungroup(judge) %>%
@@ -46,9 +45,9 @@ m2 <- glm(intensity ~ judge*video + judge*AU + video*AU,
 ```{r intensity-video, fig.cap="The confidence interval for estimated mearginal mean in model 2"}
 
 emmean_m2 <-  emmeans(m2, c("judge", "video", "AU"), type = "response")
-int_2 <- confint(emmean_m2, by = c("judge", "AU"), adjust = "bonferroni") # the by argument prescribe
+int_2i <- confint(emmean_m2, by = c("judge", "AU"), adjust = "bonferroni") # the by argument prescribe
 
-int_2 %>%
+int_2i %>%
   left_join(au_meaning, by = c("AU" = "AU_number")) %>%
   dplyr::select(-Muscle) %>%
   filter(!is.na(df)) %>%
@@ -87,9 +86,9 @@ m2 <- glm(intensity ~ judge*speaker + video*judge +
 
 ```{r intensity-speaker, fig.cap="The confidence interval for estimated mearginal mean in model 2"}
 emmean_m3 <-  emmeans(m2, c("judge", "video", "AU", "speaker"), type = "response")
-int_3 <- confint(emmean_m3, by = c("judge", "AU"), adjust = "bonferroni") # the by argument prescribe
+int_3i <- confint(emmean_m3, by = c("judge", "AU"), adjust = "bonferroni") # the by argument prescribe
 
-int_3 %>%
+int_3i %>%
   left_join(au_meaning, by = c("AU" = "AU_number")) %>%
   dplyr::select(-Muscle) %>%
   filter(!is.na(df)) %>%
@@ -105,5 +104,4 @@ int_3 %>%
   xlab("video")
 ```
 
-## Discussion
 
