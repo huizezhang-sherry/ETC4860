@@ -1,6 +1,7 @@
 # Abstract {-}
 
-Decisions by courtroom Justices have been discussed broadly in the legal literature. Gender, political views and religious background of both the Justices and counsel in the case potentially influence the decisions. This paper will explore the facial behaviour of the Justices during hearings with the objective of being to assess whether it can help to predict outcomes. Audio Visual(AV) recordings and case transcripts will be computationally processed and analysed to examine the decisions of each Justice. 
+It is part of the human nature to express emotions as a way to react. However, in particular situation, for example the court, the Justices need to restrict their emotions display as a requirement to ensure the judgement is not biased towards a particular party. In this study, we use facial recognition software to objectively assess the facial expressions of six Justices in seven cases from the high court of Australia. From the obtained facial variables, we model the presence of a selected range of action units by a binomial model and the intensity of the action units by a two part model. From the modelling, we observe that the Justices are remain impartial during the court in general. When a more intense or frequent action unit is presented, it tends to be associated with a negative emotion like sad, fear and anger. Also we find that it would be hard for some Justices to remain a still face in the criminal cases where more extreme behaviour like drug issue and sexual assult are involved. 
+
 
 
 
