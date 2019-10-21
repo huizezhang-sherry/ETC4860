@@ -51,22 +51,53 @@ Table: Details of videos processed.
 ## List of the name of ction units
 
 ```{r results = "asis"}
+
+related_emotion <- c("sadness, surprise and fear",
+                     "surprise, fear and interested",
+                     "sadness, fear, anger and confusion",
+                     "surprise, fear, anger adn interested",
+                     "happiness",
+                     "fear, anger and confusion", 
+                     "disgust",
+                     NA, 
+                     "happiness and possibly contempt if appears unilateraly", 
+                     "contempt or boredom if appears unilateraly", 
+                     "sadness, disgust and confusion", 
+                     "interested and confusion", 
+                     "fear", 
+                     "anger, confusion or bordom", 
+                     NA, 
+                     "surprise and fear", 
+                     NA, 
+                     NA)
+
 au_meaning %>% 
   filter(AU_number %in% unique(au_tidy$AU)) %>% 
   rename("AU-number" = "AU_number", "AU-meaning" = "AU_meaning") %>% 
   dplyr::select(`AU-meaning`) %>% as.data.frame() %>% 
-  knitLatex::xTab(booktabs = TRUE, caption.top = "\\label{tab:au_meaning} The meaning of all the action unit estimated")
+  mutate(emtion = related_emotion) %>% knitLatex::xTab(booktabs = TRUE, caption.top = "\\label{tab:au_meaning} The meaning of all the action unit estimated")
 ```
 
 ## Model estimation result 
 
+```{r model_1_response, results = "asis"}
+knitLatex::xTab(format(int_1, digits = 2), booktabs = TRUE, caption.top = "\\label{tab:result_1}Estimated marginal mean summary for Model 1. The confidence interval is adjusted using bonferroni adjustment")
+```
 
 ```{r result-2, results = "asis"}
-knitLatex::lTab(format(int_2 %>% filter(!is.na(prob)) %>% dplyr::select(-df), digits = 2), booktabs = TRUE, caption.firsthead = "model result 2")
+knitLatex::lTab(format(int_2 %>% filter(!is.na(prob)) %>% dplyr::select(-df), digits = 2), booktabs = TRUE, caption.firsthead = "model result 2 for mean presence")
 ```
 
 
 ```{r result-3, results = "asis"}
-knitLatex::lTab(format(int_3 %>% filter(!is.na(prob)) %>% dplyr::select(-df), digits = 2), booktabs = TRUE, caption.firsthead = "model result 3")
+knitLatex::lTab(format(int_3 %>% filter(!is.na(prob)) %>% dplyr::select(-df), digits = 2), booktabs = TRUE, caption.firsthead = "model result 3 for mean presence")
 ```
 
+```{r intensity-result-2, results = "asis"}
+knitLatex::lTab(format(int_2i %>% filter(!is.na(response)) %>% dplyr::select(-df), digits = 2), booktabs = TRUE, caption.firsthead = "model result 2 for mean intensity")
+```
+
+
+```{r intensity-result-3, results = "asis"}
+knitLatex::lTab(format(int_3i %>% filter(!is.na(response)) %>% dplyr::select(-df), digits = 2), booktabs = TRUE, caption.firsthead = "model result 3 for mean intensity")
+```
