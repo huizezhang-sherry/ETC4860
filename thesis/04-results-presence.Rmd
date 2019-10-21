@@ -10,13 +10,13 @@ knit: "bookdown::render_book"
 
 The number of action unit to include in the model is a matter of choice. Including too many action units will cause the model to run out of degree of freedom while too few action units will cause the model not being able to explain an adequate amount of data. Choosing the number of action unit to include ensures the model is parsimonious, that is, a model with the smallest number of variables but with greatest explanatory power. Random effect may be able to deal with large number of factor levels of a variable, but in our context, understanding the presence or intensity score of an action unit that barely present is not particularly of our interest. We are interested in the action units with a certain mean presence (and intensity) for most of the judges. 
 
-I compute the number of action unit for different combination of mean presence level and number of judges and plot the result as a heatmap in Figure \ref{fig:heatmap-presence} [this sentence need to be re-worded]. The bottom left cell with cutpoint of 0.05 and number of judge as 1 can be interepreted as follows. There are 17 action units with at least one judge having mean presence score greater than 0.05.
+I compute the number of action unit for different combination of mean presence level and number of judges and plot the result as a heatmap in Figure \ref{fig:heatmap-presence} [this sentence need to be re-worded]. The bottom left cell with cut point of 0.05 and number of judge as 1 can be interpreted as follows. There are 17 action units with at least one judge having mean presence score greater than 0.05.
 
-The choose of number of action unit is similar to choosing the number of principle component based on the proportion of explained varariance in the screen plot from principle component analysis. We can see from the plot that when changing the cutpoint from 0.35 to 0.3 and number of judges from 6 to 5, we have a great increase in the number of action unit. Thus, I choose the cutpoint at 0.3 and number of judge at 5. This allows my model to include seven action units. The included action units are shown in Table \ref{tab:au-presence} along with their meanings and their average presence score are plotted in Figure \ref{fig:selected-au-presence} where the color indicates whether the average percentage is above the 0.3 threshold.  
+The choose of number of action unit is similar to choosing the number of principle component based on the proportion of explained variance in the screen plot from principle component analysis. We can see from the plot that when changing the cut point from 0.35 to 0.3 and number of judges from 6 to 5, we have a great increase in the number of action unit. Thus, I choose the cut point at 0.3 and number of judge at 5. This allows my model to include seven action units. The included action units are shown in Table \ref{tab:au-presence} along with their meanings and their average presence score are plotted in Figure \ref{fig:selected-au-presence} where the color indicates whether the average percentage is above the 0.3 threshold.  
 
-I perform the procedure on the intensity data with the heatmap can be foudn in \ref{fig:heatmap-intensity}. The choose of intensity is similar to the one for presence data but we also want there to be a certain number of action unit to overlap with the ones for presence [maybe reword this sentense as well?]. Therefore, we choose the cutpoitn at 0.2 and number of judges at 5, which gives six action units to include. The information and average intensity score can be foudn in Table \ref{tab:au-intensity} and Figure \ref{fig:selected-au-intensity} respectively. 
+I perform the procedure on the intensity data with the heatmap can be found in \ref{fig:heatmap-intensity}. The choose of intensity is similar to the one for presence data but we also want there to be a certain number of action unit to overlap with the ones for presence [maybe reword this sentence as well?]. Therefore, we choose the cut point at 0.2 and number of judges at 5, which gives six action units to include. The information and average intensity score can be found in Table \ref{tab:au-intensity} and Figure \ref{fig:selected-au-intensity} respectively. 
 
-<!-- (0.2, 5), (0.2, 4), (0.25,4), (0.25,5) also valid candidates but want to overlap with the action unit choosen for presence for compare (they only overlap by two AUs) -->
+<!-- (0.2, 5), (0.2, 4), (0.25,4), (0.25,5) also valid candidates but want to overlap with the action unit choose for presence for compare (they only overlap by two A Us) -->
 
 ```{r function}
 compute_au_number <- function(cutpoint, num_judge, type){
@@ -154,7 +154,7 @@ most_intense %>%
 
 ### Model 1: Action unit
 
-The first model in Equation \ref{eq:judge_au} is estimated and the estimated marginal mean is computed in Table \ref{tab:result_1} afterward. The `prob` column can be interpreted as after averaging over all the videos and speaking parties, the estimated mean probability for judge Edelman in action unit AU02 is 0.95, with a 95% confidence interval of [0.92, 0.97]. Notice that  confidence intervals for a generalised linear model is asymmetric around the estimates because the linear symmetric interval of the mean need to be transferred via the inverse of link function to get the confidence interval for the response. 
+The first model in Equation \ref{eq:judge_au} is estimated and the estimated marginal mean is computed in Table \ref{tab:result_1} in the Appendix The `prob` column can be interpreted as after averaging over all the videos and speaking parties, the estimated mean probability for judge Edelman in action unit AU02 is 0.95, with a 95% confidence interval of [0.92, 0.97]. Notice that  confidence intervals for a generalised linear model is asymmetric around the estimates because the linear symmetric interval of the mean need to be transferred via the inverse of link function to get the confidence interval for the response. 
 
 The Type III Analysis of Variance (ANOVA) test is conducted with the result shown in Table \ref{tab:anova-1}. It can be seen that judge, AU and their interactions are all significance, which validates our choice of Type III instead of Type II ANOVA, which is better if the interactions are not signifcant. 
 
@@ -186,9 +186,7 @@ int_1 <- confint(emmean_obj_1, by = "judge",adjust = "bonferroni") %>% as.data.f
 # result_1 <- multcomp::cld(lsmean_obj_1, alpha = 0.05, type = "response") 
 ```
 
-```{r model_1_response, results = "asis"}
-knitLatex::xTab(format(int_1, digits = 2), booktabs = TRUE, caption.top = "\\label{tab:result_1}Estimated marginal mean summary for Model 1. The confidence interval is adjusted using bonferroni adjustment")
-```
+
 <!-- A bit more work on  -->
 <!-- 1) how the glm standard error is computed:  -->
 <!-- ```{r} -->
@@ -243,13 +241,7 @@ int_1 %>%
 
 ### Model 2: Video
 
-The estimated marginal mean for the second model are presented in Table \ref{tab:result-2} in the Appendix due to its length. ANOVA test (Tab \ref{tab:anova-2}) and multiple comparison is conducted as described before. Figure \ref{fig:model2-plot} presents the 95% confidence interval for each estimated marginal mean based on model 2. 
-
-We can observe that Judge Edelman, Keane and Kiefel behave relatively consistent throughout all the videos since all the intervals overlap with each other after the  bonferroni adjustment. This would indicates in these videos, these judges would have similar thinking or reaction towards the evidence and argument presented by the barristers.  
-
-Judge Gageler seems to have a large fluctuate of his facial expressions in video OKS and his response is significantly different from those in other cases for action unit 14, 15 and 20. This shows consistency with our exploratory data analysis where Gageler tends to show a higher proportion of presence for action units in case OKS. 
-
-For Judge Bell, her behaviour is much more fluctuate than all other judges. In the same Figure \ref{fig:model2-plot}, Bell shows significantly more expressions in action unit 14, 15 and 20 for case OKS and Parker, which validates the previous exploratory data analysis. From a legal perspective, this would show that Bell is addressing the cases with different responses. However, this different approach of responding by the judge doesn't indicate the biasness of the judge in the courtroom but the individuality of different judge approaching to cases. 
+The estimated marginal mean for the second model are presented in Table \ref{tab:result-2} in the Appendix due to its length. ANOVA test (Table \ref{tab:anova-2}) and multiple comparison is conducted as described before. Figure \ref{fig:model2-plot} presents the 95% confidence interval for each estimated marginal mean. 
 
 
 ```{r model-2, results = "asis"}
@@ -275,11 +267,7 @@ int_2 %>%
   left_join(au_meaning, by = c("AU" = "AU_number")) %>% 
   dplyr::select(-Muscle) %>% 
   filter(!is.na(df)) %>% 
-  mutate(judge = fct_relevel(judge, c("Edelman", "Keane", "Kiefel", 
-                                      "Nettle", "Gageler", "Bell"))) %>% 
-  ggplot(aes(x= fct_relevel(video, c("Nauru_a", "Nauru_b", "Rinehart_a",
-                               "Rinehart_b", "McKell", "OKS", "Parkes")), 
-                            y = prob,  group = judge)) + 
+  ggplot(aes(x= video, y = prob,  group = judge)) + 
   geom_point(aes(col= video)) + 
   geom_line(alpha = 0.5, lty = "dashed") + 
   geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL, col= video), 
@@ -303,7 +291,7 @@ int_2 %>%
 
 ### Model 3: Speaker
 
-The estimated marginal mean are presented in Table \ref{tab:result-3} in the Appendix and plotted in Figure \ref{fig:model3-plot}. ANOVA table in Tab \ref{tab:anova-3} SAYS BLABLABLA. We can observe that the video-wise difference between judge still persist and the speaker-wise difference is not significant. This result would be a validation that on the high court level, the judges are behaving impartial to different speaking parties. 
+The estimated marginal mean are presented in Table \ref{tab:result-3} in the Appendix and plotted in Figure \ref{fig:model3-plot}. ANOVA table in Tab \ref{tab:anova-3} SAYS BLABLABLA. 
   
 <!-- - ANOVA tests suggest all the variables in model_1 and model_2 are significant individually, but speaker in model_3 is not significant at 5% significant level. -->
   
@@ -332,17 +320,19 @@ Anova(binomial_model_3, type = "III", singular.ok = TRUE) %>%
 
 
 ```{r model3-plot, fig.cap = "The confidence interval for estimated mearginal mean in model 3"}
-int_3 %>% 
-  filter(!is.na(df)) %>% 
-  ggplot(aes(x= fct_relevel(video, c("Nauru_a", "Nauru_b", "Rinehart_a",
-                               "Rinehart_b", "McKell", "OKS", "Parkes")), 
-             y = prob,group= judge)) + 
-  geom_point(aes(col = speaker),position = position_dodge(width = 0.3)) + 
-  geom_line(alpha = 0.5, lty = "dashed") + 
-  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL, col = speaker), 
-                width = 0.2,position = position_dodge(width = 0.3)) + 
-  facet_grid(AU ~ fct_relevel(judge, c("Edelman", "Keane", "Kiefel", "Nettle", "Gageler", "Bell")), scales = "free") + 
-  theme(axis.text.x = element_text(angle = 30, hjust = 1)) + 
+int_3 %>%
+  left_join(au_meaning, by = c("AU" = "AU_number")) %>%
+  dplyr::select(-Muscle) %>%
+  filter(!is.na(df)) %>%
+  ggplot(aes(x= video,y = prob,group= judge)) +
+  geom_point(aes(col = speaker),position = position_dodge(width = 0.3)) +
+  geom_line(alpha = 0.5, lty = "dashed") +
+  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL, col = speaker),
+                width = 0.2,position = position_dodge(width = 0.3)) +
+  facet_grid(AU_meaning ~ judge, scales = "free",
+             labeller = label_wrap_gen(width = 5)) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+        strip.text.y = element_text(angle = 0),) +
   xlab("video")
 
 
