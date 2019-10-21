@@ -39,6 +39,8 @@
 \chapter*{Acknowledgements}\label{acknowledgements}}
 \addcontentsline{toc}{chapter}{Acknowledgements}
 
+I would like to express my gratitude to Professor Di Cook, my supervisors, for detailed guidance and kindness support thorughout and Professor Russell Smyth for raising the idea of this project. I would like to appreciate Stephanie Kobakian, with whom I have countless discussion with about the project. I would also like to extend my thank to my friends, colleages and family for standing behind me unconditionally.
+
 \hypertarget{declaration}{%
 \chapter*{Declaration}\label{declaration}}
 \addcontentsline{toc}{chapter}{Declaration}
@@ -51,7 +53,7 @@ I hereby declare that this thesis contains no material which has been accepted f
 \chapter*{Abstract}\label{abstract}}
 \addcontentsline{toc}{chapter}{Abstract}
 
-Decisions by courtroom Justices have been discussed broadly in the legal literature. Gender, political views and religious background of both the Justices and counsel in the case potentially influence the decisions. This paper will explore the facial behaviour of the Justices during hearings with the objective of being to assess whether it can help to predict outcomes. Audio Visual(AV) recordings and case transcripts will be computationally processed and analysed to examine the decisions of each Justice.
+It is part of the human nature to express emotions as a way to react. However, in particular situation, for example the court, the Justices need to restrict their emotions display as a requirement to ensure the judgement is not biased towards a particular party. In this study, we use facial recognition software to objectively assess the facial expressions of six Justices in seven cases from the high court of Australia. From the obtained facial variables, we model the presence of a selected range of action units by a binomial model and the intensity of the action units by a two part model. From the modelling, we observe that the Justices are remain impartial during the court in general. When a more intense or frequent action unit is presented, it tends to be associated with a negative emotion like sad, fear and anger. Also we find that it would be hard for some Justices to remain a still face in the criminal cases where more extreme behaviour like drug issue and sexual assult are involved.
 
 \clearpage\pagenumbering{arabic}\setcounter{page}{1}
 
@@ -263,7 +265,7 @@ A binomial model with logistic link is first used to model the presence score.{[
 
 \begin{align}\label{eq:judge_au}
 P_{ik} &= \frac{e^{\eta_{ik}}}{1 + e^{\eta_{ik}}} \\
-\eta_{ik} = \mu + \alpha_i + \gamma_k + (\alpha\gamma)_{ik}
+\eta_{ik} &= \mu + \alpha_i + \gamma_k + (\alpha\gamma)_{ik}
 \end{align}
 
 \hypertarget{model-2-video}{%
@@ -273,7 +275,7 @@ Build upon the first model, the second model adds the video related main effect 
 
 \begin{align}\label{eq:judge_video}
 P_{ijk} &= \frac{e^{\eta_{ijk}}}{1 + e^{\eta_{ijk}}} \\
-\eta_{ijk} = \mu + \alpha_i + \beta_j +\gamma_k + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk}
+\eta_{ijk} &= \mu + \alpha_i + \beta_j +\gamma_k + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk}
 \end{align}
 
 \noindent 
@@ -285,7 +287,7 @@ Build upon the second model, the third model is aimed to capture the speaker-wis
 
 \begin{align}\label{eq:judge_speaker}
 P_{ijkl} &= \frac{e^{\eta_{ijkl}}}{1 + e^{\eta_{ijkl}}} \\
-\eta_{ijkl} = \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\delta)_{il}
+\eta_{ijkl} &= \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\delta)_{il}
 \end{align}
 
 Interactions are still included in this model, but attention need to be paid to ensure the interactions are relevant. Theoretically, we could include speaker with all of the three existing variables (judge, action unit and video), but this would cause the model to run out of degree of freedom given the number of observations we have. Therefore, we only include judge-speaker interaction because it is directly related to the research question of this model.
@@ -661,49 +663,13 @@ AU45: Blink\\
 \hypertarget{model-1-action-unit-1}{%
 \subsection{Model 1: Action unit}\label{model-1-action-unit-1}}
 
-The first model in Equation \ref{eq:judge_au} is estimated and the estimated marginal mean is computed in Table \ref{tab:result_1} afterward. The \texttt{prob} column can be interpreted as after averaging over all the videos and speaking parties, the estimated mean probability for judge Edelman in action unit AU02 is 0.95, with a 95\% confidence interval of {[}0.92, 0.97{]}. Notice that confidence intervals for a generalised linear model is asymmetric around the estimates because the linear symmetric interval of the mean need to be transferred via the inverse of link function to get the confidence interval for the response.
+The first model in Equation \ref{eq:judge_au} is estimated and the estimated marginal mean is computed in Table \ref{tab:result_1} in the Appendix The \texttt{prob} column can be interpreted as after averaging over all the videos and speaking parties, the estimated mean probability for judge Edelman in action unit AU02 is 0.95, with a 95\% confidence interval of {[}0.92, 0.97{]}. Notice that confidence intervals for a generalised linear model is asymmetric around the estimates because the linear symmetric interval of the mean need to be transferred via the inverse of link function to get the confidence interval for the response.
 
 The Type III Analysis of Variance (ANOVA) test is conducted with the result shown in Table \ref{tab:anova-1}. It can be seen that judge, AU and their interactions are all significance, which validates our choice of Type III instead of Type II ANOVA, which is better if the interactions are not signifcant.
 
 Multiple comparison is then performed and the 95\% confidence interval after bonferroni adjustment is plotted in Figure \ref{fig:model1-plot}. This plot shows that the intervals for the judges are significantly different from one to another as most of the intervals are not overlapping with each other. This confirms the necessity of including the interaction terms.
 
 {[}Lastly talk about residuals{]}
-
-\begin{table}[ht]
-\begin{center}
-\caption{\label{tab:result_1}Estimated marginal mean summary for Model 1. The confidence interval is adjusted using bonferroni adjustment}
-\begin{tabular}{llllll}
-\toprule
-judge & AU & prob & SE & asymp.LCL & asymp.UCL \\
-\midrule
-Edelman & AU02 & 0.95 & 0.0069 & 0.92 & 0.97 \\
-Bell & AU02 & 0.73 & 0.0223 & 0.65 & 0.79 \\
-Gageler & AU02 & 0.85 & 0.0125 & 0.81 & 0.89 \\
-Keane & AU02 & 0.78 & 0.0207 & 0.71 & 0.84 \\
-Kiefel & AU02 & 0.95 & 0.0091 & 0.91 & 0.97 \\
-Nettle & AU02 & 1.00 & 0.0028 & 0.97 & 1.00 \\
-Edelman & AU14 & 0.43 & 0.0155 & 0.38 & 0.48 \\
-Bell & AU14 & 0.15 & 0.0179 & 0.10 & 0.22 \\
-Gageler & AU14 & 0.62 & 0.0173 & 0.56 & 0.67 \\
-Keane & AU14 & 0.71 & 0.0227 & 0.63 & 0.77 \\
-Kiefel & AU14 & 0.52 & 0.0211 & 0.46 & 0.58 \\
-Nettle & AU14 & 0.49 & 0.0201 & 0.42 & 0.55 \\
-Edelman & AU15 & 0.46 & 0.0156 & 0.41 & 0.51 \\
-Bell & AU15 & 0.86 & 0.0176 & 0.79 & 0.90 \\
-Gageler & AU15 & 0.62 & 0.0172 & 0.57 & 0.67 \\
-Keane & AU15 & 0.87 & 0.0170 & 0.80 & 0.91 \\
-Kiefel & AU15 & 0.44 & 0.0210 & 0.38 & 0.51 \\
-Nettle & AU15 & 0.78 & 0.0166 & 0.73 & 0.83 \\
-Edelman & AU20 & 0.77 & 0.0132 & 0.72 & 0.81 \\
-Bell & AU20 & 0.62 & 0.0242 & 0.55 & 0.69 \\
-Gageler & AU20 & 0.55 & 0.0177 & 0.49 & 0.60 \\
-Keane & AU20 & 0.93 & 0.0131 & 0.87 & 0.96 \\
-Kiefel & AU20 & 0.84 & 0.0154 & 0.79 & 0.88 \\
-Nettle & AU20 & 0.74 & 0.0176 & 0.68 & 0.79 \\
-\bottomrule
-\end{tabular}
-\end{center}
-\end{table}
 
 \begin{table}
 
@@ -715,7 +681,7 @@ Nettle & AU20 & 0.74 & 0.0176 & 0.68 & 0.79 \\
 \hline
 judge & 579 & 5 & 6.1e-123\\
 \hline
-AU & 577 & 7 & 2.1e-120\\
+AU & 1743 & 7 & 0.0e+00\\
 \hline
 judge:AU & 3587 & 35 & 0.0e+00\\
 \hline
@@ -734,13 +700,7 @@ judge:AU & 3587 & 35 & 0.0e+00\\
 \hypertarget{model-2-video-1}{%
 \subsection{Model 2: Video}\label{model-2-video-1}}
 
-The estimated marginal mean for the second model are presented in Table \ref{tab:result-2} in the Appendix due to its length. ANOVA test (Tab \ref{tab:anova-2}) and multiple comparison is conducted as described before. Figure \ref{fig:model2-plot} presents the 95\% confidence interval for each estimated marginal mean based on model 2.
-
-We can observe that Judge Edelman, Keane and Kiefel behave relatively consistent throughout all the videos since all the intervals overlap with each other after the bonferroni adjustment. This would indicates in these videos, these judges would have similar thinking or reaction towards the evidence and argument presented by the barristers.
-
-Judge Gageler seems to have a large fluctuate of his facial expressions in video OKS and his response is significantly different from those in other cases for action unit 14, 15 and 20. This shows consistency with our exploratory data analysis where Gageler tends to show a higher proportion of presence for action units in case OKS.
-
-For Judge Bell, her behaviour is much more fluctuate than all other judges. In the same Figure \ref{fig:model2-plot}, Bell shows significantly more expressions in action unit 14, 15 and 20 for case OKS and Parker, which validates the previous exploratory data analysis. From a legal perspective, this would show that Bell is addressing the cases with different responses. However, this different approach of responding by the judge doesn't indicate the biasness of the judge in the courtroom but the individuality of different judge approaching to cases.
+The estimated marginal mean for the second model are presented in Table \ref{tab:result-2} in the Appendix due to its length. ANOVA test (Table \ref{tab:anova-2}) and multiple comparison is conducted as described before. Figure \ref{fig:model2-plot} presents the 95\% confidence interval for each estimated marginal mean.
 
 \begin{table}
 
@@ -750,11 +710,11 @@ For Judge Bell, her behaviour is much more fluctuate than all other judges. In t
 \hline
   & LR Chisq & Df & Pr(>Chisq)\\
 \hline
-judge & 354 & 3 & 2.6e-76\\
+judge & 144 & 2 & 4.3e-32\\
 \hline
-video & 62 & 2 & 4.4e-14\\
+video & 40 & 6 & 3.8e-07\\
 \hline
-AU & 339 & 7 & 2.5e-69\\
+AU & 483 & 7 & 2.9e-100\\
 \hline
 judge:video & 180 & 13 & 1.5e-31\\
 \hline
@@ -777,7 +737,7 @@ video:AU & 290 & 42 & 8.1e-39\\
 \hypertarget{model-3-speaker-1}{%
 \subsection{Model 3: Speaker}\label{model-3-speaker-1}}
 
-The estimated marginal mean are presented in Table \ref{tab:result-3} in the Appendix and plotted in Figure \ref{fig:model3-plot}. ANOVA table in Tab \ref{tab:anova-3} SAYS BLABLABLA. We can observe that the video-wise difference between judge still persist and the speaker-wise difference is not significant. This result would be a validation that on the high court level, the judges are behaving impartial to different speaking parties.
+The estimated marginal mean are presented in Table \ref{tab:result-3} in the Appendix and plotted in Figure \ref{fig:model3-plot}. ANOVA table in Tab \ref{tab:anova-3} SAYS BLABLABLA.
 
 \begin{table}
 
@@ -787,21 +747,21 @@ The estimated marginal mean are presented in Table \ref{tab:result-3} in the App
 \hline
   & LR Chisq & Df & Pr(>Chisq)\\
 \hline
-judge & 334.8 & 3 & 2.9e-72\\
+judge & 131.16 & 2 & 3.3e-29\\
 \hline
-speaker & 3.2 & 1 & 7.4e-02\\
+speaker & 0.12 & 1 & 7.3e-01\\
 \hline
-video & 62.0 & 2 & 3.5e-14\\
+video & 40.50 & 6 & 3.6e-07\\
 \hline
-AU & 339.5 & 7 & 2.1e-69\\
+AU & 483.42 & 7 & 2.9e-100\\
 \hline
-judge:speaker & 20.6 & 5 & 9.5e-04\\
+judge:speaker & 20.64 & 5 & 9.5e-04\\
 \hline
-judge:video & 180.8 & 13 & 1.1e-31\\
+judge:video & 180.84 & 13 & 1.1e-31\\
 \hline
-judge:AU & 3390.3 & 35 & 0.0e+00\\
+judge:AU & 3390.28 & 35 & 0.0e+00\\
 \hline
-video:AU & 290.2 & 42 & 7.7e-39\\
+video:AU & 290.24 & 42 & 7.7e-39\\
 \hline
 \end{tabular}
 \end{table}
@@ -827,6 +787,17 @@ The two part model in equation \ref{eq:two-part1} is estimated for the intensity
 
 The 95\% confidence interval plot is presented in Figure \ref{fig:intensity-video}.
 
+Edelman:
+AU04: lower for rinehart-a, McKell, OKS and Parkes
+AU07: lower for OKS
+AU09: significantly lower for rinehart-a, McKell, OKS and Parkes comparing to Nauru-a and Nauru-b
+
+Keane: more intensity in AU07 for McKell and AU05 in OKS
+Kiefel: significantly different in AU05, 07 and 15
+Nettle: significantly less in rinehart-a than Nauru-b in AU4, 9, 14
+Gageler: more in OKS for AU05, AU20 CI for OKS is almost higher than that in other cases, except Nauru-b
+Bell: in OKS: AU01, 05, 14 (almost), 20
+
 \begin{figure}
 
 {\centering \includegraphics[width=1\linewidth]{figures/intensity-video-1} 
@@ -851,18 +822,56 @@ The two part model in equation \ref{eq:two-part2} is also estimated for the inte
 \end{figure}
 
 \hypertarget{discussion}{%
-\section{Discussion}\label{discussion}}
+\chapter{Discussion}\label{discussion}}
+
+\hypertarget{the-expression-of-the-justices-by-video}{%
+\section{The expression of the justices by video}\label{the-expression-of-the-justices-by-video}}
+
+Many information can be observed from Figure \ref{fig:model2-plot} for presence and Figure \ref{fig:intensity-video}. The discussion of the two plots will be focusing on answering the question: \textbf{For the same judge, whether the mean presence and mean intensity of the action units are the same or different for different videos}.
+
+In general, we can see that facial expression of the justices are impartial as most of the 95\% confidence intervals for the same judge and action unit overlaps in most of the videos in both plots. While at the same time, there are some time when in a particular video, a judge expressed significantly more or less of an expression and next, I will break it down to discuss them in more detail.
+
+We can observe that Judge Edelman and Keane behave relatively consistent throughout all the videos since most of the intervals overlap with each other after the bonferroni adjustment. However, Edelman seems to express significantly less in action unit 5 in case OKS In terms of intensity, Edelman has significantly stronger expression in case Nauru-a, Nauru-b and Rinehart-a in action unit 4 and 9, but more relaxed expression in action unit 7 for case OKS. Based the nature of the 7 cases, we can see Edelman is more likely to express stronger emotion to the political and commercial cases and express less and softer at criminal cases.
+
+One thing being interesting is about the case classification. Nauru-a and Nauru-b discuss the refugee status of the appellent, which are political-based. McKell and OKS are more criminal-based, relates to drug and sexual misconduct. Parkes is a civil case about negligence while Rinehart-a and Rinehart-b are business related cases.
+
+For Keane, he appears significantly less action unit 5 in case OKS as with Edelman in Figure \ref{fig:model2-plot} but Figure \ref{fig:intensity-video} suggest he has more intense of expression in the same action unit 5. At the same time, Keane has also more intense expression of action unit 7 in case McKell. This would somehow show evidence that Keane is more responsive to the criminal cases than cases of other categories.
+
+Kiefel and Nettle are relatively consistent in their expressions. The presence plot shows that Nettle has relatively higher mean in case Rinehart-b, but it is not significant when comparing the 955 confidence interval.
+
+Gageler shows a consistent responsive expression in case OKS. In Figure \ref{fig:model2-plot}, Gageler had significantly higher expression of action unit 15 adn 20. From the intensity plot in Figure \ref{fig:intensity-video}, actiion unit 5 and 20 have significantly higher intensity. The common associated emotion of action unit 5, 15 adn 20 is anger, sad and fear in the six univeral emtions. Thus, we can see that Gageler tends to react negatively and more strongly to criminal cases.
+
+Bell also shows a significantly higher proportion of negative emotion associated with action unit 1 and 15 in case OKS and the intensity of action unit 1, 5, 14 and 20 are also significantly higher in case OKS. These evidence indicate the same emotion pattern as judge Gageler to criminal cases. While at the same time, Bell is less reactive in the presence of action unit 07 and 20 in case Parkes and this shows that she has less negative emotion of anger and fear in Parkes, comparing to the criminal case OKS.
+
+\hypertarget{the-expression-of-the-justices-by-speaker}{%
+\section{The expression of the justices by speaker}\label{the-expression-of-the-justices-by-speaker}}
+
+From the presence and intensity plot by speakers in Figure \ref{fig:model3-plot} and \ref{fig:intensity-speaker}, we can observe that the video-wise difference between judge are still persist when the speaker effects are included in the model. However, the speaker-wise difference is not significant in terms of both presence and intensity for all the judges.
+
+This result would be a validation that on the high court level, the judges are behaving impartial to different speaking parties.
+
+\hypertarget{summary}{%
+\section{Summary}\label{summary}}
+
+To summarise, the above discussion of intensity and presence of action unit in different cases gives us several findings about the expression of the judges:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  In general, the expression of the Justices are impartial, which is live up to the code of conduct from \textcite{judicalguid} and validate the result from \textcite{tutton2018judicial}.
+\item
+  When there is significantly present or intense expression of the Justices, it tends to be associated with negative emotion like sad, fear and anger. This could have implication on the mental wellbeing of the judges.
+\item
+  Some justices, for example Kean, Gageler and Bell are more responsive, both in frequency (mean presence) and magnitude (mean intensity) to criminal cases. This could show that it is harder for judges to keep a still face when the content of a case goes against human nature.
+\end{enumerate}
 
 \hypertarget{conclusion}{%
 \chapter{Conclusion}\label{conclusion}}
 
-\hypertarget{discussion-1}{%
-\section{Discussion}\label{discussion-1}}
-
 \hypertarget{limitation}{%
 \section{Limitation}\label{limitation}}
 
-I will now briefly discuss some of the limitation of this work. The current image frames are extracted at every one minute interval. However, some facial expressions may only last for a few second. Thus more frequent time interval could be used for getting more precise facial information of the judges.
+I will now briefly discuss some of the limitation of this work. The current image frames are extracted at every one minute interval. However, some facial expressions may only last for a few second. Thus more frequent time interval could be used for getting more precise facial information of the judges. Also, if videos of the high court heraing could be accepted as input for facial expression detection, the potential correlation of emotion could be captured even better.
 
 In my work, seven videos are being processed into the facial recognition software and more videos could be processed to get more robust results. The reason for not processing more videos in the current study is because the resolution of publicly available vidoes from the high court has only 720 pixels while the facial recognition software, OpenFace requires at least 30 pixels for a face to be detected. This means that we have to choose videos where three or five judges are presented.
 
@@ -870,6 +879,8 @@ However, this work has established a workflow for extracting facial expressions 
 
 \hypertarget{future-work}{%
 \section{Future work}\label{future-work}}
+
+In the future, more work could be done to extract facial expressions of the Justices from videos using OpenFace. This could enable the researchers to capture more precise expression of the judges. However, as the extraction becomes more frequent, the problem of serial correlation could rise and appropriate modelling technique should be utilised to accommodate for this feature of data.
 
 \appendix
 
@@ -977,28 +988,28 @@ Gordon, Gageler, Kiefel, Nettle, Edelman\strut
 \begin{table}[ht]
 \begin{center}
 \caption{\label{tab:au_meaning} The meaning of all the action unit estimated}
-\begin{tabular}{l}
+\begin{tabular}{ll}
 \toprule
-AU-meaning \\
+AU-meaning & emtion \\
 \midrule
-AU01: Inner brow raiser \\
-AU02: Outer brow raiser \\
-AU04: Brow lowerer \\
-AU05: Upper lid raiser \\
-AU06: Cheek raiser \\
-AU07: Lid tightener \\
-AU09: Nose wrinkler \\
-AU10: Upper lip raiser \\
-AU12: Lip corner puller \\
-AU14: Dimpler \\
-AU15: Lip corner depressor \\
-AU17: Chin raiser \\
-AU20: Lip stretcher \\
-AU23: Lip tightener \\
-AU25: Lips part \\
-AU26: Jaw drop \\
-AU28: Lip suck \\
-AU45: Blink \\
+AU01: Inner brow raiser & sadness, surprise and fear \\
+AU02: Outer brow raiser & surprise, fear and interested \\
+AU04: Brow lowerer & sadness, fear, anger and confusion \\
+AU05: Upper lid raiser & surprise, fear, anger adn interested \\
+AU06: Cheek raiser & happiness \\
+AU07: Lid tightener & fear, anger and confusion \\
+AU09: Nose wrinkler & disgust \\
+AU10: Upper lip raiser & NA \\
+AU12: Lip corner puller & happiness and possibly contempt if appears unilateraly \\
+AU14: Dimpler & contempt or boredom if appears unilateraly \\
+AU15: Lip corner depressor & sadness, disgust and confusion \\
+AU17: Chin raiser & interested and confusion \\
+AU20: Lip stretcher & fear \\
+AU23: Lip tightener & anger, confusion or bordom \\
+AU25: Lips part & NA \\
+AU26: Jaw drop & surprise and fear \\
+AU28: Lip suck & NA \\
+AU45: Blink & NA \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -1007,627 +1018,1386 @@ AU45: Blink \\
 \hypertarget{model-estimation-result}{%
 \section{Model estimation result}\label{model-estimation-result}}
 
+\begin{table}[ht]
+\begin{center}
+\caption{\label{tab:result_1}Estimated marginal mean summary for Model 1. The confidence interval is adjusted using bonferroni adjustment}
+\begin{tabular}{llllll}
+\toprule
+judge & AU & prob & SE & asymp.LCL & asymp.UCL \\
+\midrule
+Edelman & AU01 & 0.59 & 0.0154 & 0.544 & 0.63 \\
+Keane & AU01 & 0.11 & 0.0156 & 0.074 & 0.16 \\
+Kiefel & AU01 & 0.49 & 0.0211 & 0.434 & 0.55 \\
+Nettle & AU01 & 0.71 & 0.0183 & 0.654 & 0.75 \\
+Gageler & AU01 & 0.32 & 0.0166 & 0.281 & 0.37 \\
+Bell & AU01 & 0.69 & 0.0230 & 0.627 & 0.75 \\
+Edelman & AU02 & 0.95 & 0.0069 & 0.925 & 0.96 \\
+Keane & AU02 & 0.78 & 0.0207 & 0.719 & 0.83 \\
+Kiefel & AU02 & 0.95 & 0.0091 & 0.920 & 0.97 \\
+Nettle & AU02 & 1.00 & 0.0028 & 0.977 & 1.00 \\
+Gageler & AU02 & 0.85 & 0.0125 & 0.816 & 0.88 \\
+Bell & AU02 & 0.73 & 0.0223 & 0.661 & 0.78 \\
+Edelman & AU05 & 0.30 & 0.0143 & 0.259 & 0.34 \\
+Keane & AU05 & 0.54 & 0.0249 & 0.468 & 0.60 \\
+Kiefel & AU05 & 0.34 & 0.0201 & 0.291 & 0.40 \\
+Nettle & AU05 & 0.25 & 0.0173 & 0.201 & 0.30 \\
+Gageler & AU05 & 0.66 & 0.0168 & 0.618 & 0.71 \\
+Bell & AU05 & 0.55 & 0.0248 & 0.483 & 0.62 \\
+Edelman & AU07 & 0.39 & 0.0152 & 0.347 & 0.43 \\
+Keane & AU07 & 0.65 & 0.0239 & 0.578 & 0.71 \\
+Kiefel & AU07 & 0.16 & 0.0154 & 0.120 & 0.20 \\
+Nettle & AU07 & 0.51 & 0.0201 & 0.458 & 0.57 \\
+Gageler & AU07 & 0.30 & 0.0162 & 0.256 & 0.34 \\
+Bell & AU07 & 0.62 & 0.0243 & 0.550 & 0.68 \\
+Edelman & AU14 & 0.43 & 0.0155 & 0.387 & 0.47 \\
+Keane & AU14 & 0.71 & 0.0227 & 0.643 & 0.77 \\
+Kiefel & AU14 & 0.52 & 0.0211 & 0.463 & 0.58 \\
+Nettle & AU14 & 0.49 & 0.0201 & 0.431 & 0.54 \\
+Gageler & AU14 & 0.62 & 0.0173 & 0.568 & 0.66 \\
+Bell & AU14 & 0.15 & 0.0179 & 0.109 & 0.21 \\
+Edelman & AU15 & 0.46 & 0.0156 & 0.415 & 0.50 \\
+Keane & AU15 & 0.87 & 0.0170 & 0.812 & 0.91 \\
+Kiefel & AU15 & 0.44 & 0.0210 & 0.385 & 0.50 \\
+Nettle & AU15 & 0.78 & 0.0166 & 0.732 & 0.82 \\
+Gageler & AU15 & 0.62 & 0.0172 & 0.574 & 0.67 \\
+Bell & AU15 & 0.86 & 0.0176 & 0.800 & 0.90 \\
+Edelman & AU20 & 0.77 & 0.0132 & 0.730 & 0.80 \\
+Keane & AU20 & 0.93 & 0.0131 & 0.880 & 0.95 \\
+Kiefel & AU20 & 0.84 & 0.0154 & 0.796 & 0.88 \\
+Nettle & AU20 & 0.74 & 0.0176 & 0.691 & 0.79 \\
+Gageler & AU20 & 0.55 & 0.0177 & 0.497 & 0.59 \\
+Bell & AU20 & 0.62 & 0.0242 & 0.555 & 0.69 \\
+Edelman & AU25 & 0.30 & 0.0144 & 0.263 & 0.34 \\
+Keane & AU25 & 0.15 & 0.0181 & 0.111 & 0.21 \\
+Kiefel & AU25 & 0.90 & 0.0129 & 0.855 & 0.93 \\
+Nettle & AU25 & 0.40 & 0.0197 & 0.352 & 0.46 \\
+Gageler & AU25 & 0.47 & 0.0177 & 0.422 & 0.52 \\
+Bell & AU25 & 0.80 & 0.0201 & 0.735 & 0.85 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{table}
+
 \begin{center}
 \begin{longtable}{lllllll}
-\caption{model result 2}\\
+\caption{model result 2 for mean presence}\\
 \toprule
 judge & video & AU & prob & SE & asymp.LCL & asymp.UCL \\
 \midrule
 \endhead
 \bottomrule
 \endfoot
-Bell & McKell & AU01 & 0.661 & 0.0327 & 0.569 & 0.74 \\
-Edelman & McKell & AU01 & 0.426 & 0.0320 & 0.343 & 0.51 \\
-Gageler & McKell & AU01 & 0.222 & 0.0250 & 0.162 & 0.30 \\
-Keane & McKell & AU01 & 0.062 & 0.0120 & 0.036 & 0.10 \\
 Edelman & Nauru-a & AU01 & 0.661 & 0.0282 & 0.582 & 0.73 \\
-Gageler & Nauru-a & AU01 & 0.357 & 0.0290 & 0.283 & 0.44 \\
 Nettle & Nauru-a & AU01 & 0.717 & 0.0270 & 0.639 & 0.78 \\
+Gageler & Nauru-a & AU01 & 0.357 & 0.0290 & 0.283 & 0.44 \\
 Edelman & Nauru-b & AU01 & 0.580 & 0.0358 & 0.482 & 0.67 \\
-Gageler & Nauru-b & AU01 & 0.273 & 0.0303 & 0.199 & 0.36 \\
 Nettle & Nauru-b & AU01 & 0.682 & 0.0334 & 0.586 & 0.76 \\
-Bell & OKS & AU01 & 0.934 & 0.0173 & 0.869 & 0.97 \\
+Gageler & Nauru-b & AU01 & 0.273 & 0.0303 & 0.199 & 0.36 \\
+Edelman & Rinehart-a & AU01 & 0.598 & 0.0213 & 0.540 & 0.65 \\
+Kiefel & Rinehart-a & AU01 & 0.519 & 0.0245 & 0.454 & 0.58 \\
+Nettle & Rinehart-a & AU01 & 0.691 & 0.0217 & 0.630 & 0.75 \\
+Gageler & Rinehart-a & AU01 & 0.333 & 0.0211 & 0.278 & 0.39 \\
+Edelman & Rinehart-b & AU01 & 0.695 & 0.0540 & 0.534 & 0.82 \\
+Nettle & Rinehart-b & AU01 & 0.871 & 0.0315 & 0.761 & 0.93 \\
+Gageler & Rinehart-b & AU01 & 0.295 & 0.0532 & 0.174 & 0.45 \\
+Edelman & McKell & AU01 & 0.426 & 0.0320 & 0.343 & 0.51 \\
+Keane & McKell & AU01 & 0.062 & 0.0120 & 0.036 & 0.10 \\
+Gageler & McKell & AU01 & 0.222 & 0.0250 & 0.162 & 0.30 \\
+Bell & McKell & AU01 & 0.661 & 0.0327 & 0.569 & 0.74 \\
 Edelman & OKS & AU01 & 0.576 & 0.0544 & 0.427 & 0.71 \\
-Gageler & OKS & AU01 & 0.627 & 0.0527 & 0.478 & 0.75 \\
 Keane & OKS & AU01 & 0.173 & 0.0379 & 0.093 & 0.30 \\
-Bell & Parkes & AU01 & 0.667 & 0.0275 & 0.590 & 0.74 \\
+Gageler & OKS & AU01 & 0.627 & 0.0527 & 0.478 & 0.75 \\
+Bell & OKS & AU01 & 0.934 & 0.0173 & 0.869 & 0.97 \\
 Edelman & Parkes & AU01 & 0.601 & 0.0257 & 0.530 & 0.67 \\
 Keane & Parkes & AU01 & 0.126 & 0.0188 & 0.083 & 0.19 \\
 Kiefel & Parkes & AU01 & 0.452 & 0.0278 & 0.379 & 0.53 \\
-Edelman & Rinehart-a & AU01 & 0.598 & 0.0213 & 0.540 & 0.65 \\
-Gageler & Rinehart-a & AU01 & 0.333 & 0.0211 & 0.278 & 0.39 \\
-Kiefel & Rinehart-a & AU01 & 0.519 & 0.0245 & 0.454 & 0.58 \\
-Nettle & Rinehart-a & AU01 & 0.691 & 0.0217 & 0.630 & 0.75 \\
-Edelman & Rinehart-b & AU01 & 0.695 & 0.0540 & 0.534 & 0.82 \\
-Gageler & Rinehart-b & AU01 & 0.295 & 0.0532 & 0.174 & 0.45 \\
-Nettle & Rinehart-b & AU01 & 0.871 & 0.0315 & 0.761 & 0.93 \\
-Bell & McKell & AU02 & 0.699 & 0.0329 & 0.603 & 0.78 \\
-Edelman & McKell & AU02 & 0.942 & 0.0117 & 0.901 & 0.97 \\
-Gageler & McKell & AU02 & 0.871 & 0.0222 & 0.799 & 0.92 \\
-Keane & McKell & AU02 & 0.686 & 0.0337 & 0.589 & 0.77 \\
+Bell & Parkes & AU01 & 0.667 & 0.0275 & 0.590 & 0.74 \\
 Edelman & Nauru-a & AU02 & 0.950 & 0.0114 & 0.909 & 0.97 \\
-Gageler & Nauru-a & AU02 & 0.856 & 0.0250 & 0.775 & 0.91 \\
 Nettle & Nauru-a & AU02 & 0.995 & 0.0028 & 0.977 & 1.00 \\
+Gageler & Nauru-a & AU02 & 0.856 & 0.0250 & 0.775 & 0.91 \\
 Edelman & Nauru-b & AU02 & 0.959 & 0.0116 & 0.914 & 0.98 \\
-Gageler & Nauru-b & AU02 & 0.875 & 0.0286 & 0.776 & 0.93 \\
 Nettle & Nauru-b & AU02 & 0.997 & 0.0020 & 0.983 & 1.00 \\
-Bell & OKS & AU02 & 0.921 & 0.0248 & 0.823 & 0.97 \\
+Gageler & Nauru-b & AU02 & 0.875 & 0.0286 & 0.776 & 0.93 \\
+Edelman & Rinehart-a & AU02 & 0.928 & 0.0112 & 0.891 & 0.95 \\
+Kiefel & Rinehart-a & AU02 & 0.940 & 0.0116 & 0.900 & 0.96 \\
+Nettle & Rinehart-a & AU02 & 0.994 & 0.0034 & 0.972 & 1.00 \\
+Gageler & Rinehart-a & AU02 & 0.824 & 0.0188 & 0.768 & 0.87 \\
+Edelman & Rinehart-b & AU02 & 0.970 & 0.0142 & 0.898 & 0.99 \\
+Nettle & Rinehart-b & AU02 & 0.999 & 0.0009 & 0.991 & 1.00 \\
+Gageler & Rinehart-b & AU02 & 0.865 & 0.0510 & 0.664 & 0.95 \\
+Edelman & McKell & AU02 & 0.942 & 0.0117 & 0.901 & 0.97 \\
+Keane & McKell & AU02 & 0.686 & 0.0337 & 0.589 & 0.77 \\
+Gageler & McKell & AU02 & 0.871 & 0.0222 & 0.799 & 0.92 \\
+Bell & McKell & AU02 & 0.699 & 0.0329 & 0.603 & 0.78 \\
 Edelman & OKS & AU02 & 0.953 & 0.0160 & 0.886 & 0.98 \\
-Gageler & OKS & AU02 & 0.965 & 0.0121 & 0.913 & 0.99 \\
 Keane & OKS & AU02 & 0.827 & 0.0441 & 0.676 & 0.92 \\
-Bell & Parkes & AU02 & 0.705 & 0.0272 & 0.628 & 0.77 \\
+Gageler & OKS & AU02 & 0.965 & 0.0121 & 0.913 & 0.99 \\
+Bell & OKS & AU02 & 0.921 & 0.0248 & 0.823 & 0.97 \\
 Edelman & Parkes & AU02 & 0.971 & 0.0064 & 0.948 & 0.98 \\
 Keane & Parkes & AU02 & 0.827 & 0.0214 & 0.762 & 0.88 \\
 Kiefel & Parkes & AU02 & 0.968 & 0.0080 & 0.938 & 0.98 \\
-Edelman & Rinehart-a & AU02 & 0.928 & 0.0112 & 0.891 & 0.95 \\
-Gageler & Rinehart-a & AU02 & 0.824 & 0.0188 & 0.768 & 0.87 \\
-Kiefel & Rinehart-a & AU02 & 0.940 & 0.0116 & 0.900 & 0.96 \\
-Nettle & Rinehart-a & AU02 & 0.994 & 0.0034 & 0.972 & 1.00 \\
-Edelman & Rinehart-b & AU02 & 0.970 & 0.0142 & 0.898 & 0.99 \\
-Gageler & Rinehart-b & AU02 & 0.865 & 0.0510 & 0.664 & 0.95 \\
-Nettle & Rinehart-b & AU02 & 0.999 & 0.0009 & 0.991 & 1.00 \\
-Bell & McKell & AU05 & 0.656 & 0.0315 & 0.567 & 0.74 \\
-Edelman & McKell & AU05 & 0.292 & 0.0272 & 0.225 & 0.37 \\
-Gageler & McKell & AU05 & 0.699 & 0.0287 & 0.616 & 0.77 \\
-Keane & McKell & AU05 & 0.557 & 0.0340 & 0.465 & 0.65 \\
+Bell & Parkes & AU02 & 0.705 & 0.0272 & 0.628 & 0.77 \\
 Edelman & Nauru-a & AU05 & 0.307 & 0.0276 & 0.238 & 0.39 \\
-Gageler & Nauru-a & AU05 & 0.648 & 0.0292 & 0.566 & 0.72 \\
 Nettle & Nauru-a & AU05 & 0.210 & 0.0235 & 0.154 & 0.28 \\
+Gageler & Nauru-a & AU05 & 0.648 & 0.0292 & 0.566 & 0.72 \\
 Edelman & Nauru-b & AU05 & 0.278 & 0.0310 & 0.202 & 0.37 \\
-Gageler & Nauru-b & AU05 & 0.605 & 0.0359 & 0.505 & 0.70 \\
 Nettle & Nauru-b & AU05 & 0.217 & 0.0279 & 0.151 & 0.30 \\
-Bell & OKS & AU05 & 0.536 & 0.0570 & 0.384 & 0.68 \\
+Gageler & Nauru-b & AU05 & 0.605 & 0.0359 & 0.505 & 0.70 \\
+Edelman & Rinehart-a & AU05 & 0.335 & 0.0205 & 0.282 & 0.39 \\
+Kiefel & Rinehart-a & AU05 & 0.386 & 0.0240 & 0.324 & 0.45 \\
+Nettle & Rinehart-a & AU05 & 0.260 & 0.0205 & 0.208 & 0.32 \\
+Gageler & Rinehart-a & AU05 & 0.712 & 0.0199 & 0.655 & 0.76 \\
+Edelman & Rinehart-b & AU05 & 0.271 & 0.0479 & 0.163 & 0.42 \\
+Nettle & Rinehart-b & AU05 & 0.338 & 0.0547 & 0.209 & 0.50 \\
+Gageler & Rinehart-b & AU05 & 0.501 & 0.0588 & 0.348 & 0.65 \\
+Edelman & McKell & AU05 & 0.292 & 0.0272 & 0.225 & 0.37 \\
+Keane & McKell & AU05 & 0.557 & 0.0340 & 0.465 & 0.65 \\
+Gageler & McKell & AU05 & 0.699 & 0.0287 & 0.616 & 0.77 \\
+Bell & McKell & AU05 & 0.656 & 0.0315 & 0.567 & 0.74 \\
 Edelman & OKS & AU05 & 0.060 & 0.0142 & 0.031 & 0.11 \\
-Gageler & OKS & AU05 & 0.534 & 0.0555 & 0.386 & 0.68 \\
 Keane & OKS & AU05 & 0.251 & 0.0448 & 0.150 & 0.39 \\
-Bell & Parkes & AU05 & 0.493 & 0.0289 & 0.416 & 0.57 \\
+Gageler & OKS & AU05 & 0.534 & 0.0555 & 0.386 & 0.68 \\
+Bell & OKS & AU05 & 0.536 & 0.0570 & 0.384 & 0.68 \\
 Edelman & Parkes & AU05 & 0.293 & 0.0231 & 0.235 & 0.36 \\
 Keane & Parkes & AU05 & 0.577 & 0.0286 & 0.498 & 0.65 \\
 Kiefel & Parkes & AU05 & 0.281 & 0.0243 & 0.220 & 0.35 \\
-Edelman & Rinehart-a & AU05 & 0.335 & 0.0205 & 0.282 & 0.39 \\
-Gageler & Rinehart-a & AU05 & 0.712 & 0.0199 & 0.655 & 0.76 \\
-Kiefel & Rinehart-a & AU05 & 0.386 & 0.0240 & 0.324 & 0.45 \\
-Nettle & Rinehart-a & AU05 & 0.260 & 0.0205 & 0.208 & 0.32 \\
-Edelman & Rinehart-b & AU05 & 0.271 & 0.0479 & 0.163 & 0.42 \\
-Gageler & Rinehart-b & AU05 & 0.501 & 0.0588 & 0.348 & 0.65 \\
-Nettle & Rinehart-b & AU05 & 0.338 & 0.0547 & 0.209 & 0.50 \\
-Bell & McKell & AU07 & 0.722 & 0.0291 & 0.638 & 0.79 \\
-Edelman & McKell & AU07 & 0.427 & 0.0307 & 0.347 & 0.51 \\
-Gageler & McKell & AU07 & 0.358 & 0.0307 & 0.280 & 0.44 \\
-Keane & McKell & AU07 & 0.667 & 0.0316 & 0.577 & 0.75 \\
+Bell & Parkes & AU05 & 0.493 & 0.0289 & 0.416 & 0.57 \\
 Edelman & Nauru-a & AU07 & 0.422 & 0.0299 & 0.345 & 0.50 \\
-Gageler & Nauru-a & AU07 & 0.289 & 0.0263 & 0.223 & 0.36 \\
 Nettle & Nauru-a & AU07 & 0.507 & 0.0312 & 0.424 & 0.59 \\
+Gageler & Nauru-a & AU07 & 0.289 & 0.0263 & 0.223 & 0.36 \\
 Edelman & Nauru-b & AU07 & 0.393 & 0.0350 & 0.303 & 0.49 \\
-Gageler & Nauru-b & AU07 & 0.255 & 0.0291 & 0.185 & 0.34 \\
 Nettle & Nauru-b & AU07 & 0.521 & 0.0370 & 0.422 & 0.62 \\
-Bell & OKS & AU07 & 0.833 & 0.0347 & 0.718 & 0.91 \\
+Gageler & Nauru-b & AU07 & 0.255 & 0.0291 & 0.185 & 0.34 \\
+Edelman & Rinehart-a & AU07 & 0.380 & 0.0212 & 0.325 & 0.44 \\
+Kiefel & Rinehart-a & AU07 & 0.173 & 0.0181 & 0.129 & 0.23 \\
+Nettle & Rinehart-a & AU07 & 0.499 & 0.0237 & 0.436 & 0.56 \\
+Gageler & Rinehart-a & AU07 & 0.286 & 0.0199 & 0.235 & 0.34 \\
+Edelman & Rinehart-b & AU07 & 0.358 & 0.0563 & 0.224 & 0.52 \\
+Nettle & Rinehart-b & AU07 & 0.641 & 0.0571 & 0.478 & 0.78 \\
+Gageler & Rinehart-b & AU07 & 0.167 & 0.0362 & 0.091 & 0.29 \\
+Edelman & McKell & AU07 & 0.427 & 0.0307 & 0.347 & 0.51 \\
+Keane & McKell & AU07 & 0.667 & 0.0316 & 0.577 & 0.75 \\
+Gageler & McKell & AU07 & 0.358 & 0.0307 & 0.280 & 0.44 \\
+Bell & McKell & AU07 & 0.722 & 0.0291 & 0.638 & 0.79 \\
 Edelman & OKS & AU07 & 0.265 & 0.0434 & 0.166 & 0.40 \\
-Gageler & OKS & AU07 & 0.466 & 0.0536 & 0.328 & 0.61 \\
 Keane & OKS & AU07 & 0.627 & 0.0525 & 0.479 & 0.75 \\
-Bell & Parkes & AU07 & 0.518 & 0.0292 & 0.440 & 0.60 \\
+Gageler & OKS & AU07 & 0.466 & 0.0536 & 0.328 & 0.61 \\
+Bell & OKS & AU07 & 0.833 & 0.0347 & 0.718 & 0.91 \\
 Edelman & Parkes & AU07 & 0.379 & 0.0258 & 0.312 & 0.45 \\
 Keane & Parkes & AU07 & 0.637 & 0.0277 & 0.560 & 0.71 \\
 Kiefel & Parkes & AU07 & 0.135 & 0.0171 & 0.095 & 0.19 \\
-Edelman & Rinehart-a & AU07 & 0.380 & 0.0212 & 0.325 & 0.44 \\
-Gageler & Rinehart-a & AU07 & 0.286 & 0.0199 & 0.235 & 0.34 \\
-Kiefel & Rinehart-a & AU07 & 0.173 & 0.0181 & 0.129 & 0.23 \\
-Nettle & Rinehart-a & AU07 & 0.499 & 0.0237 & 0.436 & 0.56 \\
-Edelman & Rinehart-b & AU07 & 0.358 & 0.0563 & 0.224 & 0.52 \\
-Gageler & Rinehart-b & AU07 & 0.167 & 0.0362 & 0.091 & 0.29 \\
-Nettle & Rinehart-b & AU07 & 0.641 & 0.0571 & 0.478 & 0.78 \\
-Bell & McKell & AU14 & 0.185 & 0.0257 & 0.126 & 0.26 \\
-Edelman & McKell & AU14 & 0.454 & 0.0315 & 0.372 & 0.54 \\
-Gageler & McKell & AU14 & 0.667 & 0.0299 & 0.583 & 0.74 \\
-Keane & McKell & AU14 & 0.716 & 0.0302 & 0.628 & 0.79 \\
+Bell & Parkes & AU07 & 0.518 & 0.0292 & 0.440 & 0.60 \\
 Edelman & Nauru-a & AU14 & 0.446 & 0.0299 & 0.368 & 0.53 \\
-Gageler & Nauru-a & AU14 & 0.590 & 0.0295 & 0.509 & 0.67 \\
 Nettle & Nauru-a & AU14 & 0.461 & 0.0308 & 0.380 & 0.54 \\
+Gageler & Nauru-a & AU14 & 0.590 & 0.0295 & 0.509 & 0.67 \\
 Edelman & Nauru-b & AU14 & 0.467 & 0.0355 & 0.374 & 0.56 \\
-Gageler & Nauru-b & AU14 & 0.600 & 0.0346 & 0.504 & 0.69 \\
 Nettle & Nauru-b & AU14 & 0.527 & 0.0364 & 0.429 & 0.62 \\
-Bell & OKS & AU14 & 0.395 & 0.0560 & 0.258 & 0.55 \\
+Gageler & Nauru-b & AU14 & 0.600 & 0.0346 & 0.504 & 0.69 \\
+Edelman & Rinehart-a & AU14 & 0.405 & 0.0211 & 0.350 & 0.46 \\
+Kiefel & Rinehart-a & AU14 & 0.547 & 0.0244 & 0.481 & 0.61 \\
+Nettle & Rinehart-a & AU14 & 0.455 & 0.0235 & 0.393 & 0.52 \\
+Gageler & Rinehart-a & AU14 & 0.589 & 0.0221 & 0.529 & 0.65 \\
+Edelman & Rinehart-b & AU14 & 0.552 & 0.0578 & 0.397 & 0.70 \\
+Nettle & Rinehart-b & AU14 & 0.749 & 0.0468 & 0.604 & 0.85 \\
+Gageler & Rinehart-b & AU14 & 0.588 & 0.0569 & 0.431 & 0.73 \\
+Edelman & McKell & AU14 & 0.454 & 0.0315 & 0.372 & 0.54 \\
+Keane & McKell & AU14 & 0.716 & 0.0302 & 0.628 & 0.79 \\
+Gageler & McKell & AU14 & 0.667 & 0.0299 & 0.583 & 0.74 \\
+Bell & McKell & AU14 & 0.185 & 0.0257 & 0.126 & 0.26 \\
 Edelman & OKS & AU14 & 0.377 & 0.0516 & 0.251 & 0.52 \\
-Gageler & OKS & AU14 & 0.825 & 0.0338 & 0.715 & 0.90 \\
 Keane & OKS & AU14 & 0.761 & 0.0432 & 0.627 & 0.86 \\
-Bell & Parkes & AU14 & 0.088 & 0.0138 & 0.057 & 0.13 \\
+Gageler & OKS & AU14 & 0.825 & 0.0338 & 0.715 & 0.90 \\
+Bell & OKS & AU14 & 0.395 & 0.0560 & 0.258 & 0.55 \\
 Edelman & Parkes & AU14 & 0.410 & 0.0257 & 0.343 & 0.48 \\
 Keane & Parkes & AU14 & 0.694 & 0.0265 & 0.618 & 0.76 \\
 Kiefel & Parkes & AU14 & 0.482 & 0.0278 & 0.408 & 0.56 \\
-Edelman & Rinehart-a & AU14 & 0.405 & 0.0211 & 0.350 & 0.46 \\
-Gageler & Rinehart-a & AU14 & 0.589 & 0.0221 & 0.529 & 0.65 \\
-Kiefel & Rinehart-a & AU14 & 0.547 & 0.0244 & 0.481 & 0.61 \\
-Nettle & Rinehart-a & AU14 & 0.455 & 0.0235 & 0.393 & 0.52 \\
-Edelman & Rinehart-b & AU14 & 0.552 & 0.0578 & 0.397 & 0.70 \\
-Gageler & Rinehart-b & AU14 & 0.588 & 0.0569 & 0.431 & 0.73 \\
-Nettle & Rinehart-b & AU14 & 0.749 & 0.0468 & 0.604 & 0.85 \\
-Bell & McKell & AU15 & 0.877 & 0.0197 & 0.814 & 0.92 \\
-Edelman & McKell & AU15 & 0.452 & 0.0320 & 0.368 & 0.54 \\
-Gageler & McKell & AU15 & 0.669 & 0.0303 & 0.583 & 0.74 \\
-Keane & McKell & AU15 & 0.835 & 0.0243 & 0.759 & 0.89 \\
+Bell & Parkes & AU14 & 0.088 & 0.0138 & 0.057 & 0.13 \\
 Edelman & Nauru-a & AU15 & 0.358 & 0.0287 & 0.285 & 0.44 \\
-Gageler & Nauru-a & AU15 & 0.504 & 0.0308 & 0.421 & 0.59 \\
 Nettle & Nauru-a & AU15 & 0.694 & 0.0283 & 0.613 & 0.76 \\
+Gageler & Nauru-a & AU15 & 0.504 & 0.0308 & 0.421 & 0.59 \\
 Edelman & Nauru-b & AU15 & 0.495 & 0.0369 & 0.397 & 0.59 \\
-Gageler & Nauru-b & AU15 & 0.629 & 0.0349 & 0.532 & 0.72 \\
 Nettle & Nauru-b & AU15 & 0.826 & 0.0243 & 0.751 & 0.88 \\
-Bell & OKS & AU15 & 0.972 & 0.0089 & 0.935 & 0.99 \\
+Gageler & Nauru-b & AU15 & 0.629 & 0.0349 & 0.532 & 0.72 \\
+Edelman & Rinehart-a & AU15 & 0.457 & 0.0218 & 0.400 & 0.52 \\
+Kiefel & Rinehart-a & AU15 & 0.448 & 0.0244 & 0.384 & 0.51 \\
+Nettle & Rinehart-a & AU15 & 0.798 & 0.0182 & 0.745 & 0.84 \\
+Gageler & Rinehart-a & AU15 & 0.643 & 0.0215 & 0.583 & 0.70 \\
+Edelman & Rinehart-b & AU15 & 0.387 & 0.0574 & 0.248 & 0.55 \\
+Nettle & Rinehart-b & AU15 & 0.854 & 0.0337 & 0.738 & 0.92 \\
+Gageler & Rinehart-b & AU15 & 0.426 & 0.0590 & 0.279 & 0.59 \\
+Edelman & McKell & AU15 & 0.452 & 0.0320 & 0.368 & 0.54 \\
+Keane & McKell & AU15 & 0.835 & 0.0243 & 0.759 & 0.89 \\
+Gageler & McKell & AU15 & 0.669 & 0.0303 & 0.583 & 0.74 \\
+Bell & McKell & AU15 & 0.877 & 0.0197 & 0.814 & 0.92 \\
 Edelman & OKS & AU15 & 0.507 & 0.0613 & 0.347 & 0.67 \\
-Gageler & OKS & AU15 & 0.890 & 0.0271 & 0.794 & 0.94 \\
 Keane & OKS & AU15 & 0.916 & 0.0234 & 0.828 & 0.96 \\
-Bell & Parkes & AU15 & 0.821 & 0.0223 & 0.753 & 0.87 \\
+Gageler & OKS & AU15 & 0.890 & 0.0271 & 0.794 & 0.94 \\
+Bell & OKS & AU15 & 0.972 & 0.0089 & 0.935 & 0.99 \\
 Edelman & Parkes & AU15 & 0.512 & 0.0267 & 0.440 & 0.58 \\
 Keane & Parkes & AU15 & 0.874 & 0.0180 & 0.817 & 0.91 \\
 Kiefel & Parkes & AU15 & 0.432 & 0.0276 & 0.360 & 0.51 \\
-Edelman & Rinehart-a & AU15 & 0.457 & 0.0218 & 0.400 & 0.52 \\
-Gageler & Rinehart-a & AU15 & 0.643 & 0.0215 & 0.583 & 0.70 \\
-Kiefel & Rinehart-a & AU15 & 0.448 & 0.0244 & 0.384 & 0.51 \\
-Nettle & Rinehart-a & AU15 & 0.798 & 0.0182 & 0.745 & 0.84 \\
-Edelman & Rinehart-b & AU15 & 0.387 & 0.0574 & 0.248 & 0.55 \\
-Gageler & Rinehart-b & AU15 & 0.426 & 0.0590 & 0.279 & 0.59 \\
-Nettle & Rinehart-b & AU15 & 0.854 & 0.0337 & 0.738 & 0.92 \\
-Bell & McKell & AU20 & 0.779 & 0.0277 & 0.695 & 0.84 \\
-Edelman & McKell & AU20 & 0.849 & 0.0195 & 0.789 & 0.89 \\
-Gageler & McKell & AU20 & 0.692 & 0.0310 & 0.603 & 0.77 \\
-Keane & McKell & AU20 & 0.946 & 0.0119 & 0.903 & 0.97 \\
+Bell & Parkes & AU15 & 0.821 & 0.0223 & 0.753 & 0.87 \\
 Edelman & Nauru-a & AU20 & 0.763 & 0.0243 & 0.692 & 0.82 \\
-Gageler & Nauru-a & AU20 & 0.489 & 0.0312 & 0.406 & 0.57 \\
 Nettle & Nauru-a & AU20 & 0.721 & 0.0272 & 0.643 & 0.79 \\
+Gageler & Nauru-a & AU20 & 0.489 & 0.0312 & 0.406 & 0.57 \\
 Edelman & Nauru-b & AU20 & 0.758 & 0.0289 & 0.673 & 0.83 \\
-Gageler & Nauru-b & AU20 & 0.471 & 0.0370 & 0.374 & 0.57 \\
 Nettle & Nauru-b & AU20 & 0.751 & 0.0301 & 0.661 & 0.82 \\
-Bell & OKS & AU20 & 0.931 & 0.0211 & 0.848 & 0.97 \\
+Gageler & Nauru-b & AU20 & 0.471 & 0.0370 & 0.374 & 0.57 \\
+Edelman & Rinehart-a & AU20 & 0.754 & 0.0184 & 0.701 & 0.80 \\
+Kiefel & Rinehart-a & AU20 & 0.861 & 0.0160 & 0.812 & 0.90 \\
+Nettle & Rinehart-a & AU20 & 0.739 & 0.0204 & 0.681 & 0.79 \\
+Gageler & Rinehart-a & AU20 & 0.516 & 0.0230 & 0.454 & 0.58 \\
+Edelman & Rinehart-b & AU20 & 0.725 & 0.0505 & 0.571 & 0.84 \\
+Nettle & Rinehart-b & AU20 & 0.828 & 0.0384 & 0.700 & 0.91 \\
+Gageler & Rinehart-b & AU20 & 0.336 & 0.0556 & 0.206 & 0.50 \\
+Edelman & McKell & AU20 & 0.849 & 0.0195 & 0.789 & 0.89 \\
+Keane & McKell & AU20 & 0.946 & 0.0119 & 0.903 & 0.97 \\
+Gageler & McKell & AU20 & 0.692 & 0.0310 & 0.603 & 0.77 \\
+Bell & McKell & AU20 & 0.779 & 0.0277 & 0.695 & 0.84 \\
 Edelman & OKS & AU20 & 0.845 & 0.0382 & 0.713 & 0.92 \\
-Gageler & OKS & AU20 & 0.876 & 0.0324 & 0.760 & 0.94 \\
 Keane & OKS & AU20 & 0.967 & 0.0115 & 0.918 & 0.99 \\
-Bell & Parkes & AU20 & 0.476 & 0.0301 & 0.397 & 0.56 \\
+Gageler & OKS & AU20 & 0.876 & 0.0324 & 0.760 & 0.94 \\
+Bell & OKS & AU20 & 0.931 & 0.0211 & 0.848 & 0.97 \\
 Edelman & Parkes & AU20 & 0.742 & 0.0234 & 0.674 & 0.80 \\
 Keane & Parkes & AU20 & 0.905 & 0.0169 & 0.849 & 0.94 \\
 Kiefel & Parkes & AU20 & 0.815 & 0.0211 & 0.751 & 0.87 \\
-Edelman & Rinehart-a & AU20 & 0.754 & 0.0184 & 0.701 & 0.80 \\
-Gageler & Rinehart-a & AU20 & 0.516 & 0.0230 & 0.454 & 0.58 \\
-Kiefel & Rinehart-a & AU20 & 0.861 & 0.0160 & 0.812 & 0.90 \\
-Nettle & Rinehart-a & AU20 & 0.739 & 0.0204 & 0.681 & 0.79 \\
-Edelman & Rinehart-b & AU20 & 0.725 & 0.0505 & 0.571 & 0.84 \\
-Gageler & Rinehart-b & AU20 & 0.336 & 0.0556 & 0.206 & 0.50 \\
-Nettle & Rinehart-b & AU20 & 0.828 & 0.0384 & 0.700 & 0.91 \\
-Bell & McKell & AU25 & 0.815 & 0.0251 & 0.738 & 0.87 \\
-Edelman & McKell & AU25 & 0.210 & 0.0235 & 0.154 & 0.28 \\
-Gageler & McKell & AU25 & 0.383 & 0.0325 & 0.301 & 0.47 \\
-Keane & McKell & AU25 & 0.123 & 0.0197 & 0.079 & 0.19 \\
+Bell & Parkes & AU20 & 0.476 & 0.0301 & 0.397 & 0.56 \\
 Edelman & Nauru-a & AU25 & 0.403 & 0.0295 & 0.327 & 0.48 \\
-Gageler & Nauru-a & AU25 & 0.540 & 0.0302 & 0.459 & 0.62 \\
 Nettle & Nauru-a & AU25 & 0.434 & 0.0307 & 0.354 & 0.52 \\
+Gageler & Nauru-a & AU25 & 0.540 & 0.0302 & 0.459 & 0.62 \\
 Edelman & Nauru-b & AU25 & 0.367 & 0.0338 & 0.281 & 0.46 \\
-Gageler & Nauru-b & AU25 & 0.490 & 0.0359 & 0.395 & 0.59 \\
 Nettle & Nauru-b & AU25 & 0.440 & 0.0362 & 0.346 & 0.54 \\
-Bell & OKS & AU25 & 0.907 & 0.0242 & 0.819 & 0.96 \\
+Gageler & Nauru-b & AU25 & 0.490 & 0.0359 & 0.395 & 0.59 \\
+Edelman & Rinehart-a & AU25 & 0.296 & 0.0196 & 0.246 & 0.35 \\
+Kiefel & Rinehart-a & AU25 & 0.910 & 0.0127 & 0.870 & 0.94 \\
+Nettle & Rinehart-a & AU25 & 0.356 & 0.0224 & 0.298 & 0.42 \\
+Gageler & Rinehart-a & AU25 & 0.462 & 0.0226 & 0.402 & 0.52 \\
+Edelman & Rinehart-b & AU25 & 0.403 & 0.0559 & 0.266 & 0.56 \\
+Nettle & Rinehart-b & AU25 & 0.636 & 0.0552 & 0.480 & 0.77 \\
+Gageler & Rinehart-b & AU25 & 0.432 & 0.0568 & 0.290 & 0.59 \\
+Edelman & McKell & AU25 & 0.210 & 0.0235 & 0.154 & 0.28 \\
+Keane & McKell & AU25 & 0.123 & 0.0197 & 0.079 & 0.19 \\
+Gageler & McKell & AU25 & 0.383 & 0.0325 & 0.301 & 0.47 \\
+Bell & McKell & AU25 & 0.815 & 0.0251 & 0.738 & 0.87 \\
 Edelman & OKS & AU25 & 0.131 & 0.0293 & 0.070 & 0.23 \\
-Gageler & OKS & AU25 & 0.532 & 0.0580 & 0.378 & 0.68 \\
 Keane & OKS & AU25 & 0.121 & 0.0297 & 0.061 & 0.23 \\
-Bell & Parkes & AU25 & 0.764 & 0.0247 & 0.691 & 0.82 \\
+Gageler & OKS & AU25 & 0.532 & 0.0580 & 0.378 & 0.68 \\
+Bell & OKS & AU25 & 0.907 & 0.0242 & 0.819 & 0.96 \\
 Edelman & Parkes & AU25 & 0.278 & 0.0242 & 0.218 & 0.35 \\
 Keane & Parkes & AU25 & 0.179 & 0.0220 & 0.128 & 0.25 \\
 Kiefel & Parkes & AU25 & 0.875 & 0.0174 & 0.821 & 0.92 \\
-Edelman & Rinehart-a & AU25 & 0.296 & 0.0196 & 0.246 & 0.35 \\
-Gageler & Rinehart-a & AU25 & 0.462 & 0.0226 & 0.402 & 0.52 \\
-Kiefel & Rinehart-a & AU25 & 0.910 & 0.0127 & 0.870 & 0.94 \\
-Nettle & Rinehart-a & AU25 & 0.356 & 0.0224 & 0.298 & 0.42 \\
-Edelman & Rinehart-b & AU25 & 0.403 & 0.0559 & 0.266 & 0.56 \\
-Gageler & Rinehart-b & AU25 & 0.432 & 0.0568 & 0.290 & 0.59 \\
-Nettle & Rinehart-b & AU25 & 0.636 & 0.0552 & 0.480 & 0.77 \\
+Bell & Parkes & AU25 & 0.764 & 0.0247 & 0.691 & 0.82 \\
 \end{longtable}
 \end{center}
 
 \begin{center}
 \begin{longtable}{llllllll}
-\caption{model result 3}\\
+\caption{model result 3 for mean presence}\\
 \toprule
 judge & AU & speaker & video & prob & SE & asymp.LCL & asymp.UCL \\
 \midrule
 \endhead
 \bottomrule
 \endfoot
-Bell & AU01 & Appellent & McKell & 0.650 & 0.03379 & 0.547 & 0.74 \\
-Edelman & AU01 & Appellent & McKell & 0.428 & 0.03227 & 0.337 & 0.52 \\
-Gageler & AU01 & Appellent & McKell & 0.223 & 0.02531 & 0.158 & 0.31 \\
-Keane & AU01 & Appellent & McKell & 0.060 & 0.01179 & 0.033 & 0.10 \\
-Bell & AU02 & Appellent & McKell & 0.688 & 0.03406 & 0.581 & 0.78 \\
-Edelman & AU02 & Appellent & McKell & 0.942 & 0.01164 & 0.897 & 0.97 \\
-Gageler & AU02 & Appellent & McKell & 0.872 & 0.02215 & 0.793 & 0.92 \\
-Keane & AU02 & Appellent & McKell & 0.678 & 0.03475 & 0.569 & 0.77 \\
-Bell & AU05 & Appellent & McKell & 0.645 & 0.03265 & 0.545 & 0.73 \\
-Edelman & AU05 & Appellent & McKell & 0.293 & 0.02747 & 0.220 & 0.38 \\
-Gageler & AU05 & Appellent & McKell & 0.700 & 0.02890 & 0.610 & 0.78 \\
-Keane & AU05 & Appellent & McKell & 0.548 & 0.03499 & 0.446 & 0.65 \\
-Bell & AU07 & Appellent & McKell & 0.712 & 0.03027 & 0.617 & 0.79 \\
-Edelman & AU07 & Appellent & McKell & 0.429 & 0.03104 & 0.342 & 0.52 \\
-Gageler & AU07 & Appellent & McKell & 0.360 & 0.03105 & 0.275 & 0.45 \\
-Keane & AU07 & Appellent & McKell & 0.658 & 0.03270 & 0.558 & 0.75 \\
-Bell & AU14 & Appellent & McKell & 0.178 & 0.02530 & 0.115 & 0.26 \\
-Edelman & AU14 & Appellent & McKell & 0.456 & 0.03176 & 0.366 & 0.55 \\
-Gageler & AU14 & Appellent & McKell & 0.669 & 0.03009 & 0.576 & 0.75 \\
-Keane & AU14 & Appellent & McKell & 0.708 & 0.03126 & 0.610 & 0.79 \\
-Bell & AU15 & Appellent & McKell & 0.872 & 0.02059 & 0.799 & 0.92 \\
-Edelman & AU15 & Appellent & McKell & 0.454 & 0.03231 & 0.362 & 0.55 \\
-Gageler & AU15 & Appellent & McKell & 0.671 & 0.03053 & 0.577 & 0.75 \\
-Keane & AU15 & Appellent & McKell & 0.830 & 0.02519 & 0.744 & 0.89 \\
-Bell & AU20 & Appellent & McKell & 0.770 & 0.02892 & 0.675 & 0.84 \\
-Edelman & AU20 & Appellent & McKell & 0.850 & 0.01959 & 0.783 & 0.90 \\
-Gageler & AU20 & Appellent & McKell & 0.694 & 0.03114 & 0.597 & 0.78 \\
-Keane & AU20 & Appellent & McKell & 0.944 & 0.01242 & 0.895 & 0.97 \\
-Bell & AU25 & Appellent & McKell & 0.807 & 0.02616 & 0.719 & 0.87 \\
-Edelman & AU25 & Appellent & McKell & 0.211 & 0.02371 & 0.150 & 0.29 \\
-Gageler & AU25 & Appellent & McKell & 0.385 & 0.03285 & 0.295 & 0.48 \\
-Keane & AU25 & Appellent & McKell & 0.119 & 0.01942 & 0.073 & 0.19 \\
-Bell & AU01 & Respondent & McKell & 0.684 & 0.03408 & 0.578 & 0.77 \\
-Edelman & AU01 & Respondent & McKell & 0.423 & 0.03308 & 0.331 & 0.52 \\
-Gageler & AU01 & Respondent & McKell & 0.219 & 0.02564 & 0.153 & 0.30 \\
-Keane & AU01 & Respondent & McKell & 0.066 & 0.01342 & 0.037 & 0.12 \\
-Bell & AU02 & Respondent & McKell & 0.720 & 0.03374 & 0.612 & 0.81 \\
-Edelman & AU02 & Respondent & McKell & 0.941 & 0.01195 & 0.895 & 0.97 \\
-Gageler & AU02 & Respondent & McKell & 0.869 & 0.02291 & 0.787 & 0.92 \\
-Keane & AU02 & Respondent & McKell & 0.702 & 0.03534 & 0.590 & 0.79 \\
-Bell & AU05 & Respondent & McKell & 0.679 & 0.03307 & 0.577 & 0.77 \\
-Edelman & AU05 & Respondent & McKell & 0.290 & 0.02802 & 0.215 & 0.38 \\
-Gageler & AU05 & Respondent & McKell & 0.695 & 0.03010 & 0.601 & 0.77 \\
-Keane & AU05 & Respondent & McKell & 0.576 & 0.03705 & 0.467 & 0.68 \\
-Bell & AU07 & Respondent & McKell & 0.743 & 0.02996 & 0.647 & 0.82 \\
-Edelman & AU07 & Respondent & McKell & 0.424 & 0.03189 & 0.335 & 0.52 \\
-Gageler & AU07 & Respondent & McKell & 0.354 & 0.03183 & 0.268 & 0.45 \\
-Keane & AU07 & Respondent & McKell & 0.684 & 0.03372 & 0.578 & 0.77 \\
-Bell & AU14 & Respondent & McKell & 0.201 & 0.02889 & 0.130 & 0.30 \\
-Edelman & AU14 & Respondent & McKell & 0.451 & 0.03264 & 0.359 & 0.55 \\
-Gageler & AU14 & Respondent & McKell & 0.663 & 0.03131 & 0.567 & 0.75 \\
-Keane & AU14 & Respondent & McKell & 0.732 & 0.03175 & 0.630 & 0.81 \\
-Bell & AU15 & Respondent & McKell & 0.888 & 0.01912 & 0.819 & 0.93 \\
-Edelman & AU15 & Respondent & McKell & 0.449 & 0.03317 & 0.356 & 0.55 \\
-Gageler & AU15 & Respondent & McKell & 0.665 & 0.03174 & 0.567 & 0.75 \\
-Keane & AU15 & Respondent & McKell & 0.845 & 0.02451 & 0.760 & 0.90 \\
-Bell & AU20 & Respondent & McKell & 0.796 & 0.02786 & 0.703 & 0.87 \\
-Edelman & AU20 & Respondent & McKell & 0.847 & 0.02024 & 0.779 & 0.90 \\
-Gageler & AU20 & Respondent & McKell & 0.688 & 0.03231 & 0.587 & 0.77 \\
-Keane & AU20 & Respondent & McKell & 0.950 & 0.01155 & 0.903 & 0.97 \\
-Bell & AU25 & Respondent & McKell & 0.830 & 0.02492 & 0.745 & 0.89 \\
-Edelman & AU25 & Respondent & McKell & 0.208 & 0.02403 & 0.146 & 0.29 \\
-Gageler & AU25 & Respondent & McKell & 0.379 & 0.03366 & 0.287 & 0.48 \\
-Keane & AU25 & Respondent & McKell & 0.131 & 0.02198 & 0.079 & 0.21 \\
 Edelman & AU01 & Appellent & Nauru-a & 0.663 & 0.02859 & 0.575 & 0.74 \\
-Gageler & AU01 & Appellent & Nauru-a & 0.359 & 0.02957 & 0.278 & 0.45 \\
 Nettle & AU01 & Appellent & Nauru-a & 0.712 & 0.02798 & 0.625 & 0.79 \\
+Gageler & AU01 & Appellent & Nauru-a & 0.359 & 0.02957 & 0.278 & 0.45 \\
 Edelman & AU02 & Appellent & Nauru-a & 0.951 & 0.01135 & 0.905 & 0.97 \\
-Gageler & AU02 & Appellent & Nauru-a & 0.857 & 0.02498 & 0.768 & 0.92 \\
 Nettle & AU02 & Appellent & Nauru-a & 0.995 & 0.00284 & 0.973 & 1.00 \\
+Gageler & AU02 & Appellent & Nauru-a & 0.857 & 0.02498 & 0.768 & 0.92 \\
 Edelman & AU05 & Appellent & Nauru-a & 0.308 & 0.02803 & 0.233 & 0.40 \\
-Gageler & AU05 & Appellent & Nauru-a & 0.651 & 0.02961 & 0.560 & 0.73 \\
 Nettle & AU05 & Appellent & Nauru-a & 0.206 & 0.02371 & 0.146 & 0.28 \\
+Gageler & AU05 & Appellent & Nauru-a & 0.651 & 0.02961 & 0.560 & 0.73 \\
 Edelman & AU07 & Appellent & Nauru-a & 0.424 & 0.03041 & 0.339 & 0.51 \\
-Gageler & AU07 & Appellent & Nauru-a & 0.291 & 0.02687 & 0.219 & 0.37 \\
 Nettle & AU07 & Appellent & Nauru-a & 0.501 & 0.03210 & 0.409 & 0.59 \\
+Gageler & AU07 & Appellent & Nauru-a & 0.291 & 0.02687 & 0.219 & 0.37 \\
 Edelman & AU14 & Appellent & Nauru-a & 0.448 & 0.03037 & 0.362 & 0.54 \\
-Gageler & AU14 & Appellent & Nauru-a & 0.592 & 0.03000 & 0.503 & 0.68 \\
 Nettle & AU14 & Appellent & Nauru-a & 0.455 & 0.03161 & 0.365 & 0.55 \\
+Gageler & AU14 & Appellent & Nauru-a & 0.592 & 0.03000 & 0.503 & 0.68 \\
 Edelman & AU15 & Appellent & Nauru-a & 0.360 & 0.02916 & 0.280 & 0.45 \\
-Gageler & AU15 & Appellent & Nauru-a & 0.506 & 0.03134 & 0.416 & 0.60 \\
 Nettle & AU15 & Appellent & Nauru-a & 0.689 & 0.02926 & 0.598 & 0.77 \\
+Gageler & AU15 & Appellent & Nauru-a & 0.506 & 0.03134 & 0.416 & 0.60 \\
 Edelman & AU20 & Appellent & Nauru-a & 0.765 & 0.02450 & 0.686 & 0.83 \\
-Gageler & AU20 & Appellent & Nauru-a & 0.492 & 0.03176 & 0.400 & 0.58 \\
 Nettle & AU20 & Appellent & Nauru-a & 0.716 & 0.02811 & 0.628 & 0.79 \\
+Gageler & AU20 & Appellent & Nauru-a & 0.492 & 0.03176 & 0.400 & 0.58 \\
 Edelman & AU25 & Appellent & Nauru-a & 0.405 & 0.03000 & 0.321 & 0.49 \\
-Gageler & AU25 & Appellent & Nauru-a & 0.543 & 0.03071 & 0.453 & 0.63 \\
 Nettle & AU25 & Appellent & Nauru-a & 0.428 & 0.03145 & 0.340 & 0.52 \\
+Gageler & AU25 & Appellent & Nauru-a & 0.543 & 0.03071 & 0.453 & 0.63 \\
 Edelman & AU01 & Respondent & Nauru-a & 0.659 & 0.02919 & 0.569 & 0.74 \\
-Gageler & AU01 & Respondent & Nauru-a & 0.353 & 0.02990 & 0.272 & 0.44 \\
 Nettle & AU01 & Respondent & Nauru-a & 0.724 & 0.02795 & 0.636 & 0.80 \\
+Gageler & AU01 & Respondent & Nauru-a & 0.353 & 0.02990 & 0.272 & 0.44 \\
 Edelman & AU02 & Respondent & Nauru-a & 0.950 & 0.01158 & 0.903 & 0.97 \\
-Gageler & AU02 & Respondent & Nauru-a & 0.854 & 0.02563 & 0.763 & 0.91 \\
 Nettle & AU02 & Respondent & Nauru-a & 0.996 & 0.00267 & 0.975 & 1.00 \\
+Gageler & AU02 & Respondent & Nauru-a & 0.854 & 0.02563 & 0.763 & 0.91 \\
 Edelman & AU05 & Respondent & Nauru-a & 0.304 & 0.02824 & 0.229 & 0.39 \\
-Gageler & AU05 & Respondent & Nauru-a & 0.645 & 0.03037 & 0.552 & 0.73 \\
 Nettle & AU05 & Respondent & Nauru-a & 0.216 & 0.02504 & 0.152 & 0.30 \\
+Gageler & AU05 & Respondent & Nauru-a & 0.645 & 0.03037 & 0.552 & 0.73 \\
 Edelman & AU07 & Respondent & Nauru-a & 0.420 & 0.03082 & 0.334 & 0.51 \\
-Gageler & AU07 & Respondent & Nauru-a & 0.285 & 0.02707 & 0.213 & 0.37 \\
 Nettle & AU07 & Respondent & Nauru-a & 0.516 & 0.03294 & 0.421 & 0.61 \\
+Gageler & AU07 & Respondent & Nauru-a & 0.285 & 0.02707 & 0.213 & 0.37 \\
 Edelman & AU14 & Respondent & Nauru-a & 0.443 & 0.03081 & 0.356 & 0.53 \\
-Gageler & AU14 & Respondent & Nauru-a & 0.586 & 0.03073 & 0.495 & 0.67 \\
 Nettle & AU14 & Respondent & Nauru-a & 0.470 & 0.03263 & 0.377 & 0.56 \\
+Gageler & AU14 & Respondent & Nauru-a & 0.586 & 0.03073 & 0.495 & 0.67 \\
 Edelman & AU15 & Respondent & Nauru-a & 0.356 & 0.02946 & 0.275 & 0.45 \\
-Gageler & AU15 & Respondent & Nauru-a & 0.500 & 0.03195 & 0.408 & 0.59 \\
 Nettle & AU15 & Respondent & Nauru-a & 0.702 & 0.02932 & 0.610 & 0.78 \\
+Gageler & AU15 & Respondent & Nauru-a & 0.500 & 0.03195 & 0.408 & 0.59 \\
 Edelman & AU20 & Respondent & Nauru-a & 0.761 & 0.02506 & 0.681 & 0.83 \\
-Gageler & AU20 & Respondent & Nauru-a & 0.485 & 0.03234 & 0.392 & 0.58 \\
 Nettle & AU20 & Respondent & Nauru-a & 0.729 & 0.02806 & 0.640 & 0.80 \\
+Gageler & AU20 & Respondent & Nauru-a & 0.485 & 0.03234 & 0.392 & 0.58 \\
 Edelman & AU25 & Respondent & Nauru-a & 0.401 & 0.03038 & 0.316 & 0.49 \\
-Gageler & AU25 & Respondent & Nauru-a & 0.536 & 0.03139 & 0.445 & 0.63 \\
 Nettle & AU25 & Respondent & Nauru-a & 0.443 & 0.03254 & 0.351 & 0.54 \\
+Gageler & AU25 & Respondent & Nauru-a & 0.536 & 0.03139 & 0.445 & 0.63 \\
 Edelman & AU01 & Appellent & Nauru-b & 0.580 & 0.03581 & 0.474 & 0.68 \\
-Gageler & AU01 & Appellent & Nauru-b & 0.273 & 0.03042 & 0.194 & 0.37 \\
 Nettle & AU01 & Appellent & Nauru-b & 0.680 & 0.03357 & 0.576 & 0.77 \\
+Gageler & AU01 & Appellent & Nauru-b & 0.273 & 0.03042 & 0.194 & 0.37 \\
 Edelman & AU02 & Appellent & Nauru-b & 0.960 & 0.01157 & 0.909 & 0.98 \\
-Gageler & AU02 & Appellent & Nauru-b & 0.876 & 0.02854 & 0.766 & 0.94 \\
 Nettle & AU02 & Appellent & Nauru-b & 0.997 & 0.00198 & 0.980 & 1.00 \\
+Gageler & AU02 & Appellent & Nauru-b & 0.876 & 0.02854 & 0.766 & 0.94 \\
 Edelman & AU05 & Appellent & Nauru-b & 0.278 & 0.03110 & 0.197 & 0.38 \\
-Gageler & AU05 & Appellent & Nauru-b & 0.605 & 0.03596 & 0.497 & 0.70 \\
 Nettle & AU05 & Appellent & Nauru-b & 0.215 & 0.02784 & 0.145 & 0.31 \\
+Gageler & AU05 & Appellent & Nauru-b & 0.605 & 0.03596 & 0.497 & 0.70 \\
 Edelman & AU07 & Appellent & Nauru-b & 0.393 & 0.03500 & 0.297 & 0.50 \\
-Gageler & AU07 & Appellent & Nauru-b & 0.256 & 0.02922 & 0.180 & 0.35 \\
 Nettle & AU07 & Appellent & Nauru-b & 0.519 & 0.03704 & 0.412 & 0.62 \\
+Gageler & AU07 & Appellent & Nauru-b & 0.256 & 0.02922 & 0.180 & 0.35 \\
 Edelman & AU14 & Appellent & Nauru-b & 0.468 & 0.03557 & 0.367 & 0.57 \\
-Gageler & AU14 & Appellent & Nauru-b & 0.600 & 0.03463 & 0.497 & 0.70 \\
 Nettle & AU14 & Appellent & Nauru-b & 0.525 & 0.03646 & 0.419 & 0.63 \\
+Gageler & AU14 & Appellent & Nauru-b & 0.600 & 0.03463 & 0.497 & 0.70 \\
 Edelman & AU15 & Appellent & Nauru-b & 0.495 & 0.03690 & 0.390 & 0.60 \\
-Gageler & AU15 & Appellent & Nauru-b & 0.630 & 0.03496 & 0.524 & 0.73 \\
 Nettle & AU15 & Appellent & Nauru-b & 0.825 & 0.02440 & 0.743 & 0.89 \\
+Gageler & AU15 & Appellent & Nauru-b & 0.630 & 0.03496 & 0.524 & 0.73 \\
 Edelman & AU20 & Appellent & Nauru-b & 0.759 & 0.02888 & 0.665 & 0.83 \\
-Gageler & AU20 & Appellent & Nauru-b & 0.472 & 0.03708 & 0.367 & 0.58 \\
 Nettle & AU20 & Appellent & Nauru-b & 0.749 & 0.03027 & 0.652 & 0.83 \\
+Gageler & AU20 & Appellent & Nauru-b & 0.472 & 0.03708 & 0.367 & 0.58 \\
 Edelman & AU25 & Appellent & Nauru-b & 0.367 & 0.03389 & 0.275 & 0.47 \\
-Gageler & AU25 & Appellent & Nauru-b & 0.491 & 0.03593 & 0.388 & 0.59 \\
 Nettle & AU25 & Appellent & Nauru-b & 0.438 & 0.03626 & 0.337 & 0.55 \\
+Gageler & AU25 & Appellent & Nauru-b & 0.491 & 0.03593 & 0.388 & 0.59 \\
 Edelman & AU01 & Respondent & Nauru-b & 0.576 & 0.03764 & 0.464 & 0.68 \\
-Gageler & AU01 & Respondent & Nauru-b & 0.268 & 0.03170 & 0.186 & 0.37 \\
 Nettle & AU01 & Respondent & Nauru-b & 0.693 & 0.03544 & 0.582 & 0.79 \\
+Gageler & AU01 & Respondent & Nauru-b & 0.268 & 0.03170 & 0.186 & 0.37 \\
 Edelman & AU02 & Respondent & Nauru-b & 0.959 & 0.01190 & 0.906 & 0.98 \\
-Gageler & AU02 & Respondent & Nauru-b & 0.873 & 0.02964 & 0.759 & 0.94 \\
 Nettle & AU02 & Respondent & Nauru-b & 0.997 & 0.00187 & 0.981 & 1.00 \\
+Gageler & AU02 & Respondent & Nauru-b & 0.873 & 0.02964 & 0.759 & 0.94 \\
 Edelman & AU05 & Respondent & Nauru-b & 0.274 & 0.03220 & 0.191 & 0.38 \\
-Gageler & AU05 & Respondent & Nauru-b & 0.599 & 0.03818 & 0.485 & 0.70 \\
 Nettle & AU05 & Respondent & Nauru-b & 0.226 & 0.03077 & 0.149 & 0.33 \\
+Gageler & AU05 & Respondent & Nauru-b & 0.599 & 0.03818 & 0.485 & 0.70 \\
 Edelman & AU07 & Respondent & Nauru-b & 0.389 & 0.03656 & 0.289 & 0.50 \\
-Gageler & AU07 & Respondent & Nauru-b & 0.251 & 0.03042 & 0.173 & 0.35 \\
 Nettle & AU07 & Respondent & Nauru-b & 0.534 & 0.04006 & 0.418 & 0.65 \\
+Gageler & AU07 & Respondent & Nauru-b & 0.251 & 0.03042 & 0.173 & 0.35 \\
 Edelman & AU14 & Respondent & Nauru-b & 0.463 & 0.03734 & 0.358 & 0.57 \\
-Gageler & AU14 & Respondent & Nauru-b & 0.594 & 0.03693 & 0.484 & 0.70 \\
 Nettle & AU14 & Respondent & Nauru-b & 0.540 & 0.03949 & 0.425 & 0.65 \\
+Gageler & AU14 & Respondent & Nauru-b & 0.594 & 0.03693 & 0.484 & 0.70 \\
 Edelman & AU15 & Respondent & Nauru-b & 0.491 & 0.03866 & 0.380 & 0.60 \\
-Gageler & AU15 & Respondent & Nauru-b & 0.624 & 0.03718 & 0.511 & 0.72 \\
 Nettle & AU15 & Respondent & Nauru-b & 0.834 & 0.02502 & 0.748 & 0.89 \\
+Gageler & AU15 & Respondent & Nauru-b & 0.624 & 0.03718 & 0.511 & 0.72 \\
 Edelman & AU20 & Respondent & Nauru-b & 0.756 & 0.03038 & 0.657 & 0.83 \\
-Gageler & AU20 & Respondent & Nauru-b & 0.465 & 0.03915 & 0.355 & 0.58 \\
 Nettle & AU20 & Respondent & Nauru-b & 0.761 & 0.03151 & 0.657 & 0.84 \\
+Gageler & AU20 & Respondent & Nauru-b & 0.465 & 0.03915 & 0.355 & 0.58 \\
 Edelman & AU25 & Respondent & Nauru-b & 0.363 & 0.03538 & 0.267 & 0.47 \\
-Gageler & AU25 & Respondent & Nauru-b & 0.484 & 0.03811 & 0.376 & 0.59 \\
 Nettle & AU25 & Respondent & Nauru-b & 0.453 & 0.03963 & 0.342 & 0.57 \\
-Bell & AU01 & Appellent & OKS & 0.929 & 0.01860 & 0.852 & 0.97 \\
+Gageler & AU25 & Respondent & Nauru-b & 0.484 & 0.03811 & 0.376 & 0.59 \\
+Edelman & AU01 & Appellent & Rinehart-a & 0.601 & 0.02273 & 0.534 & 0.67 \\
+Kiefel & AU01 & Appellent & Rinehart-a & 0.567 & 0.02701 & 0.487 & 0.64 \\
+Nettle & AU01 & Appellent & Rinehart-a & 0.683 & 0.02413 & 0.609 & 0.75 \\
+Gageler & AU01 & Appellent & Rinehart-a & 0.336 & 0.02278 & 0.273 & 0.41 \\
+Edelman & AU02 & Appellent & Rinehart-a & 0.929 & 0.01136 & 0.888 & 0.96 \\
+Kiefel & AU02 & Appellent & Rinehart-a & 0.951 & 0.01007 & 0.912 & 0.97 \\
+Nettle & AU02 & Appellent & Rinehart-a & 0.994 & 0.00355 & 0.967 & 1.00 \\
+Gageler & AU02 & Appellent & Rinehart-a & 0.827 & 0.01940 & 0.763 & 0.88 \\
+Edelman & AU05 & Appellent & Rinehart-a & 0.338 & 0.02193 & 0.277 & 0.40 \\
+Kiefel & AU05 & Appellent & Rinehart-a & 0.431 & 0.02744 & 0.354 & 0.51 \\
+Nettle & AU05 & Appellent & Rinehart-a & 0.252 & 0.02193 & 0.194 & 0.32 \\
+Gageler & AU05 & Appellent & Rinehart-a & 0.715 & 0.02125 & 0.650 & 0.77 \\
+Edelman & AU07 & Appellent & Rinehart-a & 0.383 & 0.02275 & 0.319 & 0.45 \\
+Kiefel & AU07 & Appellent & Rinehart-a & 0.200 & 0.02154 & 0.145 & 0.27 \\
+Nettle & AU07 & Appellent & Rinehart-a & 0.489 & 0.02636 & 0.413 & 0.57 \\
+Gageler & AU07 & Appellent & Rinehart-a & 0.289 & 0.02143 & 0.231 & 0.36 \\
+Edelman & AU14 & Appellent & Rinehart-a & 0.408 & 0.02268 & 0.344 & 0.48 \\
+Kiefel & AU14 & Appellent & Rinehart-a & 0.594 & 0.02658 & 0.515 & 0.67 \\
+Nettle & AU14 & Appellent & Rinehart-a & 0.446 & 0.02603 & 0.372 & 0.52 \\
+Gageler & AU14 & Appellent & Rinehart-a & 0.593 & 0.02380 & 0.522 & 0.66 \\
+Edelman & AU15 & Appellent & Rinehart-a & 0.460 & 0.02336 & 0.393 & 0.53 \\
+Kiefel & AU15 & Appellent & Rinehart-a & 0.495 & 0.02753 & 0.416 & 0.57 \\
+Nettle & AU15 & Appellent & Rinehart-a & 0.792 & 0.02005 & 0.727 & 0.84 \\
+Gageler & AU15 & Appellent & Rinehart-a & 0.647 & 0.02310 & 0.577 & 0.71 \\
+Edelman & AU20 & Appellent & Rinehart-a & 0.756 & 0.01931 & 0.695 & 0.81 \\
+Kiefel & AU20 & Appellent & Rinehart-a & 0.883 & 0.01488 & 0.833 & 0.92 \\
+Nettle & AU20 & Appellent & Rinehart-a & 0.732 & 0.02265 & 0.661 & 0.79 \\
+Gageler & AU20 & Appellent & Rinehart-a & 0.520 & 0.02485 & 0.448 & 0.59 \\
+Edelman & AU25 & Appellent & Rinehart-a & 0.298 & 0.02098 & 0.241 & 0.36 \\
+Kiefel & AU25 & Appellent & Rinehart-a & 0.925 & 0.01141 & 0.884 & 0.95 \\
+Nettle & AU25 & Appellent & Rinehart-a & 0.347 & 0.02449 & 0.279 & 0.42 \\
+Gageler & AU25 & Appellent & Rinehart-a & 0.466 & 0.02453 & 0.396 & 0.54 \\
+Edelman & AU01 & Respondent & Rinehart-a & 0.597 & 0.02177 & 0.532 & 0.66 \\
+Kiefel & AU01 & Respondent & Rinehart-a & 0.493 & 0.02553 & 0.419 & 0.57 \\
+Nettle & AU01 & Respondent & Rinehart-a & 0.696 & 0.02222 & 0.627 & 0.76 \\
+Gageler & AU01 & Respondent & Rinehart-a & 0.330 & 0.02152 & 0.271 & 0.40 \\
+Edelman & AU02 & Respondent & Rinehart-a & 0.927 & 0.01138 & 0.886 & 0.95 \\
+Kiefel & AU02 & Respondent & Rinehart-a & 0.935 & 0.01275 & 0.886 & 0.96 \\
+Nettle & AU02 & Respondent & Rinehart-a & 0.994 & 0.00334 & 0.969 & 1.00 \\
+Gageler & AU02 & Respondent & Rinehart-a & 0.823 & 0.01919 & 0.760 & 0.87 \\
+Edelman & AU05 & Respondent & Rinehart-a & 0.334 & 0.02089 & 0.276 & 0.40 \\
+Kiefel & AU05 & Respondent & Rinehart-a & 0.361 & 0.02427 & 0.294 & 0.43 \\
+Nettle & AU05 & Respondent & Rinehart-a & 0.264 & 0.02127 & 0.206 & 0.33 \\
+Gageler & AU05 & Respondent & Rinehart-a & 0.710 & 0.02048 & 0.647 & 0.77 \\
+Edelman & AU07 & Respondent & Rinehart-a & 0.378 & 0.02167 & 0.318 & 0.44 \\
+Kiefel & AU07 & Respondent & Rinehart-a & 0.157 & 0.01725 & 0.113 & 0.21 \\
+Nettle & AU07 & Respondent & Rinehart-a & 0.504 & 0.02459 & 0.433 & 0.58 \\
+Gageler & AU07 & Respondent & Rinehart-a & 0.284 & 0.02024 & 0.229 & 0.35 \\
+Edelman & AU14 & Respondent & Rinehart-a & 0.404 & 0.02156 & 0.343 & 0.47 \\
+Kiefel & AU14 & Respondent & Rinehart-a & 0.521 & 0.02549 & 0.447 & 0.59 \\
+Nettle & AU14 & Respondent & Rinehart-a & 0.461 & 0.02440 & 0.391 & 0.53 \\
+Gageler & AU14 & Respondent & Rinehart-a & 0.587 & 0.02268 & 0.519 & 0.65 \\
+Edelman & AU15 & Respondent & Rinehart-a & 0.456 & 0.02225 & 0.392 & 0.52 \\
+Kiefel & AU15 & Respondent & Rinehart-a & 0.422 & 0.02506 & 0.351 & 0.50 \\
+Nettle & AU15 & Respondent & Rinehart-a & 0.802 & 0.01842 & 0.742 & 0.85 \\
+Gageler & AU15 & Respondent & Rinehart-a & 0.641 & 0.02212 & 0.574 & 0.70 \\
+Edelman & AU20 & Respondent & Rinehart-a & 0.752 & 0.01876 & 0.694 & 0.80 \\
+Kiefel & AU20 & Respondent & Rinehart-a & 0.849 & 0.01748 & 0.791 & 0.89 \\
+Nettle & AU20 & Respondent & Rinehart-a & 0.743 & 0.02084 & 0.678 & 0.80 \\
+Gageler & AU20 & Respondent & Rinehart-a & 0.514 & 0.02362 & 0.445 & 0.58 \\
+Edelman & AU25 & Respondent & Rinehart-a & 0.295 & 0.01999 & 0.240 & 0.36 \\
+Kiefel & AU25 & Respondent & Rinehart-a & 0.902 & 0.01395 & 0.853 & 0.94 \\
+Nettle & AU25 & Respondent & Rinehart-a & 0.360 & 0.02329 & 0.296 & 0.43 \\
+Gageler & AU25 & Respondent & Rinehart-a & 0.460 & 0.02323 & 0.393 & 0.53 \\
+Edelman & AU01 & Appellent & Rinehart-b & 0.696 & 0.05397 & 0.521 & 0.83 \\
+Nettle & AU01 & Appellent & Rinehart-b & 0.869 & 0.03206 & 0.745 & 0.94 \\
+Gageler & AU01 & Appellent & Rinehart-b & 0.297 & 0.05355 & 0.167 & 0.47 \\
+Edelman & AU02 & Appellent & Rinehart-b & 0.970 & 0.01409 & 0.888 & 0.99 \\
+Nettle & AU02 & Appellent & Rinehart-b & 0.999 & 0.00092 & 0.989 & 1.00 \\
+Gageler & AU02 & Appellent & Rinehart-b & 0.866 & 0.05077 & 0.644 & 0.96 \\
+Edelman & AU05 & Appellent & Rinehart-b & 0.273 & 0.04821 & 0.156 & 0.43 \\
+Nettle & AU05 & Appellent & Rinehart-b & 0.334 & 0.05464 & 0.197 & 0.51 \\
+Gageler & AU05 & Appellent & Rinehart-b & 0.504 & 0.05904 & 0.338 & 0.67 \\
+Edelman & AU07 & Appellent & Rinehart-b & 0.360 & 0.05653 & 0.215 & 0.53 \\
+Nettle & AU07 & Appellent & Rinehart-b & 0.637 & 0.05772 & 0.459 & 0.78 \\
+Gageler & AU07 & Appellent & Rinehart-b & 0.168 & 0.03648 & 0.086 & 0.30 \\
+Edelman & AU14 & Appellent & Rinehart-b & 0.554 & 0.05790 & 0.385 & 0.71 \\
+Nettle & AU14 & Appellent & Rinehart-b & 0.745 & 0.04743 & 0.585 & 0.86 \\
+Gageler & AU14 & Appellent & Rinehart-b & 0.590 & 0.05700 & 0.420 & 0.74 \\
+Edelman & AU15 & Appellent & Rinehart-b & 0.388 & 0.05768 & 0.238 & 0.56 \\
+Nettle & AU15 & Appellent & Rinehart-b & 0.851 & 0.03432 & 0.722 & 0.93 \\
+Gageler & AU15 & Appellent & Rinehart-b & 0.428 & 0.05931 & 0.270 & 0.60 \\
+Edelman & AU20 & Appellent & Rinehart-b & 0.726 & 0.05051 & 0.558 & 0.85 \\
+Nettle & AU20 & Appellent & Rinehart-b & 0.825 & 0.03907 & 0.682 & 0.91 \\
+Gageler & AU20 & Appellent & Rinehart-b & 0.338 & 0.05592 & 0.198 & 0.51 \\
+Edelman & AU25 & Appellent & Rinehart-b & 0.405 & 0.05609 & 0.257 & 0.57 \\
+Nettle & AU25 & Appellent & Rinehart-b & 0.632 & 0.05580 & 0.460 & 0.78 \\
+Gageler & AU25 & Appellent & Rinehart-b & 0.434 & 0.05710 & 0.281 & 0.60 \\
+Edelman & AU01 & Respondent & Rinehart-b & 0.692 & 0.05474 & 0.516 & 0.83 \\
+Nettle & AU01 & Respondent & Rinehart-b & 0.875 & 0.03100 & 0.754 & 0.94 \\
+Gageler & AU01 & Respondent & Rinehart-b & 0.292 & 0.05345 & 0.162 & 0.47 \\
+Edelman & AU02 & Respondent & Rinehart-b & 0.969 & 0.01436 & 0.886 & 0.99 \\
+Nettle & AU02 & Respondent & Rinehart-b & 0.999 & 0.00087 & 0.990 & 1.00 \\
+Gageler & AU02 & Respondent & Rinehart-b & 0.863 & 0.05189 & 0.637 & 0.96 \\
+Edelman & AU05 & Respondent & Rinehart-b & 0.269 & 0.04818 & 0.153 & 0.43 \\
+Nettle & AU05 & Respondent & Rinehart-b & 0.347 & 0.05647 & 0.205 & 0.52 \\
+Gageler & AU05 & Respondent & Rinehart-b & 0.497 & 0.05964 & 0.330 & 0.66 \\
+Edelman & AU07 & Respondent & Rinehart-b & 0.355 & 0.05668 & 0.211 & 0.53 \\
+Nettle & AU07 & Respondent & Rinehart-b & 0.651 & 0.05752 & 0.471 & 0.80 \\
+Gageler & AU07 & Respondent & Rinehart-b & 0.165 & 0.03616 & 0.084 & 0.30 \\
+Edelman & AU14 & Respondent & Rinehart-b & 0.549 & 0.05850 & 0.380 & 0.71 \\
+Nettle & AU14 & Respondent & Rinehart-b & 0.756 & 0.04667 & 0.598 & 0.87 \\
+Gageler & AU14 & Respondent & Rinehart-b & 0.584 & 0.05785 & 0.412 & 0.74 \\
+Edelman & AU15 & Respondent & Rinehart-b & 0.384 & 0.05789 & 0.234 & 0.56 \\
+Nettle & AU15 & Respondent & Rinehart-b & 0.859 & 0.03329 & 0.732 & 0.93 \\
+Gageler & AU15 & Respondent & Rinehart-b & 0.422 & 0.05965 & 0.263 & 0.60 \\
+Edelman & AU20 & Respondent & Rinehart-b & 0.722 & 0.05129 & 0.553 & 0.85 \\
+Nettle & AU20 & Respondent & Rinehart-b & 0.834 & 0.03802 & 0.693 & 0.92 \\
+Gageler & AU20 & Respondent & Rinehart-b & 0.332 & 0.05596 & 0.193 & 0.51 \\
+Edelman & AU25 & Respondent & Rinehart-b & 0.400 & 0.05637 & 0.252 & 0.57 \\
+Nettle & AU25 & Respondent & Rinehart-b & 0.646 & 0.05569 & 0.473 & 0.79 \\
+Gageler & AU25 & Respondent & Rinehart-b & 0.428 & 0.05750 & 0.274 & 0.60 \\
+Edelman & AU01 & Appellent & McKell & 0.428 & 0.03227 & 0.337 & 0.52 \\
+Keane & AU01 & Appellent & McKell & 0.060 & 0.01179 & 0.033 & 0.10 \\
+Gageler & AU01 & Appellent & McKell & 0.223 & 0.02531 & 0.158 & 0.31 \\
+Bell & AU01 & Appellent & McKell & 0.650 & 0.03379 & 0.547 & 0.74 \\
+Edelman & AU02 & Appellent & McKell & 0.942 & 0.01164 & 0.897 & 0.97 \\
+Keane & AU02 & Appellent & McKell & 0.678 & 0.03475 & 0.569 & 0.77 \\
+Gageler & AU02 & Appellent & McKell & 0.872 & 0.02215 & 0.793 & 0.92 \\
+Bell & AU02 & Appellent & McKell & 0.688 & 0.03406 & 0.581 & 0.78 \\
+Edelman & AU05 & Appellent & McKell & 0.293 & 0.02747 & 0.220 & 0.38 \\
+Keane & AU05 & Appellent & McKell & 0.548 & 0.03499 & 0.446 & 0.65 \\
+Gageler & AU05 & Appellent & McKell & 0.700 & 0.02890 & 0.610 & 0.78 \\
+Bell & AU05 & Appellent & McKell & 0.645 & 0.03265 & 0.545 & 0.73 \\
+Edelman & AU07 & Appellent & McKell & 0.429 & 0.03104 & 0.342 & 0.52 \\
+Keane & AU07 & Appellent & McKell & 0.658 & 0.03270 & 0.558 & 0.75 \\
+Gageler & AU07 & Appellent & McKell & 0.360 & 0.03105 & 0.275 & 0.45 \\
+Bell & AU07 & Appellent & McKell & 0.712 & 0.03027 & 0.617 & 0.79 \\
+Edelman & AU14 & Appellent & McKell & 0.456 & 0.03176 & 0.366 & 0.55 \\
+Keane & AU14 & Appellent & McKell & 0.708 & 0.03126 & 0.610 & 0.79 \\
+Gageler & AU14 & Appellent & McKell & 0.669 & 0.03009 & 0.576 & 0.75 \\
+Bell & AU14 & Appellent & McKell & 0.178 & 0.02530 & 0.115 & 0.26 \\
+Edelman & AU15 & Appellent & McKell & 0.454 & 0.03231 & 0.362 & 0.55 \\
+Keane & AU15 & Appellent & McKell & 0.830 & 0.02519 & 0.744 & 0.89 \\
+Gageler & AU15 & Appellent & McKell & 0.671 & 0.03053 & 0.577 & 0.75 \\
+Bell & AU15 & Appellent & McKell & 0.872 & 0.02059 & 0.799 & 0.92 \\
+Edelman & AU20 & Appellent & McKell & 0.850 & 0.01959 & 0.783 & 0.90 \\
+Keane & AU20 & Appellent & McKell & 0.944 & 0.01242 & 0.895 & 0.97 \\
+Gageler & AU20 & Appellent & McKell & 0.694 & 0.03114 & 0.597 & 0.78 \\
+Bell & AU20 & Appellent & McKell & 0.770 & 0.02892 & 0.675 & 0.84 \\
+Edelman & AU25 & Appellent & McKell & 0.211 & 0.02371 & 0.150 & 0.29 \\
+Keane & AU25 & Appellent & McKell & 0.119 & 0.01942 & 0.073 & 0.19 \\
+Gageler & AU25 & Appellent & McKell & 0.385 & 0.03285 & 0.295 & 0.48 \\
+Bell & AU25 & Appellent & McKell & 0.807 & 0.02616 & 0.719 & 0.87 \\
+Edelman & AU01 & Respondent & McKell & 0.423 & 0.03308 & 0.331 & 0.52 \\
+Keane & AU01 & Respondent & McKell & 0.066 & 0.01342 & 0.037 & 0.12 \\
+Gageler & AU01 & Respondent & McKell & 0.219 & 0.02564 & 0.153 & 0.30 \\
+Bell & AU01 & Respondent & McKell & 0.684 & 0.03408 & 0.578 & 0.77 \\
+Edelman & AU02 & Respondent & McKell & 0.941 & 0.01195 & 0.895 & 0.97 \\
+Keane & AU02 & Respondent & McKell & 0.702 & 0.03534 & 0.590 & 0.79 \\
+Gageler & AU02 & Respondent & McKell & 0.869 & 0.02291 & 0.787 & 0.92 \\
+Bell & AU02 & Respondent & McKell & 0.720 & 0.03374 & 0.612 & 0.81 \\
+Edelman & AU05 & Respondent & McKell & 0.290 & 0.02802 & 0.215 & 0.38 \\
+Keane & AU05 & Respondent & McKell & 0.576 & 0.03705 & 0.467 & 0.68 \\
+Gageler & AU05 & Respondent & McKell & 0.695 & 0.03010 & 0.601 & 0.77 \\
+Bell & AU05 & Respondent & McKell & 0.679 & 0.03307 & 0.577 & 0.77 \\
+Edelman & AU07 & Respondent & McKell & 0.424 & 0.03189 & 0.335 & 0.52 \\
+Keane & AU07 & Respondent & McKell & 0.684 & 0.03372 & 0.578 & 0.77 \\
+Gageler & AU07 & Respondent & McKell & 0.354 & 0.03183 & 0.268 & 0.45 \\
+Bell & AU07 & Respondent & McKell & 0.743 & 0.02996 & 0.647 & 0.82 \\
+Edelman & AU14 & Respondent & McKell & 0.451 & 0.03264 & 0.359 & 0.55 \\
+Keane & AU14 & Respondent & McKell & 0.732 & 0.03175 & 0.630 & 0.81 \\
+Gageler & AU14 & Respondent & McKell & 0.663 & 0.03131 & 0.567 & 0.75 \\
+Bell & AU14 & Respondent & McKell & 0.201 & 0.02889 & 0.130 & 0.30 \\
+Edelman & AU15 & Respondent & McKell & 0.449 & 0.03317 & 0.356 & 0.55 \\
+Keane & AU15 & Respondent & McKell & 0.845 & 0.02451 & 0.760 & 0.90 \\
+Gageler & AU15 & Respondent & McKell & 0.665 & 0.03174 & 0.567 & 0.75 \\
+Bell & AU15 & Respondent & McKell & 0.888 & 0.01912 & 0.819 & 0.93 \\
+Edelman & AU20 & Respondent & McKell & 0.847 & 0.02024 & 0.779 & 0.90 \\
+Keane & AU20 & Respondent & McKell & 0.950 & 0.01155 & 0.903 & 0.97 \\
+Gageler & AU20 & Respondent & McKell & 0.688 & 0.03231 & 0.587 & 0.77 \\
+Bell & AU20 & Respondent & McKell & 0.796 & 0.02786 & 0.703 & 0.87 \\
+Edelman & AU25 & Respondent & McKell & 0.208 & 0.02403 & 0.146 & 0.29 \\
+Keane & AU25 & Respondent & McKell & 0.131 & 0.02198 & 0.079 & 0.21 \\
+Gageler & AU25 & Respondent & McKell & 0.379 & 0.03366 & 0.287 & 0.48 \\
+Bell & AU25 & Respondent & McKell & 0.830 & 0.02492 & 0.745 & 0.89 \\
 Edelman & AU01 & Appellent & OKS & 0.578 & 0.05470 & 0.416 & 0.72 \\
-Gageler & AU01 & Appellent & OKS & 0.630 & 0.05296 & 0.467 & 0.77 \\
 Keane & AU01 & Appellent & OKS & 0.165 & 0.03706 & 0.083 & 0.30 \\
-Bell & AU02 & Appellent & OKS & 0.915 & 0.02647 & 0.800 & 0.97 \\
+Gageler & AU01 & Appellent & OKS & 0.630 & 0.05296 & 0.467 & 0.77 \\
+Bell & AU01 & Appellent & OKS & 0.929 & 0.01860 & 0.852 & 0.97 \\
 Edelman & AU02 & Appellent & OKS & 0.954 & 0.01587 & 0.878 & 0.98 \\
-Gageler & AU02 & Appellent & OKS & 0.966 & 0.01204 & 0.907 & 0.99 \\
 Keane & AU02 & Appellent & OKS & 0.820 & 0.04614 & 0.647 & 0.92 \\
-Bell & AU05 & Appellent & OKS & 0.518 & 0.05810 & 0.353 & 0.68 \\
+Gageler & AU02 & Appellent & OKS & 0.966 & 0.01204 & 0.907 & 0.99 \\
+Bell & AU02 & Appellent & OKS & 0.915 & 0.02647 & 0.800 & 0.97 \\
 Edelman & AU05 & Appellent & OKS & 0.060 & 0.01440 & 0.029 & 0.12 \\
-Gageler & AU05 & Appellent & OKS & 0.537 & 0.05592 & 0.376 & 0.69 \\
 Keane & AU05 & Appellent & OKS & 0.241 & 0.04431 & 0.135 & 0.39 \\
-Bell & AU07 & Appellent & OKS & 0.822 & 0.03684 & 0.689 & 0.91 \\
+Gageler & AU05 & Appellent & OKS & 0.537 & 0.05592 & 0.376 & 0.69 \\
+Bell & AU05 & Appellent & OKS & 0.518 & 0.05810 & 0.353 & 0.68 \\
 Edelman & AU07 & Appellent & OKS & 0.267 & 0.04382 & 0.160 & 0.41 \\
-Gageler & AU07 & Appellent & OKS & 0.469 & 0.05408 & 0.319 & 0.62 \\
 Keane & AU07 & Appellent & OKS & 0.614 & 0.05422 & 0.450 & 0.76 \\
-Bell & AU14 & Appellent & OKS & 0.377 & 0.05593 & 0.232 & 0.55 \\
+Gageler & AU07 & Appellent & OKS & 0.469 & 0.05408 & 0.319 & 0.62 \\
+Bell & AU07 & Appellent & OKS & 0.822 & 0.03684 & 0.689 & 0.91 \\
 Edelman & AU14 & Appellent & OKS & 0.379 & 0.05207 & 0.243 & 0.54 \\
-Gageler & AU14 & Appellent & OKS & 0.826 & 0.03379 & 0.706 & 0.90 \\
 Keane & AU14 & Appellent & OKS & 0.751 & 0.04512 & 0.599 & 0.86 \\
-Bell & AU15 & Appellent & OKS & 0.970 & 0.00958 & 0.925 & 0.99 \\
+Gageler & AU14 & Appellent & OKS & 0.826 & 0.03379 & 0.706 & 0.90 \\
+Bell & AU14 & Appellent & OKS & 0.377 & 0.05593 & 0.232 & 0.55 \\
 Edelman & AU15 & Appellent & OKS & 0.509 & 0.06159 & 0.336 & 0.68 \\
-Gageler & AU15 & Appellent & OKS & 0.892 & 0.02697 & 0.785 & 0.95 \\
 Keane & AU15 & Appellent & OKS & 0.912 & 0.02473 & 0.809 & 0.96 \\
-Bell & AU20 & Appellent & OKS & 0.926 & 0.02257 & 0.827 & 0.97 \\
+Gageler & AU15 & Appellent & OKS & 0.892 & 0.02697 & 0.785 & 0.95 \\
+Bell & AU15 & Appellent & OKS & 0.970 & 0.00958 & 0.925 & 0.99 \\
 Edelman & AU20 & Appellent & OKS & 0.846 & 0.03810 & 0.701 & 0.93 \\
-Gageler & AU20 & Appellent & OKS & 0.877 & 0.03226 & 0.749 & 0.94 \\
 Keane & AU20 & Appellent & OKS & 0.965 & 0.01216 & 0.906 & 0.99 \\
-Bell & AU25 & Appellent & OKS & 0.901 & 0.02586 & 0.797 & 0.96 \\
+Gageler & AU20 & Appellent & OKS & 0.877 & 0.03226 & 0.749 & 0.94 \\
+Bell & AU20 & Appellent & OKS & 0.926 & 0.02257 & 0.827 & 0.97 \\
 Edelman & AU25 & Appellent & OKS & 0.132 & 0.02960 & 0.066 & 0.24 \\
-Gageler & AU25 & Appellent & OKS & 0.535 & 0.05839 & 0.367 & 0.69 \\
 Keane & AU25 & Appellent & OKS & 0.115 & 0.02883 & 0.054 & 0.23 \\
-Bell & AU01 & Respondent & OKS & 0.939 & 0.01635 & 0.870 & 0.97 \\
+Gageler & AU25 & Appellent & OKS & 0.535 & 0.05839 & 0.367 & 0.69 \\
+Bell & AU25 & Appellent & OKS & 0.901 & 0.02586 & 0.797 & 0.96 \\
 Edelman & AU01 & Respondent & OKS & 0.574 & 0.05492 & 0.412 & 0.72 \\
-Gageler & AU01 & Respondent & OKS & 0.624 & 0.05339 & 0.461 & 0.76 \\
 Keane & AU01 & Respondent & OKS & 0.182 & 0.03996 & 0.092 & 0.33 \\
-Bell & AU02 & Respondent & OKS & 0.926 & 0.02333 & 0.823 & 0.97 \\
+Gageler & AU01 & Respondent & OKS & 0.624 & 0.05339 & 0.461 & 0.76 \\
+Bell & AU01 & Respondent & OKS & 0.939 & 0.01635 & 0.870 & 0.97 \\
 Edelman & AU02 & Respondent & OKS & 0.953 & 0.01614 & 0.876 & 0.98 \\
-Gageler & AU02 & Respondent & OKS & 0.965 & 0.01234 & 0.905 & 0.99 \\
 Keane & AU02 & Respondent & OKS & 0.836 & 0.04295 & 0.672 & 0.93 \\
-Bell & AU05 & Respondent & OKS & 0.556 & 0.05772 & 0.388 & 0.71 \\
+Gageler & AU02 & Respondent & OKS & 0.965 & 0.01234 & 0.905 & 0.99 \\
+Bell & AU02 & Respondent & OKS & 0.926 & 0.02333 & 0.823 & 0.97 \\
 Edelman & AU05 & Respondent & OKS & 0.059 & 0.01419 & 0.029 & 0.12 \\
-Gageler & AU05 & Respondent & OKS & 0.531 & 0.05610 & 0.370 & 0.69 \\
 Keane & AU05 & Respondent & OKS & 0.262 & 0.04705 & 0.149 & 0.42 \\
-Bell & AU07 & Respondent & OKS & 0.844 & 0.03343 & 0.721 & 0.92 \\
+Gageler & AU05 & Respondent & OKS & 0.531 & 0.05610 & 0.370 & 0.69 \\
+Bell & AU05 & Respondent & OKS & 0.556 & 0.05772 & 0.388 & 0.71 \\
 Edelman & AU07 & Respondent & OKS & 0.264 & 0.04351 & 0.157 & 0.41 \\
-Gageler & AU07 & Respondent & OKS & 0.462 & 0.05408 & 0.313 & 0.62 \\
 Keane & AU07 & Respondent & OKS & 0.641 & 0.05293 & 0.477 & 0.78 \\
-Bell & AU14 & Respondent & OKS & 0.414 & 0.05786 & 0.261 & 0.59 \\
+Gageler & AU07 & Respondent & OKS & 0.462 & 0.05408 & 0.313 & 0.62 \\
+Bell & AU07 & Respondent & OKS & 0.844 & 0.03343 & 0.721 & 0.92 \\
 Edelman & AU14 & Respondent & OKS & 0.375 & 0.05191 & 0.239 & 0.53 \\
-Gageler & AU14 & Respondent & OKS & 0.823 & 0.03441 & 0.700 & 0.90 \\
 Keane & AU14 & Respondent & OKS & 0.772 & 0.04272 & 0.625 & 0.87 \\
-Bell & AU15 & Respondent & OKS & 0.974 & 0.00831 & 0.935 & 0.99 \\
+Gageler & AU14 & Respondent & OKS & 0.823 & 0.03441 & 0.700 & 0.90 \\
+Bell & AU14 & Respondent & OKS & 0.414 & 0.05786 & 0.261 & 0.59 \\
 Edelman & AU15 & Respondent & OKS & 0.505 & 0.06168 & 0.332 & 0.68 \\
-Gageler & AU15 & Respondent & OKS & 0.889 & 0.02755 & 0.780 & 0.95 \\
 Keane & AU15 & Respondent & OKS & 0.921 & 0.02257 & 0.825 & 0.97 \\
-Bell & AU20 & Respondent & OKS & 0.936 & 0.01982 & 0.848 & 0.97 \\
+Gageler & AU15 & Respondent & OKS & 0.889 & 0.02755 & 0.780 & 0.95 \\
+Bell & AU15 & Respondent & OKS & 0.974 & 0.00831 & 0.935 & 0.99 \\
 Edelman & AU20 & Respondent & OKS & 0.844 & 0.03861 & 0.697 & 0.93 \\
-Gageler & AU20 & Respondent & OKS & 0.874 & 0.03292 & 0.744 & 0.94 \\
 Keane & AU20 & Respondent & OKS & 0.969 & 0.01096 & 0.915 & 0.99 \\
-Bell & AU25 & Respondent & OKS & 0.914 & 0.02292 & 0.820 & 0.96 \\
+Gageler & AU20 & Respondent & OKS & 0.874 & 0.03292 & 0.744 & 0.94 \\
+Bell & AU20 & Respondent & OKS & 0.936 & 0.01982 & 0.848 & 0.97 \\
 Edelman & AU25 & Respondent & OKS & 0.129 & 0.02923 & 0.065 & 0.24 \\
-Gageler & AU25 & Respondent & OKS & 0.528 & 0.05857 & 0.361 & 0.69 \\
 Keane & AU25 & Respondent & OKS & 0.127 & 0.03146 & 0.060 & 0.25 \\
-Bell & AU01 & Appellent & Parkes & 0.645 & 0.03102 & 0.551 & 0.73 \\
+Gageler & AU25 & Respondent & OKS & 0.528 & 0.05857 & 0.361 & 0.69 \\
+Bell & AU25 & Respondent & OKS & 0.914 & 0.02292 & 0.820 & 0.96 \\
 Edelman & AU01 & Appellent & Parkes & 0.604 & 0.02692 & 0.523 & 0.68 \\
 Keane & AU01 & Appellent & Parkes & 0.118 & 0.01889 & 0.073 & 0.18 \\
 Kiefel & AU01 & Appellent & Parkes & 0.499 & 0.03058 & 0.411 & 0.59 \\
-Bell & AU02 & Appellent & Parkes & 0.685 & 0.03059 & 0.590 & 0.77 \\
+Bell & AU01 & Appellent & Parkes & 0.645 & 0.03102 & 0.551 & 0.73 \\
 Edelman & AU02 & Appellent & Parkes & 0.971 & 0.00636 & 0.945 & 0.98 \\
 Keane & AU02 & Appellent & Parkes & 0.817 & 0.02410 & 0.736 & 0.88 \\
 Kiefel & AU02 & Appellent & Parkes & 0.974 & 0.00676 & 0.945 & 0.99 \\
-Bell & AU05 & Appellent & Parkes & 0.468 & 0.03200 & 0.377 & 0.56 \\
+Bell & AU02 & Appellent & Parkes & 0.685 & 0.03059 & 0.590 & 0.77 \\
 Edelman & AU05 & Appellent & Parkes & 0.295 & 0.02428 & 0.230 & 0.37 \\
 Keane & AU05 & Appellent & Parkes & 0.558 & 0.03241 & 0.463 & 0.65 \\
 Kiefel & AU05 & Appellent & Parkes & 0.320 & 0.02814 & 0.244 & 0.41 \\
-Bell & AU07 & Appellent & Parkes & 0.494 & 0.03236 & 0.401 & 0.59 \\
+Bell & AU05 & Appellent & Parkes & 0.468 & 0.03200 & 0.377 & 0.56 \\
 Edelman & AU07 & Appellent & Parkes & 0.381 & 0.02707 & 0.306 & 0.46 \\
 Keane & AU07 & Appellent & Parkes & 0.620 & 0.03147 & 0.525 & 0.71 \\
 Kiefel & AU07 & Appellent & Parkes & 0.158 & 0.02038 & 0.107 & 0.23 \\
-Bell & AU14 & Appellent & Parkes & 0.080 & 0.01335 & 0.049 & 0.13 \\
+Bell & AU07 & Appellent & Parkes & 0.494 & 0.03236 & 0.401 & 0.59 \\
 Edelman & AU14 & Appellent & Parkes & 0.413 & 0.02709 & 0.337 & 0.49 \\
 Keane & AU14 & Appellent & Parkes & 0.678 & 0.03016 & 0.585 & 0.76 \\
 Kiefel & AU14 & Appellent & Parkes & 0.529 & 0.03037 & 0.441 & 0.62 \\
-Bell & AU15 & Appellent & Parkes & 0.806 & 0.02511 & 0.723 & 0.87 \\
+Bell & AU14 & Appellent & Parkes & 0.080 & 0.01335 & 0.049 & 0.13 \\
 Edelman & AU15 & Appellent & Parkes & 0.515 & 0.02802 & 0.433 & 0.60 \\
 Keane & AU15 & Appellent & Parkes & 0.865 & 0.02020 & 0.795 & 0.91 \\
 Kiefel & AU15 & Appellent & Parkes & 0.479 & 0.03060 & 0.392 & 0.57 \\
-Bell & AU20 & Appellent & Parkes & 0.452 & 0.03291 & 0.359 & 0.55 \\
+Bell & AU15 & Appellent & Parkes & 0.806 & 0.02511 & 0.723 & 0.87 \\
 Edelman & AU20 & Appellent & Parkes & 0.744 & 0.02415 & 0.667 & 0.81 \\
 Keane & AU20 & Appellent & Parkes & 0.899 & 0.01864 & 0.830 & 0.94 \\
 Kiefel & AU20 & Appellent & Parkes & 0.843 & 0.01982 & 0.776 & 0.89 \\
-Bell & AU25 & Appellent & Parkes & 0.746 & 0.02788 & 0.656 & 0.82 \\
+Bell & AU20 & Appellent & Parkes & 0.452 & 0.03291 & 0.359 & 0.55 \\
 Edelman & AU25 & Appellent & Parkes & 0.281 & 0.02529 & 0.213 & 0.36 \\
 Keane & AU25 & Appellent & Parkes & 0.169 & 0.02272 & 0.112 & 0.25 \\
 Kiefel & AU25 & Appellent & Parkes & 0.895 & 0.01573 & 0.840 & 0.93 \\
-Bell & AU01 & Respondent & Parkes & 0.680 & 0.02785 & 0.594 & 0.75 \\
+Bell & AU25 & Appellent & Parkes & 0.746 & 0.02788 & 0.656 & 0.82 \\
 Edelman & AU01 & Respondent & Parkes & 0.599 & 0.02614 & 0.521 & 0.67 \\
 Keane & AU01 & Respondent & Parkes & 0.130 & 0.01968 & 0.083 & 0.20 \\
 Kiefel & AU01 & Respondent & Parkes & 0.426 & 0.02826 & 0.346 & 0.51 \\
-Bell & AU02 & Respondent & Parkes & 0.717 & 0.02732 & 0.631 & 0.79 \\
+Bell & AU01 & Respondent & Parkes & 0.680 & 0.02785 & 0.594 & 0.75 \\
 Edelman & AU02 & Respondent & Parkes & 0.970 & 0.00642 & 0.945 & 0.98 \\
 Keane & AU02 & Respondent & Parkes & 0.833 & 0.02139 & 0.761 & 0.89 \\
 Kiefel & AU02 & Respondent & Parkes & 0.965 & 0.00877 & 0.928 & 0.98 \\
-Bell & AU05 & Respondent & Parkes & 0.506 & 0.02996 & 0.420 & 0.59 \\
+Bell & AU02 & Respondent & Parkes & 0.717 & 0.02732 & 0.631 & 0.79 \\
 Edelman & AU05 & Respondent & Parkes & 0.292 & 0.02339 & 0.228 & 0.36 \\
 Keane & AU05 & Respondent & Parkes & 0.586 & 0.02953 & 0.499 & 0.67 \\
 Kiefel & AU05 & Respondent & Parkes & 0.259 & 0.02382 & 0.196 & 0.33 \\
-Bell & AU07 & Respondent & Parkes & 0.532 & 0.03015 & 0.444 & 0.62 \\
+Bell & AU05 & Respondent & Parkes & 0.506 & 0.02996 & 0.420 & 0.59 \\
 Edelman & AU07 & Respondent & Parkes & 0.377 & 0.02612 & 0.304 & 0.46 \\
 Keane & AU07 & Respondent & Parkes & 0.647 & 0.02843 & 0.560 & 0.72 \\
 Kiefel & AU07 & Respondent & Parkes & 0.123 & 0.01610 & 0.083 & 0.18 \\
-Bell & AU14 & Respondent & Parkes & 0.092 & 0.01456 & 0.058 & 0.14 \\
+Bell & AU07 & Respondent & Parkes & 0.532 & 0.03015 & 0.444 & 0.62 \\
 Edelman & AU14 & Respondent & Parkes & 0.409 & 0.02612 & 0.335 & 0.49 \\
 Keane & AU14 & Respondent & Parkes & 0.703 & 0.02707 & 0.618 & 0.78 \\
 Kiefel & AU14 & Respondent & Parkes & 0.455 & 0.02852 & 0.374 & 0.54 \\
-Bell & AU15 & Respondent & Parkes & 0.829 & 0.02195 & 0.756 & 0.88 \\
+Bell & AU14 & Respondent & Parkes & 0.092 & 0.01456 & 0.058 & 0.14 \\
 Edelman & AU15 & Respondent & Parkes & 0.510 & 0.02712 & 0.431 & 0.59 \\
 Keane & AU15 & Respondent & Parkes & 0.878 & 0.01787 & 0.816 & 0.92 \\
 Kiefel & AU15 & Respondent & Parkes & 0.406 & 0.02803 & 0.328 & 0.49 \\
-Bell & AU20 & Respondent & Parkes & 0.490 & 0.03114 & 0.401 & 0.58 \\
+Bell & AU15 & Respondent & Parkes & 0.829 & 0.02195 & 0.756 & 0.88 \\
 Edelman & AU20 & Respondent & Parkes & 0.740 & 0.02374 & 0.665 & 0.80 \\
 Keane & AU20 & Respondent & Parkes & 0.909 & 0.01656 & 0.848 & 0.95 \\
 Kiefel & AU20 & Respondent & Parkes & 0.799 & 0.02280 & 0.725 & 0.86 \\
-Bell & AU25 & Respondent & Parkes & 0.774 & 0.02459 & 0.694 & 0.84 \\
+Bell & AU20 & Respondent & Parkes & 0.490 & 0.03114 & 0.401 & 0.58 \\
 Edelman & AU25 & Respondent & Parkes & 0.277 & 0.02444 & 0.212 & 0.35 \\
 Keane & AU25 & Respondent & Parkes & 0.185 & 0.02312 & 0.127 & 0.26 \\
 Kiefel & AU25 & Respondent & Parkes & 0.864 & 0.01891 & 0.799 & 0.91 \\
-Edelman & AU01 & Appellent & Rinehart-a & 0.601 & 0.02273 & 0.534 & 0.67 \\
-Gageler & AU01 & Appellent & Rinehart-a & 0.336 & 0.02278 & 0.273 & 0.41 \\
-Kiefel & AU01 & Appellent & Rinehart-a & 0.567 & 0.02701 & 0.487 & 0.64 \\
-Nettle & AU01 & Appellent & Rinehart-a & 0.683 & 0.02413 & 0.609 & 0.75 \\
-Edelman & AU02 & Appellent & Rinehart-a & 0.929 & 0.01136 & 0.888 & 0.96 \\
-Gageler & AU02 & Appellent & Rinehart-a & 0.827 & 0.01940 & 0.763 & 0.88 \\
-Kiefel & AU02 & Appellent & Rinehart-a & 0.951 & 0.01007 & 0.912 & 0.97 \\
-Nettle & AU02 & Appellent & Rinehart-a & 0.994 & 0.00355 & 0.967 & 1.00 \\
-Edelman & AU05 & Appellent & Rinehart-a & 0.338 & 0.02193 & 0.277 & 0.40 \\
-Gageler & AU05 & Appellent & Rinehart-a & 0.715 & 0.02125 & 0.650 & 0.77 \\
-Kiefel & AU05 & Appellent & Rinehart-a & 0.431 & 0.02744 & 0.354 & 0.51 \\
-Nettle & AU05 & Appellent & Rinehart-a & 0.252 & 0.02193 & 0.194 & 0.32 \\
-Edelman & AU07 & Appellent & Rinehart-a & 0.383 & 0.02275 & 0.319 & 0.45 \\
-Gageler & AU07 & Appellent & Rinehart-a & 0.289 & 0.02143 & 0.231 & 0.36 \\
-Kiefel & AU07 & Appellent & Rinehart-a & 0.200 & 0.02154 & 0.145 & 0.27 \\
-Nettle & AU07 & Appellent & Rinehart-a & 0.489 & 0.02636 & 0.413 & 0.57 \\
-Edelman & AU14 & Appellent & Rinehart-a & 0.408 & 0.02268 & 0.344 & 0.48 \\
-Gageler & AU14 & Appellent & Rinehart-a & 0.593 & 0.02380 & 0.522 & 0.66 \\
-Kiefel & AU14 & Appellent & Rinehart-a & 0.594 & 0.02658 & 0.515 & 0.67 \\
-Nettle & AU14 & Appellent & Rinehart-a & 0.446 & 0.02603 & 0.372 & 0.52 \\
-Edelman & AU15 & Appellent & Rinehart-a & 0.460 & 0.02336 & 0.393 & 0.53 \\
-Gageler & AU15 & Appellent & Rinehart-a & 0.647 & 0.02310 & 0.577 & 0.71 \\
-Kiefel & AU15 & Appellent & Rinehart-a & 0.495 & 0.02753 & 0.416 & 0.57 \\
-Nettle & AU15 & Appellent & Rinehart-a & 0.792 & 0.02005 & 0.727 & 0.84 \\
-Edelman & AU20 & Appellent & Rinehart-a & 0.756 & 0.01931 & 0.695 & 0.81 \\
-Gageler & AU20 & Appellent & Rinehart-a & 0.520 & 0.02485 & 0.448 & 0.59 \\
-Kiefel & AU20 & Appellent & Rinehart-a & 0.883 & 0.01488 & 0.833 & 0.92 \\
-Nettle & AU20 & Appellent & Rinehart-a & 0.732 & 0.02265 & 0.661 & 0.79 \\
-Edelman & AU25 & Appellent & Rinehart-a & 0.298 & 0.02098 & 0.241 & 0.36 \\
-Gageler & AU25 & Appellent & Rinehart-a & 0.466 & 0.02453 & 0.396 & 0.54 \\
-Kiefel & AU25 & Appellent & Rinehart-a & 0.925 & 0.01141 & 0.884 & 0.95 \\
-Nettle & AU25 & Appellent & Rinehart-a & 0.347 & 0.02449 & 0.279 & 0.42 \\
-Edelman & AU01 & Respondent & Rinehart-a & 0.597 & 0.02177 & 0.532 & 0.66 \\
-Gageler & AU01 & Respondent & Rinehart-a & 0.330 & 0.02152 & 0.271 & 0.40 \\
-Kiefel & AU01 & Respondent & Rinehart-a & 0.493 & 0.02553 & 0.419 & 0.57 \\
-Nettle & AU01 & Respondent & Rinehart-a & 0.696 & 0.02222 & 0.627 & 0.76 \\
-Edelman & AU02 & Respondent & Rinehart-a & 0.927 & 0.01138 & 0.886 & 0.95 \\
-Gageler & AU02 & Respondent & Rinehart-a & 0.823 & 0.01919 & 0.760 & 0.87 \\
-Kiefel & AU02 & Respondent & Rinehart-a & 0.935 & 0.01275 & 0.886 & 0.96 \\
-Nettle & AU02 & Respondent & Rinehart-a & 0.994 & 0.00334 & 0.969 & 1.00 \\
-Edelman & AU05 & Respondent & Rinehart-a & 0.334 & 0.02089 & 0.276 & 0.40 \\
-Gageler & AU05 & Respondent & Rinehart-a & 0.710 & 0.02048 & 0.647 & 0.77 \\
-Kiefel & AU05 & Respondent & Rinehart-a & 0.361 & 0.02427 & 0.294 & 0.43 \\
-Nettle & AU05 & Respondent & Rinehart-a & 0.264 & 0.02127 & 0.206 & 0.33 \\
-Edelman & AU07 & Respondent & Rinehart-a & 0.378 & 0.02167 & 0.318 & 0.44 \\
-Gageler & AU07 & Respondent & Rinehart-a & 0.284 & 0.02024 & 0.229 & 0.35 \\
-Kiefel & AU07 & Respondent & Rinehart-a & 0.157 & 0.01725 & 0.113 & 0.21 \\
-Nettle & AU07 & Respondent & Rinehart-a & 0.504 & 0.02459 & 0.433 & 0.58 \\
-Edelman & AU14 & Respondent & Rinehart-a & 0.404 & 0.02156 & 0.343 & 0.47 \\
-Gageler & AU14 & Respondent & Rinehart-a & 0.587 & 0.02268 & 0.519 & 0.65 \\
-Kiefel & AU14 & Respondent & Rinehart-a & 0.521 & 0.02549 & 0.447 & 0.59 \\
-Nettle & AU14 & Respondent & Rinehart-a & 0.461 & 0.02440 & 0.391 & 0.53 \\
-Edelman & AU15 & Respondent & Rinehart-a & 0.456 & 0.02225 & 0.392 & 0.52 \\
-Gageler & AU15 & Respondent & Rinehart-a & 0.641 & 0.02212 & 0.574 & 0.70 \\
-Kiefel & AU15 & Respondent & Rinehart-a & 0.422 & 0.02506 & 0.351 & 0.50 \\
-Nettle & AU15 & Respondent & Rinehart-a & 0.802 & 0.01842 & 0.742 & 0.85 \\
-Edelman & AU20 & Respondent & Rinehart-a & 0.752 & 0.01876 & 0.694 & 0.80 \\
-Gageler & AU20 & Respondent & Rinehart-a & 0.514 & 0.02362 & 0.445 & 0.58 \\
-Kiefel & AU20 & Respondent & Rinehart-a & 0.849 & 0.01748 & 0.791 & 0.89 \\
-Nettle & AU20 & Respondent & Rinehart-a & 0.743 & 0.02084 & 0.678 & 0.80 \\
-Edelman & AU25 & Respondent & Rinehart-a & 0.295 & 0.01999 & 0.240 & 0.36 \\
-Gageler & AU25 & Respondent & Rinehart-a & 0.460 & 0.02323 & 0.393 & 0.53 \\
-Kiefel & AU25 & Respondent & Rinehart-a & 0.902 & 0.01395 & 0.853 & 0.94 \\
-Nettle & AU25 & Respondent & Rinehart-a & 0.360 & 0.02329 & 0.296 & 0.43 \\
-Edelman & AU01 & Appellent & Rinehart-b & 0.696 & 0.05397 & 0.521 & 0.83 \\
-Gageler & AU01 & Appellent & Rinehart-b & 0.297 & 0.05355 & 0.167 & 0.47 \\
-Nettle & AU01 & Appellent & Rinehart-b & 0.869 & 0.03206 & 0.745 & 0.94 \\
-Edelman & AU02 & Appellent & Rinehart-b & 0.970 & 0.01409 & 0.888 & 0.99 \\
-Gageler & AU02 & Appellent & Rinehart-b & 0.866 & 0.05077 & 0.644 & 0.96 \\
-Nettle & AU02 & Appellent & Rinehart-b & 0.999 & 0.00092 & 0.989 & 1.00 \\
-Edelman & AU05 & Appellent & Rinehart-b & 0.273 & 0.04821 & 0.156 & 0.43 \\
-Gageler & AU05 & Appellent & Rinehart-b & 0.504 & 0.05904 & 0.338 & 0.67 \\
-Nettle & AU05 & Appellent & Rinehart-b & 0.334 & 0.05464 & 0.197 & 0.51 \\
-Edelman & AU07 & Appellent & Rinehart-b & 0.360 & 0.05653 & 0.215 & 0.53 \\
-Gageler & AU07 & Appellent & Rinehart-b & 0.168 & 0.03648 & 0.086 & 0.30 \\
-Nettle & AU07 & Appellent & Rinehart-b & 0.637 & 0.05772 & 0.459 & 0.78 \\
-Edelman & AU14 & Appellent & Rinehart-b & 0.554 & 0.05790 & 0.385 & 0.71 \\
-Gageler & AU14 & Appellent & Rinehart-b & 0.590 & 0.05700 & 0.420 & 0.74 \\
-Nettle & AU14 & Appellent & Rinehart-b & 0.745 & 0.04743 & 0.585 & 0.86 \\
-Edelman & AU15 & Appellent & Rinehart-b & 0.388 & 0.05768 & 0.238 & 0.56 \\
-Gageler & AU15 & Appellent & Rinehart-b & 0.428 & 0.05931 & 0.270 & 0.60 \\
-Nettle & AU15 & Appellent & Rinehart-b & 0.851 & 0.03432 & 0.722 & 0.93 \\
-Edelman & AU20 & Appellent & Rinehart-b & 0.726 & 0.05051 & 0.558 & 0.85 \\
-Gageler & AU20 & Appellent & Rinehart-b & 0.338 & 0.05592 & 0.198 & 0.51 \\
-Nettle & AU20 & Appellent & Rinehart-b & 0.825 & 0.03907 & 0.682 & 0.91 \\
-Edelman & AU25 & Appellent & Rinehart-b & 0.405 & 0.05609 & 0.257 & 0.57 \\
-Gageler & AU25 & Appellent & Rinehart-b & 0.434 & 0.05710 & 0.281 & 0.60 \\
-Nettle & AU25 & Appellent & Rinehart-b & 0.632 & 0.05580 & 0.460 & 0.78 \\
-Edelman & AU01 & Respondent & Rinehart-b & 0.692 & 0.05474 & 0.516 & 0.83 \\
-Gageler & AU01 & Respondent & Rinehart-b & 0.292 & 0.05345 & 0.162 & 0.47 \\
-Nettle & AU01 & Respondent & Rinehart-b & 0.875 & 0.03100 & 0.754 & 0.94 \\
-Edelman & AU02 & Respondent & Rinehart-b & 0.969 & 0.01436 & 0.886 & 0.99 \\
-Gageler & AU02 & Respondent & Rinehart-b & 0.863 & 0.05189 & 0.637 & 0.96 \\
-Nettle & AU02 & Respondent & Rinehart-b & 0.999 & 0.00087 & 0.990 & 1.00 \\
-Edelman & AU05 & Respondent & Rinehart-b & 0.269 & 0.04818 & 0.153 & 0.43 \\
-Gageler & AU05 & Respondent & Rinehart-b & 0.497 & 0.05964 & 0.330 & 0.66 \\
-Nettle & AU05 & Respondent & Rinehart-b & 0.347 & 0.05647 & 0.205 & 0.52 \\
-Edelman & AU07 & Respondent & Rinehart-b & 0.355 & 0.05668 & 0.211 & 0.53 \\
-Gageler & AU07 & Respondent & Rinehart-b & 0.165 & 0.03616 & 0.084 & 0.30 \\
-Nettle & AU07 & Respondent & Rinehart-b & 0.651 & 0.05752 & 0.471 & 0.80 \\
-Edelman & AU14 & Respondent & Rinehart-b & 0.549 & 0.05850 & 0.380 & 0.71 \\
-Gageler & AU14 & Respondent & Rinehart-b & 0.584 & 0.05785 & 0.412 & 0.74 \\
-Nettle & AU14 & Respondent & Rinehart-b & 0.756 & 0.04667 & 0.598 & 0.87 \\
-Edelman & AU15 & Respondent & Rinehart-b & 0.384 & 0.05789 & 0.234 & 0.56 \\
-Gageler & AU15 & Respondent & Rinehart-b & 0.422 & 0.05965 & 0.263 & 0.60 \\
-Nettle & AU15 & Respondent & Rinehart-b & 0.859 & 0.03329 & 0.732 & 0.93 \\
-Edelman & AU20 & Respondent & Rinehart-b & 0.722 & 0.05129 & 0.553 & 0.85 \\
-Gageler & AU20 & Respondent & Rinehart-b & 0.332 & 0.05596 & 0.193 & 0.51 \\
-Nettle & AU20 & Respondent & Rinehart-b & 0.834 & 0.03802 & 0.693 & 0.92 \\
-Edelman & AU25 & Respondent & Rinehart-b & 0.400 & 0.05637 & 0.252 & 0.57 \\
-Gageler & AU25 & Respondent & Rinehart-b & 0.428 & 0.05750 & 0.274 & 0.60 \\
-Nettle & AU25 & Respondent & Rinehart-b & 0.646 & 0.05569 & 0.473 & 0.79 \\
+Bell & AU25 & Respondent & Parkes & 0.774 & 0.02459 & 0.694 & 0.84 \\
+\end{longtable}
+\end{center}
+
+\begin{center}
+\begin{longtable}{lllllll}
+\caption{model result 2 for mean intensity}\\
+\toprule
+judge & video & AU & response & SE & asymp.LCL & asymp.UCL \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+Edelman & Nauru-a & AU01 & 0.66 & 0.0378 & 0.56 & 0.77 \\
+Nettle & Nauru-a & AU01 & 0.83 & 0.0468 & 0.71 & 0.97 \\
+Gageler & Nauru-a & AU01 & 0.53 & 0.0314 & 0.45 & 0.62 \\
+Edelman & Nauru-b & AU01 & 0.66 & 0.0444 & 0.55 & 0.79 \\
+Nettle & Nauru-b & AU01 & 0.82 & 0.0559 & 0.68 & 0.98 \\
+Gageler & Nauru-b & AU01 & 0.57 & 0.0412 & 0.47 & 0.69 \\
+Edelman & Rinehart-a & AU01 & 0.48 & 0.0214 & 0.43 & 0.54 \\
+Kiefel & Rinehart-a & AU01 & 0.27 & 0.0116 & 0.24 & 0.31 \\
+Nettle & Rinehart-a & AU01 & 0.65 & 0.0257 & 0.59 & 0.73 \\
+Gageler & Rinehart-a & AU01 & 0.43 & 0.0187 & 0.38 & 0.48 \\
+Edelman & Rinehart-b & AU01 & 0.51 & 0.0539 & 0.38 & 0.68 \\
+Nettle & Rinehart-b & AU01 & 0.61 & 0.0602 & 0.47 & 0.80 \\
+Gageler & Rinehart-b & AU01 & 0.52 & 0.0556 & 0.39 & 0.69 \\
+Edelman & McKell & AU01 & 0.35 & 0.0226 & 0.29 & 0.42 \\
+Keane & McKell & AU01 & 0.32 & 0.0349 & 0.23 & 0.42 \\
+Gageler & McKell & AU01 & 0.32 & 0.0220 & 0.27 & 0.39 \\
+Bell & McKell & AU01 & 0.30 & 0.0192 & 0.26 & 0.36 \\
+Edelman & OKS & AU01 & 0.59 & 0.0555 & 0.45 & 0.76 \\
+Keane & OKS & AU01 & 0.58 & 0.0834 & 0.39 & 0.85 \\
+Gageler & OKS & AU01 & 0.82 & 0.0846 & 0.62 & 1.08 \\
+Bell & OKS & AU01 & 0.80 & 0.0861 & 0.60 & 1.07 \\
+Edelman & Parkes & AU01 & 0.48 & 0.0237 & 0.42 & 0.55 \\
+Keane & Parkes & AU01 & 0.35 & 0.0351 & 0.27 & 0.46 \\
+Kiefel & Parkes & AU01 & 0.21 & 0.0117 & 0.18 & 0.25 \\
+Bell & Parkes & AU01 & 0.32 & 0.0201 & 0.27 & 0.38 \\
+Edelman & Nauru-a & AU04 & 0.72 & 0.0372 & 0.62 & 0.82 \\
+Nettle & Nauru-a & AU04 & 0.61 & 0.0345 & 0.53 & 0.71 \\
+Gageler & Nauru-a & AU04 & 0.84 & 0.0436 & 0.73 & 0.96 \\
+Edelman & Nauru-b & AU04 & 0.70 & 0.0447 & 0.59 & 0.83 \\
+Nettle & Nauru-b & AU04 & 0.59 & 0.0406 & 0.49 & 0.71 \\
+Gageler & Nauru-b & AU04 & 0.88 & 0.0566 & 0.74 & 1.05 \\
+Edelman & Rinehart-a & AU04 & 0.42 & 0.0169 & 0.37 & 0.47 \\
+Kiefel & Rinehart-a & AU04 & 0.33 & 0.0145 & 0.29 & 0.37 \\
+Nettle & Rinehart-a & AU04 & 0.38 & 0.0155 & 0.34 & 0.43 \\
+Gageler & Rinehart-a & AU04 & 0.54 & 0.0203 & 0.49 & 0.59 \\
+Edelman & Rinehart-b & AU04 & 0.77 & 0.0823 & 0.58 & 1.03 \\
+Nettle & Rinehart-b & AU04 & 0.63 & 0.0602 & 0.49 & 0.81 \\
+Gageler & Rinehart-b & AU04 & 1.14 & 0.1110 & 0.88 & 1.48 \\
+Edelman & McKell & AU04 & 0.42 & 0.0226 & 0.36 & 0.48 \\
+Keane & McKell & AU04 & 0.55 & 0.0325 & 0.47 & 0.65 \\
+Gageler & McKell & AU04 & 0.55 & 0.0290 & 0.48 & 0.64 \\
+Bell & McKell & AU04 & 0.81 & 0.0426 & 0.70 & 0.93 \\
+Edelman & OKS & AU04 & 0.31 & 0.0251 & 0.25 & 0.39 \\
+Keane & OKS & AU04 & 0.46 & 0.0418 & 0.36 & 0.59 \\
+Gageler & OKS & AU04 & 0.64 & 0.0510 & 0.52 & 0.79 \\
+Bell & OKS & AU04 & 0.96 & 0.0784 & 0.77 & 1.20 \\
+Edelman & Parkes & AU04 & 0.45 & 0.0204 & 0.40 & 0.51 \\
+Keane & Parkes & AU04 & 0.48 & 0.0258 & 0.42 & 0.56 \\
+Kiefel & Parkes & AU04 & 0.28 & 0.0130 & 0.24 & 0.31 \\
+Bell & Parkes & AU04 & 0.66 & 0.0292 & 0.59 & 0.74 \\
+Edelman & Nauru-a & AU05 & 0.50 & 0.0328 & 0.42 & 0.60 \\
+Nettle & Nauru-a & AU05 & 0.71 & 0.0443 & 0.60 & 0.84 \\
+Gageler & Nauru-a & AU05 & 0.94 & 0.0574 & 0.79 & 1.10 \\
+Edelman & Nauru-b & AU05 & 0.55 & 0.0407 & 0.45 & 0.67 \\
+Nettle & Nauru-b & AU05 & 0.75 & 0.0558 & 0.62 & 0.92 \\
+Gageler & Nauru-b & AU05 & 1.10 & 0.0768 & 0.91 & 1.32 \\
+Edelman & Rinehart-a & AU05 & 0.42 & 0.0196 & 0.37 & 0.48 \\
+Kiefel & Rinehart-a & AU05 & 0.37 & 0.0215 & 0.31 & 0.43 \\
+Nettle & Rinehart-a & AU05 & 0.64 & 0.0289 & 0.56 & 0.72 \\
+Gageler & Rinehart-a & AU05 & 0.87 & 0.0336 & 0.78 & 0.96 \\
+Edelman & Rinehart-b & AU05 & 0.35 & 0.0398 & 0.25 & 0.47 \\
+Nettle & Rinehart-b & AU05 & 0.46 & 0.0506 & 0.34 & 0.62 \\
+Gageler & Rinehart-b & AU05 & 0.81 & 0.0849 & 0.61 & 1.08 \\
+Edelman & McKell & AU05 & 0.41 & 0.0274 & 0.34 & 0.49 \\
+Keane & McKell & AU05 & 0.72 & 0.0520 & 0.59 & 0.88 \\
+Gageler & McKell & AU05 & 0.87 & 0.0499 & 0.75 & 1.02 \\
+Bell & McKell & AU05 & 0.38 & 0.0247 & 0.32 & 0.46 \\
+Edelman & OKS & AU05 & 0.67 & 0.0844 & 0.47 & 0.94 \\
+Keane & OKS & AU05 & 1.28 & 0.1382 & 0.96 & 1.71 \\
+Gageler & OKS & AU05 & 2.16 & 0.2766 & 1.53 & 3.05 \\
+Bell & OKS & AU05 & 0.97 & 0.0964 & 0.75 & 1.27 \\
+Edelman & Parkes & AU05 & 0.39 & 0.0206 & 0.34 & 0.45 \\
+Keane & Parkes & AU05 & 0.56 & 0.0312 & 0.48 & 0.65 \\
+Kiefel & Parkes & AU05 & 0.27 & 0.0130 & 0.23 & 0.30 \\
+Bell & Parkes & AU05 & 0.28 & 0.0171 & 0.23 & 0.33 \\
+Edelman & Nauru-a & AU07 & 1.07 & 0.0718 & 0.89 & 1.28 \\
+Nettle & Nauru-a & AU07 & 1.06 & 0.0666 & 0.90 & 1.26 \\
+Gageler & Nauru-a & AU07 & 0.85 & 0.0547 & 0.71 & 1.01 \\
+Edelman & Nauru-b & AU07 & 0.83 & 0.0683 & 0.66 & 1.03 \\
+Nettle & Nauru-b & AU07 & 0.81 & 0.0601 & 0.66 & 0.98 \\
+Gageler & Nauru-b & AU07 & 0.71 & 0.0548 & 0.57 & 0.87 \\
+Edelman & Rinehart-a & AU07 & 0.63 & 0.0264 & 0.56 & 0.70 \\
+Kiefel & Rinehart-a & AU07 & 0.50 & 0.0316 & 0.43 & 0.60 \\
+Nettle & Rinehart-a & AU07 & 0.67 & 0.0284 & 0.60 & 0.75 \\
+Gageler & Rinehart-a & AU07 & 0.55 & 0.0257 & 0.48 & 0.62 \\
+Edelman & Rinehart-b & AU07 & 0.67 & 0.0667 & 0.51 & 0.87 \\
+Nettle & Rinehart-b & AU07 & 0.63 & 0.0616 & 0.48 & 0.82 \\
+Gageler & Rinehart-b & AU07 & 0.67 & 0.0712 & 0.50 & 0.89 \\
+Edelman & McKell & AU07 & 0.63 & 0.0355 & 0.55 & 0.74 \\
+Keane & McKell & AU07 & 1.23 & 0.0699 & 1.05 & 1.43 \\
+Gageler & McKell & AU07 & 0.57 & 0.0348 & 0.49 & 0.67 \\
+Bell & McKell & AU07 & 1.01 & 0.0563 & 0.87 & 1.18 \\
+Edelman & OKS & AU07 & 0.36 & 0.0304 & 0.29 & 0.45 \\
+Keane & OKS & AU07 & 0.76 & 0.0673 & 0.60 & 0.97 \\
+Gageler & OKS & AU07 & 0.50 & 0.0468 & 0.39 & 0.64 \\
+Bell & OKS & AU07 & 0.90 & 0.0863 & 0.69 & 1.16 \\
+Edelman & Parkes & AU07 & 0.51 & 0.0240 & 0.45 & 0.58 \\
+Keane & Parkes & AU07 & 0.81 & 0.0409 & 0.70 & 0.92 \\
+Kiefel & Parkes & AU07 & 0.32 & 0.0251 & 0.26 & 0.40 \\
+Bell & Parkes & AU07 & 0.62 & 0.0342 & 0.53 & 0.72 \\
+Edelman & Nauru-a & AU09 & 0.63 & 0.0332 & 0.54 & 0.72 \\
+Nettle & Nauru-a & AU09 & 0.83 & 0.0445 & 0.72 & 0.96 \\
+Gageler & Nauru-a & AU09 & 0.66 & 0.0336 & 0.57 & 0.75 \\
+Edelman & Nauru-b & AU09 & 0.60 & 0.0399 & 0.50 & 0.72 \\
+Nettle & Nauru-b & AU09 & 0.78 & 0.0495 & 0.66 & 0.93 \\
+Gageler & Nauru-b & AU09 & 0.68 & 0.0411 & 0.58 & 0.80 \\
+Edelman & Rinehart-a & AU09 & 0.34 & 0.0141 & 0.30 & 0.38 \\
+Kiefel & Rinehart-a & AU09 & 0.17 & 0.0149 & 0.13 & 0.21 \\
+Nettle & Rinehart-a & AU09 & 0.48 & 0.0188 & 0.43 & 0.53 \\
+Gageler & Rinehart-a & AU09 & 0.39 & 0.0160 & 0.35 & 0.43 \\
+Edelman & Rinehart-b & AU09 & 0.42 & 0.0476 & 0.31 & 0.57 \\
+Nettle & Rinehart-b & AU09 & 0.53 & 0.0567 & 0.40 & 0.71 \\
+Gageler & Rinehart-b & AU09 & 0.56 & 0.0637 & 0.41 & 0.76 \\
+Edelman & McKell & AU09 & 0.28 & 0.0153 & 0.24 & 0.33 \\
+Keane & McKell & AU09 & 0.52 & 0.0319 & 0.44 & 0.62 \\
+Gageler & McKell & AU09 & 0.34 & 0.0202 & 0.29 & 0.39 \\
+Bell & McKell & AU09 & 0.71 & 0.0398 & 0.61 & 0.82 \\
+Edelman & OKS & AU09 & 0.22 & 0.0185 & 0.18 & 0.28 \\
+Keane & OKS & AU09 & 0.46 & 0.0405 & 0.36 & 0.58 \\
+Gageler & OKS & AU09 & 0.41 & 0.0333 & 0.33 & 0.51 \\
+Bell & OKS & AU09 & 0.88 & 0.0725 & 0.71 & 1.10 \\
+Edelman & Parkes & AU09 & 0.37 & 0.0175 & 0.33 & 0.42 \\
+Keane & Parkes & AU09 & 0.56 & 0.0321 & 0.48 & 0.65 \\
+Kiefel & Parkes & AU09 & 0.15 & 0.0123 & 0.12 & 0.18 \\
+Bell & Parkes & AU09 & 0.71 & 0.0317 & 0.63 & 0.80 \\
+Edelman & Nauru-a & AU14 & 0.59 & 0.0341 & 0.50 & 0.69 \\
+Nettle & Nauru-a & AU14 & 0.66 & 0.0405 & 0.56 & 0.78 \\
+Gageler & Nauru-a & AU14 & 0.44 & 0.0262 & 0.38 & 0.52 \\
+Edelman & Nauru-b & AU14 & 0.72 & 0.0493 & 0.60 & 0.86 \\
+Nettle & Nauru-b & AU14 & 0.79 & 0.0535 & 0.66 & 0.95 \\
+Gageler & Nauru-b & AU14 & 0.58 & 0.0417 & 0.48 & 0.70 \\
+Edelman & Rinehart-a & AU14 & 0.40 & 0.0157 & 0.36 & 0.44 \\
+Kiefel & Rinehart-a & AU14 & 0.44 & 0.0189 & 0.39 & 0.49 \\
+Nettle & Rinehart-a & AU14 & 0.48 & 0.0198 & 0.43 & 0.54 \\
+Gageler & Rinehart-a & AU14 & 0.33 & 0.0163 & 0.29 & 0.38 \\
+Edelman & Rinehart-b & AU14 & 0.47 & 0.0480 & 0.36 & 0.62 \\
+Nettle & Rinehart-b & AU14 & 0.51 & 0.0483 & 0.39 & 0.65 \\
+Gageler & Rinehart-b & AU14 & 0.45 & 0.0454 & 0.34 & 0.59 \\
+Edelman & McKell & AU14 & 0.42 & 0.0263 & 0.35 & 0.49 \\
+Keane & McKell & AU14 & 0.67 & 0.0410 & 0.57 & 0.79 \\
+Gageler & McKell & AU14 & 0.36 & 0.0256 & 0.29 & 0.43 \\
+Bell & McKell & AU14 & 0.16 & 0.0164 & 0.12 & 0.21 \\
+Edelman & OKS & AU14 & 0.48 & 0.0431 & 0.38 & 0.61 \\
+Keane & OKS & AU14 & 0.85 & 0.0819 & 0.66 & 1.10 \\
+Gageler & OKS & AU14 & 0.63 & 0.0556 & 0.50 & 0.80 \\
+Bell & OKS & AU14 & 0.28 & 0.0341 & 0.20 & 0.39 \\
+Edelman & Parkes & AU14 & 0.51 & 0.0235 & 0.45 & 0.58 \\
+Keane & Parkes & AU14 & 0.66 & 0.0337 & 0.58 & 0.76 \\
+Kiefel & Parkes & AU14 & 0.43 & 0.0200 & 0.38 & 0.49 \\
+Bell & Parkes & AU14 & 0.14 & 0.0174 & 0.10 & 0.20 \\
+Edelman & Nauru-a & AU15 & 0.25 & 0.0159 & 0.21 & 0.30 \\
+Nettle & Nauru-a & AU15 & 0.48 & 0.0285 & 0.41 & 0.57 \\
+Gageler & Nauru-a & AU15 & 0.23 & 0.0155 & 0.19 & 0.28 \\
+Edelman & Nauru-b & AU15 & 0.34 & 0.0250 & 0.28 & 0.41 \\
+Nettle & Nauru-b & AU15 & 0.63 & 0.0439 & 0.52 & 0.76 \\
+Gageler & Nauru-b & AU15 & 0.33 & 0.0241 & 0.27 & 0.40 \\
+Edelman & Rinehart-a & AU15 & 0.25 & 0.0103 & 0.23 & 0.28 \\
+Kiefel & Rinehart-a & AU15 & 0.19 & 0.0083 & 0.17 & 0.22 \\
+Nettle & Rinehart-a & AU15 & 0.52 & 0.0202 & 0.47 & 0.58 \\
+Gageler & Rinehart-a & AU15 & 0.25 & 0.0103 & 0.23 & 0.28 \\
+Edelman & Rinehart-b & AU15 & 0.17 & 0.0200 & 0.12 & 0.23 \\
+Nettle & Rinehart-b & AU15 & 0.31 & 0.0314 & 0.23 & 0.41 \\
+Gageler & Rinehart-b & AU15 & 0.20 & 0.0219 & 0.14 & 0.26 \\
+Edelman & McKell & AU15 & 0.26 & 0.0150 & 0.23 & 0.31 \\
+Keane & McKell & AU15 & 0.59 & 0.0320 & 0.51 & 0.69 \\
+Gageler & McKell & AU15 & 0.27 & 0.0163 & 0.23 & 0.32 \\
+Bell & McKell & AU15 & 0.55 & 0.0299 & 0.47 & 0.64 \\
+Edelman & OKS & AU15 & 0.29 & 0.0238 & 0.23 & 0.36 \\
+Keane & OKS & AU15 & 0.71 & 0.0599 & 0.57 & 0.89 \\
+Gageler & OKS & AU15 & 0.46 & 0.0379 & 0.37 & 0.57 \\
+Bell & OKS & AU15 & 0.94 & 0.0935 & 0.72 & 1.23 \\
+Edelman & Parkes & AU15 & 0.47 & 0.0222 & 0.41 & 0.53 \\
+Keane & Parkes & AU15 & 0.85 & 0.0384 & 0.75 & 0.96 \\
+Kiefel & Parkes & AU15 & 0.28 & 0.0138 & 0.24 & 0.32 \\
+Bell & Parkes & AU15 & 0.73 & 0.0364 & 0.64 & 0.84 \\
+Edelman & Nauru-a & AU20 & 0.94 & 0.0501 & 0.81 & 1.08 \\
+Nettle & Nauru-a & AU20 & 0.86 & 0.0454 & 0.75 & 0.99 \\
+Gageler & Nauru-a & AU20 & 0.62 & 0.0328 & 0.54 & 0.71 \\
+Edelman & Nauru-b & AU20 & 1.02 & 0.0629 & 0.86 & 1.20 \\
+Nettle & Nauru-b & AU20 & 0.92 & 0.0554 & 0.78 & 1.08 \\
+Gageler & Nauru-b & AU20 & 0.73 & 0.0450 & 0.61 & 0.86 \\
+Edelman & Rinehart-a & AU20 & 0.70 & 0.0244 & 0.64 & 0.77 \\
+Kiefel & Rinehart-a & AU20 & 0.82 & 0.0309 & 0.75 & 0.91 \\
+Nettle & Rinehart-a & AU20 & 0.69 & 0.0266 & 0.62 & 0.77 \\
+Gageler & Rinehart-a & AU20 & 0.51 & 0.0185 & 0.46 & 0.56 \\
+Edelman & Rinehart-b & AU20 & 0.67 & 0.0732 & 0.50 & 0.90 \\
+Nettle & Rinehart-b & AU20 & 0.59 & 0.0764 & 0.42 & 0.83 \\
+Gageler & Rinehart-b & AU20 & 0.56 & 0.0663 & 0.41 & 0.77 \\
+Edelman & McKell & AU20 & 0.90 & 0.0454 & 0.79 & 1.03 \\
+Keane & McKell & AU20 & 1.06 & 0.0554 & 0.92 & 1.22 \\
+Gageler & McKell & AU20 & 0.68 & 0.0362 & 0.59 & 0.78 \\
+Bell & McKell & AU20 & 0.40 & 0.0216 & 0.35 & 0.47 \\
+Edelman & OKS & AU20 & 0.89 & 0.0711 & 0.72 & 1.11 \\
+Keane & OKS & AU20 & 1.16 & 0.0928 & 0.94 & 1.44 \\
+Gageler & OKS & AU20 & 1.03 & 0.0814 & 0.84 & 1.28 \\
+Bell & OKS & AU20 & 0.63 & 0.0507 & 0.51 & 0.78 \\
+Edelman & Parkes & AU20 & 0.95 & 0.0392 & 0.85 & 1.06 \\
+Keane & Parkes & AU20 & 0.91 & 0.0400 & 0.81 & 1.02 \\
+Kiefel & Parkes & AU20 & 0.88 & 0.0374 & 0.78 & 0.98 \\
+Bell & Parkes & AU20 & 0.32 & 0.0156 & 0.28 & 0.37 \\
+Edelman & Nauru-a & AU45 & 0.40 & 0.0216 & 0.34 & 0.46 \\
+Nettle & Nauru-a & AU45 & 0.22 & 0.0137 & 0.19 & 0.26 \\
+Gageler & Nauru-a & AU45 & 0.51 & 0.0275 & 0.44 & 0.59 \\
+Edelman & Nauru-b & AU45 & 0.36 & 0.0228 & 0.30 & 0.43 \\
+Nettle & Nauru-b & AU45 & 0.20 & 0.0144 & 0.16 & 0.24 \\
+Gageler & Nauru-b & AU45 & 0.49 & 0.0333 & 0.41 & 0.59 \\
+Edelman & Rinehart-a & AU45 & 0.28 & 0.0106 & 0.25 & 0.31 \\
+Kiefel & Rinehart-a & AU45 & 0.91 & 0.0344 & 0.82 & 1.01 \\
+Nettle & Rinehart-a & AU45 & 0.17 & 0.0084 & 0.15 & 0.19 \\
+Gageler & Rinehart-a & AU45 & 0.39 & 0.0150 & 0.35 & 0.44 \\
+Edelman & Rinehart-b & AU45 & 0.20 & 0.0226 & 0.15 & 0.28 \\
+Nettle & Rinehart-b & AU45 & 0.11 & 0.0129 & 0.08 & 0.15 \\
+Gageler & Rinehart-b & AU45 & 0.33 & 0.0340 & 0.25 & 0.44 \\
+Edelman & McKell & AU45 & 0.33 & 0.0176 & 0.28 & 0.38 \\
+Keane & McKell & AU45 & 0.58 & 0.0323 & 0.50 & 0.67 \\
+Gageler & McKell & AU45 & 0.47 & 0.0251 & 0.41 & 0.55 \\
+Bell & McKell & AU45 & 0.32 & 0.0172 & 0.28 & 0.37 \\
+Edelman & OKS & AU45 & 0.20 & 0.0161 & 0.16 & 0.24 \\
+Keane & OKS & AU45 & 0.38 & 0.0345 & 0.30 & 0.49 \\
+Gageler & OKS & AU45 & 0.44 & 0.0352 & 0.35 & 0.54 \\
+Bell & OKS & AU45 & 0.30 & 0.0255 & 0.24 & 0.38 \\
+Edelman & Parkes & AU45 & 0.36 & 0.0154 & 0.32 & 0.41 \\
+Keane & Parkes & AU45 & 0.52 & 0.0248 & 0.46 & 0.59 \\
+Kiefel & Parkes & AU45 & 0.92 & 0.0397 & 0.82 & 1.04 \\
+Bell & Parkes & AU45 & 0.27 & 0.0140 & 0.23 & 0.31 \\
+\end{longtable}
+\end{center}
+
+\begin{center}
+\begin{longtable}{llllllll}
+\caption{model result 3 for mean intensity}\\
+\toprule
+judge & video & AU & speaker & response & SE & asymp.LCL & asymp.UCL \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+Edelman & Nauru-a & AU01 & Appellent & 0.67 & 0.0389 & 0.566 & 0.79 \\
+Nettle & Nauru-a & AU01 & Appellent & 0.87 & 0.0499 & 0.740 & 1.03 \\
+Gageler & Nauru-a & AU01 & Appellent & 0.52 & 0.0315 & 0.437 & 0.62 \\
+Edelman & Nauru-b & AU01 & Appellent & 0.67 & 0.0446 & 0.548 & 0.81 \\
+Nettle & Nauru-b & AU01 & Appellent & 0.83 & 0.0568 & 0.681 & 1.01 \\
+Gageler & Nauru-b & AU01 & Appellent & 0.56 & 0.0407 & 0.458 & 0.70 \\
+Edelman & Rinehart-a & AU01 & Appellent & 0.50 & 0.0234 & 0.438 & 0.58 \\
+Kiefel & Rinehart-a & AU01 & Appellent & 0.32 & 0.0146 & 0.276 & 0.36 \\
+Nettle & Rinehart-a & AU01 & Appellent & 0.71 & 0.0300 & 0.629 & 0.80 \\
+Gageler & Rinehart-a & AU01 & Appellent & 0.43 & 0.0198 & 0.371 & 0.49 \\
+Edelman & Rinehart-b & AU01 & Appellent & 0.52 & 0.0548 & 0.380 & 0.70 \\
+Nettle & Rinehart-b & AU01 & Appellent & 0.64 & 0.0630 & 0.479 & 0.85 \\
+Gageler & Rinehart-b & AU01 & Appellent & 0.51 & 0.0552 & 0.375 & 0.70 \\
+Edelman & McKell & AU01 & Appellent & 0.37 & 0.0238 & 0.303 & 0.44 \\
+Keane & McKell & AU01 & Appellent & 0.33 & 0.0370 & 0.241 & 0.46 \\
+Gageler & McKell & AU01 & Appellent & 0.32 & 0.0225 & 0.265 & 0.40 \\
+Bell & McKell & AU01 & Appellent & 0.33 & 0.0206 & 0.271 & 0.39 \\
+Edelman & OKS & AU01 & Appellent & 0.60 & 0.0571 & 0.454 & 0.79 \\
+Keane & OKS & AU01 & Appellent & 0.59 & 0.0851 & 0.385 & 0.90 \\
+Gageler & OKS & AU01 & Appellent & 0.82 & 0.0853 & 0.603 & 1.11 \\
+Bell & OKS & AU01 & Appellent & 0.90 & 0.0979 & 0.651 & 1.23 \\
+Edelman & Parkes & AU01 & Appellent & 0.48 & 0.0242 & 0.410 & 0.55 \\
+Keane & Parkes & AU01 & Appellent & 0.33 & 0.0339 & 0.249 & 0.45 \\
+Kiefel & Parkes & AU01 & Appellent & 0.23 & 0.0131 & 0.194 & 0.27 \\
+Bell & Parkes & AU01 & Appellent & 0.33 & 0.0215 & 0.276 & 0.40 \\
+Edelman & Nauru-a & AU04 & Appellent & 0.72 & 0.0381 & 0.622 & 0.84 \\
+Nettle & Nauru-a & AU04 & Appellent & 0.64 & 0.0365 & 0.543 & 0.76 \\
+Gageler & Nauru-a & AU04 & Appellent & 0.83 & 0.0441 & 0.711 & 0.97 \\
+Edelman & Nauru-b & AU04 & Appellent & 0.71 & 0.0450 & 0.588 & 0.85 \\
+Nettle & Nauru-b & AU04 & Appellent & 0.60 & 0.0413 & 0.491 & 0.73 \\
+Gageler & Nauru-b & AU04 & Appellent & 0.88 & 0.0567 & 0.733 & 1.07 \\
+Edelman & Rinehart-a & AU04 & Appellent & 0.43 & 0.0182 & 0.377 & 0.48 \\
+Kiefel & Rinehart-a & AU04 & Appellent & 0.37 & 0.0175 & 0.320 & 0.42 \\
+Nettle & Rinehart-a & AU04 & Appellent & 0.41 & 0.0177 & 0.361 & 0.46 \\
+Gageler & Rinehart-a & AU04 & Appellent & 0.53 & 0.0216 & 0.473 & 0.60 \\
+Edelman & Rinehart-b & AU04 & Appellent & 0.77 & 0.0829 & 0.567 & 1.06 \\
+Nettle & Rinehart-b & AU04 & Appellent & 0.65 & 0.0622 & 0.490 & 0.86 \\
+Gageler & Rinehart-b & AU04 & Appellent & 1.13 & 0.1104 & 0.851 & 1.50 \\
+Edelman & McKell & AU04 & Appellent & 0.42 & 0.0233 & 0.362 & 0.50 \\
+Keane & McKell & AU04 & Appellent & 0.54 & 0.0326 & 0.457 & 0.65 \\
+Gageler & McKell & AU04 & Appellent & 0.55 & 0.0294 & 0.475 & 0.65 \\
+Bell & McKell & AU04 & Appellent & 0.82 & 0.0436 & 0.699 & 0.95 \\
+Edelman & OKS & AU04 & Appellent & 0.32 & 0.0256 & 0.252 & 0.40 \\
+Keane & OKS & AU04 & Appellent & 0.44 & 0.0408 & 0.336 & 0.58 \\
+Gageler & OKS & AU04 & Appellent & 0.64 & 0.0516 & 0.507 & 0.81 \\
+Bell & OKS & AU04 & Appellent & 1.03 & 0.0861 & 0.806 & 1.31 \\
+Edelman & Parkes & AU04 & Appellent & 0.46 & 0.0215 & 0.398 & 0.52 \\
+Keane & Parkes & AU04 & Appellent & 0.45 & 0.0258 & 0.384 & 0.54 \\
+Kiefel & Parkes & AU04 & Appellent & 0.30 & 0.0151 & 0.261 & 0.35 \\
+Bell & Parkes & AU04 & Appellent & 0.69 & 0.0343 & 0.598 & 0.80 \\
+Edelman & Nauru-a & AU05 & Appellent & 0.51 & 0.0333 & 0.420 & 0.62 \\
+Nettle & Nauru-a & AU05 & Appellent & 0.74 & 0.0474 & 0.617 & 0.89 \\
+Gageler & Nauru-a & AU05 & Appellent & 0.92 & 0.0574 & 0.770 & 1.11 \\
+Edelman & Nauru-b & AU05 & Appellent & 0.55 & 0.0408 & 0.443 & 0.68 \\
+Nettle & Nauru-b & AU05 & Appellent & 0.77 & 0.0571 & 0.620 & 0.96 \\
+Gageler & Nauru-b & AU05 & Appellent & 1.09 & 0.0764 & 0.888 & 1.34 \\
+Edelman & Rinehart-a & AU05 & Appellent & 0.44 & 0.0210 & 0.379 & 0.50 \\
+Kiefel & Rinehart-a & AU05 & Appellent & 0.41 & 0.0249 & 0.344 & 0.49 \\
+Nettle & Rinehart-a & AU05 & Appellent & 0.69 & 0.0340 & 0.600 & 0.80 \\
+Gageler & Rinehart-a & AU05 & Appellent & 0.86 & 0.0357 & 0.764 & 0.97 \\
+Edelman & Rinehart-b & AU05 & Appellent & 0.34 & 0.0395 & 0.244 & 0.48 \\
+Nettle & Rinehart-b & AU05 & Appellent & 0.47 & 0.0520 & 0.342 & 0.65 \\
+Gageler & Rinehart-b & AU05 & Appellent & 0.79 & 0.0830 & 0.583 & 1.07 \\
+Edelman & McKell & AU05 & Appellent & 0.42 & 0.0281 & 0.346 & 0.51 \\
+Keane & McKell & AU05 & Appellent & 0.71 & 0.0514 & 0.571 & 0.87 \\
+Gageler & McKell & AU05 & Appellent & 0.87 & 0.0503 & 0.736 & 1.03 \\
+Bell & McKell & AU05 & Appellent & 0.39 & 0.0250 & 0.321 & 0.47 \\
+Edelman & OKS & AU05 & Appellent & 0.67 & 0.0846 & 0.461 & 0.96 \\
+Keane & OKS & AU05 & Appellent & 1.21 & 0.1312 & 0.878 & 1.66 \\
+Gageler & OKS & AU05 & Appellent & 2.12 & 0.2729 & 1.460 & 3.09 \\
+Bell & OKS & AU05 & Appellent & 1.03 & 0.1031 & 0.769 & 1.38 \\
+Edelman & Parkes & AU05 & Appellent & 0.40 & 0.0218 & 0.342 & 0.47 \\
+Keane & Parkes & AU05 & Appellent & 0.52 & 0.0308 & 0.439 & 0.62 \\
+Kiefel & Parkes & AU05 & Appellent & 0.29 & 0.0150 & 0.248 & 0.34 \\
+Bell & Parkes & AU05 & Appellent & 0.29 & 0.0184 & 0.241 & 0.35 \\
+Edelman & Nauru-a & AU07 & Appellent & 1.07 & 0.0724 & 0.878 & 1.30 \\
+Nettle & Nauru-a & AU07 & Appellent & 1.12 & 0.0715 & 0.931 & 1.35 \\
+Gageler & Nauru-a & AU07 & Appellent & 0.85 & 0.0551 & 0.699 & 1.02 \\
+Edelman & Nauru-b & AU07 & Appellent & 0.82 & 0.0678 & 0.645 & 1.04 \\
+Nettle & Nauru-b & AU07 & Appellent & 0.82 & 0.0615 & 0.663 & 1.02 \\
+Gageler & Nauru-b & AU07 & Appellent & 0.71 & 0.0548 & 0.564 & 0.89 \\
+Edelman & Rinehart-a & AU07 & Appellent & 0.63 & 0.0278 & 0.557 & 0.72 \\
+Kiefel & Rinehart-a & AU07 & Appellent & 0.51 & 0.0324 & 0.428 & 0.62 \\
+Nettle & Rinehart-a & AU07 & Appellent & 0.72 & 0.0326 & 0.632 & 0.82 \\
+Gageler & Rinehart-a & AU07 & Appellent & 0.54 & 0.0265 & 0.473 & 0.63 \\
+Edelman & Rinehart-b & AU07 & Appellent & 0.67 & 0.0673 & 0.500 & 0.90 \\
+Nettle & Rinehart-b & AU07 & Appellent & 0.66 & 0.0651 & 0.499 & 0.88 \\
+Gageler & Rinehart-b & AU07 & Appellent & 0.67 & 0.0719 & 0.495 & 0.92 \\
+Edelman & McKell & AU07 & Appellent & 0.63 & 0.0357 & 0.537 & 0.75 \\
+Keane & McKell & AU07 & Appellent & 1.17 & 0.0678 & 0.986 & 1.38 \\
+Gageler & McKell & AU07 & Appellent & 0.57 & 0.0348 & 0.477 & 0.68 \\
+Bell & McKell & AU07 & Appellent & 1.11 & 0.0640 & 0.938 & 1.31 \\
+Edelman & OKS & AU07 & Appellent & 0.36 & 0.0311 & 0.284 & 0.47 \\
+Keane & OKS & AU07 & Appellent & 0.72 & 0.0650 & 0.557 & 0.94 \\
+Gageler & OKS & AU07 & Appellent & 0.50 & 0.0481 & 0.382 & 0.67 \\
+Bell & OKS & AU07 & Appellent & 1.07 & 0.1077 & 0.800 & 1.44 \\
+Edelman & Parkes & AU07 & Appellent & 0.54 & 0.0261 & 0.465 & 0.62 \\
+Keane & Parkes & AU07 & Appellent & 0.77 & 0.0419 & 0.654 & 0.90 \\
+Kiefel & Parkes & AU07 & Appellent & 0.33 & 0.0263 & 0.265 & 0.42 \\
+Bell & Parkes & AU07 & Appellent & 0.74 & 0.0470 & 0.616 & 0.89 \\
+Edelman & Nauru-a & AU09 & Appellent & 0.63 & 0.0340 & 0.541 & 0.74 \\
+Nettle & Nauru-a & AU09 & Appellent & 0.87 & 0.0475 & 0.745 & 1.02 \\
+Gageler & Nauru-a & AU09 & Appellent & 0.65 & 0.0341 & 0.562 & 0.76 \\
+Edelman & Nauru-b & AU09 & Appellent & 0.60 & 0.0401 & 0.496 & 0.73 \\
+Nettle & Nauru-b & AU09 & Appellent & 0.80 & 0.0504 & 0.661 & 0.96 \\
+Gageler & Nauru-b & AU09 & Appellent & 0.68 & 0.0412 & 0.568 & 0.81 \\
+Edelman & Rinehart-a & AU09 & Appellent & 0.34 & 0.0151 & 0.301 & 0.39 \\
+Kiefel & Rinehart-a & AU09 & Appellent & 0.19 & 0.0172 & 0.148 & 0.25 \\
+Nettle & Rinehart-a & AU09 & Appellent & 0.51 & 0.0219 & 0.453 & 0.58 \\
+Gageler & Rinehart-a & AU09 & Appellent & 0.39 & 0.0170 & 0.339 & 0.44 \\
+Edelman & Rinehart-b & AU09 & Appellent & 0.43 & 0.0485 & 0.307 & 0.59 \\
+Nettle & Rinehart-b & AU09 & Appellent & 0.56 & 0.0596 & 0.408 & 0.76 \\
+Gageler & Rinehart-b & AU09 & Appellent & 0.56 & 0.0643 & 0.404 & 0.79 \\
+Edelman & McKell & AU09 & Appellent & 0.28 & 0.0153 & 0.239 & 0.33 \\
+Keane & McKell & AU09 & Appellent & 0.50 & 0.0310 & 0.417 & 0.60 \\
+Gageler & McKell & AU09 & Appellent & 0.33 & 0.0199 & 0.276 & 0.39 \\
+Bell & McKell & AU09 & Appellent & 0.76 & 0.0430 & 0.643 & 0.90 \\
+Edelman & OKS & AU09 & Appellent & 0.22 & 0.0187 & 0.176 & 0.29 \\
+Keane & OKS & AU09 & Appellent & 0.43 & 0.0389 & 0.332 & 0.56 \\
+Gageler & OKS & AU09 & Appellent & 0.41 & 0.0334 & 0.320 & 0.52 \\
+Bell & OKS & AU09 & Appellent & 1.02 & 0.0859 & 0.800 & 1.31 \\
+Edelman & Parkes & AU09 & Appellent & 0.38 & 0.0186 & 0.330 & 0.44 \\
+Keane & Parkes & AU09 & Appellent & 0.53 & 0.0320 & 0.441 & 0.63 \\
+Kiefel & Parkes & AU09 & Appellent & 0.16 & 0.0140 & 0.127 & 0.21 \\
+Bell & Parkes & AU09 & Appellent & 0.81 & 0.0405 & 0.703 & 0.94 \\
+Edelman & Nauru-a & AU14 & Appellent & 0.60 & 0.0353 & 0.505 & 0.71 \\
+Nettle & Nauru-a & AU14 & Appellent & 0.69 & 0.0425 & 0.574 & 0.82 \\
+Gageler & Nauru-a & AU14 & Appellent & 0.44 & 0.0266 & 0.369 & 0.52 \\
+Edelman & Nauru-b & AU14 & Appellent & 0.72 & 0.0499 & 0.592 & 0.89 \\
+Nettle & Nauru-b & AU14 & Appellent & 0.80 & 0.0537 & 0.654 & 0.97 \\
+Gageler & Nauru-b & AU14 & Appellent & 0.58 & 0.0418 & 0.470 & 0.71 \\
+Edelman & Rinehart-a & AU14 & Appellent & 0.41 & 0.0170 & 0.359 & 0.46 \\
+Kiefel & Rinehart-a & AU14 & Appellent & 0.48 & 0.0223 & 0.424 & 0.55 \\
+Nettle & Rinehart-a & AU14 & Appellent & 0.51 & 0.0222 & 0.445 & 0.57 \\
+Gageler & Rinehart-a & AU14 & Appellent & 0.32 & 0.0169 & 0.278 & 0.38 \\
+Edelman & Rinehart-b & AU14 & Appellent & 0.48 & 0.0491 & 0.356 & 0.65 \\
+Nettle & Rinehart-b & AU14 & Appellent & 0.52 & 0.0499 & 0.393 & 0.69 \\
+Gageler & Rinehart-b & AU14 & Appellent & 0.45 & 0.0457 & 0.333 & 0.60 \\
+Edelman & McKell & AU14 & Appellent & 0.42 & 0.0265 & 0.347 & 0.50 \\
+Keane & McKell & AU14 & Appellent & 0.65 & 0.0403 & 0.541 & 0.78 \\
+Gageler & McKell & AU14 & Appellent & 0.35 & 0.0253 & 0.282 & 0.43 \\
+Bell & McKell & AU14 & Appellent & 0.17 & 0.0178 & 0.123 & 0.23 \\
+Edelman & OKS & AU14 & Appellent & 0.49 & 0.0444 & 0.380 & 0.64 \\
+Keane & OKS & AU14 & Appellent & 0.83 & 0.0806 & 0.623 & 1.10 \\
+Gageler & OKS & AU14 & Appellent & 0.64 & 0.0565 & 0.491 & 0.82 \\
+Bell & OKS & AU14 & Appellent & 0.33 & 0.0410 & 0.233 & 0.48 \\
+Edelman & Parkes & AU14 & Appellent & 0.52 & 0.0249 & 0.448 & 0.59 \\
+Keane & Parkes & AU14 & Appellent & 0.62 & 0.0341 & 0.529 & 0.73 \\
+Kiefel & Parkes & AU14 & Appellent & 0.47 & 0.0232 & 0.409 & 0.54 \\
+Bell & Parkes & AU14 & Appellent & 0.16 & 0.0202 & 0.114 & 0.23 \\
+Edelman & Nauru-a & AU15 & Appellent & 0.26 & 0.0162 & 0.213 & 0.31 \\
+Nettle & Nauru-a & AU15 & Appellent & 0.51 & 0.0303 & 0.425 & 0.60 \\
+Gageler & Nauru-a & AU15 & Appellent & 0.23 & 0.0157 & 0.188 & 0.28 \\
+Edelman & Nauru-b & AU15 & Appellent & 0.34 & 0.0250 & 0.272 & 0.42 \\
+Nettle & Nauru-b & AU15 & Appellent & 0.64 & 0.0444 & 0.523 & 0.78 \\
+Gageler & Nauru-b & AU15 & Appellent & 0.33 & 0.0241 & 0.267 & 0.41 \\
+Edelman & Rinehart-a & AU15 & Appellent & 0.26 & 0.0111 & 0.228 & 0.29 \\
+Kiefel & Rinehart-a & AU15 & Appellent & 0.23 & 0.0105 & 0.197 & 0.26 \\
+Nettle & Rinehart-a & AU15 & Appellent & 0.55 & 0.0233 & 0.490 & 0.63 \\
+Gageler & Rinehart-a & AU15 & Appellent & 0.25 & 0.0109 & 0.222 & 0.29 \\
+Edelman & Rinehart-b & AU15 & Appellent & 0.17 & 0.0205 & 0.123 & 0.24 \\
+Nettle & Rinehart-b & AU15 & Appellent & 0.32 & 0.0330 & 0.241 & 0.44 \\
+Gageler & Rinehart-b & AU15 & Appellent & 0.20 & 0.0222 & 0.143 & 0.27 \\
+Edelman & McKell & AU15 & Appellent & 0.26 & 0.0151 & 0.224 & 0.31 \\
+Keane & McKell & AU15 & Appellent & 0.58 & 0.0317 & 0.491 & 0.68 \\
+Gageler & McKell & AU15 & Appellent & 0.27 & 0.0163 & 0.227 & 0.32 \\
+Bell & McKell & AU15 & Appellent & 0.62 & 0.0346 & 0.523 & 0.73 \\
+Edelman & OKS & AU15 & Appellent & 0.29 & 0.0242 & 0.229 & 0.37 \\
+Keane & OKS & AU15 & Appellent & 0.68 & 0.0587 & 0.534 & 0.88 \\
+Gageler & OKS & AU15 & Appellent & 0.46 & 0.0384 & 0.360 & 0.59 \\
+Bell & OKS & AU15 & Appellent & 1.14 & 0.1175 & 0.846 & 1.54 \\
+Edelman & Parkes & AU15 & Appellent & 0.47 & 0.0235 & 0.410 & 0.55 \\
+Keane & Parkes & AU15 & Appellent & 0.80 & 0.0398 & 0.692 & 0.93 \\
+Kiefel & Parkes & AU15 & Appellent & 0.32 & 0.0168 & 0.272 & 0.37 \\
+Bell & Parkes & AU15 & Appellent & 0.87 & 0.0499 & 0.737 & 1.03 \\
+Edelman & Nauru-a & AU20 & Appellent & 0.95 & 0.0514 & 0.810 & 1.11 \\
+Nettle & Nauru-a & AU20 & Appellent & 0.91 & 0.0488 & 0.777 & 1.06 \\
+Gageler & Nauru-a & AU20 & Appellent & 0.62 & 0.0333 & 0.528 & 0.72 \\
+Edelman & Nauru-b & AU20 & Appellent & 1.02 & 0.0630 & 0.852 & 1.22 \\
+Nettle & Nauru-b & AU20 & Appellent & 0.94 & 0.0565 & 0.785 & 1.12 \\
+Gageler & Nauru-b & AU20 & Appellent & 0.72 & 0.0450 & 0.604 & 0.87 \\
+Edelman & Rinehart-a & AU20 & Appellent & 0.71 & 0.0268 & 0.639 & 0.80 \\
+Kiefel & Rinehart-a & AU20 & Appellent & 0.93 & 0.0386 & 0.826 & 1.05 \\
+Nettle & Rinehart-a & AU20 & Appellent & 0.74 & 0.0311 & 0.656 & 0.84 \\
+Gageler & Rinehart-a & AU20 & Appellent & 0.50 & 0.0198 & 0.450 & 0.57 \\
+Edelman & Rinehart-b & AU20 & Appellent & 0.68 & 0.0740 & 0.492 & 0.93 \\
+Nettle & Rinehart-b & AU20 & Appellent & 0.61 & 0.0796 & 0.419 & 0.89 \\
+Gageler & Rinehart-b & AU20 & Appellent & 0.56 & 0.0664 & 0.398 & 0.79 \\
+Edelman & McKell & AU20 & Appellent & 0.91 & 0.0463 & 0.785 & 1.06 \\
+Keane & McKell & AU20 & Appellent & 1.03 & 0.0551 & 0.886 & 1.21 \\
+Gageler & McKell & AU20 & Appellent & 0.68 & 0.0365 & 0.577 & 0.79 \\
+Bell & McKell & AU20 & Appellent & 0.44 & 0.0240 & 0.373 & 0.51 \\
+Edelman & OKS & AU20 & Appellent & 0.90 & 0.0720 & 0.714 & 1.14 \\
+Keane & OKS & AU20 & Appellent & 1.10 & 0.0899 & 0.870 & 1.40 \\
+Gageler & OKS & AU20 & Appellent & 1.03 & 0.0819 & 0.816 & 1.30 \\
+Bell & OKS & AU20 & Appellent & 0.73 & 0.0606 & 0.570 & 0.93 \\
+Edelman & Parkes & AU20 & Appellent & 0.97 & 0.0423 & 0.857 & 1.10 \\
+Keane & Parkes & AU20 & Appellent & 0.86 & 0.0415 & 0.744 & 0.99 \\
+Kiefel & Parkes & AU20 & Appellent & 0.98 & 0.0452 & 0.852 & 1.12 \\
+Bell & Parkes & AU20 & Appellent & 0.37 & 0.0205 & 0.314 & 0.43 \\
+Edelman & Nauru-a & AU45 & Appellent & 0.40 & 0.0222 & 0.343 & 0.47 \\
+Nettle & Nauru-a & AU45 & Appellent & 0.24 & 0.0145 & 0.196 & 0.28 \\
+Gageler & Nauru-a & AU45 & Appellent & 0.51 & 0.0280 & 0.432 & 0.60 \\
+Edelman & Nauru-b & AU45 & Appellent & 0.36 & 0.0228 & 0.297 & 0.43 \\
+Nettle & Nauru-b & AU45 & Appellent & 0.20 & 0.0145 & 0.162 & 0.25 \\
+Gageler & Nauru-b & AU45 & Appellent & 0.49 & 0.0333 & 0.404 & 0.60 \\
+Edelman & Rinehart-a & AU45 & Appellent & 0.28 & 0.0117 & 0.252 & 0.32 \\
+Kiefel & Rinehart-a & AU45 & Appellent & 1.04 & 0.0432 & 0.919 & 1.17 \\
+Nettle & Rinehart-a & AU45 & Appellent & 0.18 & 0.0093 & 0.155 & 0.21 \\
+Gageler & Rinehart-a & AU45 & Appellent & 0.39 & 0.0160 & 0.346 & 0.44 \\
+Edelman & Rinehart-b & AU45 & Appellent & 0.20 & 0.0227 & 0.148 & 0.28 \\
+Nettle & Rinehart-b & AU45 & Appellent & 0.11 & 0.0133 & 0.080 & 0.16 \\
+Gageler & Rinehart-b & AU45 & Appellent & 0.33 & 0.0339 & 0.244 & 0.44 \\
+Edelman & McKell & AU45 & Appellent & 0.33 & 0.0179 & 0.281 & 0.39 \\
+Keane & McKell & AU45 & Appellent & 0.56 & 0.0316 & 0.475 & 0.66 \\
+Gageler & McKell & AU45 & Appellent & 0.47 & 0.0253 & 0.405 & 0.55 \\
+Bell & McKell & AU45 & Appellent & 0.35 & 0.0193 & 0.299 & 0.41 \\
+Edelman & OKS & AU45 & Appellent & 0.19 & 0.0160 & 0.152 & 0.25 \\
+Keane & OKS & AU45 & Appellent & 0.35 & 0.0325 & 0.270 & 0.46 \\
+Gageler & OKS & AU45 & Appellent & 0.43 & 0.0350 & 0.336 & 0.54 \\
+Bell & OKS & AU45 & Appellent & 0.34 & 0.0301 & 0.267 & 0.44 \\
+Edelman & Parkes & AU45 & Appellent & 0.37 & 0.0167 & 0.328 & 0.43 \\
+Keane & Parkes & AU45 & Appellent & 0.49 & 0.0253 & 0.425 & 0.57 \\
+Kiefel & Parkes & AU45 & Appellent & 1.05 & 0.0489 & 0.915 & 1.20 \\
+Bell & Parkes & AU45 & Appellent & 0.31 & 0.0183 & 0.265 & 0.37 \\
+Edelman & Nauru-a & AU01 & Respondent & 0.65 & 0.0380 & 0.548 & 0.77 \\
+Nettle & Nauru-a & AU01 & Respondent & 0.78 & 0.0456 & 0.655 & 0.92 \\
+Gageler & Nauru-a & AU01 & Respondent & 0.53 & 0.0321 & 0.442 & 0.63 \\
+Edelman & Nauru-b & AU01 & Respondent & 0.65 & 0.0448 & 0.527 & 0.79 \\
+Nettle & Nauru-b & AU01 & Respondent & 0.74 & 0.0532 & 0.599 & 0.91 \\
+Gageler & Nauru-b & AU01 & Respondent & 0.57 & 0.0426 & 0.460 & 0.71 \\
+Edelman & Rinehart-a & AU01 & Respondent & 0.49 & 0.0218 & 0.427 & 0.55 \\
+Kiefel & Rinehart-a & AU01 & Respondent & 0.26 & 0.0114 & 0.231 & 0.30 \\
+Nettle & Rinehart-a & AU01 & Respondent & 0.63 & 0.0256 & 0.562 & 0.71 \\
+Gageler & Rinehart-a & AU01 & Respondent & 0.43 & 0.0191 & 0.378 & 0.49 \\
+Edelman & Rinehart-b & AU01 & Respondent & 0.50 & 0.0534 & 0.368 & 0.68 \\
+Nettle & Rinehart-b & AU01 & Respondent & 0.57 & 0.0567 & 0.424 & 0.76 \\
+Gageler & Rinehart-b & AU01 & Respondent & 0.52 & 0.0563 & 0.379 & 0.71 \\
+Edelman & McKell & AU01 & Respondent & 0.36 & 0.0235 & 0.293 & 0.43 \\
+Keane & McKell & AU01 & Respondent & 0.37 & 0.0413 & 0.263 & 0.51 \\
+Gageler & McKell & AU01 & Respondent & 0.33 & 0.0232 & 0.268 & 0.40 \\
+Bell & McKell & AU01 & Respondent & 0.27 & 0.0184 & 0.219 & 0.33 \\
+Edelman & OKS & AU01 & Respondent & 0.58 & 0.0555 & 0.440 & 0.77 \\
+Keane & OKS & AU01 & Respondent & 0.64 & 0.0935 & 0.422 & 0.98 \\
+Gageler & OKS & AU01 & Respondent & 0.83 & 0.0854 & 0.613 & 1.12 \\
+Bell & OKS & AU01 & Respondent & 0.74 & 0.0799 & 0.537 & 1.01 \\
+Edelman & Parkes & AU01 & Respondent & 0.46 & 0.0228 & 0.399 & 0.53 \\
+Keane & Parkes & AU01 & Respondent & 0.37 & 0.0369 & 0.274 & 0.49 \\
+Kiefel & Parkes & AU01 & Respondent & 0.19 & 0.0106 & 0.162 & 0.22 \\
+Bell & Parkes & AU01 & Respondent & 0.27 & 0.0182 & 0.226 & 0.33 \\
+Edelman & Nauru-a & AU04 & Respondent & 0.70 & 0.0375 & 0.601 & 0.82 \\
+Nettle & Nauru-a & AU04 & Respondent & 0.57 & 0.0334 & 0.480 & 0.68 \\
+Gageler & Nauru-a & AU04 & Respondent & 0.84 & 0.0453 & 0.718 & 0.98 \\
+Edelman & Nauru-b & AU04 & Respondent & 0.69 & 0.0454 & 0.566 & 0.83 \\
+Nettle & Nauru-b & AU04 & Respondent & 0.53 & 0.0387 & 0.432 & 0.66 \\
+Gageler & Nauru-b & AU04 & Respondent & 0.89 & 0.0603 & 0.735 & 1.09 \\
+Edelman & Rinehart-a & AU04 & Respondent & 0.41 & 0.0171 & 0.367 & 0.47 \\
+Kiefel & Rinehart-a & AU04 & Respondent & 0.31 & 0.0136 & 0.268 & 0.35 \\
+Nettle & Rinehart-a & AU04 & Respondent & 0.36 & 0.0151 & 0.323 & 0.41 \\
+Gageler & Rinehart-a & AU04 & Respondent & 0.54 & 0.0209 & 0.481 & 0.60 \\
+Edelman & Rinehart-b & AU04 & Respondent & 0.75 & 0.0807 & 0.549 & 1.03 \\
+Nettle & Rinehart-b & AU04 & Respondent & 0.58 & 0.0561 & 0.434 & 0.77 \\
+Gageler & Rinehart-b & AU04 & Respondent & 1.14 & 0.1131 & 0.859 & 1.53 \\
+Edelman & McKell & AU04 & Respondent & 0.41 & 0.0232 & 0.350 & 0.49 \\
+Keane & McKell & AU04 & Respondent & 0.60 & 0.0373 & 0.498 & 0.72 \\
+Gageler & McKell & AU04 & Respondent & 0.56 & 0.0309 & 0.478 & 0.66 \\
+Bell & McKell & AU04 & Respondent & 0.67 & 0.0389 & 0.567 & 0.79 \\
+Edelman & OKS & AU04 & Respondent & 0.31 & 0.0250 & 0.244 & 0.39 \\
+Keane & OKS & AU04 & Respondent & 0.48 & 0.0446 & 0.369 & 0.63 \\
+Gageler & OKS & AU04 & Respondent & 0.65 & 0.0521 & 0.513 & 0.82 \\
+Bell & OKS & AU04 & Respondent & 0.85 & 0.0700 & 0.665 & 1.08 \\
+Edelman & Parkes & AU04 & Respondent & 0.44 & 0.0204 & 0.387 & 0.51 \\
+Keane & Parkes & AU04 & Respondent & 0.50 & 0.0273 & 0.424 & 0.58 \\
+Kiefel & Parkes & AU04 & Respondent & 0.25 & 0.0120 & 0.218 & 0.29 \\
+Bell & Parkes & AU04 & Respondent & 0.57 & 0.0261 & 0.497 & 0.65 \\
+Edelman & Nauru-a & AU05 & Respondent & 0.49 & 0.0326 & 0.406 & 0.60 \\
+Nettle & Nauru-a & AU05 & Respondent & 0.66 & 0.0426 & 0.547 & 0.80 \\
+Gageler & Nauru-a & AU05 & Respondent & 0.93 & 0.0589 & 0.778 & 1.12 \\
+Edelman & Nauru-b & AU05 & Respondent & 0.53 & 0.0409 & 0.426 & 0.67 \\
+Nettle & Nauru-b & AU05 & Respondent & 0.68 & 0.0529 & 0.547 & 0.86 \\
+Gageler & Nauru-b & AU05 & Respondent & 1.10 & 0.0806 & 0.891 & 1.36 \\
+Edelman & Rinehart-a & AU05 & Respondent & 0.42 & 0.0200 & 0.368 & 0.49 \\
+Kiefel & Rinehart-a & AU05 & Respondent & 0.34 & 0.0205 & 0.286 & 0.41 \\
+Nettle & Rinehart-a & AU05 & Respondent & 0.62 & 0.0284 & 0.538 & 0.70 \\
+Gageler & Rinehart-a & AU05 & Respondent & 0.87 & 0.0348 & 0.777 & 0.98 \\
+Edelman & Rinehart-b & AU05 & Respondent & 0.33 & 0.0385 & 0.236 & 0.46 \\
+Nettle & Rinehart-b & AU05 & Respondent & 0.42 & 0.0469 & 0.303 & 0.58 \\
+Gageler & Rinehart-b & AU05 & Respondent & 0.80 & 0.0849 & 0.588 & 1.09 \\
+Edelman & McKell & AU05 & Respondent & 0.41 & 0.0279 & 0.334 & 0.50 \\
+Keane & McKell & AU05 & Respondent & 0.78 & 0.0586 & 0.622 & 0.97 \\
+Gageler & McKell & AU05 & Respondent & 0.88 & 0.0525 & 0.741 & 1.05 \\
+Bell & McKell & AU05 & Respondent & 0.32 & 0.0228 & 0.258 & 0.39 \\
+Edelman & OKS & AU05 & Respondent & 0.65 & 0.0822 & 0.446 & 0.94 \\
+Keane & OKS & AU05 & Respondent & 1.32 & 0.1448 & 0.962 & 1.82 \\
+Gageler & OKS & AU05 & Respondent & 2.15 & 0.2759 & 1.479 & 3.12 \\
+Bell & OKS & AU05 & Respondent & 0.85 & 0.0856 & 0.631 & 1.14 \\
+Edelman & Parkes & AU05 & Respondent & 0.39 & 0.0206 & 0.332 & 0.45 \\
+Keane & Parkes & AU05 & Respondent & 0.57 & 0.0330 & 0.484 & 0.68 \\
+Kiefel & Parkes & AU05 & Respondent & 0.24 & 0.0120 & 0.207 & 0.28 \\
+Bell & Parkes & AU05 & Respondent & 0.24 & 0.0158 & 0.197 & 0.29 \\
+Edelman & Nauru-a & AU07 & Respondent & 1.04 & 0.0711 & 0.849 & 1.27 \\
+Nettle & Nauru-a & AU07 & Respondent & 1.00 & 0.0644 & 0.826 & 1.20 \\
+Gageler & Nauru-a & AU07 & Respondent & 0.86 & 0.0565 & 0.706 & 1.04 \\
+Edelman & Nauru-b & AU07 & Respondent & 0.80 & 0.0674 & 0.622 & 1.02 \\
+Nettle & Nauru-b & AU07 & Respondent & 0.73 & 0.0569 & 0.584 & 0.92 \\
+Gageler & Nauru-b & AU07 & Respondent & 0.72 & 0.0576 & 0.566 & 0.90 \\
+Edelman & Rinehart-a & AU07 & Respondent & 0.61 & 0.0264 & 0.542 & 0.70 \\
+Kiefel & Rinehart-a & AU07 & Respondent & 0.43 & 0.0280 & 0.353 & 0.52 \\
+Nettle & Rinehart-a & AU07 & Respondent & 0.64 & 0.0280 & 0.564 & 0.73 \\
+Gageler & Rinehart-a & AU07 & Respondent & 0.55 & 0.0264 & 0.480 & 0.63 \\
+Edelman & Rinehart-b & AU07 & Respondent & 0.65 & 0.0657 & 0.484 & 0.87 \\
+Nettle & Rinehart-b & AU07 & Respondent & 0.59 & 0.0586 & 0.442 & 0.79 \\
+Gageler & Rinehart-b & AU07 & Respondent & 0.68 & 0.0735 & 0.499 & 0.93 \\
+Edelman & McKell & AU07 & Respondent & 0.61 & 0.0355 & 0.519 & 0.73 \\
+Keane & McKell & AU07 & Respondent & 1.28 & 0.0777 & 1.074 & 1.53 \\
+Gageler & McKell & AU07 & Respondent & 0.58 & 0.0363 & 0.480 & 0.69 \\
+Bell & McKell & AU07 & Respondent & 0.91 & 0.0537 & 0.769 & 1.08 \\
+Edelman & OKS & AU07 & Respondent & 0.35 & 0.0303 & 0.275 & 0.45 \\
+Keane & OKS & AU07 & Respondent & 0.79 & 0.0712 & 0.612 & 1.03 \\
+Gageler & OKS & AU07 & Respondent & 0.51 & 0.0483 & 0.388 & 0.67 \\
+Bell & OKS & AU07 & Respondent & 0.88 & 0.0847 & 0.666 & 1.17 \\
+Edelman & Parkes & AU07 & Respondent & 0.52 & 0.0245 & 0.453 & 0.60 \\
+Keane & Parkes & AU07 & Respondent & 0.84 & 0.0437 & 0.723 & 0.98 \\
+Kiefel & Parkes & AU07 & Respondent & 0.28 & 0.0220 & 0.220 & 0.35 \\
+Bell & Parkes & AU07 & Respondent & 0.61 & 0.0336 & 0.519 & 0.72 \\
+Edelman & Nauru-a & AU09 & Respondent & 0.61 & 0.0334 & 0.524 & 0.72 \\
+Nettle & Nauru-a & AU09 & Respondent & 0.78 & 0.0432 & 0.660 & 0.91 \\
+Gageler & Nauru-a & AU09 & Respondent & 0.66 & 0.0351 & 0.568 & 0.77 \\
+Edelman & Nauru-b & AU09 & Respondent & 0.58 & 0.0404 & 0.477 & 0.71 \\
+Nettle & Nauru-b & AU09 & Respondent & 0.71 & 0.0474 & 0.581 & 0.86 \\
+Gageler & Nauru-b & AU09 & Respondent & 0.69 & 0.0441 & 0.569 & 0.83 \\
+Edelman & Rinehart-a & AU09 & Respondent & 0.33 & 0.0143 & 0.293 & 0.38 \\
+Kiefel & Rinehart-a & AU09 & Respondent & 0.16 & 0.0142 & 0.123 & 0.21 \\
+Nettle & Rinehart-a & AU09 & Respondent & 0.46 & 0.0184 & 0.405 & 0.51 \\
+Gageler & Rinehart-a & AU09 & Respondent & 0.39 & 0.0164 & 0.345 & 0.44 \\
+Edelman & Rinehart-b & AU09 & Respondent & 0.41 & 0.0472 & 0.297 & 0.58 \\
+Nettle & Rinehart-b & AU09 & Respondent & 0.50 & 0.0534 & 0.362 & 0.68 \\
+Gageler & Rinehart-b & AU09 & Respondent & 0.57 & 0.0657 & 0.407 & 0.80 \\
+Edelman & McKell & AU09 & Respondent & 0.27 & 0.0153 & 0.230 & 0.32 \\
+Keane & McKell & AU09 & Respondent & 0.55 & 0.0352 & 0.455 & 0.66 \\
+Gageler & McKell & AU09 & Respondent & 0.33 & 0.0209 & 0.278 & 0.40 \\
+Bell & McKell & AU09 & Respondent & 0.62 & 0.0389 & 0.521 & 0.75 \\
+Edelman & OKS & AU09 & Respondent & 0.22 & 0.0183 & 0.170 & 0.28 \\
+Keane & OKS & AU09 & Respondent & 0.47 & 0.0426 & 0.365 & 0.62 \\
+Gageler & OKS & AU09 & Respondent & 0.41 & 0.0338 & 0.324 & 0.52 \\
+Bell & OKS & AU09 & Respondent & 0.84 & 0.0702 & 0.659 & 1.07 \\
+Edelman & Parkes & AU09 & Respondent & 0.37 & 0.0176 & 0.321 & 0.42 \\
+Keane & Parkes & AU09 & Respondent & 0.58 & 0.0338 & 0.488 & 0.69 \\
+Kiefel & Parkes & AU09 & Respondent & 0.14 & 0.0116 & 0.106 & 0.17 \\
+Bell & Parkes & AU09 & Respondent & 0.67 & 0.0312 & 0.584 & 0.77 \\
+Edelman & Nauru-a & AU14 & Respondent & 0.58 & 0.0345 & 0.489 & 0.69 \\
+Nettle & Nauru-a & AU14 & Respondent & 0.61 & 0.0386 & 0.509 & 0.73 \\
+Gageler & Nauru-a & AU14 & Respondent & 0.45 & 0.0271 & 0.373 & 0.53 \\
+Edelman & Nauru-b & AU14 & Respondent & 0.70 & 0.0499 & 0.571 & 0.86 \\
+Nettle & Nauru-b & AU14 & Respondent & 0.71 & 0.0504 & 0.575 & 0.87 \\
+Gageler & Nauru-b & AU14 & Respondent & 0.59 & 0.0439 & 0.472 & 0.73 \\
+Edelman & Rinehart-a & AU14 & Respondent & 0.39 & 0.0157 & 0.350 & 0.44 \\
+Kiefel & Rinehart-a & AU14 & Respondent & 0.40 & 0.0182 & 0.353 & 0.46 \\
+Nettle & Rinehart-a & AU14 & Respondent & 0.45 & 0.0190 & 0.398 & 0.51 \\
+Gageler & Rinehart-a & AU14 & Respondent & 0.33 & 0.0164 & 0.283 & 0.38 \\
+Edelman & Rinehart-b & AU14 & Respondent & 0.46 & 0.0478 & 0.345 & 0.63 \\
+Nettle & Rinehart-b & AU14 & Respondent & 0.46 & 0.0450 & 0.348 & 0.61 \\
+Gageler & Rinehart-b & AU14 & Respondent & 0.45 & 0.0466 & 0.337 & 0.61 \\
+Edelman & McKell & AU14 & Respondent & 0.40 & 0.0262 & 0.335 & 0.49 \\
+Keane & McKell & AU14 & Respondent & 0.71 & 0.0462 & 0.589 & 0.86 \\
+Gageler & McKell & AU14 & Respondent & 0.35 & 0.0260 & 0.285 & 0.44 \\
+Bell & McKell & AU14 & Respondent & 0.14 & 0.0149 & 0.101 & 0.19 \\
+Edelman & OKS & AU14 & Respondent & 0.48 & 0.0433 & 0.369 & 0.62 \\
+Keane & OKS & AU14 & Respondent & 0.91 & 0.0885 & 0.684 & 1.21 \\
+Gageler & OKS & AU14 & Respondent & 0.64 & 0.0571 & 0.497 & 0.83 \\
+Bell & OKS & AU14 & Respondent & 0.27 & 0.0331 & 0.193 & 0.39 \\
+Edelman & Parkes & AU14 & Respondent & 0.50 & 0.0233 & 0.436 & 0.57 \\
+Keane & Parkes & AU14 & Respondent & 0.68 & 0.0354 & 0.586 & 0.79 \\
+Kiefel & Parkes & AU14 & Respondent & 0.39 & 0.0185 & 0.341 & 0.45 \\
+Bell & Parkes & AU14 & Respondent & 0.13 & 0.0163 & 0.094 & 0.19 \\
+Edelman & Nauru-a & AU15 & Respondent & 0.25 & 0.0159 & 0.206 & 0.30 \\
+Nettle & Nauru-a & AU15 & Respondent & 0.45 & 0.0274 & 0.377 & 0.54 \\
+Gageler & Nauru-a & AU15 & Respondent & 0.23 & 0.0160 & 0.190 & 0.28 \\
+Edelman & Nauru-b & AU15 & Respondent & 0.33 & 0.0250 & 0.262 & 0.41 \\
+Nettle & Nauru-b & AU15 & Respondent & 0.57 & 0.0415 & 0.460 & 0.70 \\
+Gageler & Nauru-b & AU15 & Respondent & 0.33 & 0.0254 & 0.268 & 0.42 \\
+Edelman & Rinehart-a & AU15 & Respondent & 0.25 & 0.0104 & 0.222 & 0.28 \\
+Kiefel & Rinehart-a & AU15 & Respondent & 0.19 & 0.0082 & 0.165 & 0.21 \\
+Nettle & Rinehart-a & AU15 & Respondent & 0.49 & 0.0198 & 0.438 & 0.55 \\
+Gageler & Rinehart-a & AU15 & Respondent & 0.25 & 0.0106 & 0.226 & 0.29 \\
+Edelman & Rinehart-b & AU15 & Respondent & 0.17 & 0.0199 & 0.119 & 0.24 \\
+Nettle & Rinehart-b & AU15 & Respondent & 0.29 & 0.0297 & 0.213 & 0.39 \\
+Gageler & Rinehart-b & AU15 & Respondent & 0.20 & 0.0227 & 0.144 & 0.28 \\
+Edelman & McKell & AU15 & Respondent & 0.26 & 0.0150 & 0.216 & 0.30 \\
+Keane & McKell & AU15 & Respondent & 0.63 & 0.0365 & 0.534 & 0.75 \\
+Gageler & McKell & AU15 & Respondent & 0.27 & 0.0169 & 0.228 & 0.33 \\
+Bell & McKell & AU15 & Respondent & 0.51 & 0.0296 & 0.428 & 0.60 \\
+Edelman & OKS & AU15 & Respondent & 0.28 & 0.0236 & 0.222 & 0.36 \\
+Keane & OKS & AU15 & Respondent & 0.75 & 0.0643 & 0.586 & 0.96 \\
+Gageler & OKS & AU15 & Respondent & 0.46 & 0.0388 & 0.364 & 0.59 \\
+Bell & OKS & AU15 & Respondent & 0.94 & 0.0936 & 0.703 & 1.26 \\
+Edelman & Parkes & AU15 & Respondent & 0.46 & 0.0221 & 0.399 & 0.53 \\
+Keane & Parkes & AU15 & Respondent & 0.88 & 0.0410 & 0.767 & 1.01 \\
+Kiefel & Parkes & AU15 & Respondent & 0.26 & 0.0132 & 0.228 & 0.31 \\
+Bell & Parkes & AU15 & Respondent & 0.72 & 0.0360 & 0.619 & 0.83 \\
+Edelman & Nauru-a & AU20 & Respondent & 0.92 & 0.0504 & 0.784 & 1.08 \\
+Nettle & Nauru-a & AU20 & Respondent & 0.81 & 0.0441 & 0.689 & 0.95 \\
+Gageler & Nauru-a & AU20 & Respondent & 0.62 & 0.0342 & 0.533 & 0.73 \\
+Edelman & Nauru-b & AU20 & Respondent & 0.99 & 0.0637 & 0.820 & 1.19 \\
+Nettle & Nauru-b & AU20 & Respondent & 0.83 & 0.0534 & 0.690 & 1.00 \\
+Gageler & Nauru-b & AU20 & Respondent & 0.73 & 0.0480 & 0.606 & 0.89 \\
+Edelman & Rinehart-a & AU20 & Respondent & 0.69 & 0.0246 & 0.623 & 0.77 \\
+Kiefel & Rinehart-a & AU20 & Respondent & 0.77 & 0.0300 & 0.691 & 0.87 \\
+Nettle & Rinehart-a & AU20 & Respondent & 0.66 & 0.0261 & 0.587 & 0.74 \\
+Gageler & Rinehart-a & AU20 & Respondent & 0.51 & 0.0191 & 0.458 & 0.57 \\
+Edelman & Rinehart-b & AU20 & Respondent & 0.66 & 0.0721 & 0.476 & 0.90 \\
+Nettle & Rinehart-b & AU20 & Respondent & 0.54 & 0.0713 & 0.372 & 0.80 \\
+Gageler & Rinehart-b & AU20 & Respondent & 0.57 & 0.0676 & 0.402 & 0.80 \\
+Edelman & McKell & AU20 & Respondent & 0.88 & 0.0464 & 0.757 & 1.03 \\
+Keane & McKell & AU20 & Respondent & 1.14 & 0.0638 & 0.964 & 1.34 \\
+Gageler & McKell & AU20 & Respondent & 0.68 & 0.0382 & 0.581 & 0.80 \\
+Bell & McKell & AU20 & Respondent & 0.36 & 0.0208 & 0.304 & 0.43 \\
+Edelman & OKS & AU20 & Respondent & 0.87 & 0.0703 & 0.691 & 1.10 \\
+Keane & OKS & AU20 & Respondent & 1.21 & 0.0986 & 0.955 & 1.53 \\
+Gageler & OKS & AU20 & Respondent & 1.04 & 0.0827 & 0.826 & 1.31 \\
+Bell & OKS & AU20 & Respondent & 0.60 & 0.0486 & 0.472 & 0.76 \\
+Edelman & Parkes & AU20 & Respondent & 0.94 & 0.0395 & 0.835 & 1.07 \\
+Keane & Parkes & AU20 & Respondent & 0.94 & 0.0428 & 0.824 & 1.07 \\
+Kiefel & Parkes & AU20 & Respondent & 0.81 & 0.0354 & 0.712 & 0.92 \\
+Bell & Parkes & AU20 & Respondent & 0.30 & 0.0149 & 0.263 & 0.35 \\
+Edelman & Nauru-a & AU45 & Respondent & 0.39 & 0.0217 & 0.332 & 0.46 \\
+Nettle & Nauru-a & AU45 & Respondent & 0.21 & 0.0133 & 0.174 & 0.25 \\
+Gageler & Nauru-a & AU45 & Respondent & 0.51 & 0.0288 & 0.436 & 0.60 \\
+Edelman & Nauru-b & AU45 & Respondent & 0.35 & 0.0229 & 0.286 & 0.42 \\
+Nettle & Nauru-b & AU45 & Respondent & 0.18 & 0.0136 & 0.143 & 0.22 \\
+Gageler & Nauru-b & AU45 & Respondent & 0.50 & 0.0353 & 0.405 & 0.61 \\
+Edelman & Rinehart-a & AU45 & Respondent & 0.28 & 0.0106 & 0.246 & 0.31 \\
+Kiefel & Rinehart-a & AU45 & Respondent & 0.86 & 0.0336 & 0.768 & 0.96 \\
+Nettle & Rinehart-a & AU45 & Respondent & 0.16 & 0.0082 & 0.138 & 0.19 \\
+Gageler & Rinehart-a & AU45 & Respondent & 0.39 & 0.0155 & 0.352 & 0.44 \\
+Edelman & Rinehart-b & AU45 & Respondent & 0.20 & 0.0221 & 0.144 & 0.27 \\
+Nettle & Rinehart-b & AU45 & Respondent & 0.10 & 0.0120 & 0.071 & 0.14 \\
+Gageler & Rinehart-b & AU45 & Respondent & 0.33 & 0.0346 & 0.246 & 0.45 \\
+Edelman & McKell & AU45 & Respondent & 0.32 & 0.0178 & 0.271 & 0.38 \\
+Keane & McKell & AU45 & Respondent & 0.61 & 0.0368 & 0.516 & 0.73 \\
+Gageler & McKell & AU45 & Respondent & 0.48 & 0.0265 & 0.408 & 0.56 \\
+Bell & McKell & AU45 & Respondent & 0.29 & 0.0168 & 0.243 & 0.34 \\
+Edelman & OKS & AU45 & Respondent & 0.19 & 0.0156 & 0.147 & 0.24 \\
+Keane & OKS & AU45 & Respondent & 0.39 & 0.0356 & 0.297 & 0.51 \\
+Gageler & OKS & AU45 & Respondent & 0.43 & 0.0354 & 0.341 & 0.55 \\
+Bell & OKS & AU45 & Respondent & 0.28 & 0.0244 & 0.221 & 0.36 \\
+Edelman & Parkes & AU45 & Respondent & 0.36 & 0.0156 & 0.320 & 0.41 \\
+Keane & Parkes & AU45 & Respondent & 0.54 & 0.0266 & 0.469 & 0.62 \\
+Kiefel & Parkes & AU45 & Respondent & 0.87 & 0.0384 & 0.765 & 0.99 \\
+Bell & Parkes & AU45 & Respondent & 0.26 & 0.0136 & 0.221 & 0.30 \\
 \end{longtable}
 \end{center}
 
