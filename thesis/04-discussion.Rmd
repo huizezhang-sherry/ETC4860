@@ -1,0 +1,48 @@
+---
+chapter: 4
+knit: "bookdown::render_book"
+---
+
+# Discussion 
+
+## The expression of the justices by video
+
+<!-- [may be go to discussion???]Rather than doing *one* hypothesis testing on if two statistics are (significantly) different or not, we are interested comparing if multiple statistics under the same family are the same or different. Under the first model, the family is each action unit, that is, we want to compare that for the same judge, whether the percentage of appearance of action units are the same or different.  P-value and confidence interval are both tools for quantifying uncertainty of estimation. However, in the context of multiple comparison, adjustment need to be made for thesis statistics to be meaningful.  -->
+
+
+
+Many information can be observed from Figure \ref{fig:model2-plot} for presence and Figure \ref{fig:intensity-video}. The discussion of the two plots will be focusing on answering the question: **For the same judge, whether the mean presence and mean intensity of the action units are the same or different for different videos**. 
+
+In general, we can see that facial expression of the justices are impartial as most of the 95% confidence intervals for the same judge and action unit overlaps in most of the videos in both plots. While at the same time, there are some time when in a particular video, a judge expressed significantly more or less of an expression and next, I will break it down to discuss them in more detail.  
+
+We can observe that Judge Edelman and Keane behave relatively consistent throughout all the videos since most of the intervals overlap with each other after the  bonferroni adjustment. However, Edelman seems to express significantly less in action unit 5 in case OKS  In terms of intensity, Edelman has significantly stronger expression in case Nauru-a, Nauru-b and Rinehart-a in action unit 4 and 9, but more relaxed expression in action unit 7 for case OKS. Based the nature of the 7 cases, we can see Edelman is more likely to express stronger emotion to the political and commercial cases and express less and softer at criminal cases.  
+
+One thing being interesting is about the case classification. Nauru-a and Nauru-b discuss the refugee status of the appellent, which are political-based. McKell and OKS are more criminal-based, relates to drug and sexual misconduct. Parkes is a civil case about negligence while Rinehart-a and Rinehart-b are business related cases. 
+
+For Keane, he appears significantly less action unit 5 in case OKS as with Edelman in Figure \ref{fig:model2-plot} but Figure \ref{fig:intensity-video} suggest he has more intense of expression in the same action unit 5. At the same time, Keane has also more intense expression of action unit 7 in case McKell. This would somehow show evidence that Keane is more responsive to the criminal cases than cases of other categories. 
+
+Kiefel and Nettle are relatively consistent in their expressions. The presence plot shows that Nettle has relatively higher mean in case Rinehart-b, but it is not significant when comparing the 955 confidence interval. 
+
+Gageler shows a consistent responsive expression in case OKS. In Figure \ref{fig:model2-plot}, Gageler had significantly higher expression of action unit 15 adn 20. From the intensity plot in Figure \ref{fig:intensity-video}, actiion unit 5 and 20 have significantly higher intensity. The common associated emotion of action unit 5, 15 adn 20 is anger, sad and fear in the six univeral emtions. Thus, we can see that Gageler tends to react negatively and more strongly to criminal cases. 
+
+Bell also shows a significantly higher proportion of negative emotion associated with action unit 1 and 15 in case OKS and the intensity of action unit 1, 5, 14 and 20 are also significantly higher in case OKS. These evidence indicate the same emotion pattern as judge Gageler to criminal cases. While at the same time, Bell is less reactive in the presence of action unit 07 and 20 in case Parkes and this shows that she has less negative emotion of anger and fear in Parkes, comparing to the criminal case OKS. 
+
+## The expression of the justices by speaker
+
+From the presence and intensity plot by speakers in Figure \ref{fig:model3-plot} and \ref{fig:intensity-speaker}, we can observe that the video-wise difference between judge are still persist when the speaker effects are included in the model. However, the speaker-wise difference is not significant in terms of both presence and intensity for all the judges. 
+
+
+This result would be a validation that on the high court level, the judges are behaving impartial to different speaking parties. 
+
+
+
+## Summary
+
+To summarise, the above discussion of intensity and presence of action unit in different cases gives us several findings about the expression of the judges: 
+
+1) In general, the expression of the Justices are impartial, which is live up to the code of conduct from @judicalguid and validate the result from @tutton2018judicial. 
+
+2) When there is significantly present or intense expression of the Justices, it tends to be associated with negative emotion like sad, fear and anger. This could have implication on the mental wellbeing of the judges. 
+
+3) Some justices, for example Kean, Gageler and Bell are more responsive, both in frequency (mean presence) and magnitude (mean intensity) to criminal cases. This could show that it is harder for judges to keep a still face when the content of a case goes against human nature. 
+
