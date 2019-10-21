@@ -12,6 +12,7 @@ rmd_files: ["index.Rmd",
   "04-results.Rmd",
   "04-results-presence.Rmd",
   "04-results-intensity.Rmd",
+  "04-discussion.Rmd",
   "05-conclusion.Rmd",
   "A-appA.Rmd"]
 delete_merged_file: TRUE
