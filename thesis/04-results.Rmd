@@ -5,8 +5,10 @@ knit: "bookdown::render_book"
 
 # Results
 
-<!-- ## Action unit: Presence  -->
+
 ## Exploratory Data Analysis
+
+[THIS PART NEED TO BE TIDY UP]
 
 ### Action unit: Presence
 
@@ -105,10 +107,6 @@ more_presence %>%
 ```
 
 ### Action unit: Intensity
-
-
-
-
 
 #### General Intensity  plot
 
