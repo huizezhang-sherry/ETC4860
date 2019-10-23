@@ -7,12 +7,18 @@ knit: "bookdown::render_book"
 
 ## Modelling result for intensity 
 
+[MORE EXPLANATION WILL BE ADDED FOR THIS PART]
+
 ### Model 2: Video
 
 The two part model in equation \ref{eq:two-part1} is estimated for the intensity data. Estimated marginal mean, ANOVA and multiple comparison procedure are performed as modelling presence data. [should I include all ANOVA result?? - they are significant]
 
 The 95% confidence interval plot is presented in Figure \ref{fig:intensity-video}. 
 ```{r intensity-data}
+au_intensity <- most_intense %>% ungroup() %>%
+  filter(mean_intensity > 0.15) %>% group_by(AU) %>%
+  summarise(count = n()) %>% filter(count >=5) %>% pull(AU)
+
 model_dt <- au_tidy %>%
   ungroup(judge) %>%
   filter(AU %in% au_intensity) %>%
@@ -34,6 +40,28 @@ m2 <- glm(intensity ~ judge*video + judge*AU + video*AU,
           data = subset(model_dt, non_zero == 1),
           family = Gamma(link = "log"))
 ```
+
+```{r eval = FALSE}
+diag_1 <- augment(m2, type.pred = "response",type.resid = "deviance") %>% 
+  mutate(ind = row_number())
+
+p1 <- diag_1 %>% ggplot(aes(x= .fitted, y = .resid)) + geom_point()
+
+p2 <-  diag_1 %>% ggplot(aes(x = ind, y = .cooksd)) + geom_point()
+gridExtra::grid.arrange(p1, p2, nrow = 1)
+
+outliers <- diag_1 %>% filter(.cooksd == max(.cooksd)) %>% pull(ind)
+
+#model_dt %>% mutate(ind = row_number()) %>% filter(ind %in% outliers) %>% View()
+model_dt2 <- model_dt %>% mutate(ind = row_number()) %>% filter(!ind %in% outliers)
+library(boot)
+leuk.diag <- glm.diag(m2)
+glm.diag.plots(m2, leuk.diag)
+
+```
+
+
+
 
 ```{r anova-intensity-1}
 # Anova(m2, type = "III", singular.ok = TRUE) %>% 
@@ -64,6 +92,8 @@ int_2i %>%
         legend.position = "none") +
   xlab("video")
 ```
+
+\newpage 
 
 ### Model 3: Speaker
 
