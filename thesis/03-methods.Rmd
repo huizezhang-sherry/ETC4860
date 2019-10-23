@@ -27,7 +27,7 @@ $$Y_{ijklt} = \mu + \alpha_i + \beta_j + \gamma_k + \delta_l + \varepsilon_{ijkl
 
 ### Model structure
 
-- why probit or logit? 
+The presence score is a binary variable that can take value of one when a particular action unit is observed for that observation and zero if not. This suggest using a binomial generalised linear model (GLM) to model the data. The link function of a matter of choice in the GLM family and the three popular choice in the binomial model include logit link, probit link and complementary log-log link. Theoratically, these links give very similar result in terms of prediction @faraway2016extending, while the logit link is used for my study because it is the canonical link for the binomial model. 
 
 
 ### Model 1: Action unit
@@ -37,10 +37,10 @@ $$Y_{ijklt} = \mu + \alpha_i + \beta_j + \gamma_k + \delta_l + \varepsilon_{ijkl
 
 <!-- and we would be interested in interactions between judge, case, action unit and speaker. An alternative model structure, is to treat each action unit individually, and fit separate models.  -->
 
-A binomial model with logistic link is first used to model the presence score.[https://stats.stackexchange.com/questions/20523/difference-between-logit-and-probit-models#30909] Interaction of judge and action unit is included to capture the judge-wise differences for different action units. The is necessary since from the exploratory data analysis, different judges  have different average presence score for different action units. The model can be written down as Equation \ref{eq:judge_au}. 
+A binomial model with logistic link for modelling the presence score can be written down as Equation \ref{eq:judge_au}. . Interaction of judge and action unit is included to capture the judge-wise differences for different action units. The is necessary since from the exploratory data analysis, different judges  have different average presence score for different action units. 
 
 \begin{align}\label{eq:judge_au}
-P_{ik} &= \frac{e^{\eta_{ik}}}{1 + e^{\eta_{ik}}} \\
+\mu_{ik} &= \frac{e^{\eta_{ik}}}{1 + e^{\eta_{ik}}} \\
 \eta_{ik} &= \mu + \alpha_i + \gamma_k + (\alpha\gamma)_{ik}
 \end{align}
 
@@ -50,7 +50,7 @@ P_{ik} &= \frac{e^{\eta_{ik}}}{1 + e^{\eta_{ik}}} \\
 Build upon the first model, the second model adds the video related main effect and interactions, as shown in Equation \ref{eq:judge_video}. The interactions allow both judge and action unit variables to differ in different videos, which is useful to answer the research questions *whether the judges are behaving same or different across videos*. 
 
 \begin{align}\label{eq:judge_video}
-P_{ijk} &= \frac{e^{\eta_{ijk}}}{1 + e^{\eta_{ijk}}} \\
+\mu_{ijk} &= \frac{e^{\eta_{ijk}}}{1 + e^{\eta_{ijk}}} \\
 \eta_{ijk} &= \mu + \alpha_i + \beta_j +\gamma_k + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk}
 \end{align}
 
@@ -61,7 +61,7 @@ P_{ijk} &= \frac{e^{\eta_{ijk}}}{1 + e^{\eta_{ijk}}} \\
 Build upon the second model, the third model is aimed to capture the speaker-wise effect, that is, *do the expressions of the judges change when different parties are speaking*. The model formula is shown in Equation \ref{eq:judge_speaker}. 
 
 \begin{align}\label{eq:judge_speaker}
-P_{ijkl} &= \frac{e^{\eta_{ijkl}}}{1 + e^{\eta_{ijkl}}} \\
+\mu_{ijkl} &= \frac{e^{\eta_{ijkl}}}{1 + e^{\eta_{ijkl}}} \\
 \eta_{ijkl} &= \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\delta)_{il}
 \end{align}
 
@@ -71,7 +71,7 @@ Interactions are still included in this model, but attention need to be paid to 
 <!-- think about if it is necessary to adjust the standard error as well:  -->
 <!-- if there are hetroskadasticity, the estimate itself is inconsistent, thus adjustment to make the standard error robust doesnt make sense.  -->
 
-### Diagnostics 
+### Analysis of variance (ANOVA) 
 
 The analysis of variance (ANOVA) [@faraway2016extending; @gelman2006data] is a statistical method that compares the mean of each treatment level for a variable. Three types of ANOVA test are designed for different purposes. Type I takes a sequential approach to test the significance of variables, thus the order of the variable in the model will potentially affect the ANOVA result. Type II ANOVA tests the main effect of a covariate after controlling for other covariates but not interactions. This approach is recommended if the interactions are not significant. Type III ANOVA tests the main effect of a covariate after controlling for other covariates *and* the interactions. It is better than Type II ANOVA if the interactions are significant. 
 
@@ -83,7 +83,7 @@ The ANOVA test provide variable significance, which allows us to understand if a
 
 ## Modelling Intensity 
 
-The histogram of the intensity is plotted in Figure \ref{fig:intensity}. The distribution has a high proportion of zeros with highly skewed continuous position value.  This type of data is the so-called semi-continuous data [@Neelon2019; @twopart2010]. The semi-continuous data is modelled in the econometrics literature by the two part model[@cragg1971some; @manning1981two]. In the two part model, the data is viewed to be generated via a sequential modelling technique that is a mixed distribution of 
+The histogram of the intensity is plotted in Figure \ref{fig:intensity}. The distribution has a high proportion of zeros with highly skewed continuous  value.  This type of data is the so-called semi-continuous data [@Neelon2019; @twopart2010]. The semi-continuous data can be modelled in the econometrics literature by the two part model[@cragg1971some; @manning1981two]. In the two part model, the data is viewed to be generated via a sequential modelling technique, which is a mixed distribution of 
 
 - a binary (logistic or probit) model of if Y = 0 or not, and 
 - a specific model for the conditional distribution of $y \mid y > 0$. 
