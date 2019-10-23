@@ -8,9 +8,9 @@ knit: "bookdown::render_book"
 ## Choose of action unit to include
 
 
-The number of action unit to include in the model is a matter of choice. Including too many action units will cause the model to run out of degree of freedom while too few action units will cause the model not being able to explain an adequate amount of data. Choosing the number of action unit to include ensures the model is parsimonious, that is, a model with the smallest number of variables but with greatest explanatory power. Random effect may be able to deal with large number of factor levels of a variable, but in our context, understanding the presence or intensity score of an action unit that barely present is not particularly of our interest. We are interested in the action units with a certain mean presence (and intensity) for most of the judges. 
+The number of action unit to include in the model is a matter of choice. Including too many action units will cause the model to run out of degree of freedom while too few action units will cause the model not being able to explain an adequate amount of data. The discussion of this choice is to ensure our model is parsimonious, that is, a model has the smallest number of variables but with greatest explanatory power. Random effect is a way to deal with large number of factor levels of a variable, but in our context, understanding the presence or intensity score of an action unit that barely present is not particularly meaningful. We are interested in the action units with a certain mean presence (and intensity) for most of the judges. 
 
-I compute the number of action unit for different combination of mean presence level and number of judges and plot the result as a heatmap in Figure \ref{fig:heatmap-presence} [this sentence need to be re-worded]. The bottom left cell with cut point of 0.05 and number of judge as 1 can be interpreted as follows. There are 17 action units with at least one judge having mean presence score greater than 0.05.
+[this sentence need to be re-worded] To do this, I compute the number of action unit for different combination of mean presence level and number of judges and plot the result as a heatmap in Figure \ref{fig:heatmap-presence}. The bottom left cell with cut point of 0.05 and number of judge as 1 can be interpreted as follows. There are 17 action units with at least one judge having mean presence score greater than 0.05.
 
 The choose of number of action unit is similar to choosing the number of principle component based on the proportion of explained variance in the screen plot from principle component analysis. We can see from the plot that when changing the cut point from 0.35 to 0.3 and number of judges from 6 to 5, we have a great increase in the number of action unit. Thus, I choose the cut point at 0.3 and number of judge at 5. This allows my model to include seven action units. The included action units are shown in Table \ref{tab:au-presence} along with their meanings and their average presence score are plotted in Figure \ref{fig:selected-au-presence} where the color indicates whether the average percentage is above the 0.3 threshold.  
 
@@ -154,13 +154,14 @@ most_intense %>%
 
 ### Model 1: Action unit
 
-The first model in Equation \ref{eq:judge_au} is estimated and the estimated marginal mean is computed in Table \ref{tab:result_1} in the Appendix The `prob` column can be interpreted as after averaging over all the videos and speaking parties, the estimated mean probability for judge Edelman in action unit AU02 is 0.95, with a 95% confidence interval of [0.92, 0.97]. Notice that  confidence intervals for a generalised linear model is asymmetric around the estimates because the linear symmetric interval of the mean need to be transferred via the inverse of link function to get the confidence interval for the response. 
+The baseline model in Equation \ref{eq:judge_au} has been fitted and it is necessary to look at the diagnostics of the model. The fitted and residual plot and cook distance is presented in Figure \ref{fig:mod1-diag-1}. We can see that there is one point on the bottom right of the fitted-residual plot has large negative residual. These are the points from Justice Nettle in Action unit 2. The cook distance on the right hand side of Figure \ref{fig:mod1-diag-1} shows the presence of some highly influential points. These are also points from Justices Nettle in action unit 2. From summary statistics, Justices Nettle has an extraordinary highly presence of action unit 2 comparing to other Justices in other action unit, these points are more likely to be outliers that can't be modelled well. Thus we exclude these highly influential points and refit the model. This time, the residual vs. fitted plot & cook distance is shown in Figure \ref{fig:mod1-diag-2} and here is no points with significantly large residual or large cook distance. 
 
-The Type III Analysis of Variance (ANOVA) test is conducted with the result shown in Table \ref{tab:anova-1}. It can be seen that judge, AU and their interactions are all significance, which validates our choice of Type III instead of Type II ANOVA, which is better if the interactions are not signifcant. 
+The estimated marginal mean is computed in Table \ref{tab:result_1} in the Appendix The `prob` column can be interpreted as after averaging over all the videos and speaking parties, the estimated mean probability for judge Edelman in action unit AU02 is 0.95, with a 95% confidence interval of [0.92, 0.97]. Notice that confidence intervals for a generalised linear model is asymmetric around the estimates because the linear symmetric interval of the mean need to be transferred via the inverse of link function to get the confidence interval for the response. 
 
-Multiple comparison is then performed and the 95% confidence interval after bonferroni adjustment is plotted in Figure \ref{fig:model1-plot}. This plot shows that the intervals for the judges are significantly different from one to another as most of the intervals are not overlapping with each other. This confirms the necessity of including the interaction terms. 
+The Type III Analysis of Variance (ANOVA) test is conducted with the result shown in Table \ref{tab:anova-1}. It can be seen that judge, AU and their interactions are all significance, which validates our choice of Type III instead of Type II ANOVA, which is better if the interactions are not significant. 
 
-[Lastly talk about residuals] 
+Multiple comparison is then performed and the 95% confidence interval after bonferroni adjustment is plotted in Figure \ref{fig:model1-plot}. Notice that the estimated 95% confidence interval for Nettle in Action unit 2 is highly unstable and this is because after removing the influential points, all the data remain for Justices Nettle in Action unit 2 have presence ==1. [WE COULD REMOVE ALL THE POINTS FOR NETTLE FROM AU02 BUT SHOULD WE? ]. This plot shows that the intervals for the judges are significantly different from one to another as most of the intervals are not overlapping with each other. This confirms the necessity of including the interaction terms. 
+
 
 ```{r}
 model_dt <- au_tidy %>%
@@ -174,17 +175,39 @@ model_dt <- au_tidy %>%
 ```
 
 
-```{r model_1}
+```{r mod1-diag-1, fig.cap = "model diagnostics: fitted vs. residual plot and cook distance for model 1"}
 binomial_model_1 <- glm(presence ~ judge*AU,
                         family = binomial(link = "logit"),
                         data = model_dt)
 
-emmean_obj_1 <-  emmeans(binomial_model_1, ~judge*AU, type = "response")
-int_1 <- confint(emmean_obj_1, by = "judge",adjust = "bonferroni") %>% as.data.frame() %>% dplyr::select(-df)
+diag_1 <- augment(binomial_model_1, type.pred = "response",type.resid = "deviance") %>% 
+  mutate(ind = row_number())
 
+p1 <- diag_1 %>% ggplot(aes(x= .fitted, y = .resid)) + geom_point()
 
-# result_1 <- multcomp::cld(lsmean_obj_1, alpha = 0.05, type = "response") 
+p2 <-  diag_1 %>% ggplot(aes(x = ind, y = .cooksd)) + geom_point()
+gridExtra::grid.arrange(p1, p2, nrow = 1)
+
+outliers <- diag_1 %>% filter(.cooksd == max(.cooksd)) %>% pull(ind)
+
+#model_dt %>% mutate(ind = row_number()) %>% filter(ind %in% outliers) %>% View()
+model_dt2 <- model_dt %>% mutate(ind = row_number()) %>% filter(!ind %in% outliers)
+
+binomial_model_1 <- glm(presence ~ judge*AU,
+                        family = binomial(link = "logit"),
+                        data = model_dt2)
 ```
+
+```{r mod1-diag-2, fig.cap = "model diagnostics: fitted vs. residual plot and cook distance for model 1 after removing the influential points"}
+diag_1 <- augment(binomial_model_1, type.pred = "response",type.resid = "deviance") %>% 
+  mutate(ind = row_number())
+
+p1 <- diag_1 %>% ggplot(aes(x= .fitted, y = .resid)) + geom_point()
+
+p2 <-  diag_1 %>% ggplot(aes(x = ind, y = .cooksd)) + geom_point()
+gridExtra::grid.arrange(p1, p2, nrow = 1)
+```
+
 
 
 <!-- A bit more work on  -->
@@ -210,6 +233,11 @@ Anova(binomial_model_1, type = "III", singular.ok = TRUE) %>%
 ```
 
 ```{r model1-plot, fig.cap="The confidence interval for estimated mearginal mean in model 1"}
+emmean_obj_1 <-  emmeans(binomial_model_1, ~judge*AU, type = "response")
+
+int_1 <- confint(emmean_obj_1, by = "judge",adjust = "bonferroni") %>% 
+  as.data.frame() %>% dplyr::select(-df)
+
 int_1 %>%
   left_join(au_meaning, by = c("AU" = "AU_number")) %>%
   as_tibble()%>%
@@ -223,37 +251,51 @@ int_1 %>%
   theme(legend.position = "none")
 ```
 
-```{r}
-# binnedplot(fitted(binomial_model_1), 
-#            resid(binomial_model_1, type = "response"))
 
 
-# arm:::binned.resids(fitted(binomial_model_1), 
-#                     resid(binomial_model_1, type = "response"), 
-#                     floor(sqrt(length(fitted(binomial_model_1)))))
-
-# arm:::binned.resids(fitted(binomial_model_1), 
-#                     resid(binomial_model_1, type = "response"), 
-#                     floor(sqrt(length(fitted(binomial_model_1)))))
-```
 
 
+\newpage 
 
 ### Model 2: Video
 
-The estimated marginal mean for the second model are presented in Table \ref{tab:result-2} in the Appendix due to its length. ANOVA test (Table \ref{tab:anova-2}) and multiple comparison is conducted as described before. Figure \ref{fig:model2-plot} presents the 95% confidence interval for each estimated marginal mean. 
+The model in Equation \ref{eq:judge_video} is fitted and we followed the same diagnostic procedure as before. The presence scores for Justices Nettle in action unit 2 are still highly influential and we refit the model that excludes these points. The estimated marginal mean is then computed and  presented in Table \ref{tab:result-2} in the Appendix due to its length. ANOVA test (Table \ref{tab:anova-2}) again suggests all the variables are significant including the interactions. Multiple comparison is conducted as described before. Figure \ref{fig:model2-plot} presents the 95% confidence interval for each estimated marginal mean. 
 
-
-```{r model-2, results = "asis"}
+```{r model2}
 binomial_model_2 <- glm(presence ~ judge*video + judge*AU + video*AU,
                         family = binomial(link = "logit"),
                         data = model_dt)
 
-emmean_obj_2 <- emmeans(binomial_model_2, c("judge", "video", "AU"),
-                        type = "response")
+diag_2 <- augment(binomial_model_2, type.pred = "response", 
+                  type.resid = "deviance") %>% 
+  mutate(ind = row_number())
+```
 
-int_2 <- confint(emmean_obj_2, by = c("judge", "AU"), adjust = "bonferroni") # the by argument prescribe
+```{r mod2-diag-1, eval = FALSE}
+p1 <- diag_2 %>% ggplot(aes(x= .fitted, y = .resid)) + geom_point()
+p2 <-  diag_2 %>% ggplot(aes(x = ind, y = .cooksd)) + geom_point()
+gridExtra::grid.arrange(p1, p2, nrow = 1)
+```
 
+```{r}
+outliers <- diag_2 %>% filter(.cooksd == max(.cooksd)) %>% pull(ind)
+
+#model_dt %>% mutate(ind = row_number()) %>% filter(ind %in% outliers) # these are points from Justices Nettle
+model_dt2 <- model_dt %>% mutate(ind = row_number()) %>% filter(!ind %in% outliers) 
+
+binomial_model_2 <- glm(presence ~ judge*video + judge*AU + video*AU,
+                        family = binomial(link = "logit"),
+                        data = model_dt2)
+```
+
+
+```{r mod2-diag-2, eval = FALSE}
+diag_2 <- augment(binomial_model_2, type.pred = "response",
+                  type.resid = "deviance") %>% mutate(ind = row_number())
+
+p1 <- diag_2 %>% ggplot(aes(x= .fitted, y = .resid)) + geom_point()
+p2 <-  diag_2 %>% ggplot(aes(x = ind, y = .cooksd)) + geom_point()
+gridExtra::grid.arrange(p1, p2, nrow = 1)
 ```
 
 ```{r anova-2}
@@ -263,6 +305,11 @@ Anova(binomial_model_2, type = "III", singular.ok = TRUE) %>%
 ```
 
 ```{r model2-plot, fig.cap="The confidence interval for estimated mearginal mean in model 2"}
+emmean_obj_2 <- emmeans(binomial_model_2, c("judge", "video", "AU"),
+                        type = "response")
+
+int_2 <- confint(emmean_obj_2, by = c("judge", "AU"), adjust = "bonferroni")
+
 int_2 %>% 
   left_join(au_meaning, by = c("AU" = "AU_number")) %>% 
   dplyr::select(-Muscle) %>% 
@@ -279,47 +326,69 @@ int_2 %>%
         legend.position = "none") + 
   xlab("video")
 
-```      
-
-```{r}
-# binnedplot(fitted(binomial_model_2), 
-#            resid(binomial_model_2, type = "response"))
-
-```
+```    
 
 
+\newpage 
 
 ### Model 3: Speaker
 
-The estimated marginal mean are presented in Table \ref{tab:result-3} in the Appendix and plotted in Figure \ref{fig:model3-plot}. ANOVA table in Tab \ref{tab:anova-3} SAYS BLABLABLA. 
-  
-<!-- - ANOVA tests suggest all the variables in model_1 and model_2 are significant individually, but speaker in model_3 is not significant at 5% significant level. -->
-  
+The same model fitting procedure and diagnostics are conducted for Equation \ref{eq:judge_speaker}, which includes the covariate and interaction terms of speaking party. Again, there are some highly influential points as can be seen from the cook distance plot in Figure \ref{fig:mod3-diag-1} and thus we refit the model without these outliers. ANOVA table in Tab \ref{tab:anova-3} suggests, after including the interaction term of judge and speaker, the interaction term is significant but the main effect of speaker is not [ADD WHAT DOES IT TELL US]. 
 
-```{r model_3, results = "asis"}
+The estimated marginal mean is computed along with multiple comparison adjustment. Table \ref{tab:result-3} in the Appendix presents the numerical result and Figure \ref{fig:model3-plot} plots the 95% confidence interval. 
+  
+```{r mod3-diag-1, fig.cap="model diagnostics for model 3 - residual vs fitted plot and cook distance"}
 binomial_model_3 <- glm(presence ~ judge*speaker + video*judge +
                           AU*judge + video*AU, family = "binomial",
                         data = model_dt)
 
-emmean_obj_3 <-  emmeans(binomial_model_3,
-                         c("judge", "AU", "speaker", "video") ,
-                         type = "response",weights = "cell")
+diag_3 <- augment(binomial_model_3, type.pred = "response",
+                  type.resid = "deviance") %>% 
+  mutate(ind = row_number())
 
-# interesting that speaker is not significant, but speaker*judge is
-# given the interactions, speaker is not significant but it still useful because
-# the interactions are significant
-int_3 <- confint(emmean_obj_3, by = c("judge", "AU"),adjust = "bonferroni")
+p1 <- diag_3 %>% ggplot(aes(x= .fitted, y = .resid)) + geom_point()
+
+p2 <-  diag_3 %>% ggplot(aes(x = ind, y = .cooksd)) + geom_point()
+
+gridExtra::grid.arrange(p1, p2, nrow = 1)
+```
+
+```{r mod3-diag-2}
+outliers <- diag_3 %>% filter(.cooksd == max(.cooksd)) %>% pull(ind)
+
+#model_dt %>% mutate(ind = row_number()) %>% filter(ind %in% outliers) %>% View()
+model_dt2 <- model_dt %>% mutate(ind = row_number()) %>% filter(!ind %in% outliers) 
+
+binomial_model_3 <- glm(presence ~ judge*speaker + video*judge +
+                          AU*judge + video*AU, family = "binomial",
+                        data = model_dt2)
+```
+
+```{r eval =FALSE}
+diag_3 <- augment(binomial_model_3, type.pred = "response",
+                  type.resid = "deviance")%>% 
+  mutate(ind = row_number())
+
+p1 <- diag_3 %>% ggplot(aes(x= .fitted, y = .resid)) + geom_point()
+
+p2 <-  diag_3 %>% ggplot(aes(x = ind, y = .cooksd)) + geom_point()
+
+gridExtra::grid.arrange(p1, p2, nrow = 1)
+
 ```
 
 
 ```{r anova-3}
 Anova(binomial_model_3, type = "III", singular.ok = TRUE) %>% 
   format(digits = 2) %>% 
-  kable(caption = "\\label{tab:anova-3}Type III ANOVA table for model 3. NEED TO REWRITE HERE.")
+  kable(caption = "\\label{tab:anova-3}Type III ANOVA table for model 3. ")
 ```
 
 
 ```{r model3-plot, fig.cap = "The confidence interval for estimated mearginal mean in model 3"}
+emmean_obj_3 <-  emmeans(binomial_model_3, c("judge", "video", "AU", "speaker"), type = "response")
+
+int_3 <- confint(emmean_obj_3, by = c("judge", "AU"), adjust = "bonferroni") # the by argument 
 int_3 %>%
   left_join(au_meaning, by = c("AU" = "AU_number")) %>%
   dplyr::select(-Muscle) %>%
@@ -335,13 +404,4 @@ int_3 %>%
         strip.text.y = element_text(angle = 0),) +
   xlab("video")
 
-
 ```
-
-
-```{r}
-# binnedplot(fitted(binomial_model_3), 
-#            resid(binomial_model_3, type = "response"))
-```
-
-
