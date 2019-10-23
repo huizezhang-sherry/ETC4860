@@ -30,7 +30,7 @@ library(multcomp)
 library(car)
 library(kableExtra)
 library(arm)
-
+library(broom)
 load("data/au_tidy.rda")
 load("data/most_common.rda")
 load("data/au_imputed_old.rda")
