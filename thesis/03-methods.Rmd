@@ -3,7 +3,7 @@ chapter: 2
 knit: "bookdown::render_book"
 ---
 
-# Method
+# Methodology
 
 ## Notation
 
@@ -27,30 +27,26 @@ $$Y_{ijklt} = \mu + \alpha_i + \beta_j + \gamma_k + \delta_l + \varepsilon_{ijkl
 
 ### Model structure
 
-The presence score is a binary variable that can take value of one when a particular action unit is observed for that observation and zero if not. This suggest using a binomial generalised linear model (GLM) to model the data. The link function of a matter of choice in the GLM family and the three popular choice in the binomial model include logit link, probit link and complementary log-log link. Theoratically, these links give very similar result in terms of prediction @faraway2016extending, while the logit link is used for my study because it is the canonical link for the binomial model. 
+The presence score is a binary variable that is one when a particular action unit is observed and zero if not. This suggests using a logistic model and we implement this using the `glm()` function from base R. The link function of a matter of choice in the `glm()` function and the logit link is chosen because it is the canonical link of the binomial family. An alternative link could be a probit link but theoratically, these two links give very similar result in terms of prediction @faraway2016extending. The structure of the model is written as in Equation \ref{eq:logit-structure} with the first equation linking the mean of the presence to the linear prediction and the second equation specifying the linkage between $\eta$ to the predictors. The next section will specify three different function form of the linear predictor by introducing different variables and interactions. 
 
+\begin{align}\label{eq:logit-structure}
+\mu &= \frac{e^{\eta}}{1 + e^{\eta}} \\
+\eta &= f(\alpha_i\text{,}\beta_j\text{,}\gamma_k\text{,}\delta_l)
+\end{align}
 
 ### Model 1: Action unit
 
-<!-- Interactions are included for judge and action unit -->
-
-
-<!-- and we would be interested in interactions between judge, case, action unit and speaker. An alternative model structure, is to treat each action unit individually, and fit separate models.  -->
-
-A binomial model with logistic link for modelling the presence score can be written down as Equation \ref{eq:judge_au}. . Interaction of judge and action unit is included to capture the judge-wise differences for different action units. The is necessary since from the exploratory data analysis, different judges  have different average presence score for different action units. 
+The first linear function is written in Equation \ref{eq:judge_au}. It includes the main effect of judge and action unit and also their interaction. Interaction terms are included to capture the judge-wise differences for different action units and it is necessary because we suspect different judges could have different average presence scores for different action units. 
 
 \begin{align}\label{eq:judge_au}
-\mu_{ik} &= \frac{e^{\eta_{ik}}}{1 + e^{\eta_{ik}}} \\
 \eta_{ik} &= \mu + \alpha_i + \gamma_k + (\alpha\gamma)_{ik}
 \end{align}
-
 
 ### Model 2: Video
 
 Build upon the first model, the second model adds the video related main effect and interactions, as shown in Equation \ref{eq:judge_video}. The interactions allow both judge and action unit variables to differ in different videos, which is useful to answer the research questions *whether the judges are behaving same or different across videos*. 
 
 \begin{align}\label{eq:judge_video}
-\mu_{ijk} &= \frac{e^{\eta_{ijk}}}{1 + e^{\eta_{ijk}}} \\
 \eta_{ijk} &= \mu + \alpha_i + \beta_j +\gamma_k + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk}
 \end{align}
 
@@ -58,94 +54,74 @@ Build upon the first model, the second model adds the video related main effect 
 
 ### Model 3: Speaker
 
-Build upon the second model, the third model is aimed to capture the speaker-wise effect, that is, *do the expressions of the judges change when different parties are speaking*. The model formula is shown in Equation \ref{eq:judge_speaker}. 
+Build upon the second model, the third model is aimed to capture the speaker-wise effect by including the judge and speaker interaction as in Equation \ref{eq:judge_speaker}. This model would be helpful to answer the question *do the expressions of the judges change when different parties are speaking*. The reason for not including more interaction between speaker and video or action unit is because this could cause the model to run out of degree of freedom given the number of observations we have. 
 
 \begin{align}\label{eq:judge_speaker}
-\mu_{ijkl} &= \frac{e^{\eta_{ijkl}}}{1 + e^{\eta_{ijkl}}} \\
 \eta_{ijkl} &= \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\delta)_{il}
 \end{align}
 
-Interactions are still included in this model, but attention need to be paid to ensure the interactions are relevant. Theoretically, we could include speaker with all of the three existing variables (judge, action unit and video), but this would cause the model to run out of degree of freedom given the number of observations we have. Therefore, we only include judge-speaker interaction because it is directly related to the research question of this model. 
-
-
-<!-- think about if it is necessary to adjust the standard error as well:  -->
-<!-- if there are hetroskadasticity, the estimate itself is inconsistent, thus adjustment to make the standard error robust doesnt make sense.  -->
-
 ### Analysis of variance (ANOVA) 
 
-The analysis of variance (ANOVA) [@faraway2016extending; @gelman2006data] is a statistical method that compares the mean of each treatment level for a variable. Three types of ANOVA test are designed for different purposes. Type I takes a sequential approach to test the significance of variables, thus the order of the variable in the model will potentially affect the ANOVA result. Type II ANOVA tests the main effect of a covariate after controlling for other covariates but not interactions. This approach is recommended if the interactions are not significant. Type III ANOVA tests the main effect of a covariate after controlling for other covariates *and* the interactions. It is better than Type II ANOVA if the interactions are significant. 
+The analysis of variance (ANOVA) [@faraway2016extending; @gelman2006data] is a statistical method that can be used to compare different models. Different packages in R conduct ANOVA test: `anova()` and `drop()` from base R, `Anova()` from `car` package and `aov()` from `stats` package. We use the base R `anova()`  function to compare the three models via chi-square tests.
 
-Different packages in R conduct ANOVA test: `anova()` and `drop()` from base R provides type I and type II tests. `Anova()` from `car` package allows for both type II and III through specifying a `type` argument. `aov()` from `stats` package allows for ANOVA test only for balanced dataset. 
-
-The ANOVA test provide variable significance, which allows us to understand if at least one treatment in the group is significantly different from others. This is useful before proceeds to the multiple comparison procedure, where we are able to talk which treatment(s) are different from others. 
 
 \newpage
 
 ## Modelling Intensity 
 
-The histogram of the intensity is plotted in Figure \ref{fig:intensity}. The distribution has a high proportion of zeros with highly skewed continuous  value.  This type of data is the so-called semi-continuous data [@Neelon2019; @twopart2010]. The semi-continuous data can be modelled in the econometrics literature by the two part model[@cragg1971some; @manning1981two]. In the two part model, the data is viewed to be generated via a sequential modelling technique, which is a mixed distribution of 
+The intensity score is a continuous variable starts from zero when the action unit is not present to 5, where an action unit is presented at maximum intensity. A histogram of the intensity is plotted in Figure \ref{fig:intensity} and the distribution has a high proportion of zeros with highly skewed continuous  value.  This type of data is the so-called semi-continuous data [@Neelon2019; @twopart2010]. The semi-continuous data can be modelled in the econometrics literature by the two part model[@cragg1971some; @manning1981two]. In the two part model, the data is viewed to be generated via a sequential modelling technique, which is a mixed distribution of 
 
-- a binary (logistic or probit) model of if Y = 0 or not, and 
+- a logistic model of if Y = 0 or not, and 
 - a specific model for the conditional distribution of $y \mid y > 0$. 
+
+```{r intensity, fig.cap = "From the histogram of the intensity score, the data is highly skewed with an excessive amount of zeros. The two part model is about to accommodate the excessive zeros via the logistic model and gamma regression is about to capture the skewness in the data."}
+au_tidy %>% ggplot(aes(x = intensity)) + geom_histogram()
+
+```
 
 The choice of model between two part model and sample selection model is always discussed in the literature. Monte-Carlo simulation studies by different researchers [@leung1996choice; @duan1984choosing; @manning1987monte] show different results on whether these different classes of model are answering the same or distinct inferential questions. The reason for us to choose two part model rather than sample selection model is because the problem of not being able to observe $Y$ for those observations with selection variable $z = 0$ doesn't exist in our data. In another word, if an action unit is not present for an observation, it doesn't make sense to talk about "intensity score if the action unit is present". Tobit model is not appropriate because the data can't be viewed as normally distributed with negative value censored as zero (meaningless to say negative intensity value). Zero inflated model is not used because it considers two source of zeros in the data while there is no zeros being generated from the second model (only one source of zeros). 
 
-The functional form of the conditional distribution need to be able to capture the highly skewed nature of the non-zero observations. A convention approach is to assume the conditional distribution is a lognormal distribution [@manning1981two; @diehr1999methods]. More recent literature proposes the use of gamma or generalised gamma regression model for the conditional distribution [@twopart2010]. A log transformation on the non-zero data in Figure \ref{fig:intensity} suggests the data is left skewed after the transformation, thus a lognormal distribution may not be able to adequately capture the data. Gamma regression model is chosen to because it could also capture the right skewness and it is easier to  implement via the glm() function than the generalised gamma distribution. The log link function is used because the canonical inverse link for gamma distribution will cause some estimated marginal mean to be extremely high and thus meaningless for intensity score.  
+The two part model has a general structure as in Equation \ref{eq:two-part-general}. 
 
+\begin{align}\label{eq:two-part-general}
+\mu^1 &= \frac{e^{\eta}}{1 + e^{\eta}} \\
+\eta &= f(\alpha_i, \beta_j, \gamma_k, \delta_l) \\
+\mu^2 &= \log(I) \\
+E(I \mid I > 0) &= f(\alpha_i, \beta_j, \gamma_k, \delta_l)
+\end{align}
 
-The two part model including video and relevant interactions is written in Equation \ref{eq:two-part1}. The model includes speaker is shown in Equation \ref{eq:two-part2}. 
+\noindent The first two equations capture the logistic link and its linear predictor. The next two specify the functional form of the conditonal distribution. The functional form of the conditional distribution need to be able to capture the highly skewed nature of the non-zero observations. A convention approach is to assume the conditional distribution is a lognormal distribution [@manning1981two; @diehr1999methods]. More recent literature proposes the use of gamma or generalised gamma regression model for the conditional distribution [@twopart2010]. Gamma regression is used to because it could also capture the right skewness and it is easier to implement via the `glm()` function. The log link function is used because the canonical inverse link for gamma distribution will cause some estimated marginal mean to be extremely high and thus meaningless for intensity score.  
+
+The linear predictor of the conditional intensity that includes video and relevant interactions is written in Equation \ref{eq:two-part1}.
 
 \begin{align}\label{eq:two-part1}
-\mu_{ijkl}^1 &= \frac{e^{\eta_{ijkl}}}{1 + e^{\eta_{ijkl}}} \\
-\eta{ijk} &= \mu + \alpha_i + \beta_j +\gamma_k + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} \\
-\mu_{ijk}^2 &= \frac{1}{I_{ijk}} \\
 E(I_{ijk} \mid I_{ijk} > 0) &= \mu + \alpha_i + \beta_j +\gamma_k + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk}
 \end{align}
 
+The model that captures additional speaker variable is written in Equation \ref{eq:two-part2}.  
 
 \begin{align}\label{eq:two-part2}
-\mu_{ijkl}^1 &= \frac{e^{\eta_{ijkl}}}{1 + e^{\eta_{ijkl}}} \\
-\eta{ijkl} &= \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\delta)_{il} \\
-\mu_{ijkl}^2 &= \frac{1}{I_{ijkl}} \\
 E(I_{ijkl} \mid I_{ijkl} > 0) &= \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\delta)_{il}
 \end{align}
 
-\noindent In the above two models, $\mu_{.}^1$ indicates the mean of the first binomial model and $\mu_{.}^2$ is the mean of the second gamma model. 
-
-
-```{r intensity, fig.cap = "this is the histogram"}
-p1 <- au_tidy %>% ggplot(aes(x = intensity)) + 
-  geom_histogram()
-p2 <- au_tidy %>% filter(intensity != 0) %>% ggplot(aes(x = log(intensity))) + 
-  geom_histogram()
-gridExtra::grid.arrange(p1, p2, nrow = 1)
-```
 
 \newpage
 ## Post-Model Analysis
 
-The estimates of variables from the model summary are not particularly useful in our case. This is because firstly,  the estimates of the coefficient are not interpretable in the logistic regression. Secondly, we are interested in whether the mean for each treatment is same or different. Thus estimated marginal mean and multiple comparison is necessary to compute for post-model analysis. 
+The estimates of variables from the model summary are not particularly useful in our case. This is because firstly, the estimates of the coefficient are not interpretable in the logistic regression. Secondly, we are interested in whether the mean for each treatment is same or different. To assess which level of the factor is different requires post-model analysis.
 
 ### Estimated Marginal Mean (EMM)
 
-
-The estimated marginal mean [@gelman2006data] is the fitted value from a model over a pre-defined reference grid. In our data, the unique combination of judge, video and action unit forms the reference grid. The estimated marginal mean is computed on each grid point as a linear fit of the model, along with standard error and confidence interval. The probability from estimated marginal mean have a nice interpretation as the estimated probability of presence score for a particular combination of action unit, judge and video. This output allows us to compare how the estimated presence probabilities of each judge, video and action unit combination are different or similar from each other. 
+The estimated marginal mean [@gelman2006data] is the fitted value from a model over the treatmetn effects. In our data, the treatment effects include judge, video and action unit. The estimated marginal mean is computed using `emmean()` from the `emmenas` package. The probability from estimated marginal mean have a nice interpretation as the estimated probability of presence score for a particular combination of action unit, judge and video. This output allows us to compare how the estimated presence probabilities of each judge, video and action unit combination are different or similar from each other. 
 
 
 <!-- - good to know that: typically the tests and confidence intervals are asymptotic (because of using z score). Thus the df column for tabular results will be Inf.[have a look at the confidence interval for glm: https://cran.r-project.org/web/packages/emmeans/vignettes/models.html] -->
 
 
-### Multiple Comparisons 
+### Confidence Interval Adjustment
 
-Multiple comparison procedures consider the problem of simultaneous inference. A 5% significance level indicates if we conduct 100 tests simultaneously, about 5 tests will show significance out of randomness. This is a problem we need to pay attention to when comparing the estimated presence probability or we may wrongly conclude judges has a different facial expression than others but they are actually not. 
+Testing significance based on p-value has been long criticised for its interpretation. Researchers can erroneously conclude significance because of p-value being less than 0.05 without discussing the false positive/negative proportion. On the other hand, confidence interval provides a confidence range for the estimates to highlight the uncertainty around estimation. Thus confidence interval is used to compare whether the estimated mean for a particular judge-AU group is same or different across videos based on if the intervals overlap with each other. 
 
+The confidence intervals computed from the `emmean()` function need to be adjusted for simultaneous inference. A 5% significance level indicates if we conduct 100 tests simultaneously, about 5 tests will show significance out of randomness. This is a problem we need to pay attention to when comparing the estimated presence probability or we may wrongly conclude judges has a different facial expression than others but they are actually not. 
 
-When multiple estimated mean are compared at the same time, the confidence level (or $\alpha$ in p-value) need to be adjusted to control the family-wise error rate to be less than $\alpha$. Bonferroni adjustment makes the adjustment to reject a hypothesis test at $\alpha/N$ level so that the type I error of whole family of the simultaneous tests (Family-wise Error Rate (FWER)) is control be less than $\alpha$. This can be proved using Boole's inequality if we denote the number of true $H_0$ as $N_0$.   
-
-$$\Pr\left[\bigcup \Pr(P_i \le\frac{\alpha}{N})\right] \le \sum \Pr\left(p_i \le \frac{\alpha}{N}\right) = N_0\frac{\alpha}{N} \le \alpha$$
-
-Testing significance based on p-value has been long criticised for its interpretation. Researchers can erroneously conclude significance because of p-value being less than 0.05 without discussing the false positive/negative proportion. On the other hand, confidence interval provides a confidence range for the estimates to highlight the uncertainty around estimation. Thus I will compute the confidence interval to compare whether the estimated mean for a particular judge-AU group is same or different across videos based on if the intervals overlap with each other. 
-
-
-
-
+When multiple estimated mean are compared at the same time, the confidence level (or $\alpha$ in p-value) need to be adjusted to control the family-wise error rate to be less than $\alpha$. Bonferroni adjustment makes the adjustment to reject a hypothesis test at $\alpha/N$ level so that the type I error of whole family of the simultaneous tests (Family-wise Error Rate (FWER)) is control be less than $\alpha$. To do this, `confint()` function from base R is used with additional argument `adjust = "bonferroni"`.

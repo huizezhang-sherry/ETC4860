@@ -5,8 +5,13 @@ knit: "bookdown::render_book"
 
 # Conclusion
 
-[INLCUDE CONCLUSION HERE]
+In this thesis [...]. The cross-sectional data set constructed for each election provides a foundation for statistical modelling of electoral voting behaviour over time. This data will contribute to 
 
+The main aim of this research is to [...]. Our approach involves [...]. [the more detailed process for getting the data]
+
+modelling presence and intensity and summary some results
+
+Our findings [... link to contribution]. Furthermore, as far as we know, this study is the first to [...]. It also provides a workflow for...
 
 ## Limitation
 
@@ -20,3 +25,6 @@ However, this work has established a workflow for extracting facial expressions 
 
 In the future, more work could be done to extract facial expressions of the Justices from videos using OpenFace. This could enable the researchers to capture more precise expression of the judges. However, as the extraction becomes more frequent, the problem of serial correlation could rise and appropriate modelling technique should be utilised to accommodate for this feature of data. 
 
+## Acknowledgement
+
+The analysis is conducted using R [\ref], and the following packages: [] 
