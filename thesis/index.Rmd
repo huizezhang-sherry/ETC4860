@@ -1,5 +1,5 @@
 ---
-title: 'Exploration of Judicial Facial Expression in Videos and Transcripts of Legal Proceedings'
+title: 'Exploration of Judicial Facial Expression in Videos of Legal Proceedings'
 degreetype: 'Bachelor of Commerce (Honours)'
 author: 'Huize Zhang'
 studentid: 27478343
@@ -23,18 +23,18 @@ knitr::opts_chunk$set(echo = FALSE,
 # Load any R packages you need here
 library(forecast)
 library(tidyverse)
-library(ggpubr)
 library(knitr)
 library(emmeans)
-library(multcomp)
 library(car)
-library(kableExtra)
 library(arm)
 library(broom)
+library(patchwork)
+
 load("data/au_tidy.rda")
 load("data/most_common.rda")
 load("data/au_imputed_old.rda")
 load("data/au_meaning.rda")
+load("data/au_imputed.rda")
 ```
 <!-- 
 Edit these lines as appropriate.
