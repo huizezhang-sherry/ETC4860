@@ -3,135 +3,44 @@ chapter: 3
 knit: "bookdown::render_book"
 ---
 
-\newpage
 
-## Modelling result for intensity 
+## Discussion 
 
-[MORE EXPLANATION WILL BE ADDED FOR THIS PART]
+### The expression of the justices by video
 
-### Model 2: Video
+Many information can be observed from Figure \ref{fig:model2-plot} for presence and Figure \ref{fig:intensity-video}. The discussion of the two plots will be focusing on answering the question: **For the same judge, whether the mean presence and mean intensity of the action units are the same or different for different videos**. 
 
-The two part model in equation \ref{eq:two-part1} is estimated for the intensity data. Estimated marginal mean, ANOVA and multiple comparison procedure are performed as modelling presence data. [should I include all ANOVA result?? - they are significant]
+In general, we can see that facial expression of the justices are impartial as most of the 95% confidence intervals for the same judge and action unit overlaps in most of the videos in both plots. While at the same time, there are some time when in a particular video, a judge expressed significantly more or less of an expression and I will break it down to discuss them in more detail.  
 
-The 95% confidence interval plot is presented in Figure \ref{fig:intensity-video}. 
-```{r intensity-data}
-au_intensity <- most_intense %>% ungroup() %>%
-  filter(mean_intensity > 0.15) %>% group_by(AU) %>%
-  summarise(count = n()) %>% filter(count >=5) %>% pull(AU)
+We can observe that Judge Edelman and Keane behave relatively consistent throughout all the videos since most of the intervals overlap with each other after the  bonferroni adjustment. However, Edelman seems to express significantly less in action unit 5 in case OKS.  In terms of intensity, Edelman has significantly stronger expression in case Nauru-a, Nauru-b and Rinehart-a in action unit 4 and 9, but more relaxed expression in action unit 7 for case OKS. 
 
-model_dt <- au_tidy %>%
-  ungroup(judge) %>%
-  filter(AU %in% au_intensity) %>%
-  mutate(judge = fct_relevel(judge, c("Edelman", "Keane", "Kiefel",
-                                      "Nettle", "Gageler", "Bell")),
-         video = fct_relevel(video, c("Nauru-a", "Nauru-b", "Rinehart-a",
-                                      "Rinehart-b", "McKell", "OKS", "Parkes")),
-         AU = fct_relevel(AU, "AU01"),
-         non_zero = as.factor(ifelse(intensity ==0, 0, 1)))
+To be able to draw some conclusion about the facial behaviour of the Justices, it is necessary to have an understanding about the characteristics of the cases. Nauru-a and Nauru-b discuss the refugee status of the appellants, which can be though of political cases. McKell and OKS are more criminal cases, relates to drug and sexual misconduct. Parkes is a civil case about negligence while Rinehart-a and Rinehart-b are business cases. Based the nature of the 7 cases, we can see Edelman is more likely to express stronger emotion to the political and commercial cases and express less and softer at criminal cases.  
 
-# model_dt %>% group_by(non_zero) %>%
-#   summarize(count = n(), prop = count/nrow(model_dt))
-```
 
-```{r intensity-model-1}
-m1 <- glm(non_zero ~ judge*video + judge*AU + video*AU,
-          data = model_dt, family = binomial(link = "logit"))
-m2 <- glm(intensity ~ judge*video + judge*AU + video*AU,
-          data = subset(model_dt, non_zero == 1),
-          family = Gamma(link = "log"))
-```
+For Keane, he appears significantly less action unit 5 in case OKS as Edelman in Figure \ref{fig:model2-plot} but Figure \ref{fig:intensity-video} suggest he has more intense of expression in the same action unit 5. Keane has also more intense expression of action unit 7 in case McKell. This would show that in general Keane is more responsive to the criminal cases than cases of other categories. 
 
-```{r eval = FALSE}
-diag_1 <- augment(m2, type.pred = "response",type.resid = "deviance") %>% 
-  mutate(ind = row_number())
+Kiefel and Nettle are relatively consistent in their expressions. The presence plot shows that Nettle has relatively higher mean in case Rinehart-b, but it is not significant when comparing the 95% confidence interval. 
 
-p1 <- diag_1 %>% ggplot(aes(x= .fitted, y = .resid)) + geom_point()
+Gageler shows a consistent responsive expression in case OKS. In Figure \ref{fig:model2-plot}, Gageler had significantly more expression of action unit 1, 15 and 20. From the intensity plot in Figure \ref{fig:intensity-video}, action unit 5 and 20 have significantly higher intensity. The common associated emotion of action unit 5, 15 and 20 is anger, sad and fear in the six universal emotions. Thus, we can see that Gageler tends to react negatively and more strongly to criminal cases. 
 
-p2 <-  diag_1 %>% ggplot(aes(x = ind, y = .cooksd)) + geom_point()
-gridExtra::grid.arrange(p1, p2, nrow = 1)
+Bell also shows a significantly higher proportion of negative emotions associated with action unit 1 and 15 in case OKS and the intensity of action unit 1, 5, 14 and 20 are also significantly higher in case OKS. These evidence indicate the same emotion pattern as judge Gageler to criminal cases. While at the same time, Bell is less reactive in the presence of action unit 07 and 20 in case Parkes and this shows that she has less negative emotion of anger and fear in Parkes, which is the only civil case in our sample videos. 
 
-outliers <- diag_1 %>% filter(.cooksd == max(.cooksd)) %>% pull(ind)
+### The expression of the justices by speaker
 
-#model_dt %>% mutate(ind = row_number()) %>% filter(ind %in% outliers) %>% View()
-model_dt2 <- model_dt %>% mutate(ind = row_number()) %>% filter(!ind %in% outliers)
-library(boot)
-leuk.diag <- glm.diag(m2)
-glm.diag.plots(m2, leuk.diag)
+From the presence and intensity plot by speakers in Figure \ref{fig:model3-plot} and \ref{fig:intensity-speaker}, we can observe that the video-wise difference between judge are still persist when the speaker effects are included in the model. However, the speaker-wise difference is not significant in terms of both presence and intensity for all the judges. 
 
-```
+
+This result would be a validation that on the high court level, the judges are behaving impartial to different speaking parties. 
 
 
 
+## Summary
 
-```{r anova-intensity-1}
-# Anova(m2, type = "III", singular.ok = TRUE) %>% 
-#   format(digits = 2) %>% 
-#   kable(caption = "\\label{tab:anova-1}Type III ANOVA table for model 1. All the variables are significant.")
-```
+To summarise, the above discussion of intensity and presence of action unit in different cases gives us several findings about the expression of the judges: 
 
+1) In general, the expression of the Justices are impartial, which is live up to the code of conduct from @judicalguid and validate the result from @tutton2018judicial. 
 
-```{r intensity-video, fig.cap="The confidence interval for estimated mearginal mean in model 2"}
+2) When there is significantly present or intense expression of the Justices, it tends to be associated with negative emotion like sad, fear and anger. This could have implication on the mental well-being of the judges. 
 
-emmean_m2 <-  emmeans(m2, c("judge", "video", "AU"), type = "response")
-int_2i <- confint(emmean_m2, by = c("judge", "AU"), adjust = "bonferroni") # the by argument prescribe
-
-int_2i %>%
-  left_join(au_meaning, by = c("AU" = "AU_number")) %>%
-  dplyr::select(-Muscle) %>%
-  filter(!is.na(df)) %>%
-  ggplot(aes(x= video,
-             y = response,  group = judge)) +
-  geom_point(aes(col= video)) +
-  geom_line(alpha = 0.5, lty = "dashed") +
-  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL, col= video),
-                width = 0.2) +
-  facet_grid(AU_meaning ~ judge, scales = "free",
-             labeller = label_wrap_gen(width = 5)) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1),
-        strip.text.y = element_text(angle = 0),
-        legend.position = "none") +
-  xlab("video")
-```
-
-\newpage 
-
-### Model 3: Speaker
-
-The two part model in equation \ref{eq:two-part2} is also estimated for the intensity data along with post-analysis procedure being conducted after model estimation. The 95% confidence interval plot is presented in Figure \ref{fig:intensity-speaker}. 
-
-```{r intensity-model-2}
-m1 <- glm(non_zero ~ judge*speaker + video*judge +
-            AU*judge + video*AU, data = model_dt, family = binomial(link = logit))
-m2 <- glm(intensity ~ judge*speaker + video*judge +
-            AU*judge + video*AU,
-          data = subset(model_dt, non_zero == 1), family = Gamma(link = log))
-```
-
-```{r anova-intensity-2}
-# Anova(m2, type = "III", singular.ok = TRUE) %>% 
-#   format(digits = 2) %>% 
-#   kable(caption = "\\label{tab:anova-1}Type III ANOVA table for model 1. All the variables are significant.")
-```
-
-
-```{r intensity-speaker, fig.cap="The confidence interval for estimated mearginal mean in model 2"}
-emmean_m3 <-  emmeans(m2, c("judge", "video", "AU", "speaker"), type = "response")
-int_3i <- confint(emmean_m3, by = c("judge", "AU"), adjust = "bonferroni") # the by argument prescribe
-
-int_3i %>%
-  left_join(au_meaning, by = c("AU" = "AU_number")) %>%
-  dplyr::select(-Muscle) %>%
-  filter(!is.na(df)) %>%
-  ggplot(aes(x= video,y = response,group= judge)) +
-  geom_point(aes(col = speaker),position = position_dodge(width = 0.3)) +
-  geom_line(alpha = 0.5, lty = "dashed") +
-  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL, col = speaker),
-                width = 0.2,position = position_dodge(width = 0.3)) +
-  facet_grid(AU_meaning ~ judge, scales = "free",
-             labeller = label_wrap_gen(width = 5)) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1),
-        strip.text.y = element_text(angle = 0),) +
-  xlab("video")
-```
-
+3) Some justices, for example Keane, Gageler and Bell are more responsive, both in frequency (mean presence) and magnitude (mean intensity) to criminal cases. This could show that it is harder for judges to keep a still face when the content of a case goes against human nature. 
 

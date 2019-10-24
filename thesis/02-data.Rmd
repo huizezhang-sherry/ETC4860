@@ -7,19 +7,17 @@ knit: "bookdown::render_book"
 
 ## Data Processing
 
-The source data for this research project is the AV recordings publicly available from the High Court of Australia [@highcourtau]. Due to the requirement of resolution (more than 30px for face detection) of OpenFace, we picked up seven cases from 2018 that have less than seven judges as the sample videos for our dataset. A full list of video being processed can be found in Table \ref{tab:case-info} in the Appendix. 
+The source data of this research project is the AV recordings publicly available from the High Court of Australia [@highcourtau]. Due to the requirement of resolution (more than 30px for face detection) of OpenFace, we picked up seven cases from 2018 that have less than seven judges as the sample videos for our dataset. A full list of video being processed can be found in Table \ref{tab:case-info} in the Appendix. 
 
-Multiple procedures need to be performed to obtain the numerical value of facial variables from the source videos. The entire workflow has been plotted in Figure \ref{fig:workflow}. Youtube-dl [@youtube-dl] has been used to download videos from the High Court of Australia[@highcourtau]. Image frames are extracted from the videos for every minute via ffmpeg [@ffmpeg], resulting in 1021 image frames (252 frames from `Nauru` videos and 769 frames from other five videos). Taipan [@Taipan] is then used to find the x-y coordinates of the location of the Justices in each image frame. ImageMagick [@ImageMagick] is followed to crop the face of each Justice from each image frame that is taken from each video where three Justices present in `Nauru` videos and five Justices in other videos. The resulting 4601 cropped images are then sent to OpenFace [@baltrusaitis2018openface] to produce the variables for facial landmarking, head pose, eye gaze and facial action unit. This step is performed via the docker platform. The resulting outputs from OpenFace are individual comma-separated values (csv) files for each of the 4601 faces considered and processing is done in R to combine all the separate csv files into a final dataframe with appropriate index of `frame`, `judg` and `video`.
+Multiple procedures need to be performed to obtain the numerical value of facial variables from the source videos. The entire workflow has been plotted in Figure \ref{fig:workflow}. Youtube-dl [@youtube-dl] has been used to download videos from the High Court of Australia [@highcourtau]. Image frames are extracted from the videos for every minute via ffmpeg [@ffmpeg], resulting in 1021 image frames. Because the Justices are remain seated at the same position throughout the hearing, Taipan [@Taipan] is used to find the x-y coordinates of the location of the Justices in each image frame. ImageMagick [@ImageMagick] is followed to crop the face of each Justice from each image frame based on the coordinates from Taipan. The resulting 4601 cropped faces are then sent to OpenFace [@baltrusaitis2018openface] to process on Docker. The output of OpenFace contains facial variables like facial landmarking, head pose, eye gaze and  action unit. These outputs are stored as separate comma-separated values (csv) files for each of the 4601 faces and post-processing is done in R to combine all the separate csv files into a final dataframe with appropriate index of frame, judge and video added. 
 
-```{r fig.cap="workflow for video and image processing \\label{fig:workflow}"}
+```{r fig.cap="This is an illustration of the workflow for extracting facial variables from videos. \\label{fig:workflow}"}
 include_graphics("figures/workflow.png", dpi = 128)
 ```
 
 ## Variable description
 
-OpenFace provides more than 711 variables measuring different aspects of a given face and a full description of the output variables can be found in @baltrusaitis2018openface. This outlines the difficulty of this project: no existing models will present accurate prediction and inference using 700+ variables - how can we incorporate these information to say about the facial expressions of the Justices during the hearings? 
-
-I conduct some exploratory data analysis on one video: `Nauru_a` and find the 700+ variables can be classified as follows with some insights
+OpenFace provides more than 711 variables measuring different aspects of a given face and a full description of the output variables can be found in @baltrusaitis2018openface. The facial variables can be summarised into the following categories. 
 
  - **Confidence**: How confidence OpenFace is with the detection. Confidence is related to the angle that the Justice’s face present in the images. 
  
@@ -31,41 +29,43 @@ I conduct some exploratory data analysis on one video: `Nauru_a` and find the 70
  
  - **Action Unit**: Action units are used to describe facial expressions. The action unit has intensity measures ending with `_c` and presence measures ending with `_r`. 
 
+In this project, we will focus on using action units along with information about judge, video, speaker to analyse the face of the judge.
+
 ## Data format
 
-In this project, we will make use of the action unit variables along with all the added indexes to analyse the face of the judge. The data can also be expressed in the long format with action unit being another index and presence and intensity being two columns. The Table \ref{tab:long} presents the first five rows of the data in the long format. 
-
-<!-- In the wide format, apart from the first four index columns, each action unit has two columns with one for binary presence value and another for numeric intensity value. The Table \ref{tab:wide} presents the first five rows of the dataset with columns for the first action unit only.  -->
-
-
-<!-- ```{r results='asis'} -->
-<!-- wide <- au_imputed_old %>% -->
-<!--         filter(judge == "Bell", video == "McKell") %>% head(2)  -->
-<!-- names(wide) <- sub("_", "-", names(wide)) -->
-<!-- knitLatex::xTab(format(as.data.frame(wide), digits = 2), booktabs = TRUE, caption.top = "\\label{tab:wide} data in wide format") -->
-
-<!-- ``` -->
-
-
-
-
+The data can be expressed in the long format with action unit being an index and presence and intensity being two columns. The Table \ref{tab:long} presents the data for Justices Edelman in video McKell for all the action unit in the first frame in long format. Figure \ref{fig:ts-plot} plots the presence and intensity across time. 
 
 ```{r results='asis'}
-long <- au_tidy %>%
-        filter(judge == "Edelman", video == "McKell", frame <=2, AU != "AU28") 
+long <- au_imputed %>%
+        filter(judge == "Edelman", video == "McKell", frame <=1, AU != "AU28") 
 
-knitLatex::xTab(format(as.data.frame(long), digits = 2), booktabs = TRUE, caption.top = "\\label{tab:long} data in long format")
+knitLatex::xTab(format(as.data.frame(long), digits = 2), booktabs = TRUE, caption.top = "\\label{tab:long} This table is an illustration of a proportion of the data in long format.")
 
+```
+
+
+```{r ts-plot, fig.cap="The plot shows the intensity and presence score of action unit 01 for Justices Edelman in case McKell in a time series manner. "}
+au_imputed %>% 
+        filter(judge == "Edelman", video == "McKell", AU == "AU01") %>% 
+        gather(type, value, c(presence, intensity)) %>% 
+        ggplot(aes(x =frame, y = value, col = type)) + 
+        geom_line() + 
+        geom_point() + 
+        facet_wrap(vars(type), nrow = 2, scales = "free")
 ```
 
 
 ## Missing value imputation 
 
-The missingness in the dataset could be due to the fact that a judge is reading the materials on the desk so the face is not captured for a particular frame or simply because some faces are not detectable for the given resolution of the video stream. However, since that data is in time series structure, simply drop the missing observation will cause the time interval to be irregular and complicate further analysis. 
+The missingness in the dataset could be due to the fact that a judge is reading the materials on the desk so the face is not captured for a particular frame or simply because some faces are not detectable for the given resolution of the video stream. Simply drop the missing observation will cause the time interval to be irregular and thus imputation is needed. 
 
-There are two different sets of variables that need imputation. `Presence` is a binary variable that takes value of one if an action unit is present in a particular frame for a judge in a video and `Intensity` measures how strong that action unit is. Linear interpolation from `forecast` package is suitable to impute `Intensity` and `Presence` is imputed through sampling from binomial distribution. The imputed action unit data is stored as `au_imputed` under the `raw_data` folder. 
+Intensity is a continuous variable that measures how strong the action unit is presented. It is zero when the action unit is not present, 1(present at minimum intensity) to 5(present at maximum intensity). Linear interpolation function (`na.interp()`) from `forecast` package is used to impute Intensity. The missing value of presence is then imputed based on if the intensity score of the missing observations are greater than one. 
 
-## Data cleaning
+## Source Code 
 
-There is a data quality issue coming from the data I get from OpenFace. For some observations, the intensity of the action unit is high while the present variable has a zero value. According to @baltrusaitis2018openface, intensity is trained by OpenFace seperately from presence, thus some inconsistency is expected. However, one would expect presence and intensity score should not have too much discrepency. Therefore, I adjust for the presence value if the intensity is higher than one. One is being chosen as the threshold value because in Ekman's definition of the intensity of the action unit, a score of one means the action unit is at least slightly present in the judge's face.
+The whole data processing procedure is done as a major part of the project and one of the difficulties of this project is actually to source reliable facial data of the judges, so that the subsequent modelling can then be conducted meaningfully. The whole workflow has been scripted and labelled accordingly from `data_01...` to `data_07...` on my github repository. If re-processing is needed, or more videos need to be added, it is straightforward for others to do. 
+
+
+
+
 
