@@ -1,6 +1,11 @@
 # Abstract {-}
 
-It is part of the human nature to express emotions as a way to react. However, in particular situation, for example the court, the Justices need to restrict their emotions display as a requirement to ensure the judgement is not biased towards a particular party. In this study, we use facial recognition software to objectively assess the facial expressions of six Justices in seven cases from the high court of Australia. From the obtained facial variables, we model the presence of a selected range of action units by a binomial model and the intensity of the action units by a two part model. From the modelling, we observe that the Justices are remain impartial during the court in general. When a more intense or frequent action unit is presented, it tends to be associated with a negative emotion like sad, fear and anger. Also we find that it would be hard for some Justices to remain a still face in the criminal cases where more extreme behaviour like drug issue and sexual assult are involved. 
+It is part of human nature to react to change by expressing emotions. 
+However in some situations it is necessary to attempt to restrict reactions, and expressions of emotions. 
+In many court systems it is required that Justices, or Judges, restrict emotional displays and ensure the judgement is not biased towards a particular party.
+In this study, facial recognition software is used to objectively assess the facial expressions of six Justices in seven cases heard in the High Court of Australia. Facial information derived by the software is applied in a binomial model to find the presence of a selected range of action units and the intensity of the action units by a two part model. It is observed that the Justices generally remain impartial during the court proceedings.
+Negative emotions such as sadness, fear and anger are associated with action units that occur more intensely or frequently. 
+The requirement to remain expressionless is difficult for some Justices, especially in criminal cases that involve drugs and sexual assults.
 
 
 
