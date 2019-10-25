@@ -8,34 +8,6 @@ knit: "bookdown::render_book"
 
 ## List of videos used in the project
 
-```{r case-info, results = "asis", eval = FALSE}
-tibble::tibble(Case = c("The Republic of Nauru v WET040 [No. 2] [2018] HCA 60", 
-                        "TTY167 v Republic of Nauru [2018] HCA 61", 
-                        "Rinehart v Hancock Prospecting Pty Ltd [2019] HCA 13", 
-                        "Rinehart v Hancock Prospecting Pty Ltd [2019] HCA 13", 
-                        "Parkes Shire Council v South West Helicopters Pty Limited [2019] HCA 14",
-                        "McKell v The Queen [2019] HCA 5",
-                        "OKS v Western Australia [2019] HCA 10"), 
-               Names = c("Nauru-a", "Nauru-b", "Rinehart-a", 
-                         "Rinehart-b", "Parkes", "McKell", "OKS"), 
-               Link = c("http://www.hcourt.gov.au/cases/cases-av/av-2018-11-07a",
-                         "http://www.hcourt.gov.au/cases/cases-av/av-2018-11-07b",
-                         "http://www.hcourt.gov.au/cases/cases-av/av-2018-11-13",
-                         "http://www.hcourt.gov.au/cases/cases-av/av-2018-11-14a",
-                         "ttp://www.hcourt.gov.au/cases/cases-av/av-2018-11-14b",
-                         "http://www.hcourt.gov.au/cases/cases-av/av-2018-12-07",
-                         "http://www.hcourt.gov.au/cases/cases-av/av-2019-02-14"),
-               Judge = c("Nettle, Gageler, Edelman",
-                         "Nettle, Gageler, Edelman",
-                         "Gordon, Gageler, Bell, Keane, Edelman",
-                         "Gordon, Keane, Bell, Gageler, Edelman",
-                         "Gordon, Bell, Kiefel, Keane, Edelman",
-                         "Gordon, Gageler, Kiefel, Nettle, Edelman",
-                         "Gageler, Kiefel, Nettle, Edelman")) %>% 
-  knitLatex::xTab(booktabs = TRUE, caption.top = "\\label{tab:case-info} Information on the cases used in the project")
-```
-
-
 |Case|Name|AV recording link|Judge|
 |---|--|----|---|
 |The Republic of Nauru v WET040 [No. 2] [2018] HCA 60|`Nauru_a`|http://www.hcourt.gov.au/cases/cases-av/av-2018-11-07a|Nettle, Gageler, Edelman|
@@ -47,6 +19,23 @@ tibble::tibble(Case = c("The Republic of Nauru v WET040 [No. 2] [2018] HCA 60",
 |OKS v Western Australia [2019] HCA 10|`OKS`|http://www.hcourt.gov.au/cases/cases-av/av-2019-02-14|Gordon, Gageler, Kiefel, Nettle, Edelman|
 
 Table: Details of videos processed.
+
+## An illustration of face landmarking
+
+```{r landmarking, fig.cap="This is an illustration of the face landmarking where 67 key points on a face is identified. "}
+include_graphics("figures/landmarking.png")
+```
+
+## Description of action units recognised by OpenFace
+
+```{r au, results='asis'}
+au <- au_meaning %>% rename(`AU-number` = AU_number, `AU-meaning` = AU_meaning)
+
+knitLatex::xTab(au, booktabs = TRUE, caption.top = "\\label{tab:au} The subset of action units OpenFace is able to recognise.")
+
+```
+
+
 
 ## Model estimation result
 
@@ -68,19 +57,18 @@ emmean_obj_3 <- emmeans(binomial_model_3, c("judge", "video", "AU", "speaker"),
 
 int_3 <- confint(emmean_obj_3, by = c("judge", "AU"), adjust = "bonferroni")
 
-int_3 %>% 
-  left_join(au_meaning, by = c("AU" = "AU_number")) %>% 
-  filter(!is.na(df)) %>% 
-  ggplot(aes(x= video, y = prob,  group = judge)) + 
-  geom_point(aes(col= video)) + 
-  geom_line(alpha = 0.5, lty = "dashed") + 
-  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL, col= video), 
-                width = 0.2) + 
+int_3 %>%
+  left_join(au_meaning, by = c("AU" = "AU_number")) %>%
+  filter(!is.na(df)) %>%
+  ggplot(aes(x= video,y = prob,group= judge)) +
+  geom_point(aes(col = speaker),position = position_dodge(width = 0.3)) +
+  geom_line(alpha = 0.5, lty = "dashed") +
+  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL, col = speaker),
+                width = 0.2,position = position_dodge(width = 0.3)) +
   facet_grid(AU_meaning ~ judge, scales = "free",
-             labeller = label_wrap_gen(width = 5)) + 
-  theme(axis.text.x = element_text(angle = 90, hjust = 1), 
-        strip.text.y = element_text(angle = 0),
-        legend.position = "none") + 
+             labeller = label_wrap_gen(width = 5)) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+        strip.text.y = element_text(angle = 0),) +
   xlab("video")
 
 ```   
@@ -95,20 +83,17 @@ m2 <- glm(intensity ~ judge*video + judge*AU + video*AU + judge * speaker,
 
 emmean_m2 <-  emmeans(m2, c("judge", "video", "AU", "speaker"), type = "response")
 int_3i <- confint(emmean_m2, by = c("judge", "AU"), adjust = "bonferroni") # the by argument prescribe
-
 int_3i %>%
   left_join(au_meaning, by = c("AU" = "AU_number")) %>%
   filter(!is.na(df)) %>%
-  ggplot(aes(x= video,
-             y = response,  group = judge)) +
-  geom_point(aes(col= video)) +
+  ggplot(aes(x= video,y = response,group= judge)) +
+  geom_point(aes(col = speaker),position = position_dodge(width = 0.3)) +
   geom_line(alpha = 0.5, lty = "dashed") +
-  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL, col= video),
-                width = 0.2) +
+  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL, col = speaker),
+                width = 0.2,position = position_dodge(width = 0.3)) +
   facet_grid(AU_meaning ~ judge, scales = "free",
              labeller = label_wrap_gen(width = 5)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1),
-        strip.text.y = element_text(angle = 0),
-        legend.position = "none") +
+        strip.text.y = element_text(angle = 0),) +
   xlab("video")
 ```
