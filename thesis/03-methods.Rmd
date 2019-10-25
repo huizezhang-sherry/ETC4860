@@ -65,8 +65,6 @@ Build upon the second model, the third model is aimed to capture the speaker-wis
 The analysis of variance (ANOVA) [@faraway2016extending; @gelman2006data] is a statistical method that can be used to compare different models. Different packages in R conduct ANOVA test: `anova()` and `drop()` from base R, `Anova()` from `car` package and `aov()` from `stats` package. We use the base R `anova()`  function to compare the three models via chi-square tests.
 
 
-\newpage
-
 ## Modelling Intensity 
 
 The intensity score is a continuous variable starts from zero when the action unit is not present to 5, where an action unit is presented at maximum intensity. A histogram of the intensity is plotted in Figure \ref{fig:intensity} and the distribution has a high proportion of zeros with highly skewed continuous  value.  This type of data is the so-called semi-continuous data [@Neelon2019; @twopart2010]. The semi-continuous data can be modelled in the econometrics literature by the two part model[@cragg1971some; @manning1981two]. In the two part model, the data is viewed to be generated via a sequential modelling technique, which is a mixed distribution of 
@@ -105,7 +103,6 @@ E(I_{ijkl} \mid I_{ijkl} > 0) &= \mu + \alpha_i + \beta_j +\gamma_k + \delta_l +
 \end{align}
 
 
-\newpage
 ## Post-Model Analysis
 
 The estimates of variables from the model summary are not particularly useful in our case. This is because firstly, the estimates of the coefficient are not interpretable in the logistic regression. Secondly, we are interested in whether the mean for each treatment is same or different. To assess which level of the factor is different requires post-model analysis.
@@ -125,3 +122,5 @@ Testing significance based on p-value has been long criticised for its interpret
 The confidence intervals computed from the `emmean()` function need to be adjusted for simultaneous inference. A 5% significance level indicates if we conduct 100 tests simultaneously, about 5 tests will show significance out of randomness. This is a problem we need to pay attention to when comparing the estimated presence probability or we may wrongly conclude judges has a different facial expression than others but they are actually not. 
 
 When multiple estimated mean are compared at the same time, the confidence level (or $\alpha$ in p-value) need to be adjusted to control the family-wise error rate to be less than $\alpha$. Bonferroni adjustment makes the adjustment to reject a hypothesis test at $\alpha/N$ level so that the type I error of whole family of the simultaneous tests (Family-wise Error Rate (FWER)) is control be less than $\alpha$. To do this, `confint()` function from base R is used with additional argument `adjust = "bonferroni"`.
+
+\let\cleardoublepage\clearpage

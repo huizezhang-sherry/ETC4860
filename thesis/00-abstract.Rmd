@@ -1,11 +1,7 @@
 # Abstract {-}
 
-It is part of human nature to react to change by expressing emotions. 
-However in some situations it is necessary to attempt to restrict reactions, and expressions of emotions. 
-In many court systems it is required that Justices, or Judges, restrict emotional displays and ensure the judgement is not biased towards a particular party.
-In this study, facial recognition software is used to objectively assess the facial expressions of six Justices in seven cases heard in the High Court of Australia. Facial information derived by the software is applied in a binomial model to find the presence of a selected range of action units and the intensity of the action units by a two part model. It is observed that the Justices generally remain impartial during the court proceedings.
-Negative emotions such as sadness, fear and anger are associated with action units that occur more intensely or frequently. 
-The requirement to remain expressionless is difficult for some Justices, especially in criminal cases that involve drugs and sexual assults.
+It is part of human nature to react to change by expressing emotions. However in some situations it is necessary to attempt to restrict reactions, and expressions of emotions. 
+In many court systems it is required that Justices, or Judges, restrict emotional displays and ensure the judgement is not biased towards a particular party.In this study, facial recognition software is used to objectively assess the facial expressions of six Justices in seven cases heard in the High Court of Australia. Facial information derived by the software is applied in a logistic model to find the presence of a selected range of action units.  The intensity of the action units is modelled by a two part model. It is observed that the Justices generally remain impartial during the court proceedings. Negative emotions such as sadness, fear and anger are associated with action units that occur more intensely or frequently. The requirement to remain expressionless is difficult for some Justices, especially in criminal cases that involve drugs and sexual assults.
 
 
 
@@ -18,3 +14,5 @@ The requirement to remain expressionless is difficult for some Justices, especia
 The following line is required to re-set page numbering after preliminary material. Do not remove
 -->
 \clearpage\pagenumbering{arabic}\setcounter{page}{1}
+\let\cleardoublepage\clearpage
+

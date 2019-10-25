@@ -12,9 +12,11 @@ knit: "bookdown::render_book"
 
 #### Mean presence score and most common action units 
 
-The average presence ($P_{ik}$) of each action unit is first computed for each judge as $$P_{ik} = \frac{\sum_{jt}X_{ijtk}}{\sum_{j = 1}^JT_j}$$ This is plotted in Figure \ref{fig:mean_presence} to give an overview of the presence score of all the action units across all the judges. The order of action unit on the y axis is ranked by the average presence of all the judges. The five most frequent action units are highlighted in blue for each judge and summarised in Table \ref{tab:most_common}
+The average presence ($P_{ik}$) of each action unit is first computed for each judge as $$P_{ik} = \frac{\sum_{jt}X_{ijtk}}{\sum_{j = 1}^JT_j}$$ 
 
-```{r most-common, fig.cap="The average presence score of each action unit for each judge, aggregating on video and time. \\label{fig:mean_presence}"}
+\noindent Figure \ref{fig:mean_presence} shows the presence score of all the action units across all the judges. The order of action unit on the y axis is ranked by the average presence of all the judges. The five most frequent action units are highlighted in blue. From Figure \ref{fig:mean_presence}, some of the action units are common across almost most of the Justices, these includes AU02 (outer eyebrow raise), AU20 (lip stretcher), AU15 (Lip Corner Depressor), AU01 (Inner brow raise) and AU14 (Dimpler). Relating to emotions, AU01 and AU15 contribute to sadness. AU02, outer eyebrow raising can be associated with surprise, fear or interested. A dimpler (AU14) could be linked to contempt or boredom and Action unit 20, lip strecher, is commonly contribute to fear, which is most sophisticated emotion that requires seven separate action units to describe. 
+
+```{r most-common, fig.cap="The average presence score of each action unit for each Justice, aggregating on video and time. \\label{fig:mean_presence}"}
 # Because each judge has different numbers of frame available, mean is a better way ,than sum/ count,  to discribe the frequency of occurence. 
 
 most_common <- au_tidy %>% 
@@ -39,22 +41,10 @@ most_common %>%
   theme(legend.position = "none")
 ```
 
-```{r most-common-table, results = 'asis'}
-knitLatex::xTab(most_common %>% 
-        filter(most_common ==1) %>% 
-        dplyr::select(judge, AU) %>% 
-        mutate(index = row_number()) %>% 
-        spread(judge, AU), booktabs = TRUE,
-      caption.top = "\\label{tab:most_common}The five most commonly presented action units for each judge.")
-```
-
-It can be seen that some of the action units are common across almost all the judges, these includes AU02 (outer eyebrow raise), AU20 (lip stretcher), AU15 (Lip Corner Depressor) and AU14 (Dimpler).
-
-According to @ekman2002facial, AU02 makes a contribution to surprise, which may be a positive attitude showing that judges are interested in a particular moment. AU14 indicates boredom and AU15 shows confusion. Based on the most common five action units, the emotions judges displayed in the courtroom can be summarised into three categories, described in Table \ref{tab:three_category}, along with the featured action units. 
 
 #### Presence by videos
 
-We are also interested in the main presence score of the judges by video ($P_{ijk}$). This is computed as $$P_{ijk} = \frac{\sum_{t}X_{ijtk}}{T_j}$$ for the four most common action units: AU02, AU14, AU15, AU20 and plotted in Figure \ref{fig:common_video}. From this plot, we can observe that some Justices have larger fluctuation of their expression of action units while others are more consistent throughout different videos. For example, Justice Gageler, coloured as green, has a much higher proportion of expression in case OKS, especially in action unit 14, 15 and 20. Justices Bell, who is coloured red has the highest proportion of expression in case OKS while lowest in case Parkes for action unit 14 and 20. 
+The main presence score of the judges by video ($P_{ijk}$) is computed as $$P_{ijk} = \frac{\sum_{t}X_{ijtk}}{T_j}$$ for the four most common action units: AU02, AU14, AU15, AU20 and presented in Figure \ref{fig:common_video}. From this plot, some Justices have larger fluctuation of their expression of action units while others are more consistent throughout different videos. For example, Justice Gageler, coloured as green, has a much higher proportion of expressions in case OKS, especially in action unit 14, 15 and 20. Justices Bell, who is coloured red has the highest proportion of expression in case OKS while lowest in case Parkes for action unit 14 and 20. 
 
 ```{r au-video, fig.cap="Average presence of the four most common action units for each judge by video\\label{fig:common_video}"}
 more_presence <- au_tidy %>% 
@@ -81,9 +71,9 @@ more_presence %>%
 
 #### General Intensity  plot
 
-The boxplot of the intensity for all the judges across all the videos is presented in Figure \ref{fig:intensity}. Each bar-and-whisker represents the intensity ($I_{ijtk}$) of all the action units aggregated on time for a particular judge $i$ in a specific case $j$. For example, the first bar-and-whisker in case Nauru_a is created using all the 17 action units of Edelman through out the elapsed time in Nauru_a case. The square root transformation is applied so that the mean of the intensity can be easier to be visualised. From the plot, we can see that most of the action units have low intensity score and this is expected because usually judges are expected not to express to much of their expressions in the court room. We can find that Justices Nettle, colored pink seems to have higher average in all the four cases he appeared. 
+The boxplot of the intensity for all the Justices across all the videos is presented in Figure \ref{fig:intensity}. Each bar-and-whisker represents the intensity ($I_{ijtk}$) of all the action units aggregated on time for a particular Justices $i$ in a specific case $j$. For example, the first bar-and-whisker in case Nauru_a is created using all the action units of Edelman through out the elapsed time in Nauru_a case. The square root transformation is applied so that the mean of the intensity can be easier to visualise. Most of the action units have low intensity score as shown in the figure, which matches with the prior belief that the Justices are expected not to express to much of their expressions in the court room. Justices Nettle, colored in pink has the highest average in all the four cases he appeared. 
 
-```{r intensity-boxplot, fig.cap="General intensity score by judge and video\\label{fig:intensity}"}
+```{r intensity-boxplot, fig.cap="Boxplot of intensity score by Justice and video\\label{fig:intensity}"}
 au_intensity_all <- au_tidy %>% 
   mutate(is_intense = ifelse(intensity >= 2, 1, 0))  
 
@@ -96,54 +86,46 @@ au_intensity_all %>%
   coord_trans(y = "sqrt")
 ``` 
  
-#### Mean intensity 
+<!-- #### Mean intensity  -->
 
-Mean intensity score ($I_{ik}$) of each action unit for each of the judge is computed as $$I_{ik} = \frac{\sum_{jt}X_{ijtk}}{\sum_{j = 1}^JT_j}$$ and plotted in Figure \ref{fig:mean_intensity}. The five most intense action units for each judge are presented in Table \ref{tab:most_intense}. We can find that the most common high intense action units includes AU20 (Lip Stretcher), AU07 (Lid Tightener) and AU04 (Brow Lower).
+<!-- Mean intensity score ($I_{ik}$) of each action unit for each  Justices is computed as $$I_{ik} = \frac{\sum_{jt}X_{ijtk}}{\sum_{j = 1}^JT_j}$$ and presented in Figure \ref{fig:mean_intensity}. The most intense action units includes AU20 (Lip Stretcher), AU07 (Lid Tightener) and AU04 (Brow Lower). -->
 
 
-```{r mean-intensity, fig.cap="Mean intensity score for each judge and action unit aggregating on videos.\\label{fig:mean_intensity}"}
-# compute top five
-most_intense <- au_intensity_all %>% 
-  filter(!AU == "AU28") %>%  # AU28 doesnt have intensity score
-  group_by(judge, AU) %>% 
-  summarise(mean_intensity = mean(intensity, na.rm = TRUE)) %>% 
-  arrange(-mean_intensity) %>% 
-  mutate(index = row_number(), 
-         most_intense = as.factor(ifelse(index <= 5, 1,0))) 
+<!-- ```{r mean-intensity, fig.cap="Mean intensity score for each Justice and action unit aggregating on videos.\\label{fig:mean_intensity}"} -->
+<!-- # compute top five -->
+<!-- most_intense <- au_intensity_all %>%  -->
+<!--   filter(!AU == "AU28") %>%  # AU28 doesnt have intensity score -->
+<!--   group_by(judge, AU) %>%  -->
+<!--   summarise(mean_intensity = mean(intensity, na.rm = TRUE)) %>%  -->
+<!--   arrange(-mean_intensity) %>%  -->
+<!--   mutate(index = row_number(),  -->
+<!--          most_intense = as.factor(ifelse(index <= 5, 1,0)))  -->
 
-most_intense %>% 
-  ggplot(aes(x = fct_reorder(AU, mean_intensity), 
-             y = mean_intensity, 
-             fill = most_intense)) + 
-  geom_col() + 
-  facet_wrap(vars(judge)) + 
-  coord_flip() + 
-  xlab("Action Unit") + 
-  ylab("mean intensity")
-  
-```  
- 
+<!-- most_intense %>%  -->
+<!--   ggplot(aes(x = fct_reorder(AU, mean_intensity),  -->
+<!--              y = mean_intensity,  -->
+<!--              fill = most_intense)) +  -->
+<!--   geom_col() +  -->
+<!--   facet_wrap(vars(judge)) +  -->
+<!--   coord_flip() +  -->
+<!--   xlab("Action Unit") +  -->
+<!--   ylab("mean intensity") -->
 
-```{r intensity-table, results ='asis'}
-knitLatex::xTab(most_intense %>% 
-  filter(most_intense ==1) %>% 
-  dplyr::select(c(judge, AU)) %>% 
-  mutate(index = row_number()) %>% 
-  spread(judge, AU), booktabs = TRUE, caption.top = "\\label{tab:most_intense}The five most intense action unit for each judge.")
-```
- 
+<!-- ```   -->
+
  
 #### High intensity points
 
-I also plotted the points with intensity greater than two against time for all the justices in Figure \ref{fig:high-intensity-points}. It tells us that Edelman, Gageler and Nettle are the judges have stronger emotion that can be detected since they have more points with intensity greater than 2. Different judges also have different time where they display stronger emotions. For example, Justice Edelman are more likely to have stronger emotion throughout the time while Justices Nettle is more likely to have intense facial expressions at the beginning and ending of the hearing. 
+The points with intensity greater than two are shown against time for all the justices in Figure \ref{fig:high-intensity-points}. Justices Edelman, Gageler and Nettle are the judges have stronger emotion that can be detected since they have more points with intensity greater than two. Different Justices also have different time where they display stronger emotions. For example, Justice Edelman are more likely to have stronger emotion throughout the time while Justices Nettle is more likely to have intense facial expressions at the beginning and ending of the hearing. 
 
-```{r high-intensity-points, fig.cap = "this is the plot"}
+```{r high-intensity-points, fig.cap = "Points with intensity greater than two are plotted against time, colored by speaking parties. "}
 au_intensity_all %>% filter(is_intense ==1) %>% 
   ggplot(aes(x = frame, y = intensity, col = speaker)) + 
   geom_point() +
   facet_wrap(vars(judge))
 ```
 
+\newpage
 ### Summary
 
 The findings from the exploratory data analysis are summarised below 
@@ -155,3 +137,5 @@ The findings from the exploratory data analysis are summarised below
 - The overall intensity of the action units are low while Justices Nettle seems to have a relatively higher intensity than other Justices. 
 
 - Edelman, Gageler and Nettle are the Justices with more intense facial expressions in the courtroom and Justices Nettle is the only Justice that tends to have stronger expression towards the end of the hearing. 
+
+\let\cleardoublepage\clearpage
