@@ -5,6 +5,7 @@ knit: "bookdown::render_book"
 
 # Conclusion
 
+
 In this thesis, we explore the facial expressions of seven high court Justices in six cases utilising the publicly available videos from the high court hearing. The main aim of this research is to use a statistical and objective apporach to understand whether the Justices are behaving impartial in the courtroom.
 
 Our approach involves extracting facial variables from the videos of the high court hearings and statistically model the presence and intensity of the action units. This allows us to understand whether different Justices would have variations in their expressions in different cases and whether their expressions will be different when different parties are speaking. We have found that in general, the Justices are behaving impartial during the court, which is a validation on Tutton's ethnographic study on the same topic. We also find that Justices tend to have stronger and more frequent negative emotions, for example sad, anger and fear in criminal cases. From a humanity perspective, it could be hard for the Justices control their expressions in criminal cases when extreme and violent scenes are described in the hearing. 
@@ -25,4 +26,4 @@ In the future, more work could be done to extract facial expressions of the Just
 
 ## Acknowledgement
 
-The analysis is conducted using R [\ref], and the following packages: [] 
+The analysis is conducted using R [@Rlanguage], and the following packages: forecast [@forecast], tidyverse [@tidyverse], knitr [@knitr], emmenas [@emmeans], car [@car], arm [@arm] and broom [@broom]. The thesis document is written with bookdown [@bookdown]. 

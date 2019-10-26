@@ -3,3 +3,20 @@ chapter: 4
 knit: "bookdown::render_book"
 ---
 
+## Insights  
+
+This result from previous chapter contributes to  answer the question: **For the same judge, does the mean presence and mean intensity of the action units stay the same or vary for different videos?**. In general, the facial expressions of the justices appear impartial, as most of the 95% confidence intervals for the same judge and action unit overlap in the vertical direction in most of the videos in both figures. There are some instances when in a particular video, a judge expressed significantly more or less of an expression.
+
+It is necessary to link back to the nature of the cases to interpret the facial behaviour of the Justices. Nauru-a and Nauru-b discusses immigration law; McKell and OKS are more criminal cases; Parkes is a civil negligence case and Rinehart-a and Rinehart-b are commercial cases arguing contarct arbitration. 
+
+Based on the nature of the cases, Justice Edelman is more likely to express stronger emotion to the immigration and commercial cases and express less and softer at criminal cases. The action unit 5 (upper lid raiser) and 7(lid tightener), which are expressed more frequent and more intense by Justice Keane in case OKS are usually associated with the emotion of anger. This implies that Justices Keane is more responsive to the criminal cases. Kiefel and Nettle are relatively consistent in their expressions. Of the six universal emotions, the action units Justices Gageler have significantly more frequent and stronger in case OKS are action unit 5(upper lid raiser), 15 (lip corner depressor) and 20(lip stretcher). These three action units are commonly associated  with anger, sadness and fear respectively, which indicate Justice Gageler's strong and frequent emotional responses when hearing criminal cases OKS. The result for Bell suggest the same emotional reaction as judge Gageler to criminal cases. 
+
+As the speaker-wise difference was not significant, suggestions that Justice favour an appelant or respondent were not confirmed. This result would be a validation that on the high court level, the judges are behaving impartial to different speaking parties. 
+
+To summarise, the above discussion of intensity and presence of action unit in different cases gives us several findings about the expression of the judges: 
+
+1) In general, the expression of the Justices are impartial, which is live up to the code of conduct from @judicalguid and validate the result from @tutton2018judicial. 
+
+2) When there is significantly present or intense expression of the Justices, it tends to be associated with negative emotion like sad, fear and anger. This could have implication on the mental well-being of the judges. 
+
+3) Some justices, for example Keane, Gageler and Bell are more responsive, both in frequency (mean presence) and magnitude (mean intensity) to criminal cases. This could show that it is harder for judges to keep a still face when the content of a case goes against human nature. 

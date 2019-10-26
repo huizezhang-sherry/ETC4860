@@ -467,9 +467,9 @@ The findings from the exploratory data analysis are summarised below
 \hypertarget{choice-of-action-unit-to-include}{%
 \section{Choice of action unit to include}\label{choice-of-action-unit-to-include}}
 
-The number of action unit to include in the model is a matter of choice. The discussion of this choice is to ensure our model is parsimonious, that is, a model has the smallest number of variables but with greatest explanatory power. Random effect is a way to deal with large number of factor levels of a variable, but in our context, we are only interested in the action units with a certain mean presence (and intensity) for most of the judges.
+The number of action unit to include in the model is a matter of choice. The discussion of this choice is to ensure the model is parsimonious, that is, a model has the smallest number of variables but with greatest explanatory power. Random effect is a way to deal with large number of factor levels of a variable, but in our context, we are only interested in the action units with a certain mean presence and intensity for most of the judges.
 
-The mean presence and intensity score for each action unit is computed and the action units to include in the model are the ones that appear in the top 10 action unit for both mean presence and intensity rank. This ensures that these action units have both relativcely high intensity and presence score. A list of included action units along with their meaning and related emotions are presented in Table \ref{tab:au-included}
+The mean presence and intensity score for each action unit is computed and the action units to include in the model are the ones that appear in the top 10 action unit in both mean presence and intensity rank. This ensures that these action units have both relativcely high intensity and presence score. A list of included action units along with their meaning and related emotions are presented in Table \ref{tab:au-included}
 
 \begin{table}[ht]
 \begin{center}
@@ -499,7 +499,7 @@ AU45 & Blink & NA \\
 \hypertarget{model-fitting-and-anova}{%
 \subsection{Model fitting and ANOVA}\label{model-fitting-and-anova}}
 
-The three models in Equation \ref{eq:judge_au}, \ref{eq:judge_video} and \ref{eq:judge_speaker} has been fitted and ANOVA test is performed to choose the best model. In Table \ref{tab:anova-1}, the deviance of model 1 and 2 are compared and the p-value rejects the null hypothesis that model 1 and model 2 are the same. The comparison of model 2 and model 3 is presented in Table \ref{tab:anova-2}. We take a conservative approach and not rejecting the null hypothesis that model 3 is too much different from model 2. Thus, model 2 is chosen as our final model for modelling presence.
+The three models in Equation \ref{eq:judge_au}, \ref{eq:judge_video} and \ref{eq:judge_speaker} have been fitted and ANOVA test is performed to choose the best model. In Table \ref{tab:anova-1}, the deviance of model 1 and 2 are compared and the p-value rejects the null hypothesis that model 1 and model 2 are the same. The comparison of model 2 and model 3 is presented in Table \ref{tab:anova-2}. A conservative approach is taken and not rejecting the null hypothesis that model 3 is too much different from model 2. Thus, model 2 is chosen as our final model for modelling presence.
 
 \begin{table}[ht]
 \begin{center}
@@ -532,7 +532,7 @@ Resid. Df & Resid. Dev & Df & Deviance & Pr(>Chi) \\
 \hypertarget{residual-diagnostics-and-post-model-analysis}{%
 \subsection{Residual Diagnostics and post-model analysis}\label{residual-diagnostics-and-post-model-analysis}}
 
-Residual analysis is performed on model 2 to illustrate the fitness of the model. In Figure \ref{fig:resid}, the left panel shows the residual for each judge in a boxplot and one can observe that the residuals are around zero for most of the Justices. On the right panel, the residuals are plotted as dots and there is no pattern shown on the plot. This indicates model 2 has a good fit.
+Residual analysis is performed on model 2 to illustrate the fitness of the model. In Figure \ref{fig:resid}, the left panel shows the residuals for each Justice in a boxplot and one can observe that the residuals are around zero. On the right panel, the residuals are plotted as dots and there is no obvious pattern shown in the residuals. This indicates model 2 has a good fit.
 
 \begin{figure}
 
@@ -540,24 +540,19 @@ Residual analysis is performed on model 2 to illustrate the fitness of the model
 
 }
 
-\caption{The residual plot for model 2. }\label{fig:resid}
+\caption{Residual diagnostics for model 2. }\label{fig:resid}
 \end{figure}
 
-The estimated marginal mean is computed in Table \ref{tab:result-2} in the Appendix The \texttt{prob} column can be interpreted as after averaging over all the videos and speaking parties, the estimated mean probability for judge Edelman in action unit AU02 is 0.95, with a 95\% confidence interval of {[}0.92, 0.97{]}. Notice that confidence intervals for a generalised linear model is asymmetric around the estimates because the linear symmetric interval of the mean need to be transferred via the inverse of link function to get the confidence interval for the response.
+The estimated marginal mean is computed and presented in Table \ref{tab:result-2} in the Appendix due to its length. The \texttt{prob} column can be interpreted as after averaging over all the videos and speaking parties, the estimated mean probability for judge Edelman in action unit AU02 is 0.95, with a 95\% confidence interval of {[}0.92, 0.97{]}. Notice that confidence intervals for a generalised linear model is asymmetric around the estimates because the linear symmetric interval of the mean has been transferred via the inverse of link function to get the confidence interval for the response.
 
-The 95\% confidence interval after bonferroni adjustment is plotted in Figure \ref{fig:model2-plot}. This result presented contribute to answering the question: \textbf{For the same judge, does the mean presence and mean intensity of the action units stay the same or vary for different videos?}.
+\hypertarget{the-presence-of-facial-expression-of-the-justices-by-video}{%
+\subsection{The presence of facial expression of the justices by video}\label{the-presence-of-facial-expression-of-the-justices-by-video}}
 
-In general, the facial expressions of the justices appear impartial, as most of the 95\% confidence intervals for the same judge and action unit overlap in the vertical direction in most of the videos in both figures. There are some instances when in a particular video, a judge expressed significantly more or less of an expression.
+The 95\% confidence interval after bonferroni adjustment is plotted in Figure \ref{fig:model2-plot}. In general, most of the intervals for the same judge in the same action unit are overlapping with each other on the vertical axis, while there are some non-overlappings highlights the potential inconsistency of the facial expressions of the Justices.
 
-Justices Edelman and Keane behave consistently throughout all the videos, this is exhibited by most of the intervals overlapping after the bonferroni adjustment. However, Justices Edelman seems to express significantly less in action unit 5 in the OKS case.
+Justice Edelman and Keane behave consistently throughout all the videos, while they both seem to express significantly less in action unit 5 (upper lid raiser) in the OKS case. Justice Nettle has relatively low expression of action unit 4(brow lowerer) in case Rinehart-a. Gageler shows a consistently high number of expressions in case OKS for action unit 15 (lip corner depressor) and action unit 20 (lip stretcher).
 
-Justice Keane exhibits significantly less of action unit 5 in case OKS compared to Edelman in Figure \ref{fig:model2-plot}
-
-The {[}\ldots{}{]} presence plot shows that Nettle has relatively higher mean in case Rinehart-b, but it is not significant when comparing the 95\% confidence intervals.
-
-Gageler shows a consistently high amount of intensity of expression in case OKS for most of the action units displayed. In Figure \ref{fig:model2-plot}, Gageler had significantly more presence of expressions of action unit 1, 15 and 20.
-
-Bell presents similar reactions to Gageler, showing a significantly higher proportion of emotions associated with action unit 1 and 15 in case OKS.Bell exhibits less presence of action unit 07 and 20 in case Parkes which is the only civil case in our sample videos.
+Bell presents similar reactions to Gageler, showing a significantly higher proportion of emotions associated with action unit 1 (inner brow raiser), 14(dimpler), 15 (lip corner depressor) and 20 (lip stretcher) in case OKS. Bell also exhibits less presence of action unit 07 (lid tightener) and 20 (lip stretcher) in case Parkes.
 
 \begin{figure}
 
@@ -565,17 +560,17 @@ Bell presents similar reactions to Gageler, showing a significantly higher propo
 
 }
 
-\caption{The confidence interval for estimated mearginal mean in model 2}\label{fig:model2-plot}
+\caption{The confidence interval for estimated mearginal mean for presence}\label{fig:model2-plot}
 \end{figure}
 
-The two part model in equation \ref{eq:two-part1} is estimated for the intensity data. Estimated marginal mean and confidence interval adjustment procedure are performed as modelling presence data. The 95\% confidence interval plot is presented in Figure \ref{fig:intensity-video}. This shows that Edelman has significantly stronger expressions of {[}\ldots{}{]} (AU04) and {[}\ldots{}{]} (AU09) in case Nauru-a, Nauru-b and Rinehart-a, but less intensity when expressing in {[}\ldots{}{]}action unit 7 for case OKS.
+\hypertarget{the-intensity-of-facial-expression-of-the-justices-by-video}{%
+\subsection{The intensity of facial expression of the justices by video}\label{the-intensity-of-facial-expression-of-the-justices-by-video}}
 
-but Figure \ref{fig:intensity-video} suggests he has more intense expressions of {[}\ldots{}{]} action unit 5.
+The two part model in equation \ref{eq:two-part1} is estimated for the intensity data. Estimated marginal mean and confidence interval adjustment procedure are performed as modelling presence data. The 95\% confidence interval plot is presented in Figure \ref{fig:intensity-video}. This shows that Justices Edelman has significantly stronger expressions of brow lowerer (AU04) in case Nauru-a, Nauru-b and Rinehart-a, but less intensity when expressing lid tightener (AU07) in case OKS. Justice Keane also shows more intense expressions of lid tightener (AU07) in case McKell.
 
-Keane also shows more intense expressions of action unit 7 in case McKell.
-From the intensity estimated means and 95\% confidence intervals in Figure \ref{fig:intensity-video}, action unit 5 and 20 have significantly higher intensity for Justices Gageler
+Action unit 5 (upperlid raiser) and 20 (lip stretcher) are exhibited significantly more intense for Justices Gageler in case OKS. The mean for brow lowerer (AU04) seems to higher than those in other cases for Justices Gageler but this result is not significant.
 
-The intensity of action unit 1, 5, 14 and 20 are also significantly higher in case OKS. This indicates the same emotional reaction as judge Gageler to criminal cases.
+For Justice Bell, the intensity of inner brow raiser (AU01), upper lid raiser (AU05), Dimpler (AU14) and Lip stretcher (AU20) are also significantly higher in case OKS
 
 \begin{figure}
 
@@ -583,31 +578,26 @@ The intensity of action unit 1, 5, 14 and 20 are also significantly higher in ca
 
 }
 
-\caption{The confidence interval for estimated mearginal mean in model 2}\label{fig:intensity-video}
+\caption{The confidence interval for estimated mearginal mean for intensity}\label{fig:intensity-video}
 \end{figure}
 
 \hypertarget{the-expression-of-the-justices-by-speaker}{%
 \subsection{The expression of the justices by speaker}\label{the-expression-of-the-justices-by-speaker}}
 
-From the presence and intensity figures which are colored by speakers in Figure \ref{fig:model3-plot} and \ref{fig:intensity-speaker}, we can observe that the video-wise difference between judge still persist when the speaker effects are included in the model. However, the speaker-wise difference is not significant in terms of both presence and intensity for all the judges.
+From the presence and intensity figures which are colored by speakers in Figure \ref{fig:model3-plot} and \ref{fig:intensity-speaker} in the Appendix, we can observe that the video-wise difference between Justices is still preserved when the speaker effects are included in the model. However, the speaker-wise difference is not significant in terms of both presence and intensity for all the Justices.
 
 \let\cleardoublepage\clearpage
 
-\hypertarget{conclusion}{%
-\chapter{Conclusion}\label{conclusion}}
+\hypertarget{insights}{%
+\section{Insights}\label{insights}}
 
-\hypertarget{discussion}{%
-\section{Discussion}\label{discussion}}
+This result from previous chapter contributes to answer the question: \textbf{For the same judge, does the mean presence and mean intensity of the action units stay the same or vary for different videos?}. In general, the facial expressions of the justices appear impartial, as most of the 95\% confidence intervals for the same judge and action unit overlap in the vertical direction in most of the videos in both figures. There are some instances when in a particular video, a judge expressed significantly more or less of an expression.
 
-It is necessary to have an understanding about the characteristics of the cases to interpret the facial behaviour of the Justices. Nauru-a and Nauru-b discuss the refugee status of the appellants, which can be though of political cases. McKell and OKS are more criminal cases, relates to drug and sexual misconduct. Parkes is a civil case about negligence while Rinehart-a and Rinehart-b are business cases.
+It is necessary to link back to the nature of the cases to interpret the facial behaviour of the Justices. Nauru-a and Nauru-b discusses immigration law; McKell and OKS are more criminal cases; Parkes is a civil negligence case and Rinehart-a and Rinehart-b are commercial cases arguing contarct arbitration.
 
-Based the nature of the 7 cases, we can see Edelman is more likely to express stronger emotion to the political and commercial cases and express less and softer at criminal cases.
+Based on the nature of the cases, Justice Edelman is more likely to express stronger emotion to the immigration and commercial cases and express less and softer at criminal cases. The action unit 5 (upper lid raiser) and 7(lid tightener), which are expressed more frequent and more intense by Justice Keane in case OKS are usually associated with the emotion of anger. This implies that Justices Keane is more responsive to the criminal cases. Kiefel and Nettle are relatively consistent in their expressions. Of the six universal emotions, the action units Justices Gageler have significantly more frequent and stronger in case OKS are action unit 5(upper lid raiser), 15 (lip corner depressor) and 20(lip stretcher). These three action units are commonly associated with anger, sadness and fear respectively, which indicate Justice Gageler's strong and frequent emotional responses when hearing criminal cases OKS. The result for Bell suggest the same emotional reaction as judge Gageler to criminal cases.
 
-{[}add oks and McKell nature{]} Justice Keane is more responsive to the criminal cases than cases of other categories.
-
-Kiefel and Nettle are relatively consistent in their expressions.
-
-Of the six universal emotions the combinations of {[}\ldots{}{]}action unit 5, 15 and 20 are most commonly associated with anger, sadness and fear. Gageler tends to show strong and frequent emotional responses when hearing criminal cases.
+As the speaker-wise difference was not significant, suggestions that Justice favour an appelant or respondent were not confirmed. This result would be a validation that on the high court level, the judges are behaving impartial to different speaking parties.
 
 To summarise, the above discussion of intensity and presence of action unit in different cases gives us several findings about the expression of the judges:
 
@@ -621,11 +611,8 @@ To summarise, the above discussion of intensity and presence of action unit in d
   Some justices, for example Keane, Gageler and Bell are more responsive, both in frequency (mean presence) and magnitude (mean intensity) to criminal cases. This could show that it is harder for judges to keep a still face when the content of a case goes against human nature.
 \end{enumerate}
 
-As the speaker-wise difference was not significant, suggestions that Justice favour an appelant or respondent were not confirmed.
-This result would be a validation that on the high court level, the judges are behaving impartial to different speaking parties.
-
-\hypertarget{conclusion-1}{%
-\section{Conclusion}\label{conclusion-1}}
+\hypertarget{conclusion}{%
+\chapter{Conclusion}\label{conclusion}}
 
 In this thesis, we explore the facial expressions of seven high court Justices in six cases utilising the publicly available videos from the high court hearing. The main aim of this research is to use a statistical and objective apporach to understand whether the Justices are behaving impartial in the courtroom.
 
@@ -650,7 +637,7 @@ In the future, more work could be done to extract facial expressions of the Just
 \hypertarget{acknowledgement}{%
 \section{Acknowledgement}\label{acknowledgement}}
 
-The analysis is conducted using R {[}\ref{]}, and the following packages: {[}{]}
+The analysis is conducted using R \autocite{Rlanguage}, and the following packages: forecast \autocite{forecast}, tidyverse \autocite{tidyverse}, knitr \autocite{knitr}, emmenas \autocite{emmeans}, car \autocite{car}, arm \autocite{arm} and broom \autocite{broom}. The thesis document is written with bookdown \autocite{bookdown}.
 
 \appendix
 

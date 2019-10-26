@@ -8,9 +8,9 @@ knit: "bookdown::render_book"
 ## Choice of action unit to include
 
 
-The number of action unit to include in the model is a matter of choice. The discussion of this choice is to ensure our model is parsimonious, that is, a model has the smallest number of variables but with greatest explanatory power. Random effect is a way to deal with large number of factor levels of a variable, but in our context, we are only interested in the action units with a certain mean presence (and intensity) for most of the judges. 
+The number of action unit to include in the model is a matter of choice. The discussion of this choice is to ensure the model is parsimonious, that is, a model has the smallest number of variables but with greatest explanatory power. Random effect is a way to deal with large number of factor levels of a variable, but in our context, we are only interested in the action units with a certain mean presence and intensity for most of the judges. 
 
-The mean presence and intensity score for each action unit is computed and the action units to include in the model are the ones that appear in the top 10 action unit for both mean presence and intensity rank. This ensures that these action units have both relativcely high intensity and presence score. A list of included action units along with their meaning and related emotions are presented in Table \ref{tab:au-included} 
+The mean presence and intensity score for each action unit is computed and the action units to include in the model are the ones that appear in the top 10 action unit in both mean presence and intensity rank. This ensures that these action units have both relativcely high intensity and presence score. A list of included action units along with their meaning and related emotions are presented in Table \ref{tab:au-included} 
 
 ```{r au-included, results = 'asis'}
 int <- au_tidy %>% group_by(AU) %>% 
@@ -42,7 +42,7 @@ knitLatex::xTab(au_selected, booktabs = TRUE, caption.top = "\\label{tab:au-incl
 
 ### Model fitting and ANOVA
 
-The three models in Equation \ref{eq:judge_au}, \ref{eq:judge_video} and \ref{eq:judge_speaker} has been fitted and ANOVA test is performed to choose the best model. In Table \ref{tab:anova-1}, the deviance of model 1 and 2 are compared and the p-value rejects the null hypothesis that model 1 and model 2 are the same. The comparison of model 2 and model 3 is presented in Table \ref{tab:anova-2}. We take a conservative approach and not rejecting the null hypothesis that model 3 is too much different from model 2. Thus, model 2 is chosen as our final model for modelling presence. 
+The three models in Equation \ref{eq:judge_au}, \ref{eq:judge_video} and \ref{eq:judge_speaker} have been fitted and ANOVA test is performed to choose the best model. In Table \ref{tab:anova-1}, the deviance of model 1 and 2 are compared and the p-value rejects the null hypothesis that model 1 and model 2 are the same. The comparison of model 2 and model 3 is presented in Table \ref{tab:anova-2}. A conservative approach is taken and not rejecting the null hypothesis that model 3 is too much different from model 2. Thus, model 2 is chosen as our final model for modelling presence. 
 
 ```{r}
 model_dt <- au_tidy %>%
@@ -96,9 +96,9 @@ knitLatex::xTab(format(anova(binomial_model_2, binomial_model_3, test = "Chisq")
 
 ### Residual Diagnostics and post-model analysis 
 
-Residual analysis is performed on model 2 to illustrate the fitness of the model. In Figure \ref{fig:resid}, the left panel shows the residual for each judge in a boxplot and one can observe that the residuals are around zero for most of the Justices. On the right panel, the residuals are plotted as dots and there is no pattern shown on the plot. This indicates model 2 has a good fit.
+Residual analysis is performed on model 2 to illustrate the fitness of the model. In Figure \ref{fig:resid}, the left panel shows the residuals for each Justice in a boxplot and one can observe that the residuals are around zero. On the right panel, the residuals are plotted as dots and there is no obvious pattern shown in the residuals. This indicates model 2 has a good fit.
 
-```{r resid, fig.cap="The residual plot for model 2. "}
+```{r resid, fig.cap="Residual diagnostics for model 2. "}
 diag <- augment(binomial_model_2, 
                 type.pred = "response", type.resid = "response") %>% 
   mutate(ind = row_number())
@@ -111,9 +111,17 @@ p1 + p2
 ```
 
 
-The estimated marginal mean is computed in Table \ref{tab:result-2} in the Appendix The `prob` column can be interpreted as after averaging over all the videos and speaking parties, the estimated mean probability for judge Edelman in action unit AU02 is 0.95, with a 95% confidence interval of [0.92, 0.97]. Notice that confidence intervals for a generalised linear model is asymmetric around the estimates because the linear symmetric interval of the mean need to be transferred via the inverse of link function to get the confidence interval for the response. The 95% confidence interval after bonferroni adjustment is plotted in Figure \ref{fig:model2-plot}. 
+The estimated marginal mean is computed and presented in Table \ref{tab:result-2} in the Appendix due to its length. The `prob` column can be interpreted as after averaging over all the videos and speaking parties, the estimated mean probability for judge Edelman in action unit AU02 is 0.95, with a 95% confidence interval of [0.92, 0.97]. Notice that confidence intervals for a generalised linear model is asymmetric around the estimates because the linear symmetric interval of the mean has been transferred via the inverse of link function to get the confidence interval for the response. 
 
-```{r model2-plot, fig.cap="The confidence interval for estimated mearginal mean in model 2"}
+### The presence of facial expression of the justices by video
+
+The 95% confidence interval after bonferroni adjustment is plotted in Figure \ref{fig:model2-plot}. In general, most of the intervals for the same judge in the same action unit are overlapping with each other on the vertical axis, while there are some non-overlappings highlights the potential inconsistency of the facial expressions of the Justices. 
+
+Justice Edelman and Keane behave consistently throughout all the videos, while they both seem to express significantly less in action unit 5 (upper lid raiser) in the OKS case. Justice Nettle has relatively low expression of action unit 4(brow lowerer) in case Rinehart-a. Gageler shows a consistently high number of expressions in case OKS for action unit 15 (lip corner depressor) and action unit 20 (lip stretcher). 
+
+Bell presents similar reactions to Gageler, showing a significantly higher proportion of emotions associated with action unit 1 (inner brow raiser), 14(dimpler), 15 (lip corner depressor) and 20 (lip stretcher) in case OKS. Bell also  exhibits less presence of action unit 07 (lid tightener) and 20 (lip stretcher) in case Parkes. 
+
+```{r model2-plot, fig.cap="The confidence interval for estimated mearginal mean for presence"}
 emmean_obj_2 <- emmeans(binomial_model_2, c("judge", "video", "AU"),
                         type = "response")
 
@@ -136,7 +144,15 @@ int_2 %>%
 
 ```    
 
-The two part model in equation \ref{eq:two-part1} is estimated for the intensity data. Estimated marginal mean and confidence interval adjustment procedure are performed as modelling presence data. The 95% confidence interval plot is presented in Figure \ref{fig:intensity-video}. 
+
+### The intensity of facial expression of the justices by video
+
+The two part model in equation \ref{eq:two-part1} is estimated for the intensity data. Estimated marginal mean and confidence interval adjustment procedure are performed as modelling presence data. The 95% confidence interval plot is presented in Figure \ref{fig:intensity-video}. This shows that Justices Edelman has significantly stronger expressions of brow lowerer (AU04) in case Nauru-a, Nauru-b and Rinehart-a, but less intensity when expressing lid tightener (AU07) in case OKS. Justice Keane also shows more intense expressions of lid tightener (AU07) in case McKell. 
+
+Action unit 5 (upperlid raiser) and 20 (lip stretcher) are exhibited significantly more intense for Justices Gageler in case OKS. The mean for brow lowerer (AU04) seems to higher than those in other cases for Justices Gageler but this result is not significant. 
+
+For Justice Bell, the intensity of inner brow raiser (AU01), upper lid raiser (AU05), Dimpler (AU14) and Lip stretcher (AU20) are also significantly higher in case OKS
+
 
 ```{r intensity-data}
 model_dt <- au_tidy %>%
@@ -161,7 +177,7 @@ m2 <- glm(intensity ~ judge*video + judge*AU + video*AU,
           family = Gamma(link = "log"))
 ```
 
-```{r intensity-video, fig.cap="The confidence interval for estimated mearginal mean in model 2"}
+```{r intensity-video, fig.cap="The confidence interval for estimated mearginal mean for intensity"}
 
 emmean_m2 <-  emmeans(m2, c("judge", "video", "AU"), type = "response")
 int_2i <- confint(emmean_m2, by = c("judge", "AU"), adjust = "bonferroni") # the by argument prescribe
@@ -183,3 +199,8 @@ int_2i %>%
   xlab("video")
 ```
 
+### The expression of the justices by speaker
+
+From the presence and intensity figures which are colored by speakers in Figure \ref{fig:model3-plot} and \ref{fig:intensity-speaker} in the Appendix, we can observe that the video-wise difference between Justices is still preserved when the speaker effects are included in the model. However, the speaker-wise difference is not significant in terms of both presence and intensity for all the Justices. 
+
+\let\cleardoublepage\clearpage
