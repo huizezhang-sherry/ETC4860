@@ -1,3 +1,24 @@
+library(tidyverse)
+library(emmeans)
+
+load(here::here("raw_data", "au_tidy.rda"))
+load(here::here("raw_data", "au_imputed.rda"))
+load(here::here("raw_data", "au_meaning.rda"))
+
+
+#---------------------------------------
+# EDA
+most_common <- au_tidy %>% 
+  group_by(judge,AU) %>% 
+  summarise(avg_presence = mean(presence)) %>% 
+  filter(avg_presence != "NaN") %>% 
+  group_by(judge) %>% 
+  arrange(-avg_presence) %>% 
+  mutate(common = row_number()) %>% 
+  mutate(most_common = as_factor(ifelse(common <=5, 1, 0))) %>% 
+  left_join(au_meaning, by = c("AU" = "AU")) %>% 
+  mutate(AU = as.factor(AU))
+
 most_common %>%
   ggplot(aes(x =  fct_reorder(AU, avg_presence), y = avg_presence,
              fill = most_common, col = most_common)) +
@@ -8,68 +29,51 @@ most_common %>%
   coord_flip() +
   theme(legend.position = "none")
 
-compute_au_number <- function(cutpoint, num_judge){
-  count <- most_common %>% ungroup() %>%
-  filter(avg_presence > cutpoint) %>% group_by(AU) %>%
-  summarise(count = n()) %>% filter(count >=num_judge) %>% ungroup() %>%
-    pull(AU) %>% length()
-  return(count)
-}
-
-x <- seq(0.05, 0.5, 0.05)
-y <- 1:6
-heatmap_dt <- expand.grid(x, y) %>%
-  as_tibble() %>%
-  mutate(number = map2(Var1, Var2, compute_au_number)) %>%
-  unnest(number)
-
-heatmap_dt %>%
-  ggplot(aes(x = Var1, y = Var2, fill = number, col = number)) +
-  geom_tile() +
-  geom_text(aes(label = number), col = "red") +
-  scale_x_continuous(breaks = seq(0.05, 0.5, 0.05)) +
-  scale_y_continuous(breaks = 1:6)
-
-
-# number of action unit to include against
-# number of judges that has the action unit average intensity to be greater than 0.25
-# tibble(cutpoint = 1:6,
-#        count = map_dbl(cutpoint, compute_au_number)) %>%
-#   ggplot(aes(x = cutpoint, y = count, fill = count)) +
-#   geom_col() +
-#   geom_text(aes(label = count),nudge_y = 0.5, col = "red") +
-#   scale_x_continuous(breaks = seq(1,6,1))
-
-# count>= 3 - 13 AUs
-# count>= 4 - 10 AUs
-# count>= 5 - 8 AUs
-# count>= 6 - 3 AUs
-# we want to choose a parsimonious model,
-# that is, explain more about the data but as precise and concise as possible
-
-
-common_au <- most_common %>% ungroup() %>%
-  filter(avg_presence > 0.3) %>% group_by(AU) %>%
-  summarise(count = n()) %>% filter(count >=5) %>% pull(AU)
-
-# average presence score for the action unit where at least 5 judges has average presence score greater than 0.25
-most_common %>%
-  filter(AU %in% common_au) %>%
-  mutate(less = as.factor(ifelse(avg_presence > 0.25, 0, 1))) %>%
-  ggplot(aes(x = AU, y = avg_presence,
-             col = less, fill = less)) +
-  geom_col() +
-  xlab("AU") +
-  ylab("Average Presence") +
-  facet_wrap(vars(judge)) +
-  coord_flip() +
-  theme(legend.position = "none")
-
-model_dt <- au_tidy %>%
+# by videos 
+# plot int_1
+more_presence <- au_tidy %>%
+  group_by(judge,AU, video) %>%
+  summarise(avg_presence = mean(presence)) %>%
+  filter(avg_presence != "NaN") %>%
+  arrange(-avg_presence) %>%
   ungroup(judge) %>%
-  filter(AU %in% common_au) %>%
-  mutate(judge = fct_relevel(judge, "Bell"),
+  left_join(au_meaning, by = "AU") %>%
+  mutate(AU = as.factor(AU))
+
+# need more work on this plot
+more_presence %>%
+  filter(AU %in% AU_included) %>%
+  ggplot(aes(x = video, y = avg_presence,
+             group = judge, col = judge)) +
+  geom_line() +
+  geom_point() +
+  facet_wrap(vars(Meaning),scales = "free_x") +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1))
+
+#---------------------------------------
+# Modelling
+int <- au_imputed %>% group_by(AU) %>% 
+  summarise(int = mean(intensity, na.rm = TRUE)) %>% 
+  arrange(-int) %>% 
+  top_n(10)
+
+AU_included <- au_imputed %>% group_by(AU) %>% 
+  summarise(pres = mean(presence, na.rm = TRUE)) %>% 
+  arrange(-pres) %>% 
+  top_n(10) %>% 
+  inner_join(int) %>% 
+  pull(AU)
+
+model_dt <- au_imputed %>%
+  ungroup(judge) %>%
+  filter(AU %in% AU_included) %>%
+  mutate(judge = fct_relevel(judge, c("Edelman", "Keane", "Kiefel",
+                                      "Nettle", "Gageler", "Bell")),
+         video = fct_relevel(video, c("Nauru-a", "Nauru-b", "Rinehart-a",
+                                      "Rinehart-b", "McKell", "OKS", "Parkes")),
          AU = fct_relevel(AU, "AU01"))
+save(model_dt, file = "raw_data/model_dt.rda")
+
 
 binomial_model_1 <- glm(presence ~ judge*AU,
                         family = binomial(link = "logit"),
@@ -78,26 +82,6 @@ binomial_model_1 <- glm(presence ~ judge*AU,
 emmean_obj_1 <-  emmeans(binomial_model_1, ~judge*AU, type = "response")
 int_1 <- confint(emmean_obj_1, by = "judge",adjust = "bonferroni") %>% as.data.frame() %>% dplyr::select(-df)
 
-# plot int_1
-
-more_presence <- au_tidy %>%
-  group_by(judge,AU, video) %>%
-  summarise(avg_presence = mean(presence)) %>%
-  filter(avg_presence != "NaN") %>%
-  arrange(-avg_presence) %>%
-  ungroup(judge) %>%
-  left_join(au_meaning, by = c("AU" = "AU_number")) %>%
-  mutate(AU = as.factor(AU))
-
-# need more work on this plot
-more_presence %>%
-  filter(AU %in% common_au) %>%
-  ggplot(aes(x = video, y = avg_presence,
-             group = judge, col = judge)) +
-  geom_line() +
-  geom_point() +
-  facet_wrap(vars(AU_meaning),scales = "free_x") +
-  theme(axis.text.x = element_text(angle = 30, hjust = 1))
 
 
 binomial_model_2 <- glm(presence ~ judge*video + judge*AU + video*AU,
@@ -119,34 +103,59 @@ emmean_obj_3 <-  emmeans(binomial_model_3,
                          c("judge", "AU", "speaker", "video") ,
                          type = "response",weights = "cell")
 
-Anova(binomial_model_3, type = "III", singular.ok = TRUE) %>%
-  kable(digits = 5)
-# interesting that speaker is not significant, but speaker*judge is
-# given the interactions, speaker is not significant but it still useful because
-# the interactions are significant
 int_3 <- confint(emmean_obj_3, by = c("judge", "AU"),adjust = "bonferroni")
 
 
+anova(binomial_model_1, binomial_model_2, test= "Chisq")
+anova(binomial_model_2, binomial_model_3, test= "Chisq")
+
+
+int_2 %>% 
+  left_join(au_meaning, by = "AU") %>% 
+  filter(!is.na(df)) %>% 
+  ggplot(aes(x= video, y = prob,  group = judge)) + 
+  geom_point(aes(col= video)) + 
+  geom_line(alpha = 0.5, lty = "dashed") + 
+  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL, col= video), 
+                width = 0.2) + 
+  facet_grid(Meaning ~ judge, scales = "free",
+             labeller = label_wrap_gen(width = 5)) + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1), 
+        strip.text.y = element_text(angle = 0),
+        legend.position = "none") + 
+  xlab("video")
 
 int_3 %>%
-  left_join(au_meaning, by = c("AU" = "AU_number")) %>%
-  select(-Muscle) %>%
+  left_join(au_meaning, by = "AU") %>%
+  filter(!is.na(df)) %>%
+  ggplot(aes(x= video,y = prob,group= judge)) +
+  geom_point(aes(col = speaker)) +
+  geom_line(alpha = 0.5, lty = "dashed") +
+  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL, col = speaker),
+                width = 0.2,position = position_dodge(width = 0.3)) +
+  facet_grid(Meaning ~ judge, scales = "free",
+             labeller = label_wrap_gen(width = 5)) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+        strip.text.y = element_text(angle = 0),) +
+  xlab("video")
+
+int_3 %>%
+  left_join(au_meaning, by = "AU") %>%
   filter(!is.na(df)) %>%
   ggplot(aes(x = speaker, y = prob), position = position_dodge(width = 0.5)) +
   geom_point(alpha = 0.5) +
   geom_line(aes(group = judge, col = judge)) +
   # geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL),
   #               width = 0.2, alpha = 0.5) +
-  facet_grid(AU_meaning ~video, scales = "free")
+  facet_grid(Meaning ~video, scales = "free")
 
 int_3 %>%
-  left_join(au_meaning, by = c("AU" = "AU_number")) %>%
-  select(-Muscle) %>%
+  left_join(au_meaning, by = "AU") %>%
   filter(!is.na(df)) %>%
   ggplot(aes(x = speaker, y = prob, col = judge)) +
   geom_point(position = position_dodge(width = 0.3)) +
   geom_line(aes(group = judge),
             position = position_dodge(width = 0.3)) +
-  facet_grid(AU_meaning ~video, scales = "free")
+  facet_grid(Meaning ~video, scales = "free")
 
 
