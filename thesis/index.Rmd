@@ -34,17 +34,6 @@ load("data/au_tidy.rda")
 load("data/au_meaning.rda")
 load("data/au_imputed.rda")
 
-au_imputed <- au_imputed %>% mutate(
-  video = case_when(
-    video == "Nauru_a" ~ "Nauru-a",
-    video == "Nauru_b" ~ "Nauru-b",
-    video == "Rinehart_a" ~ "Rinehart-a",
-    video == "Rinehart_b" ~ "Rinehart-b",
-    video == "McKell" ~ "McKell",
-    video == "OKS" ~ "OKS",
-    video == "Parkes" ~ "Parkes",
-  )
-)
 ```
 <!-- 
 Edit these lines as appropriate.

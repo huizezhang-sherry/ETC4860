@@ -27,7 +27,7 @@ most_common <- au_tidy %>%
   arrange(-avg_presence) %>% 
   mutate(common = row_number()) %>% 
   mutate(most_common = as_factor(ifelse(common <=5, 1, 0))) %>% 
-  left_join(au_meaning, by = c("AU" = "AU")) %>% 
+  left_join(au_meaning, by ="AU") %>% 
   mutate(AU = as.factor(AU))
 
 most_common %>% 
