@@ -1,0 +1,34 @@
+- put the current work into words: data structure for each analysis 
+- find a way to dealing with missings 
+
+bootstrap across/ within judge_id/ video_id/ AU - realise it and put into word
+PCA judge_id/ video_id/ AU - mostly done
+
+strength and weekness of the treatment
+
+Penalsd LDA/ LASSO maybe in class variable - PCA
+
+Todo: 
+- clean up the `2.Magick & OpenFace` and `3.0csv_processing` - send di a copy of the data
+- write up the most common: reference the text analysis
+  - comparing should be the percentage within
+- write up intensity [tick]
+
+
+week 6:
+1. fix initial boxplot to have the line ot the max + scaled plot for vis mean
+2. write down math for the statistics computed in the presence and intensity plot
+*. write up a similar paragraph for presence, like the intensity one
+3. fix the data quality problem: `au_tidy`
+4. refine the data structure math: y is multivariate 
+5. more plots for 
+- intensity 
+- presence 
+- intensity 2
+
+
+
+6. modelling: 
+- P_{ik}: GLM binomial link
+- P_{ijk} 
+

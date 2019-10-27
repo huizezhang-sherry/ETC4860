@@ -1,0 +1,38 @@
+http://www.biostathandbook.com/multiplecomparisons.html: 
+
+ - Bonferroni correction:It is mainly useful when there are a fairly small number of multiple comparisons and you're looking for one or two that might be significant
+
+https://www.sciencedirect.com/science/article/pii/S1063458412007789
+- Second, when multiple independent hypotheses are tested, which usually is the case in a study or experiment, the risk that at least one of these tests will be false positive increases, above the nominal significance level, with the number of hypotheses tested
+
+- Third, a statistically insignificant difference between two observed groups (the sample) does not indicate that this effect does not exist in the population from which the sample is taken .... A statistically insignificant outcome indicates nothing more than that the observed sample is too small to detect a population effect. A statistically insignificant outcome should be interpreted as “absence of evidence, not evidence of absence”6.
+
+- Two means may well be statistically significantly different and still have somewhat overlapping confidence intervals. Overlapping confidence intervals can therefore not be directly interpreted in terms of statistical significance
+
+- confidence intervals are often misunderstood as representing variability of observations instead of uncertainty of the sample estimate. 
+
+ 
+ 
+https://academic.oup.com/her/article/14/6/713/745885 
+
+When significant: 
+  - is significant 
+  - not significant: a false positive - type one error 
+When insignificant: 
+  - truly insignificant 
+  - significant: a false negative - type two error 
+  
+  
+To increase power, thus reduce type two error - increase sample size 
+
+Confidence interval as another way to explain the precision of sample statistics 
+
+The advocacy of confidence interval estimation for presentation of results in scientific journals is not new [see, e.g. (Yates, 1951; Savage, 1957; Rozeboom, 1960; Gardner and Altman, 1986; Simon, 1986; Bulpitt, 1987)] 
+
+
+
+
+Summary: 
+- if you want to use p-value - has to deal with false positive and false negative rate with adjustment i.e. bonferroni correction
+
+- better to use confidence interval to represent uncertainty of the sample estimates 
