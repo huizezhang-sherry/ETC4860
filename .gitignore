@@ -2,26 +2,15 @@
 .Rhistory
 .RData
 .Ruserdata
-rblogger.png
-Research_habit.html
-Research_habit.Rmd
-POST using httr.Rmd
-google_api_key
-tensorflow_in_r.Rmd
-Taipan.Rmd
-goog_oks.json
-app
-Taipan.Rmd
-background.nb.html
-compare_x_X.R
-paintings.R
-videos
+app/
+videos/
+cropped/
+csv/
+data/
+dt/
+notes/
 presentation
-demo_nauru-a.mp4
 Presentation.html
-0.thesis.log
-0.thesis_cache
-0.thesis_files
 ETC4860_Outline_2019 (1).pdf
 4.1AU.html
 4.1AU_cache
@@ -36,4 +25,4 @@ ETC4860_Outline_2019 (1).pdf
 3.2EDA_nauru_a_files
 4.3vis_tech.html
 README_files
-notes/
+ci_sim_1.pdf
