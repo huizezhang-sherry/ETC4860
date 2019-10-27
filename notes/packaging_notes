@@ -1,6 +1,0 @@
-list all the dependencies as an import 
-put R version in the depends field 
-
-    use_package("tidyr", pkg = "datasummary")
-    
-Travis CI can be set up to run checks every time you update your code.
