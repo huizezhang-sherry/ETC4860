@@ -3,14 +3,13 @@ chapter: 3
 knit: "bookdown::render_book"
 ---
 
-\newpage
 
-## Choice of action unit to include
+## Filtering action units
 
 
 The number of action unit to include in the model is a matter of choice. The discussion of this choice is to ensure the model is parsimonious, that is, a model has the smallest number of variables but with greatest explanatory power. Random effect is a way to deal with large number of factor levels of a variable, but in our context, we are only interested in the action units with a certain mean presence and intensity for most of the judges. 
 
-The mean presence and intensity score for each action unit is computed and the action units to include in the model are the ones that appear in the top 10 action unit in both mean presence and intensity rank. This ensures that these action units have both relativcely high intensity and presence score. A list of included action units along with their meaning and related emotions are presented in Table \ref{tab:au-included} 
+The mean presence and intensity score for each action unit is computed and the action units to include in the model are the ones that appear in the top 10 action unit in both mean presence and intensity rank. This ensures that these action units have both relatively high intensity and presence score. A list of included action units along with their meaning and related emotions are presented in Table \ref{tab:au-included} 
 
 ```{r au-included, results = 'asis'}
 int <- au_tidy %>% group_by(AU) %>% 
@@ -36,13 +35,14 @@ knitLatex::xTab(au_selected, booktabs = TRUE, caption.top = "\\label{tab:au-incl
   
 ```
 
-\newpage
 
-## Modelling result for presence & intensity
+## Modelling result for presence 
 
-### Model fitting and ANOVA
+### Model comparison
 
-The three models in Equation \ref{eq:judge_au}, \ref{eq:judge_video} and \ref{eq:judge_speaker} have been fitted and ANOVA test is performed to choose the best model. In Table \ref{tab:anova-1}, the deviance of model 1 and 2 are compared and the p-value rejects the null hypothesis that model 1 and model 2 are the same. The comparison of model 2 and model 3 is presented in Table \ref{tab:anova-2}. A conservative approach is taken and not rejecting the null hypothesis that model 3 is too much different from model 2. Thus, model 2 is chosen as our final model for modelling presence. 
+The three models in Equation \ref{eq:judge_au}, \ref{eq:judge_video} and \ref{eq:judge_speaker} have been fitted and ANOVA test is performed to choose the best model. The ANOVA result for comparing Model 1 and 2 is presented in Table \ref{tab:anova-1}. After incorporating the main effect of case and its interaction with judge in Model 2, the degree of freedom is reduced by 61. This has a significant improvement on the model since the p-value (1e-88) is close to zero, indicating the null hypothesis that Model 1 and Model 2 are the same is rejected. 
+
+The ANOVA result between Model 2 and Model 3 is presented in Table \ref{tab:anova-2}. The additional six variables associated with speakers in Model 3 have improved the model at 95% significance level since the p-value (0.027) is less than 0.05, however, at 99% significicance level, this improvement is not significant. Model 2 is chosen as the final model because the interpretation of video-wise effect using Model 2 after post-model analysis provides more interesting findings about the expressions of the Justices than the speaker-wise effect using Model 3. 
 
 ```{r}
 model_dt <- au_tidy %>%
@@ -51,7 +51,7 @@ model_dt <- au_tidy %>%
   mutate(judge = fct_relevel(judge, c("Edelman", "Keane", "Kiefel",
                                       "Nettle", "Gageler", "Bell")),
          video = fct_relevel(video, c("Nauru-a", "Nauru-b", "Rinehart-a",
-                                      "Rinehart-b", "McKell", "OKS", "Parkes")),
+                                      "Rinehart-b", "Parkes", "McKell", "OKS")),
          AU = fct_relevel(AU, "AU01"))
 
 binomial_model_1 <- glm(presence ~ judge*AU,
@@ -69,11 +69,33 @@ binomial_model_3 <- glm(presence ~ judge*speaker + judge*video +
 ```
 
 ```{r anova-1, results='asis'}
-knitLatex::xTab(format(anova(binomial_model_1, binomial_model_2, test = "Chisq"), digits = 4), booktabs = TRUE, caption.top = "\\label{tab:anova-1}this is the caption")
+
+anova1 <- tibble(Model = c("Model 1", "Model 2")) %>%
+  bind_cols(as.tibble(anova(binomial_model_1, 
+                        binomial_model_2, 
+                        test = "Chisq"))) %>% 
+  mutate(Df = ifelse(!is.na(Df), Df, " "))%>%
+  mutate(Deviance = ifelse(!is.na(Deviance),
+                        format(Deviance, digits = 2,), " ")) %>%
+  mutate(`Pr(>Chi)` = ifelse(!is.na(`Pr(>Chi)`),
+                        format(`Pr(>Chi)`, digits = 2,), " ")) 
+  
+knitLatex::xTab(anova1, booktabs = TRUE, caption.top = "\\label{tab:anova-1}Model comparison using ANOVA for Model 1 and 2. The inclusion of video related variables in Model 2 decreases the degree of freedom by 61 while provides a significant improvement on the model as indicated by the p-value. ")
 ```
 
 ```{r anova-2, results='asis'}
-knitLatex::xTab(format(anova(binomial_model_2, binomial_model_3, test = "Chisq"), digits = 4), booktabs = TRUE, caption.top = "\\label{tab:anova-2}this is the caption")
+
+anova2 <- tibble(Model = c("Model 2", "Model 3")) %>%
+  bind_cols(as.tibble(anova(binomial_model_2, 
+                        binomial_model_3, 
+                        test = "Chisq"))) %>% 
+  mutate(Df = ifelse(!is.na(Df), Df, " "))%>%
+  mutate(Deviance = ifelse(!is.na(Deviance),
+                        format(Deviance, digits = 2,), " ")) %>%
+  mutate(`Pr(>Chi)` = ifelse(!is.na(`Pr(>Chi)`),
+                        format(`Pr(>Chi)`, digits = 2,), " ")) 
+  
+knitLatex::xTab(anova2, booktabs = TRUE, caption.top = "\\label{tab:anova-2}The model comparison result of Model 2 and Model 3 using ANOVA. The inclusion of six speaker related main and interaction effects contribute to improve the model. However, this is not significant at 99\\% significant level. Model 2 is chosen as the final model because the interpretation of video effect provides more interesting findings about the facial expressions of the Justices. ")
 ```
 
 
@@ -96,32 +118,19 @@ knitLatex::xTab(format(anova(binomial_model_2, binomial_model_3, test = "Chisq")
 
 ### Residual Diagnostics and post-model analysis 
 
-Residual analysis is performed on model 2 to illustrate the fitness of the model. In Figure \ref{fig:resid}, the left panel shows the residuals for each Justice in a boxplot and one can observe that the residuals are around zero. On the right panel, the residuals are plotted as dots and there is no obvious pattern shown in the residuals. This indicates model 2 has a good fit.
-
-```{r resid, fig.cap="Residual diagnostics for model 2. "}
-diag <- augment(binomial_model_2, 
-                type.pred = "response", type.resid = "response") %>% 
-  mutate(ind = row_number())
-
-p1 <- diag %>% ggplot(aes(x = judge, y = .resid, group = judge)) + geom_boxplot()
-
-p2 <- diag %>% ggplot(aes(x = judge, y = .resid)) + geom_point()
-
-p1 + p2
-```
-
+The residuals of Model 2 are plotted against variable judge and video in Figure \ref{fig:resid-judge} and \ref{fig:resid-video} in the Appendix. There is no obvious pattern shown in the residuals for different Justices or videos, which indicates adequate fit. 
 
 The estimated marginal mean is computed and presented in Table \ref{tab:result-2} in the Appendix due to its length. The `prob` column can be interpreted as after averaging over all the videos and speaking parties, the estimated mean probability for judge Edelman in action unit AU02 is 0.95, with a 95% confidence interval of [0.92, 0.97]. Notice that confidence intervals for a generalised linear model is asymmetric around the estimates because the linear symmetric interval of the mean has been transferred via the inverse of link function to get the confidence interval for the response. 
 
 ### The presence of facial expression of the justices by video
 
-The 95% confidence interval after bonferroni adjustment is plotted in Figure \ref{fig:model2-plot}. In general, most of the intervals for the same judge in the same action unit are overlapping with each other on the vertical axis, while there are some non-overlappings highlights the potential inconsistency of the facial expressions of the Justices. 
+The 95% confidence interval after bonferroni adjustment is plotted in Figure \ref{fig:model2-plot}. In general, most of the intervals for the same judge in the same action unit are overlapping with each other on the vertical axis, while there are some non-overlappings highlight the potential inconsistency of the facial expressions of the Justices. 
 
-Justice Edelman and Keane behave consistently throughout all the videos, while they both seem to express significantly less in action unit 5 (upper lid raiser) in the OKS case. Justice Nettle has relatively low expression of action unit 4(brow lowerer) in case Rinehart-a. Gageler shows a consistently high number of expressions in case OKS for action unit 15 (lip corner depressor) and action unit 20 (lip stretcher). 
+Justice Edelman and Keane behave consistently throughout all the videos, while they both seem to express significantly less in action unit 5 (upper lid raiser) in the OKS case. Justice Nettle has relatively low expression of action unit 4 (brow lowerer) in case Rinehart-a. Gageler shows a consistently high number of expressions in case OKS for action unit 15 (lip corner depressor) and action unit 20 (lip stretcher). 
 
-Bell presents similar reactions to Gageler, showing a significantly higher proportion of emotions associated with action unit 1 (inner brow raiser), 14(dimpler), 15 (lip corner depressor) and 20 (lip stretcher) in case OKS. Bell also  exhibits less presence of action unit 07 (lid tightener) and 20 (lip stretcher) in case Parkes. 
+Bell presents similar reactions to Gageler, showing a significantly higher proportion of emotions associated with action unit 1 (inner brow raiser), 14 (dimpler), 15 (lip corner depressor) and 20 (lip stretcher) in case OKS. Bell also  exhibits less presence of action unit 07 (lid tightener) and 20 (lip stretcher) in case Parkes. 
 
-```{r model2-plot, fig.cap="The confidence interval for estimated mearginal mean for presence"}
+```{r model2-plot, fig.cap="The 95\\% confidence interval for estimated mearginal mean for presence after bonferroni adjustment. The x axis represents video and the y axis represents the estimated marginal mean of an action unit being observed. The facet shows the Justices in columns and action units in rows. "}
 emmean_obj_2 <- emmeans(binomial_model_2, c("judge", "video", "AU"),
                         type = "response")
 
@@ -144,6 +153,7 @@ int_2 %>%
 
 ```    
 
+## Modelling result for intensity
 
 ### The intensity of facial expression of the justices by video
 
@@ -151,7 +161,7 @@ The two part model in equation \ref{eq:two-part1} is estimated for the intensity
 
 Action unit 5 (upperlid raiser) and 20 (lip stretcher) are exhibited significantly more intense for Justices Gageler in case OKS. The mean for brow lowerer (AU04) seems to higher than those in other cases for Justices Gageler but this result is not significant. 
 
-For Justice Bell, the intensity of inner brow raiser (AU01), upper lid raiser (AU05), Dimpler (AU14) and Lip stretcher (AU20) are also significantly higher in case OKS
+For Justice Bell, the intensity of inner brow raiser (AU01), upper lid raiser (AU05), dimpler (AU14) and Lip stretcher (AU20) are also significantly higher in case OKS. 
 
 
 ```{r intensity-data}
@@ -177,7 +187,7 @@ m2 <- glm(intensity ~ judge*video + judge*AU + video*AU,
           family = Gamma(link = "log"))
 ```
 
-```{r intensity-video, fig.cap="The confidence interval for estimated mearginal mean for intensity"}
+```{r intensity-video, fig.cap="The 95\\% confidence interval for estimated mearginal mean for presence after bonferroni adjustment. The x axis represents video and the y axis represents the estimated marginal mean of the intensity. The facet shows the Justices in columns and action units in rows. "}
 
 emmean_m2 <-  emmeans(m2, c("judge", "video", "AU"), type = "response")
 int_2i <- confint(emmean_m2, by = c("judge", "AU"), adjust = "bonferroni") # the by argument prescribe

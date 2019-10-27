@@ -5,18 +5,18 @@ knit: "bookdown::render_book"
 
 # Data Collection
 
-## Data Processing
+## Data processing
 
-The audio visual recordings of cases discribed heard by the High Court of Australia [@highcourtau] are available on the High Court of Australia website. These videos displayed the Justices' faces above the required level of resolution of the OpenFace software, more than 30px. 
+The audio visual recordings of cases described heard by the High Court of Australia [@judicalguid] are available on the High Court of Australia website. These videos displayed the Justices' faces above the required level of resolution of the OpenFace software, more than 30 pixels. 
 
-To analyse the facial expressions of the Justices the videos must be processed by OpenFace. To download videos from the High Court of Australia [@highcourtau] the software Youtube-dl [@youtube-dl] was used. Image frames were extracted from each of the videos, at every one minute interval via ffmpeg [@ffmpeg], this resulted in in 1021 image frames.
+To analyse the facial expressions of the Justices the videos must be processed by OpenFace. To download videos from the High Court of Australia [@judicalguid] the software Youtube-dl [@youtube-dl] was used. Image frames were extracted from each of the videos, at every one minute interval via ffmpeg [@ffmpeg], this resulted in in 1021 image frames.
 
 The Justices remain seated in the same position throughout the hearings, this means the same region of every image can be extracted to form a set of images containing each individual Justice. Taipan [@Taipan] is used to find the x-y coordinates of a box denoting the location of the Justices in each image frame. ImageMagick [@ImageMagick] was used to crop the face of each Justice from each image frame based on the coordinates from Taipan.
 
 The resulting 4601 cropped regions containing Justice's faces are then sent to OpenFace [@baltrusaitis2018openface] to be processed. The results provided by OpenFace contained facial variables, these include facial landmarking, head pose, eye gaze and action units. The results are stored as separate comma-separated values (csv) files for each of the 4601 faces and post-processing is done in R to combine the separate csv files into a dataframe with additional index columns for frame, judge and video. 
 The workflow to obtain the facial landmarks and expression information from the source videos has been displayed in Figure \ref{fig:workflow}. 
 
-```{r fig.cap="This is an illustration of the workflow for extracting facial variables from videos. \\label{fig:workflow}"}
+```{r fig.cap="An illustration of the workflow for extracting facial variables from videos. \\label{fig:workflow}"}
 include_graphics("figures/workflow.png", dpi = 128)
 ```
 
@@ -31,7 +31,7 @@ OpenFace provides more than 711 variables measuring different aspects of a given
  - **Action Unit**: An action unit is used to describe the movement of a single facial muscle. 
 
 
-The human facial expression can be deconstructed into a combination of action units. For example, happiness is the addition of action unit 6 and 12, which can be described as a raising check and a pull on the lip corner respectively. The Facial Action Coding System (FACS) is the common standard for describing facial expressions via anatomically decomposing a emotion into action units. To decompose an emotion of sadness, three action units are utilised. Action unit 01 describes the raise of inner brow; action unit 04 describes the general lower of brow and action unit 15 depicts the lower of lip corner. The subset of action units OpenFace is able to recognise is provided in Table \ref{tab:au} in the Appendix, along with their meaning and related emotions.  
+The human facial expression can be de-constructed into a combination of action units. For example, happiness is the addition of action unit 6 and 12, which can be described as a raising check and a pull on the lip corner respectively. The Facial Action Coding System (FACS) is the common standard for describing facial expressions via anatomically decomposing a emotion into action units. To decompose an emotion of sadness, three action units are utilised. Action unit 01 describes the raise of inner brow; action unit 04 describes the general lower of brow and action unit 15 depicts the lower of lip corner. The subset of action units OpenFace is able to recognise is provided in Table \ref{tab:au} in the Appendix, along with their meaning and related emotions.  
 
 ## Data format
 
@@ -41,34 +41,31 @@ The data can be expressed in the long format with action unit as an index and pr
 long <- au_imputed %>%
         filter(judge == "Edelman", video == "McKell", frame <=1, AU != "AU28") 
 
-knitLatex::xTab(format(as.data.frame(long), digits = 2), booktabs = TRUE, caption.top = "\\label{tab:long} This table is an illustration of the data for Justices Edelman in case McKell for all the action units in the first frame in long format.")
+knitLatex::xTab(format(as.data.frame(long), digits = 2), booktabs = TRUE, caption.top = "\\label{tab:long} An illustration of the data format for Justices Edelman in case McKell for all the action units in the first frame in long format.")
 
 ```
 
 
-```{r ts-plot, fig.cap="The plot shows the intensity and presence score of action unit 01 for Justices Edelman in case McKell as time series."}
+```{r ts-plot, fig.cap="The intensity and presence score of action unit 01 for Justices Edelman in case McKell is graphed against time (frame number) as line chart. The intensity is a numerical variable while presence is binary variable takes value of 0 when the action uit is not present and 1 otherwise."}
 au_imputed %>% 
         filter(judge == "Edelman", video == "McKell", AU == "AU01") %>% 
         gather(type, value, c(presence, intensity)) %>% 
-        ggplot(aes(x =frame, y = value, col = type)) + 
+        ggplot(aes(x =frame, y = value)) + 
         geom_line() + 
         geom_point() + 
-        facet_wrap(vars(type), nrow = 2, scales = "free")
+        facet_wrap(vars(fct_relevel(type, c("presence","intensity"))), nrow = 2, scales = "free")
 ```
 
 
 ## Missing value imputation 
 
-The missing value structure in the dataset has been explored to examine possible relationships between the missing values and judicidal behaviour. 
-This could be influenced by the Justices reading materials on their desk, resulting in their face not being captured in a particular frame, or faces that are not detectable due to the given resolution of the video stream.
-Simply drop the missing observations will cause the time interval to be irregular, to prevent this imputation is used. 
+Missing values occur in the data whenever the justice is not looking straight ahead. This might occur when they are reading materials on their desk, or perhaps if conversing with their legal assistant behind them. It can also occur when there are five judges on a case, and the video resolution is not sufficiently high to detect the face or action units. The data structure that we created specifically places an NA in these positions. This has allowed us to examine the pattern of missings and check it happens more often in some recognisable way, for example when an appellant is speaking. We did not find any over-arching pattern, and thus have used a simple procedure to impute missings for intensity, which was then used to impute presence.
 
-Intensity is a continuous variable ranging from zero or five measuring how strong the action unit is presented. The missing values of intensity are related to missing values in presence. Intensity being zero means the action unit is not present, being one means the action unit is present at minimum intensity and being five means teh action unit is present at maximum intensity. Linear interpolation function (`na.interp()`) from `forecast` package is used to impute Intensity. The missing value of presence is then imputed based on if the intensity score of the missing observations are greater than one. 
+Intensity is a continuous variable ranging from zero or five measuring how strong the action unit is presented. The missing values of intensity are related to missing values in presence. Intensity being zero means the action unit is not present, being one means the action unit is present at minimum intensity and being five means the action unit is present at maximum intensity. Linear interpolation function (`na.interp()`) from `forecast` package is used to impute Intensity. The missing value of presence is then imputed based on if the intensity score of the missing observations are greater than one. 
 
-## Source Code 
+## Source code 
 
-It is difficult to source reliable facial data of the Justices, the data processing procedure defined above is integral to sourcing and analysing a reliable data set. The workflow has been scripted and is made available in a github repository. This open source contribution enables reproducibility for this work if a re-processing is needed, or more videos are available. This can also be used and extended by other researchers.
-
+Source code for this data pre-processing is available at https://github.com/huizezhang-sherry/ETC4860/data_pre_processing.
 
 \let\cleardoublepage\clearpage
 

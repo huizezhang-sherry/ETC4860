@@ -3,7 +3,7 @@ chapter: 2
 knit: "bookdown::render_book"
 ---
 
-# Methodology
+# Methodology{#Ch:method}
 
 ## Notation
 
@@ -11,7 +11,7 @@ Let $\mathbf{X}$ be a matrix of predictors, and $\mathbf{Y}$ variable in our cas
 
 - $X_1$ indicates `judge` with six categories $i = 1,2, \cdots, 6$
 - $X_2$ indicates `video` for each of the seven cases, $j = 1,2, \cdots, 7$
-- $X_3$ indicates action unit containing 18 possible facial expression.  
+- $X_3$ indicates action unit containing 18 possible facial expression. 
 - $X_4$ indicates `speaker`, either the appellant or respondent, $l=1,2$
 - $X_5$ indicates `frame` corresponding to time, $t = 1,2, \cdots, T_j$
 
@@ -23,11 +23,11 @@ $$Y_{ijklt} = \mu + \alpha_i + \beta_j + \gamma_k + \delta_l + \varepsilon_{ijkl
 
 \noindent Also, let $P_{jitkl}$ represent the response variable presence, and $I_{jitkl}$ represent the response variable intensity. This notation will be helpful for defining the plots and models explained in this section.
 
-## Modelling Presence
+## Modelling presence
 
 ### Model structure
 
-The presence score is a binary variable that is one when a particular action unit is observed and zero if not. This suggests using a logistic model and we implement this using the `glm()` function from base R. The link function of a matter of choice in the `glm()` function and the logit link is chosen because it is the canonical link of the binomial family. An alternative link could be a probit link but theoratically, these two links give very similar result in terms of prediction @faraway2016extending. The structure of the model is written as in Equation \ref{eq:logit-structure} with the first equation linking the mean of the presence to the linear prediction and the second equation specifying the linkage between $\eta$ to the predictors. The next section will specify three different function form of the linear predictor by introducing different variables and interactions. 
+The presence score is a binary variable that is one when a particular action unit is observed and zero if not. This suggests using a logistic model and we implement this using the `glm()` function from base R. The link function of a matter of choice in the `glm()` function and the logit link is chosen because it is the canonical link of the binomial family. An alternative link could be a probit link but theoretically, these two links give very similar result in terms of prediction [@faraway2016extending]. The structure of the model is written as in Equation \ref{eq:logit-structure} with the first equation linking the mean of the presence to the linear prediction and the second equation specifying the linkage between $\eta$ to the predictors. The next section will specify three different function form of the linear predictor by introducing different variables and interactions. 
 
 \begin{align}\label{eq:logit-structure}
 \mu &= \frac{e^{\eta}}{1 + e^{\eta}} \\
@@ -60,14 +60,14 @@ Build upon the second model, the third model is aimed to capture the speaker-wis
 \eta_{ijkl} &= \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\delta)_{il}
 \end{align}
 
-### Analysis of variance (ANOVA) 
+### Model comparison
 
 The analysis of variance (ANOVA) [@faraway2016extending; @gelman2006data] is a statistical method that can be used to compare different models. Different packages in R conduct ANOVA test: `anova()` and `drop()` from base R, `Anova()` from `car` package and `aov()` from `stats` package. We use the base R `anova()`  function to compare the three models via chi-square tests.
 
 
-## Modelling Intensity 
+## Modelling intensity 
 
-The intensity score is a continuous variable starts from zero when the action unit is not present to 5, where an action unit is presented at maximum intensity. A histogram of the intensity is plotted in Figure \ref{fig:intensity} and the distribution has a high proportion of zeros with highly skewed continuous  value.  This type of data is the so-called semi-continuous data [@Neelon2019; @twopart2010]. The semi-continuous data can be modelled in the econometrics literature by the two part model[@cragg1971some; @manning1981two]. In the two part model, the data is viewed to be generated via a sequential modelling technique, which is a mixed distribution of 
+The intensity score is a continuous variable, with 0 indicating an action unit is not present to a maximum intensity of 5. A histogram of the intensity is plotted in Figure \ref{fig:intensity} and the distribution has a high proportion of zeros with highly skewed continuous  value.  This type of data is the so-called semi-continuous data [@twopart2010]. The semi-continuous data can be modelled in the econometrics literature by the two part model [@cragg1971some]. In the two part model, the data is viewed to be generated via a sequential modelling technique, which is a mixed distribution of 
 
 - a logistic model of if Y = 0 or not, and 
 - a specific model for the conditional distribution of $y \mid y > 0$. 
@@ -88,7 +88,7 @@ The two part model has a general structure as in Equation \ref{eq:two-part-gener
 E(I \mid I > 0) &= f(\alpha_i, \beta_j, \gamma_k, \delta_l)
 \end{align}
 
-\noindent The first two equations capture the logistic link and its linear predictor. The next two specify the functional form of the conditonal distribution. The functional form of the conditional distribution need to be able to capture the highly skewed nature of the non-zero observations. A convention approach is to assume the conditional distribution is a lognormal distribution [@manning1981two; @diehr1999methods]. More recent literature proposes the use of gamma or generalised gamma regression model for the conditional distribution [@twopart2010]. Gamma regression is used to because it could also capture the right skewness and it is easier to implement via the `glm()` function. The log link function is used because the canonical inverse link for gamma distribution will cause some estimated marginal mean to be extremely high and thus meaningless for intensity score.  
+\noindent The first two equations capture the logistic link and its linear predictor. The next two specify the functional form of the conditional distribution. The functional form of the conditional distribution need to be able to capture the highly skewed nature of the non-zero observations. A convention approach is to assume the conditional distribution is a lognormal distribution [@manning1981two; @diehr1999methods]. More recent literature proposes the use of gamma or generalised gamma regression model for the conditional distribution [@twopart2010]. Gamma regression is used to because it could also capture the right skewness and it is easier to implement via the `glm()` function. The log link function is used because the canonical inverse link for gamma distribution will cause some estimated marginal mean to be extremely high and thus meaningless for intensity score.  
 
 The linear predictor of the conditional intensity that includes video and relevant interactions is written in Equation \ref{eq:two-part1}.
 
@@ -103,21 +103,19 @@ E(I_{ijkl} \mid I_{ijkl} > 0) &= \mu + \alpha_i + \beta_j +\gamma_k + \delta_l +
 \end{align}
 
 
-## Post-Model Analysis
+## Post-model analysis
 
 The estimates of variables from the model summary are not particularly useful in our case. This is because firstly, the estimates of the coefficient are not interpretable in the logistic regression. Secondly, we are interested in whether the mean for each treatment is same or different. To assess which level of the factor is different requires post-model analysis.
 
 ### Estimated Marginal Mean (EMM)
 
-The estimated marginal mean [@gelman2006data] is the fitted value from a model over the treatmetn effects. In our data, the treatment effects include judge, video and action unit. The estimated marginal mean is computed using `emmean()` from the `emmenas` package. The probability from estimated marginal mean have a nice interpretation as the estimated probability of presence score for a particular combination of action unit, judge and video. This output allows us to compare how the estimated presence probabilities of each judge, video and action unit combination are different or similar from each other. 
+The estimated marginal mean [@gelman2006data] is the fitted value from a model over the treatment effects. In our data, the treatment effects include judge, video and action unit. The estimated marginal mean is computed using `emmean()` from the `emmenas` package. The probability from estimated marginal mean have a nice interpretation as the estimated probability of presence score for a particular combination of action unit, judge and video. This output allows us to compare how the estimated presence probabilities of each judge, video and action unit combination are different or similar from each other. 
 
 
 <!-- - good to know that: typically the tests and confidence intervals are asymptotic (because of using z score). Thus the df column for tabular results will be Inf.[have a look at the confidence interval for glm: https://cran.r-project.org/web/packages/emmeans/vignettes/models.html] -->
 
 
 ### Confidence Interval Adjustment
-
-Testing significance based on p-value has been long criticised for its interpretation. Researchers can erroneously conclude significance because of p-value being less than 0.05 without discussing the false positive/negative proportion. On the other hand, confidence interval provides a confidence range for the estimates to highlight the uncertainty around estimation. Thus confidence interval is used to compare whether the estimated mean for a particular judge-AU group is same or different across videos based on if the intervals overlap with each other. 
 
 The confidence intervals computed from the `emmean()` function need to be adjusted for simultaneous inference. A 5% significance level indicates if we conduct 100 tests simultaneously, about 5 tests will show significance out of randomness. This is a problem we need to pay attention to when comparing the estimated presence probability or we may wrongly conclude judges has a different facial expression than others but they are actually not. 
 

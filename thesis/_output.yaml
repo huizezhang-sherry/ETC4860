@@ -1,6 +1,7 @@
 bookdown::pdf_book:
   includes:
     in_header: preamble.tex
+    after_body: "A-appA.Rmd"
   template: monashthesis.tex
   fig_caption: yes
   fig_height: 3.8

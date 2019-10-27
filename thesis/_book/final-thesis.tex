@@ -39,7 +39,7 @@
 \chapter*{Acknowledgements}\label{acknowledgements}}
 \addcontentsline{toc}{chapter}{Acknowledgements}
 
-I would like to express my gratitude to Professor Di Cook, my supervisors, for detailed guidance and kindness support thorughout and Professor Russell Smyth for raising the idea of this project. I would like to appreciate Stephanie Kobakian, with whom I have countless discussion with about the project. I would also like to extend my thank to my friends, colleages and family for standing behind me unconditionally.
+I would like to express my gratitude to Professor Di Cook, my supervisors, for detailed guidance and kindness support throughout and Professor Russell Smyth for raising the idea of this project. I would like to appreciate Stephanie Kobakian, with whom I have countless discussion with about the project. I would also like to extend my thank to my friends, colleagues and family for standing behind me unconditionally.
 
 \let\cleardoublepage\clearpage
 
@@ -57,7 +57,7 @@ I hereby declare that this thesis contains no material which has been accepted f
 \addcontentsline{toc}{chapter}{Abstract}
 
 It is part of human nature to react to change by expressing emotions. However in some situations it is necessary to attempt to restrict reactions, and expressions of emotions.
-In many court systems it is required that Justices, or Judges, restrict emotional displays and ensure the judgement is not biased towards a particular party.In this study, facial recognition software is used to objectively assess the facial expressions of six Justices in seven cases heard in the High Court of Australia. Facial information derived by the software is applied in a logistic model to find the presence of a selected range of action units. The intensity of the action units is modelled by a two part model. It is observed that the Justices generally remain impartial during the court proceedings. Negative emotions such as sadness, fear and anger are associated with action units that occur more intensely or frequently. The requirement to remain expressionless is difficult for some Justices, especially in criminal cases that involve drugs and sexual assults.
+In many court systems it is required that Justices, or Judges, restrict emotional displays and ensure the judgement is not biased towards a particular party.In this study, facial recognition software is used to objectively assess the facial expressions of six Justices in seven cases heard in the High Court of Australia. Facial information derived by the software is applied in a logistic model to find the presence of a selected range of action units. The intensity of the action units is modelled by a two part model. It is observed that the Justices generally remain impartial during the court proceedings. Negative emotions such as sadness, fear and anger are associated with action units that occur more intensely or frequently. The requirement to remain expressionless is difficult for some Justices, especially in criminal cases that involve drugs and sexual assaults.
 
 \clearpage\pagenumbering{arabic}\setcounter{page}{1}
 \let\cleardoublepage\clearpage
@@ -68,7 +68,7 @@ In many court systems it is required that Justices, or Judges, restrict emotiona
 \hypertarget{background-and-motivation}{%
 \section{Background and motivation}\label{background-and-motivation}}
 
-The decisions of Justices have always been a source of debate and discussion. Since the realist movement in the United States emerged in the 1930s, many attempts have been made to predict decisions using specific characteristics of the Justicces such as gender, political views, and religious backgrounds. More recently, scholars \autocites{Shullman2004illusion}{chen2018justice} have utilised Audio Visual (AV) recordings and transcripts to predict the outcome of cases in the U.S. Supreme Court. \textcite{tutton2018judicial} have used an ethnographic approach to present an observational study of judicial behaviour, based on manually watching the audio footage and taking notes when an obvious emotion is observed. Manually observing the AV recordings may lead to subjective evaluations of facial expression and this motivates us to extend \textcite{tutton2018judicial}'s work and employ facial recognition technology to study the facial expression of the justices to obtain objective judgements.
+The decisions of Justices have always been a source of debate and discussion. Since the realist movement in the United States emerged in the 1930s, many attempts have been made to predict decisions using specific characteristics of the Justices such as gender, political views, and religious backgrounds. More recently, scholars \autocites{Shullman2004illusion}{chen2016justice} have utilised Audio Visual (AV) recordings and transcripts to predict the outcome of cases in the U.S. Supreme Court. \textcite{tutton2018judicial} have used an ethnographic approach to present an observational study of judicial behaviour, based on manually watching the audio footage and taking notes when an obvious emotion is observed. Manually observing the AV recordings may lead to subjective evaluations of facial expression and this motivates us to extend \textcite{tutton2018judicial}'s work and employ facial recognition technology to study the facial expression of the justices to obtain objective judgements.
 
 \hypertarget{literature-review}{%
 \section{Literature review}\label{literature-review}}
@@ -78,7 +78,7 @@ The literature summary is divided into two parts: (1) current work in legal stud
 \hypertarget{legal-study-from-a-behaviour-perspective}{%
 \subsection{Legal study from a behaviour perspective}\label{legal-study-from-a-behaviour-perspective}}
 
-There is comprehensive law, economics and political science literature that attempts to predict how the Justices will vote in court cases. This literature considers characteristics of the Justices and characteristics of the parties in the case; these include gender, political views, religious background of Justices or gender and race of the defendant in criminal cases \autocites{Stuart1962}{Peter1984}{Combining1987}{Susan1988}{Steffensmeier2001}{Kulik2003}.
+There is comprehensive law, economics and political science literature that attempts to predict how the Justices will vote in court cases. This literature considers characteristics of the Justices and characteristics of the parties in the case; these include gender, political views, religious background of Justices or gender and race of the defendant in criminal cases \autocites{Stuart1962}{Peter1984}{Combining1987}{Steffensmeier2001}{Kulik2003}.
 
 Many studies depart from static characteristics of Justices to incorporate the language used by the them in the court to predict the decision of the Justices.
 \textcite{black2011emotions} have studied the use of pleasant and unpleasant language by the Justices and \textcite{Shullman2004illusion} and \textcite{johnson2009inquiring} have studied the effect of frequency and content of Justices' questions. \textcite{epstein2010inferring} use a regression analysis involving the number of questions asked by the Justices to predict the winning party in a case.
@@ -98,9 +98,9 @@ The literature often considers the U.S. Supreme Court Database and far less stud
 \hypertarget{facial-recognition}{%
 \subsection{Facial recognition}\label{facial-recognition}}
 
-An anatomical study of the decomposition of facial muscles by \autocite{ekman1976measuring} led to the development of Facial Action Code (FAC) \autocite{ekman1978} and identification of the six universal emotions on human faces. This work has laid a solid foundation for analysing facial expression and developing facial recognition software \autocites{Kobayashi1992}{huang1997}{lien2000}{Kappoor2003}{Tong2007}{Cohn2009}{Lucey2010}.
+An anatomical study of the decomposition of facial muscles by \textcite{ekman1976measuring} led to the development of Facial Action Code (FAC) and identification of the six universal emotions on human faces. This work has laid a solid foundation for analysing facial expression and developing facial recognition software \autocites{huang1997}{Tong2007}.
 
-To analyse facial expressions, effective facial recognition capture technology is needed to extract faces from images. Facial recognition software DeepFace \autocite{taigman2014deepface} from Facebook and FaceNet \autocite{schroff2015facenet} from Google have been developed for face detection in search and social media platforms. OpenFace \autocite{baltrusaitis2018openface} is the first open-sourced face recognition software that provides facial expression detection, including facial landmarking, head pose estimation, eye gaze tracking and facial action unit detection. The OpenFace toolkit has been used in different area in research including depression classification \autocites{yang2016decision}{nasir2016multimodal}, emotion studies \autocites{Pan2018}{Nasir2016}{Huber2018} and even sports analytics. \autocite{kovalchik2018going}.
+To analyse facial expressions, effective facial recognition capture technology is needed to extract faces from images. Facial recognition software DeepFace \autocite{taigman2014deepface} from Facebook and FaceNet \autocite{schroff2015facenet} from Google have been developed for face detection in search and social media platforms. OpenFace \autocite{baltrusaitis2018openface} is the first open-sourced face recognition software that provides facial expression detection, including facial landmarking, head pose estimation, eye gaze tracking and facial action unit detection. The OpenFace toolkit has been used in different area in research including depression classification \autocite{yang2016decision}, emotion studies \autocite{huber2018emotional} and even sports analytics. \autocite{kovalchik2018going}.
 
 \hypertarget{cases-selected-in-the-project}{%
 \section{Cases selected in the project}\label{cases-selected-in-the-project}}
@@ -109,15 +109,15 @@ Six cases have been analysed in this project and they are chosen to cover a broa
 
 In Republic of Nauru v WET040 {[}No.~2{]} {[}2018{]} HCA 60, an Iranian national (respondent) was seeking for asylum protection from the Secretary of the Department of Justice and Border Control and was rejected. He then appealed to the Supreme Court of Nauru and won. The appellant, Refugee Status Review Tribunal then appeal to the High Court of Australia. Three High Court Justices sat the hearings were Justices Gageler, Justices Nettle and Justices Edelman and we refer this case as Nauru-a in this project.
 
-Another case from immigration law is TTY167 v Republic of Nauru {[}2018{]} HCA 61 is chosen, where a Bangladesh citizen (Appellant) applied to Nauru's Secretary of the Department of Justice and Border Control for refugee protection. The appellant then appealed to the Tribunal and further appealed to the High Court of Nauru but was rejected. He then appealed to the High Court of Australia and successfully got his refugee status. This case is also heared by Justices Gageler, Justices Nettle and Justices Edelman and we refer to this case as Nauru-b.
+Another case from immigration law is TTY167 v Republic of Nauru {[}2018{]} HCA 61 is chosen, where a Bangladesh citizen (Appellant) applied to Nauru's Secretary of the Department of Justice and Border Control for refugee protection. The appellant then appealed to the Tribunal and further appealed to the High Court of Nauru but was rejected. He then appealed to the High Court of Australia and successfully got his refugee status. This case is also heard by Justices Gageler, Justices Nettle and Justices Edelman and we refer to this case as Nauru-b.
 
-Rinehart v Hancock Prospecting Pty Ltd {[}2019{]} HCA 13 is a \textbf{commercial} case discussing commercial arbitration. The court decided that a non-party to the arbitration agreement can participate in the arbitration by claiming `through and under' a party to the agreement. This case were held in two hearings due to its complexity and they are named Rinehart-a and Rinehart-b in the project. Chief Justices Kiefel, Justices Gageler, Nettle, Gordon, and Edelman heard the case. A distinct characteristics of this case is that the decision is not a unaimous decision of all the Justices. Justice Edelman took a narrow interpretation of the principle of privity of contract while the majority of the Justices interpret the situation broadly.
+Rinehart v Hancock Prospecting Pty Ltd {[}2019{]} HCA 13 is a \textbf{commercial} case discussing commercial arbitration. The court decided that a non-party to the arbitration agreement can participate in the arbitration by claiming `through and under' a party to the agreement. This case were held in two hearings due to its complexity and they are named Rinehart-a and Rinehart-b in the project. Chief Justices Kiefel, Justices Gageler, Nettle, Gordon, and Edelman heard the case. A distinct characteristics of this case is that the decision is not a unanimous decision of all the Justices. Justice Edelman took a narrow interpretation of the principle of privity of contract while the majority of the Justices interpret the situation broadly.
 
 Parkes Shire Council v South West Helicopters Pty Limited {[}2019{]} HCA 14 is a \textbf{civil} case where the appellant, the Stephenson claimed for psychiatric harm resulting from the death of Mr Stephenson, who was carried and subsequently killed due to the crash of the helicopter by the Parkes city council (respondent). Chief Justices Kiefel, Justices Bell, Keane, Gordon, and Edelman heard the case and it is named Parkes in the project.
 
-Another two \textbf{criminal} law cases are chosen in the project as the nature of criminal cases are highly different from civil cases. In McKell v The Queen {[}2019{]} HCA 5, which is refered as McKell, the appellant is a truck driver and was involved in the importation of drug and cash. The trial judge sentenced a 18 years inprisonment and the appellant appealled to the Court of Criminal Appeal and further to the High Court of Australia. The High Court Justices Bell, Gageler, Keane, Gordon, Edelman decided there's a miscarriage of justice and quashed the conviction of the appellant.
+Another two \textbf{criminal} law cases are chosen in the project as the nature of criminal cases are highly different from civil cases. In McKell v The Queen {[}2019{]} HCA 5, which is referred as McKell, the appellant is a truck driver and was involved in the importation of drug and cash. The trial judge sentenced a 18 years imprisonment and the appellant appealed to the Court of Criminal Appeal and further to the High Court of Australia. The High Court Justices Bell, Gageler, Keane, Gordon, Edelman decided there's a miscarriage of justice and quashed the conviction of the appellant.
 
-In OKS v Western Australia {[}2019{]} HCA 10, the appellant is charged with misconduct with children and the Court of appeal of the Supreme Court of Western Australia charged the appellant for conviction, the Appellant then appealed to the High Court of Australia. As another criminal case,this time, Justices Bell, Keane, Nettle, Gordon and Edelman unanimously allowed the appeal and concluded there is no miscarriage of Justices.
+In OKS v Western Australia {[}2019{]} HCA 10, the appellant is charged with misconduct with children and the Court of appeal of the Supreme Court of Western Australia charged the appellant for conviction, the Appellant then appealed to the High Court of Australia. As another criminal case, this time, Justices Bell, Keane, Nettle, Gordon and Edelman also unanimously allowed the appeal and issued a new trial.
 
 A full list of the videos chosen for this study is also available in the Appendix.
 
@@ -127,11 +127,11 @@ A full list of the videos chosen for this study is also available in the Appendi
 \chapter{Data Collection}\label{data-collection}}
 
 \hypertarget{data-processing}{%
-\section{Data Processing}\label{data-processing}}
+\section{Data processing}\label{data-processing}}
 
-The audio visual recordings of cases discribed heard by the High Court of Australia \autocite{highcourtau} are available on the High Court of Australia website. These videos displayed the Justices' faces above the required level of resolution of the OpenFace software, more than 30px.
+The audio visual recordings of cases described heard by the High Court of Australia \autocite{judicalguid} are available on the High Court of Australia website. These videos displayed the Justices' faces above the required level of resolution of the OpenFace software, more than 30 pixels.
 
-To analyse the facial expressions of the Justices the videos must be processed by OpenFace. To download videos from the High Court of Australia \autocite{highcourtau} the software Youtube-dl \autocite{youtube-dl} was used. Image frames were extracted from each of the videos, at every one minute interval via ffmpeg \autocite{ffmpeg}, this resulted in in 1021 image frames.
+To analyse the facial expressions of the Justices the videos must be processed by OpenFace. To download videos from the High Court of Australia \autocite{judicalguid} the software Youtube-dl \autocite{youtube-dl} was used. Image frames were extracted from each of the videos, at every one minute interval via ffmpeg \autocite{ffmpeg}, this resulted in in 1021 image frames.
 
 The Justices remain seated in the same position throughout the hearings, this means the same region of every image can be extracted to form a set of images containing each individual Justice. Taipan \autocite{Taipan} is used to find the x-y coordinates of a box denoting the location of the Justices in each image frame. ImageMagick \autocite{ImageMagick} was used to crop the face of each Justice from each image frame based on the coordinates from Taipan.
 
@@ -144,7 +144,7 @@ The workflow to obtain the facial landmarks and expression information from the 
 
 }
 
-\caption{This is an illustration of the workflow for extracting facial variables from videos. \label{fig:workflow}}\label{fig:unnamed-chunk-1}
+\caption{An illustration of the workflow for extracting facial variables from videos. \label{fig:workflow}}\label{fig:unnamed-chunk-1}
 \end{figure}
 
 \hypertarget{facial-variables-and-action-unit}{%
@@ -166,7 +166,7 @@ OpenFace provides more than 711 variables measuring different aspects of a given
   \textbf{Action Unit}: An action unit is used to describe the movement of a single facial muscle.
 \end{itemize}
 
-The human facial expression can be deconstructed into a combination of action units. For example, happiness is the addition of action unit 6 and 12, which can be described as a raising check and a pull on the lip corner respectively. The Facial Action Coding System (FACS) is the common standard for describing facial expressions via anatomically decomposing a emotion into action units. To decompose an emotion of sadness, three action units are utilised. Action unit 01 describes the raise of inner brow; action unit 04 describes the general lower of brow and action unit 15 depicts the lower of lip corner. The subset of action units OpenFace is able to recognise is provided in Table \ref{tab:au} in the Appendix, along with their meaning and related emotions.
+The human facial expression can be de-constructed into a combination of action units. For example, happiness is the addition of action unit 6 and 12, which can be described as a raising check and a pull on the lip corner respectively. The Facial Action Coding System (FACS) is the common standard for describing facial expressions via anatomically decomposing a emotion into action units. To decompose an emotion of sadness, three action units are utilised. Action unit 01 describes the raise of inner brow; action unit 04 describes the general lower of brow and action unit 15 depicts the lower of lip corner. The subset of action units OpenFace is able to recognise is provided in Table \ref{tab:au} in the Appendix, along with their meaning and related emotions.
 
 \hypertarget{data-format}{%
 \section{Data format}\label{data-format}}
@@ -175,7 +175,7 @@ The data can be expressed in the long format with action unit as an index and pr
 
 \begin{table}[ht]
 \begin{center}
-\caption{\label{tab:long} This table is an illustration of the data for Justices Edelman in case McKell for all the action units in the first frame in long format.}
+\caption{\label{tab:long} An illustration of the data format for Justices Edelman in case McKell for all the action units in the first frame in long format.}
 \begin{tabular}{lllllll}
 \toprule
 judge & video & frame & speaker & AU & presence & intensity \\
@@ -208,27 +208,25 @@ Edelman & McKell & 1 & Appellent & AU45 & 0 & 0.25 \\
 
 }
 
-\caption{The plot shows the intensity and presence score of action unit 01 for Justices Edelman in case McKell as time series.}\label{fig:ts-plot}
+\caption{The intensity and presence score of action unit 01 for Justices Edelman in case McKell is graphed against time (frame number) as line chart. The intensity is a numerical variable while presence is binary variable takes value of 0 when the action uit is not present and 1 otherwise.}\label{fig:ts-plot}
 \end{figure}
 
 \hypertarget{missing-value-imputation}{%
 \section{Missing value imputation}\label{missing-value-imputation}}
 
-The missing value structure in the dataset has been explored to examine possible relationships between the missing values and judicidal behaviour.
-This could be influenced by the Justices reading materials on their desk, resulting in their face not being captured in a particular frame, or faces that are not detectable due to the given resolution of the video stream.
-Simply drop the missing observations will cause the time interval to be irregular, to prevent this imputation is used.
+Missing values occur in the data whenever the justice is not looking straight ahead. This might occur when they are reading materials on their desk, or perhaps if conversing with their legal assistant behind them. It can also occur when there are five judges on a case, and the video resolution is not sufficiently high to detect the face or action units. The data structure that we created specifically places an NA in these positions. This has allowed us to examine the pattern of missings and check it happens more often in some recognisable way, for example when an appellant is speaking. We did not find any over-arching pattern, and thus have used a simple procedure to impute missings for intensity, which was then used to impute presence.
 
-Intensity is a continuous variable ranging from zero or five measuring how strong the action unit is presented. The missing values of intensity are related to missing values in presence. Intensity being zero means the action unit is not present, being one means the action unit is present at minimum intensity and being five means teh action unit is present at maximum intensity. Linear interpolation function (\texttt{na.interp()}) from \texttt{forecast} package is used to impute Intensity. The missing value of presence is then imputed based on if the intensity score of the missing observations are greater than one.
+Intensity is a continuous variable ranging from zero or five measuring how strong the action unit is presented. The missing values of intensity are related to missing values in presence. Intensity being zero means the action unit is not present, being one means the action unit is present at minimum intensity and being five means the action unit is present at maximum intensity. Linear interpolation function (\texttt{na.interp()}) from \texttt{forecast} package is used to impute Intensity. The missing value of presence is then imputed based on if the intensity score of the missing observations are greater than one.
 
 \hypertarget{source-code}{%
-\section{Source Code}\label{source-code}}
+\section{Source code}\label{source-code}}
 
-It is difficult to source reliable facial data of the Justices, the data processing procedure defined above is integral to sourcing and analysing a reliable data set. The workflow has been scripted and is made available in a github repository. This open source contribution enables reproducibility for this work if a re-processing is needed, or more videos are available. This can also be used and extended by other researchers.
+Source code for this data pre-processing is available at \url{https://github.com/huizezhang-sherry/ETC4860/data_pre_processing}.
 
 \let\cleardoublepage\clearpage
 
-\hypertarget{methodology}{%
-\chapter{Methodology}\label{methodology}}
+\hypertarget{Ch:method}{%
+\chapter{Methodology}\label{Ch:method}}
 
 \hypertarget{notation}{%
 \section{Notation}\label{notation}}
@@ -242,7 +240,7 @@ Let \(\mathbf{X}\) be a matrix of predictors, and \(\mathbf{Y}\) variable in our
 \item
   \(X_2\) indicates \texttt{video} for each of the seven cases, \(j = 1,2, \cdots, 7\)
 \item
-  \(X_3\) indicates action unit containing 18 possible facial expression.\\
+  \(X_3\) indicates action unit containing 18 possible facial expression.
 \item
   \(X_4\) indicates \texttt{speaker}, either the appellant or respondent, \(l=1,2\)
 \item
@@ -258,12 +256,12 @@ A full, main effects model for the data might be expressed as:
 \noindent Also, let \(P_{jitkl}\) represent the response variable presence, and \(I_{jitkl}\) represent the response variable intensity. This notation will be helpful for defining the plots and models explained in this section.
 
 \hypertarget{modelling-presence}{%
-\section{Modelling Presence}\label{modelling-presence}}
+\section{Modelling presence}\label{modelling-presence}}
 
 \hypertarget{model-structure}{%
 \subsection{Model structure}\label{model-structure}}
 
-The presence score is a binary variable that is one when a particular action unit is observed and zero if not. This suggests using a logistic model and we implement this using the \texttt{glm()} function from base R. The link function of a matter of choice in the \texttt{glm()} function and the logit link is chosen because it is the canonical link of the binomial family. An alternative link could be a probit link but theoratically, these two links give very similar result in terms of prediction \textcite{faraway2016extending}. The structure of the model is written as in Equation \ref{eq:logit-structure} with the first equation linking the mean of the presence to the linear prediction and the second equation specifying the linkage between \(\eta\) to the predictors. The next section will specify three different function form of the linear predictor by introducing different variables and interactions.
+The presence score is a binary variable that is one when a particular action unit is observed and zero if not. This suggests using a logistic model and we implement this using the \texttt{glm()} function from base R. The link function of a matter of choice in the \texttt{glm()} function and the logit link is chosen because it is the canonical link of the binomial family. An alternative link could be a probit link but theoretically, these two links give very similar result in terms of prediction \autocite{faraway2016extending}. The structure of the model is written as in Equation \ref{eq:logit-structure} with the first equation linking the mean of the presence to the linear prediction and the second equation specifying the linkage between \(\eta\) to the predictors. The next section will specify three different function form of the linear predictor by introducing different variables and interactions.
 
 \begin{align}\label{eq:logit-structure}
 \mu &= \frac{e^{\eta}}{1 + e^{\eta}} \\
@@ -299,15 +297,15 @@ Build upon the second model, the third model is aimed to capture the speaker-wis
 \eta_{ijkl} &= \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\delta)_{il}
 \end{align}
 
-\hypertarget{analysis-of-variance-anova}{%
-\subsection{Analysis of variance (ANOVA)}\label{analysis-of-variance-anova}}
+\hypertarget{model-comparison}{%
+\subsection{Model comparison}\label{model-comparison}}
 
 The analysis of variance (ANOVA) \autocites{faraway2016extending}{gelman2006data} is a statistical method that can be used to compare different models. Different packages in R conduct ANOVA test: \texttt{anova()} and \texttt{drop()} from base R, \texttt{Anova()} from \texttt{car} package and \texttt{aov()} from \texttt{stats} package. We use the base R \texttt{anova()} function to compare the three models via chi-square tests.
 
 \hypertarget{modelling-intensity}{%
-\section{Modelling Intensity}\label{modelling-intensity}}
+\section{Modelling intensity}\label{modelling-intensity}}
 
-The intensity score is a continuous variable starts from zero when the action unit is not present to 5, where an action unit is presented at maximum intensity. A histogram of the intensity is plotted in Figure \ref{fig:intensity} and the distribution has a high proportion of zeros with highly skewed continuous value. This type of data is the so-called semi-continuous data \autocites{Neelon2019}{twopart2010}. The semi-continuous data can be modelled in the econometrics literature by the two part model\autocites{cragg1971some}{manning1981two}. In the two part model, the data is viewed to be generated via a sequential modelling technique, which is a mixed distribution of
+The intensity score is a continuous variable, with 0 indicating an action unit is not present to a maximum intensity of 5. A histogram of the intensity is plotted in Figure \ref{fig:intensity} and the distribution has a high proportion of zeros with highly skewed continuous value. This type of data is the so-called semi-continuous data \autocite{twopart2010}. The semi-continuous data can be modelled in the econometrics literature by the two part model \autocite{cragg1971some}. In the two part model, the data is viewed to be generated via a sequential modelling technique, which is a mixed distribution of
 
 \begin{itemize}
 \tightlist
@@ -337,7 +335,7 @@ The two part model has a general structure as in Equation \ref{eq:two-part-gener
 E(I \mid I > 0) &= f(\alpha_i, \beta_j, \gamma_k, \delta_l)
 \end{align}
 
-\noindent The first two equations capture the logistic link and its linear predictor. The next two specify the functional form of the conditonal distribution. The functional form of the conditional distribution need to be able to capture the highly skewed nature of the non-zero observations. A convention approach is to assume the conditional distribution is a lognormal distribution \autocites{manning1981two}{diehr1999methods}. More recent literature proposes the use of gamma or generalised gamma regression model for the conditional distribution \autocite{twopart2010}. Gamma regression is used to because it could also capture the right skewness and it is easier to implement via the \texttt{glm()} function. The log link function is used because the canonical inverse link for gamma distribution will cause some estimated marginal mean to be extremely high and thus meaningless for intensity score.
+\noindent The first two equations capture the logistic link and its linear predictor. The next two specify the functional form of the conditional distribution. The functional form of the conditional distribution need to be able to capture the highly skewed nature of the non-zero observations. A convention approach is to assume the conditional distribution is a lognormal distribution \autocites{manning1981two}{diehr1999methods}. More recent literature proposes the use of gamma or generalised gamma regression model for the conditional distribution \autocite{twopart2010}. Gamma regression is used to because it could also capture the right skewness and it is easier to implement via the \texttt{glm()} function. The log link function is used because the canonical inverse link for gamma distribution will cause some estimated marginal mean to be extremely high and thus meaningless for intensity score.
 
 The linear predictor of the conditional intensity that includes video and relevant interactions is written in Equation \ref{eq:two-part1}.
 
@@ -352,19 +350,17 @@ E(I_{ijkl} \mid I_{ijkl} > 0) &= \mu + \alpha_i + \beta_j +\gamma_k + \delta_l +
 \end{align}
 
 \hypertarget{post-model-analysis}{%
-\section{Post-Model Analysis}\label{post-model-analysis}}
+\section{Post-model analysis}\label{post-model-analysis}}
 
 The estimates of variables from the model summary are not particularly useful in our case. This is because firstly, the estimates of the coefficient are not interpretable in the logistic regression. Secondly, we are interested in whether the mean for each treatment is same or different. To assess which level of the factor is different requires post-model analysis.
 
 \hypertarget{estimated-marginal-mean-emm}{%
 \subsection{Estimated Marginal Mean (EMM)}\label{estimated-marginal-mean-emm}}
 
-The estimated marginal mean \autocite{gelman2006data} is the fitted value from a model over the treatmetn effects. In our data, the treatment effects include judge, video and action unit. The estimated marginal mean is computed using \texttt{emmean()} from the \texttt{emmenas} package. The probability from estimated marginal mean have a nice interpretation as the estimated probability of presence score for a particular combination of action unit, judge and video. This output allows us to compare how the estimated presence probabilities of each judge, video and action unit combination are different or similar from each other.
+The estimated marginal mean \autocite{gelman2006data} is the fitted value from a model over the treatment effects. In our data, the treatment effects include judge, video and action unit. The estimated marginal mean is computed using \texttt{emmean()} from the \texttt{emmenas} package. The probability from estimated marginal mean have a nice interpretation as the estimated probability of presence score for a particular combination of action unit, judge and video. This output allows us to compare how the estimated presence probabilities of each judge, video and action unit combination are different or similar from each other.
 
 \hypertarget{confidence-interval-adjustment}{%
 \subsection{Confidence Interval Adjustment}\label{confidence-interval-adjustment}}
-
-Testing significance based on p-value has been long criticised for its interpretation. Researchers can erroneously conclude significance because of p-value being less than 0.05 without discussing the false positive/negative proportion. On the other hand, confidence interval provides a confidence range for the estimates to highlight the uncertainty around estimation. Thus confidence interval is used to compare whether the estimated mean for a particular judge-AU group is same or different across videos based on if the intervals overlap with each other.
 
 The confidence intervals computed from the \texttt{emmean()} function need to be adjusted for simultaneous inference. A 5\% significance level indicates if we conduct 100 tests simultaneously, about 5 tests will show significance out of randomness. This is a problem we need to pay attention to when comparing the estimated presence probability or we may wrongly conclude judges has a different facial expression than others but they are actually not.
 
@@ -376,17 +372,17 @@ When multiple estimated mean are compared at the same time, the confidence level
 \chapter{Results}\label{results}}
 
 \hypertarget{exploratory-data-analysis}{%
-\section{Exploratory Data Analysis}\label{exploratory-data-analysis}}
+\section{Exploratory data analysis}\label{exploratory-data-analysis}}
 
 \hypertarget{action-unit-presence}{%
-\subsection{Action unit: Presence}\label{action-unit-presence}}
+\subsection{Action unit: presence}\label{action-unit-presence}}
 
 \hypertarget{mean-presence-score-and-most-common-action-units}{%
 \subsubsection{Mean presence score and most common action units}\label{mean-presence-score-and-most-common-action-units}}
 
-The average presence (\(P_{ik}\)) of each action unit is first computed for each judge as \[P_{ik} = \frac{\sum_{jt}X_{ijtk}}{\sum_{j = 1}^JT_j}\]
+Follow the notation defined in section \ref{Ch:method}, the average presence score (\(P_{ik}\)) of each action unit is computed for each judge as \[P_{ik} = \frac{\sum_{jt}X_{ijtk}}{\sum_{j = 1}^JT_j}\]
 
-\noindent Figure \ref{fig:mean_presence} shows the presence score of all the action units across all the judges. The order of action unit on the y axis is ranked by the average presence of all the judges. The five most frequent action units are highlighted in blue. From Figure \ref{fig:mean_presence}, some of the action units are common across almost most of the Justices, these includes AU02 (outer eyebrow raise), AU20 (lip stretcher), AU15 (Lip Corner Depressor), AU01 (Inner brow raise) and AU14 (Dimpler). Relating to emotions, AU01 and AU15 contribute to sadness. AU02, outer eyebrow raising can be associated with surprise, fear or interested. A dimpler (AU14) could be linked to contempt or boredom and Action unit 20, lip strecher, is commonly contribute to fear, which is most sophisticated emotion that requires seven separate action units to describe.
+\noindent Figure \ref{fig:mean_presence} graphs the presence score of all the action units across all the judges. The order of action unit on the y axis is ranked by the average presence of all the judges. The five most frequent action units are highlighted in blue. From Figure \ref{fig:mean_presence}, some of the action units are common across almost most of the Justices, these includes AU02 (outer eyebrow raiser), AU20 (lip stretcher), AU15 (lip corner depressor), AU01 (inner brow raiser) and AU14 (dimpler). Relating to emotions, AU01 and AU15 contribute to sadness. AU02, outer eyebrow raising can be associated with surprise, fear or interested. Dimpler (AU14) could be linked to contempt or boredom and Action unit 20, Lip Stretcher, is commonly contribute to fear, which is most sophisticated emotion that requires seven separate action units to describe.
 
 \begin{figure}
 
@@ -394,13 +390,13 @@ The average presence (\(P_{ik}\)) of each action unit is first computed for each
 
 }
 
-\caption{The average presence score of each action unit for each Justice, aggregating on video and time. \label{fig:mean_presence}}\label{fig:most-common}
+\caption{The average presence score of each action unit for each Justice, aggregating on video and time. The most common five action units for each Justices is colored in blue. The most common action units across all the Justices include AU02 (outer eyebrow raise), AU20 (lip stretcher), AU15 (Lip Corner Depressor), AU01 (Inner brow raise) and AU14 (Dimpler) \label{fig:mean_presence}}\label{fig:most-common}
 \end{figure}
 
 \hypertarget{presence-by-videos}{%
 \subsubsection{Presence by videos}\label{presence-by-videos}}
 
-The main presence score of the judges by video (\(P_{ijk}\)) is computed as \[P_{ijk} = \frac{\sum_{t}X_{ijtk}}{T_j}\] for the four most common action units: AU02, AU14, AU15, AU20 and presented in Figure \ref{fig:common_video}. From this plot, some Justices have larger fluctuation of their expression of action units while others are more consistent throughout different videos. For example, Justice Gageler, coloured as green, has a much higher proportion of expressions in case OKS, especially in action unit 14, 15 and 20. Justices Bell, who is coloured red has the highest proportion of expression in case OKS while lowest in case Parkes for action unit 14 and 20.
+The main presence score of the judges by video (\(P_{ijk}\)) is computed as \[P_{ijk} = \frac{\sum_{t}X_{ijtk}}{T_j}\] for the four most common action units: AU02, AU14, AU15, AU20 and presented in Figure \ref{fig:common_video}. From this figure, AU02, outer eyebrow raise, appears consistently highly across Justices and court cases. The other three vary across both Justices and cases. AU15, lip corner depressor, varies across Justices: it is common in Justices Bell, Keane and Nettle, but less common in Justices Keane and Edelman. Justice Gageler varies a lot in usage across cases and particularly uses this expression in OKS. AU20, lip stretcher is consistent across cases, varies by Justices, but is particularly frequently used in the OKS case by Justices Bell and Gageler. AU14, dimpler, is similar to AU20. Most reactions appear to be happening in case OKS and McKell. Recall that OKS is a criminal case involving misconduct with children, the result above provides some exploratory evidence that the Justices react more frequently in criminal cases like OKS and McKell.
 
 \begin{figure}
 
@@ -408,14 +404,14 @@ The main presence score of the judges by video (\(P_{ijk}\)) is computed as \[P_
 
 }
 
-\caption{Average presence of the four most common action units for each judge by video\label{fig:common_video}}\label{fig:au-video}
+\caption{Average presence of the four most common action units for each judge by videos. Some Justices, for example Justices Gageler and Bell show large fluctuation on their facial expressions while others are not. \label{fig:common_video}}\label{fig:au-video}
 \end{figure}
 
 \hypertarget{action-unit-intensity}{%
-\subsection{Action unit: Intensity}\label{action-unit-intensity}}
+\subsection{Action unit: intensity}\label{action-unit-intensity}}
 
 \hypertarget{general-intensity-plot}{%
-\subsubsection{General Intensity plot}\label{general-intensity-plot}}
+\subsubsection{General intensity plot}\label{general-intensity-plot}}
 
 The boxplot of the intensity for all the Justices across all the videos is presented in Figure \ref{fig:intensity}. Each bar-and-whisker represents the intensity (\(I_{ijtk}\)) of all the action units aggregated on time for a particular Justices \(i\) in a specific case \(j\). For example, the first bar-and-whisker in case Nauru\_a is created using all the action units of Edelman through out the elapsed time in Nauru\_a case. The square root transformation is applied so that the mean of the intensity can be easier to visualise. Most of the action units have low intensity score as shown in the figure, which matches with the prior belief that the Justices are expected not to express to much of their expressions in the court room. Justices Nettle, colored in pink has the highest average in all the four cases he appeared.
 
@@ -425,7 +421,7 @@ The boxplot of the intensity for all the Justices across all the videos is prese
 
 }
 
-\caption{Boxplot of intensity score by Justice and video\label{fig:intensity}}\label{fig:intensity-boxplot}
+\caption{Boxplot of intensity score by Justices and videos. Square root transformation is taken since the mean intensity scores are all below one.  \label{fig:intensity}}\label{fig:intensity-boxplot}
 \end{figure}
 
 \hypertarget{high-intensity-points}{%
@@ -439,7 +435,7 @@ The points with intensity greater than two are shown against time for all the ju
 
 }
 
-\caption{Points with intensity greater than two are plotted against time, colored by speaking parties. }\label{fig:high-intensity-points}
+\caption{Points with intensity greater than two are plotted against time, colored by speaking parties. Justices Edelman, Gageler and Nettle have more intense expressions than other Justices. Justice Nettle has a clear cut on when he is likely to express stronger expressions. }\label{fig:high-intensity-points}
 \end{figure}
 
 \newpage
@@ -451,7 +447,7 @@ The findings from the exploratory data analysis are summarised below
 
 \begin{itemize}
 \item
-  The most common action unit from the Justices are AU02 (outer eyebrow raise), AU20 (lip stretcher), AU15 (Lip Corner Depressor) and AU14 (Dimpler).
+  The most common action unit from the Justices are AU02 (outer eyebrow raiser), AU20 (lip stretcher), AU15 (lip corner depressor) and AU14 (dimpler).
 \item
   Some Justices show relatively consistent facial expression through different videos while others, for example Justices Gageler and Bell have larger fluctuation on their facial expressions in different cases.
 \item
@@ -462,14 +458,12 @@ The findings from the exploratory data analysis are summarised below
 
 \let\cleardoublepage\clearpage
 
-\newpage
-
-\hypertarget{choice-of-action-unit-to-include}{%
-\section{Choice of action unit to include}\label{choice-of-action-unit-to-include}}
+\hypertarget{filtering-action-units}{%
+\section{Filtering action units}\label{filtering-action-units}}
 
 The number of action unit to include in the model is a matter of choice. The discussion of this choice is to ensure the model is parsimonious, that is, a model has the smallest number of variables but with greatest explanatory power. Random effect is a way to deal with large number of factor levels of a variable, but in our context, we are only interested in the action units with a certain mean presence and intensity for most of the judges.
 
-The mean presence and intensity score for each action unit is computed and the action units to include in the model are the ones that appear in the top 10 action unit in both mean presence and intensity rank. This ensures that these action units have both relativcely high intensity and presence score. A list of included action units along with their meaning and related emotions are presented in Table \ref{tab:au-included}
+The mean presence and intensity score for each action unit is computed and the action units to include in the model are the ones that appear in the top 10 action unit in both mean presence and intensity rank. This ensures that these action units have both relatively high intensity and presence score. A list of included action units along with their meaning and related emotions are presented in Table \ref{tab:au-included}
 
 \begin{table}[ht]
 \begin{center}
@@ -491,25 +485,25 @@ AU45 & Blink & NA \\
 \end{center}
 \end{table}
 
-\newpage
+\hypertarget{modelling-result-for-presence}{%
+\section{Modelling result for presence}\label{modelling-result-for-presence}}
 
-\hypertarget{modelling-result-for-presence-intensity}{%
-\section{Modelling result for presence \& intensity}\label{modelling-result-for-presence-intensity}}
+\hypertarget{model-comparison-1}{%
+\subsection{Model comparison}\label{model-comparison-1}}
 
-\hypertarget{model-fitting-and-anova}{%
-\subsection{Model fitting and ANOVA}\label{model-fitting-and-anova}}
+The three models in Equation \ref{eq:judge_au}, \ref{eq:judge_video} and \ref{eq:judge_speaker} have been fitted and ANOVA test is performed to choose the best model. The ANOVA result for comparing Model 1 and 2 is presented in Table \ref{tab:anova-1}. After incorporating the main effect of case and its interaction with judge in Model 2, the degree of freedom is reduced by 61. This has a significant improvement on the model since the p-value (1e-88) is close to zero, indicating the null hypothesis that Model 1 and Model 2 are the same is rejected.
 
-The three models in Equation \ref{eq:judge_au}, \ref{eq:judge_video} and \ref{eq:judge_speaker} have been fitted and ANOVA test is performed to choose the best model. In Table \ref{tab:anova-1}, the deviance of model 1 and 2 are compared and the p-value rejects the null hypothesis that model 1 and model 2 are the same. The comparison of model 2 and model 3 is presented in Table \ref{tab:anova-2}. A conservative approach is taken and not rejecting the null hypothesis that model 3 is too much different from model 2. Thus, model 2 is chosen as our final model for modelling presence.
+The ANOVA result between Model 2 and Model 3 is presented in Table \ref{tab:anova-2}. The additional six variables associated with speakers in Model 3 have improved the model at 95\% significance level since the p-value (0.027) is less than 0.05, however, at 99\% significicance level, this improvement is not significant. Model 2 is chosen as the final model because the interpretation of video-wise effect using Model 2 after post-model analysis provides more interesting findings about the expressions of the Justices than the speaker-wise effect using Model 3.
 
 \begin{table}[ht]
 \begin{center}
-\caption{\label{tab:anova-1}this is the caption}
-\begin{tabular}{lllll}
+\caption{\label{tab:anova-1}Model comparison using ANOVA for Model 1 and 2. The inclusion of video related variables in Model 2 decreases the degree of freedom by 61 while provides a significant improvement on the model as indicated by the p-value. }
+\begin{tabular}{lrrlll}
 \toprule
-Resid. Df & Resid. Dev & Df & Deviance & Pr(>Chi) \\
+Model & Resid. Df & Resid. Dev & Df & Deviance & Pr(>Chi) \\
 \midrule
-30320 & 35850 & NA &    NA &        NA \\
-30259 & 35256 & 61 & 594.4 & 1.793e-88 \\
+Model 1 & 30320 & 35850.07 &   &   &   \\
+Model 2 & 30259 & 35255.72 & 61 & 594 & 1.8e-88 \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -517,13 +511,13 @@ Resid. Df & Resid. Dev & Df & Deviance & Pr(>Chi) \\
 
 \begin{table}[ht]
 \begin{center}
-\caption{\label{tab:anova-2}this is the caption}
-\begin{tabular}{lllll}
+\caption{\label{tab:anova-2}The model comparison result of Model 2 and Model 3 using ANOVA. The inclusion of six speaker related main and interaction effects contribute to improve the model. However, this is not significant at 99\% significant level. Model 2 is chosen as the final model because the interpretation of video effect provides more interesting findings about the facial expressions of the Justices. }
+\begin{tabular}{lrrlll}
 \toprule
-Resid. Df & Resid. Dev & Df & Deviance & Pr(>Chi) \\
+Model & Resid. Df & Resid. Dev & Df & Deviance & Pr(>Chi) \\
 \midrule
-30259 & 35256 & NA &    NA &      NA \\
-30253 & 35242 &  6 & 14.21 & 0.02742 \\
+Model 2 & 30259 & 35255.72 &   &   &   \\
+Model 3 & 30253 & 35241.51 & 6 & 14 & 0.027 \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -532,27 +526,18 @@ Resid. Df & Resid. Dev & Df & Deviance & Pr(>Chi) \\
 \hypertarget{residual-diagnostics-and-post-model-analysis}{%
 \subsection{Residual Diagnostics and post-model analysis}\label{residual-diagnostics-and-post-model-analysis}}
 
-Residual analysis is performed on model 2 to illustrate the fitness of the model. In Figure \ref{fig:resid}, the left panel shows the residuals for each Justice in a boxplot and one can observe that the residuals are around zero. On the right panel, the residuals are plotted as dots and there is no obvious pattern shown in the residuals. This indicates model 2 has a good fit.
-
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{figures/resid-1} 
-
-}
-
-\caption{Residual diagnostics for model 2. }\label{fig:resid}
-\end{figure}
+The residuals of Model 2 are plotted against variable judge and video in Figure \ref{fig:resid-judge} and \ref{fig:resid-video} in the Appendix. There is no obvious pattern shown in the residuals for different Justices or videos, which indicates adequate fit.
 
 The estimated marginal mean is computed and presented in Table \ref{tab:result-2} in the Appendix due to its length. The \texttt{prob} column can be interpreted as after averaging over all the videos and speaking parties, the estimated mean probability for judge Edelman in action unit AU02 is 0.95, with a 95\% confidence interval of {[}0.92, 0.97{]}. Notice that confidence intervals for a generalised linear model is asymmetric around the estimates because the linear symmetric interval of the mean has been transferred via the inverse of link function to get the confidence interval for the response.
 
 \hypertarget{the-presence-of-facial-expression-of-the-justices-by-video}{%
 \subsection{The presence of facial expression of the justices by video}\label{the-presence-of-facial-expression-of-the-justices-by-video}}
 
-The 95\% confidence interval after bonferroni adjustment is plotted in Figure \ref{fig:model2-plot}. In general, most of the intervals for the same judge in the same action unit are overlapping with each other on the vertical axis, while there are some non-overlappings highlights the potential inconsistency of the facial expressions of the Justices.
+The 95\% confidence interval after bonferroni adjustment is plotted in Figure \ref{fig:model2-plot}. In general, most of the intervals for the same judge in the same action unit are overlapping with each other on the vertical axis, while there are some non-overlappings highlight the potential inconsistency of the facial expressions of the Justices.
 
-Justice Edelman and Keane behave consistently throughout all the videos, while they both seem to express significantly less in action unit 5 (upper lid raiser) in the OKS case. Justice Nettle has relatively low expression of action unit 4(brow lowerer) in case Rinehart-a. Gageler shows a consistently high number of expressions in case OKS for action unit 15 (lip corner depressor) and action unit 20 (lip stretcher).
+Justice Edelman and Keane behave consistently throughout all the videos, while they both seem to express significantly less in action unit 5 (upper lid raiser) in the OKS case. Justice Nettle has relatively low expression of action unit 4 (brow lowerer) in case Rinehart-a. Gageler shows a consistently high number of expressions in case OKS for action unit 15 (lip corner depressor) and action unit 20 (lip stretcher).
 
-Bell presents similar reactions to Gageler, showing a significantly higher proportion of emotions associated with action unit 1 (inner brow raiser), 14(dimpler), 15 (lip corner depressor) and 20 (lip stretcher) in case OKS. Bell also exhibits less presence of action unit 07 (lid tightener) and 20 (lip stretcher) in case Parkes.
+Bell presents similar reactions to Gageler, showing a significantly higher proportion of emotions associated with action unit 1 (inner brow raiser), 14 (dimpler), 15 (lip corner depressor) and 20 (lip stretcher) in case OKS. Bell also exhibits less presence of action unit 07 (lid tightener) and 20 (lip stretcher) in case Parkes.
 
 \begin{figure}
 
@@ -560,8 +545,11 @@ Bell presents similar reactions to Gageler, showing a significantly higher propo
 
 }
 
-\caption{The confidence interval for estimated mearginal mean for presence}\label{fig:model2-plot}
+\caption{The 95\% confidence interval for estimated mearginal mean for presence after bonferroni adjustment. The x axis represents video and the y axis represents the estimated marginal mean of an action unit being observed. The facet shows the Justices in columns and action units in rows. }\label{fig:model2-plot}
 \end{figure}
+
+\hypertarget{modelling-result-for-intensity}{%
+\section{Modelling result for intensity}\label{modelling-result-for-intensity}}
 
 \hypertarget{the-intensity-of-facial-expression-of-the-justices-by-video}{%
 \subsection{The intensity of facial expression of the justices by video}\label{the-intensity-of-facial-expression-of-the-justices-by-video}}
@@ -570,7 +558,7 @@ The two part model in equation \ref{eq:two-part1} is estimated for the intensity
 
 Action unit 5 (upperlid raiser) and 20 (lip stretcher) are exhibited significantly more intense for Justices Gageler in case OKS. The mean for brow lowerer (AU04) seems to higher than those in other cases for Justices Gageler but this result is not significant.
 
-For Justice Bell, the intensity of inner brow raiser (AU01), upper lid raiser (AU05), Dimpler (AU14) and Lip stretcher (AU20) are also significantly higher in case OKS
+For Justice Bell, the intensity of inner brow raiser (AU01), upper lid raiser (AU05), dimpler (AU14) and Lip stretcher (AU20) are also significantly higher in case OKS.
 
 \begin{figure}
 
@@ -578,7 +566,7 @@ For Justice Bell, the intensity of inner brow raiser (AU01), upper lid raiser (A
 
 }
 
-\caption{The confidence interval for estimated mearginal mean for intensity}\label{fig:intensity-video}
+\caption{The 95\% confidence interval for estimated mearginal mean for presence after bonferroni adjustment. The x axis represents video and the y axis represents the estimated marginal mean of the intensity. The facet shows the Justices in columns and action units in rows. }\label{fig:intensity-video}
 \end{figure}
 
 \hypertarget{the-expression-of-the-justices-by-speaker}{%
@@ -591,13 +579,13 @@ From the presence and intensity figures which are colored by speakers in Figure 
 \hypertarget{insights}{%
 \section{Insights}\label{insights}}
 
-This result from previous chapter contributes to answer the question: \textbf{For the same judge, does the mean presence and mean intensity of the action units stay the same or vary for different videos?}. In general, the facial expressions of the justices appear impartial, as most of the 95\% confidence intervals for the same judge and action unit overlap in the vertical direction in most of the videos in both figures. There are some instances when in a particular video, a judge expressed significantly more or less of an expression.
+This result from previous chapter contributes to answer the question: \textbf{For the same judge, does the mean presence and mean intensity of the action units stay the same or vary for different videos?} In general, the facial expressions of the justices appear impartial, as most of the 95\% confidence intervals for the same judge and action unit overlap in the vertical direction in most of the videos in both figures. There are some instances when in a particular video, a judge expressed significantly more or less of an expression.
 
-It is necessary to link back to the nature of the cases to interpret the facial behaviour of the Justices. Nauru-a and Nauru-b discusses immigration law; McKell and OKS are more criminal cases; Parkes is a civil negligence case and Rinehart-a and Rinehart-b are commercial cases arguing contarct arbitration.
+It is necessary to link back to the nature of the cases to interpret the facial behaviour of the Justices. Nauru-a and Nauru-b discusses immigration law; McKell and OKS are more criminal cases; Parkes is a civil negligence case and Rinehart-a and Rinehart-b are commercial cases arguing contract arbitration.
 
-Based on the nature of the cases, Justice Edelman is more likely to express stronger emotion to the immigration and commercial cases and express less and softer at criminal cases. The action unit 5 (upper lid raiser) and 7(lid tightener), which are expressed more frequent and more intense by Justice Keane in case OKS are usually associated with the emotion of anger. This implies that Justices Keane is more responsive to the criminal cases. Kiefel and Nettle are relatively consistent in their expressions. Of the six universal emotions, the action units Justices Gageler have significantly more frequent and stronger in case OKS are action unit 5(upper lid raiser), 15 (lip corner depressor) and 20(lip stretcher). These three action units are commonly associated with anger, sadness and fear respectively, which indicate Justice Gageler's strong and frequent emotional responses when hearing criminal cases OKS. The result for Bell suggest the same emotional reaction as judge Gageler to criminal cases.
+Based on the nature of the cases, Justice Edelman is more likely to express stronger emotion to the immigration and commercial cases and express less and softer at criminal cases. The action unit 5 (upper lid raiser) and 7 (lid tightener), which are expressed more frequent and more intense by Justice Keane in case OKS are usually associated with the emotion of anger. This implies that Justices Keane is more responsive to the criminal cases. Kiefel and Nettle are relatively consistent in their expressions. Of the six universal emotions, the action units Justices Gageler have significantly more frequent and stronger in case OKS are action unit 5 (upper lid raiser), 15 (lip corner depressor) and 20 (lip stretcher). These three action units are commonly associated with anger, sadness and fear respectively, which indicate Justice Gageler's strong and frequent emotional responses when hearing criminal cases OKS. The result for Bell suggest the same emotional reaction as judge Gageler to criminal cases.
 
-As the speaker-wise difference was not significant, suggestions that Justice favour an appelant or respondent were not confirmed. This result would be a validation that on the high court level, the judges are behaving impartial to different speaking parties.
+As the speaker-wise difference was not significant, suggestions that Justice favour an appellant or respondent were not confirmed. This result would be a validation that on the high court level, the judges are behaving impartial to different speaking parties.
 
 To summarise, the above discussion of intensity and presence of action unit in different cases gives us several findings about the expression of the judges:
 
@@ -611,19 +599,22 @@ To summarise, the above discussion of intensity and presence of action unit in d
   Some justices, for example Keane, Gageler and Bell are more responsive, both in frequency (mean presence) and magnitude (mean intensity) to criminal cases. This could show that it is harder for judges to keep a still face when the content of a case goes against human nature.
 \end{enumerate}
 
-\hypertarget{conclusion}{%
-\chapter{Conclusion}\label{conclusion}}
+\hypertarget{conclusion-limitation-and-future-work}{%
+\chapter{Conclusion, limitation and future work}\label{conclusion-limitation-and-future-work}}
 
-In this thesis, we explore the facial expressions of seven high court Justices in six cases utilising the publicly available videos from the high court hearing. The main aim of this research is to use a statistical and objective apporach to understand whether the Justices are behaving impartial in the courtroom.
+\hypertarget{conclusion}{%
+\section{Conclusion}\label{conclusion}}
+
+In this thesis, we explore the facial expressions of seven high court Justices in six cases utilising the publicly available videos from the high court hearing. The main aim of this research is to use a statistical and objective approach to understand whether the Justices are behaving impartial in the courtroom.
 
 Our approach involves extracting facial variables from the videos of the high court hearings and statistically model the presence and intensity of the action units. This allows us to understand whether different Justices would have variations in their expressions in different cases and whether their expressions will be different when different parties are speaking. We have found that in general, the Justices are behaving impartial during the court, which is a validation on Tutton's ethnographic study on the same topic. We also find that Justices tend to have stronger and more frequent negative emotions, for example sad, anger and fear in criminal cases. From a humanity perspective, it could be hard for the Justices control their expressions in criminal cases when extreme and violent scenes are described in the hearing.
 
-One of highlights of the project is to establish a workflow for systematically extracting facial variables from videos. The established workflow makes it easy for any re-processing of the videos and analysing facial expressions from other video source. Furthermore, as far as we know, this study is the first of its kind to statistically analyse videos to study the emotions in the courtroom. This piece of work therefore makes a significant contribution to the legal reaserach by providing a new, statistical methodology to understand the emotion of the Justices. The facial information gained from this reserach could also be incorporated with other judicial information to predict the high court case outcome in Australia.
+One of highlights of the project is to establish a workflow for systematically extracting facial variables from videos. The established workflow makes it easy for any re-processing of the videos and analysing facial expressions from other video source. Furthermore, as far as we know, this study is the first of its kind to statistically analyse videos to study the emotions in the courtroom. This piece of work therefore makes a significant contribution to the legal research by providing a new, statistical methodology to understand the emotion of the Justices. The facial information gained from this research could also be incorporated with other judicial information to predict the high court case outcome in Australia.
 
 \hypertarget{limitation}{%
 \section{Limitation}\label{limitation}}
 
-I will now briefly discuss some of the limitation of this work. The current image frames are extracted at every one minute interval. However, some facial expressions may only last for a few second. Thus more frequent time interval could be used for getting more precise facial information of the judges. Also, if videos of the high court hearing could be accepted as input for facial expression detection, the potential correlation of emotion could be captured even better.
+The current image frames are extracted at every one minute interval. However, some facial expressions may only last for a few second. Thus more frequent time interval could be used for getting more precise facial information of the judges. Also, if videos of the high court hearing could be accepted as input for facial expression detection, the potential correlation of emotion could be captured even better.
 
 In my work, seven videos are being processed into the facial recognition software and more videos could be processed to get more robust results. The reason for not processing more videos in the current study is because the resolution of publicly available videos from the high court has only 720 pixels while the facial recognition software, OpenFace requires at least 30 pixels for a face to be detected. This means that we have to choose videos where three or five judges are presented.
 
@@ -632,14 +623,12 @@ However, this work has established a workflow for extracting facial expressions 
 \hypertarget{future-work}{%
 \section{Future work}\label{future-work}}
 
-In the future, more work could be done to extract facial expressions of the Justices from videos using OpenFace. This could enable the researchers to capture more precise expression of the judges. However, as the extraction becomes more frequent, the problem of serial correlation could rise and appropriate modelling technique should be utilised to accommodate for this feature of data.
+Faces could be extracted more often than at 1 minute intervals to allow researchers to capture more precise expressions of the judges. However, as the extraction becomes more frequent, the problem of serial correlation could rise and appropriate modelling technique should be utilised to accommodate for this feature of data.
 
 \hypertarget{acknowledgement}{%
 \section{Acknowledgement}\label{acknowledgement}}
 
-The analysis is conducted using R \autocite{Rlanguage}, and the following packages: forecast \autocite{forecast}, tidyverse \autocite{tidyverse}, knitr \autocite{knitr}, emmenas \autocite{emmeans}, car \autocite{car}, arm \autocite{arm} and broom \autocite{broom}. The thesis document is written with bookdown \autocite{bookdown}.
-
-\appendix
+The analysis is conducted using R \autocite{Rlanguage}, and the following packages: forecast \autocite{forecast}, tidyverse \autocite{tidyverse}, emmenas \autocite{emmeans} and broom \autocite{broom}. This thesis document is created with knitr \autocite{knitr}, R Markdown \autocite{rmarkdown} and bookdown \autocite{bookdown}. All matrials required to reproduce the project can be found at \url{https://github.com/huizezhang-sherry/ETC4860/}.
 
 \hypertarget{appendix}{%
 \chapter{Appendix}\label{appendix}}
@@ -748,7 +737,7 @@ Gordon, Gageler, Kiefel, Nettle, Edelman\strut
 
 }
 
-\caption{This is an illustration of the face landmarking where 67 key points on a face is identified. }\label{fig:landmarking}
+\caption{An illustration of the face landmarking where 67 key points on a face is identified. OpenFace provides 2D and 3D coordinates of these landmarking points}\label{fig:landmarking}
 \end{figure}
 
 \hypertarget{description-of-action-units-recognised-by-openface}{%
@@ -789,7 +778,7 @@ AU45 & AU45: Blink & NA \\
 
 \begin{center}
 \begin{longtable}{lllllll}
-\caption{\label{tab:result-2}model result 2 for mean presence}\\
+\caption{\label{tab:result-2}Estimated marginal means of presence for model 2. }\\
 \toprule
 judge & video & AU & prob & SE & asymp.LCL & asymp.UCL \\
 \midrule
@@ -999,14 +988,41 @@ Bell & Parkes & AU45 & 0.204 & 0.0229 & 0.150 & 0.273 \\
 \end{longtable}
 \end{center}
 
+\hypertarget{residual-plots}{%
+\section{Residual plots}\label{residual-plots}}
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{figures/resid-judge-1} 
+
+}
+
+\caption{Residuals from Model 2 are graphed against judge. On the left panel, the mean of the residuals for each judge is close to zero and on the right panel, there is no clear pattern in the residuals can be observed. This indicates adequate fit.}\label{fig:resid-judge}
+\end{figure}
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{figures/resid-video-1} 
+
+}
+
+\caption{Residuals from model 2 are graphed against video. There is no clear pattern in the residuals indicating adequate fit.}\label{fig:resid-video}
+\end{figure}
+
+\hypertarget{the-presence-of-facial-expression-of-the-justices-by-speaker}{%
+\section{The presence of facial expression of the justices by speaker}\label{the-presence-of-facial-expression-of-the-justices-by-speaker}}
+
 \begin{figure}
 
 {\centering \includegraphics[width=1\linewidth]{figures/model3-plot-1} 
 
 }
 
-\caption{The confidence interval for estimated mearginal mean in model 3}\label{fig:model3-plot}
+\caption{The 95\% confidence interval for estimated mearginal mean of presence after bonferroni adjustment. The x axis represents video and the y axis represents the estimated marginal mean of an action unit being observed. The facet shows the Justices in columns and action units in rows. The intervals for different speakers are overlaid with different colors. }\label{fig:model3-plot}
 \end{figure}
+
+\hypertarget{the-intensity-of-facial-expression-of-the-justices-by-speakers}{%
+\section{The intensity of facial expression of the justices by speakers}\label{the-intensity-of-facial-expression-of-the-justices-by-speakers}}
 
 \begin{figure}
 
@@ -1014,11 +1030,10 @@ Bell & Parkes & AU45 & 0.204 & 0.0229 & 0.150 & 0.273 \\
 
 }
 
-\caption{The confidence interval for estimated mearginal mean in model 3}\label{fig:intensity-speaker}
+\caption{The 95\% confidence interval for estimated mearginal mean of intensity after bonferroni adjustment. The x axis represents video and the y axis represents the estimated marginal mean of the intensity. The facet shows the Justices in columns and action units in rows. The intervals for different speakers are overlaid with different colors.}\label{fig:intensity-speaker}
 \end{figure}
 
 \printbibliography[heading=bibintoc]
-
 
 
 \end{document}
