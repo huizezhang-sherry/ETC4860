@@ -77,7 +77,7 @@ p1 + p2
 
 ## The presence of facial expression of the justices by speaker
 
-```{r model3-plot, fig.cap="The 95\\% confidence interval for estimated mearginal mean of presence after bonferroni adjustment. The x axis represents video and the y axis represents the estimated marginal mean of an action unit being observed. The facet shows the Justices in columns and action units in rows. The intervals for different speakers are overlaid with different colors. ", eval = FALSE}
+```{r model3-plot, fig.cap="The 95\\% confidence interval for estimated mearginal mean of presence after bonferroni adjustment. The x axis represents video and the y axis represents the estimated marginal mean of an action unit being observed. The facet shows the Justices in columns and action units in rows. The intervals for different speakers are overlaid with different colors. "}
 emmean_obj_3 <- emmeans(binomial_model_3, c("judge", "video", "AU", "speaker"),
                         type = "response")
 

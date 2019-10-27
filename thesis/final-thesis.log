@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.10.22)  28 OCT 2019 09:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.10.22)  28 OCT 2019 10:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1381,10 +1381,6 @@ File: figures/intensity-video-1.pdf Graphic file (type pdf)
 Package pdftex.def Info: figures/intensity-video-1.pdf  used on input line 557.
 
 (pdftex.def)             Requested size: 426.79135pt x 298.75812pt.
-
-LaTeX Warning: Reference `fig:model3-plot' on page 27 undefined on input line 5
-67.
-
 [27 <./figures/intensity-video-1.pdf>] [28] [29]
 Chapter 5.
 [30
@@ -1394,7 +1390,7 @@ Appendix A.
 [33
 
 ]
-<figures/landmarking.png, id=686, 441.65pt x 397.485pt>
+<figures/landmarking.png, id=688, 441.65pt x 397.485pt>
 File: figures/landmarking.png Graphic file (type png)
 <use figures/landmarking.png>
 Package pdftex.def Info: figures/landmarking.png  used on input line 730.
@@ -1405,38 +1401,41 @@ Overfull \hbox (39.97624pt too wide) in paragraph at lines 743--767
  []
 
 [35 <./figures/landmarking.png>] [36] [37] [38] [39] [40] [41] [42] [43]
-<figures/resid-judge-1.pdf, id=739, 722.7pt x 361.35pt>
+<figures/resid-judge-1.pdf, id=741, 722.7pt x 361.35pt>
 File: figures/resid-judge-1.pdf Graphic file (type pdf)
 <use figures/resid-judge-1.pdf>
 Package pdftex.def Info: figures/resid-judge-1.pdf  used on input line 990.
 (pdftex.def)             Requested size: 426.79135pt x 213.39867pt.
-<figures/resid-video-1.pdf, id=740, 722.7pt x 361.35pt>
+<figures/resid-video-1.pdf, id=742, 722.7pt x 361.35pt>
 File: figures/resid-video-1.pdf Graphic file (type pdf)
 <use figures/resid-video-1.pdf>
 Package pdftex.def Info: figures/resid-video-1.pdf  used on input line 999.
 (pdftex.def)             Requested size: 426.79135pt x 213.39867pt.
 [44 <./figures/resid-judge-1.pdf> <./figures/resid-video-1.pdf>]
-<figures/intensity-speaker-1.pdf, id=757, 722.7pt x 505.89pt>
+<figures/model3-plot-1.pdf, id=759, 722.7pt x 505.89pt>
+File: figures/model3-plot-1.pdf Graphic file (type pdf)
+<use figures/model3-plot-1.pdf>
+Package pdftex.def Info: figures/model3-plot-1.pdf  used on input line 1011.
+(pdftex.def)             Requested size: 426.79135pt x 298.75812pt.
+[45 <./figures/model3-plot-1.pdf>]
+<figures/intensity-speaker-1.pdf, id=773, 722.7pt x 505.89pt>
 File: figures/intensity-speaker-1.pdf Graphic file (type pdf)
 <use figures/intensity-speaker-1.pdf>
 Package pdftex.def Info: figures/intensity-speaker-1.pdf  used on input line 10
-14.
+23.
 (pdftex.def)             Requested size: 426.79135pt x 298.75812pt.
-[45 <./figures/intensity-speaker-1.pdf>] [46
+[46 <./figures/intensity-speaker-1.pdf>] [47
 
-] [47] [48]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1025.
-[49]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1025.
+] [48] [49]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1034.
+[50]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1034.
 (./final-thesis.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1025.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1025.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1034.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1034.
 
 Package rerunfilecheck Info: File `final-thesis.out' has not changed.
-(rerunfilecheck)             Checksum: FF05E84A9A04B0653F00C937A7DFF6EC;2571.
-
-LaTeX Warning: There were undefined references.
-
+(rerunfilecheck)             Checksum: BA49B203E52A63BDF53747B3BF13B2B2;2571.
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -1449,13 +1448,13 @@ Package logreq Info: Writing requests to 'final-thesis.run.xml'.
 ### semi simple group (level 1) entered at line 102 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 29360 strings out of 494553
- 531010 string characters out of 6176312
- 1038917 words of memory out of 5000000
- 32242 multiletter control sequences out of 15000+600000
+ 29367 strings out of 494553
+ 531194 string characters out of 6176312
+ 1039305 words of memory out of 5000000
+ 32246 multiletter control sequences out of 15000+600000
  630074 words of font info for 241 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 48i,12n,65p,1415b,17390s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 48i,12n,65p,1415b,17389s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/Users/huizezhang/Library/TinyTeX/texmf-dist/fonts/enc/dvips/b
 ase/8r.enc}</Users/huizezhang/Library/TinyTeX/texmf-dist/fonts/type1/public/ams
 fonts/cm/cmmi10.pfb></Users/huizezhang/Library/TinyTeX/texmf-dist/fonts/type1/p
@@ -1469,10 +1468,10 @@ TinyTeX/texmf-dist/fonts/type1/public/bera/fvsr8a.pfb></Users/huizezhang/Librar
 y/TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></Users/huizezhang/Lib
 rary/TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></Users/huizezhang/
 Library/TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on final-thesis.pdf (56 pages, 913638 bytes).
+Output written on final-thesis.pdf (57 pages, 958092 bytes).
 PDF statistics:
- 902 PDF objects out of 1000 (max. 8388607)
- 798 compressed objects within 8 object streams
- 247 named destinations out of 1000 (max. 500000)
- 34167 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 918 PDF objects out of 1000 (max. 8388607)
+ 810 compressed objects within 9 object streams
+ 249 named destinations out of 1000 (max. 500000)
+ 34172 words of extra memory for PDF output out of 35830 (max. 10000000)
 
