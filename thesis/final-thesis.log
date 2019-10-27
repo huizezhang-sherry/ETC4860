@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.10.22)  27 OCT 2019 18:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.10.22)  28 OCT 2019 00:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1178,22 +1178,7 @@ Package biblatex Info: Data encoding 'utf8' specified.
 
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'final-thesis.bbl' found.
-(./final-thesis.bbl
-
-Package biblatex Warning: The following entry could not be found
-(biblatex)                in the database:
-(biblatex)                chen2018justice
-(biblatex)                Please verify the spelling and rerun
-(biblatex)                LaTeX afterwards.
-
-
-Package biblatex Warning: The following entry could not be found
-(biblatex)                in the database:
-(biblatex)                manning1981two
-(biblatex)                Please verify the spelling and rerun
-(biblatex)                LaTeX afterwards.
-
-)
+(./final-thesis.bbl)
 Package biblatex Info: Reference section=0 on input line 28.
 Package biblatex Info: Reference segment=0 on input line 28.
 \AtBeginShipoutBox=\box54
@@ -1308,158 +1293,150 @@ l.82
  been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.95 
-      [2]pdfTeX warning (ext4): destination with the same identifier (name{page
-.3}) has been already used, duplicate ignored
+l.91 \end{quote}
+                 [2]pdfTeX warning (ext4): destination with the same identifier
+ (name{page.3}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.104 
        [3] [4] [5]
 Chapter 2.
-[6
-
-]
-<figures/workflow.png, id=338, 795.97375pt x 461.725pt>
-File: figures/workflow.png Graphic file (type png)
-<use figures/workflow.png>
-Package pdftex.def Info: figures/workflow.png  used on input line 143.
-(pdftex.def)             Requested size: 426.79135pt x 247.56645pt.
-LaTeX Font Info:    Try loading font information for TS1+ppl on input line 158.
-
-(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ts1ppl.fd
-File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
-) [7 <./figures/workflow.png>]
-<figures/ts-plot-1.pdf, id=353, 722.7pt x 505.89pt>
-File: figures/ts-plot-1.pdf Graphic file (type pdf)
-<use figures/ts-plot-1.pdf>
-Package pdftex.def Info: figures/ts-plot-1.pdf  used on input line 207.
-(pdftex.def)             Requested size: 426.79135pt x 298.75812pt.
-[8] [9] [10 <./figures/ts-plot-1.pdf>]
-LaTeX Font Info:    Try loading font information for T1+fvm on input line 219.
+LaTeX Font Info:    Try loading font information for T1+fvm on input line 129.
 (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/bera/t1fvm.fd
 File: t1fvm.fd 2004/09/07 scalable font definitions for T1/fvm.
 )
 LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
-(Font)              scaled to size 9.85492pt on input line 219.
+(Font)              scaled to size 9.85492pt on input line 129.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `fvm' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-
-Underfull \hbox (badness 2980) in paragraph at lines 224--225
-[]\T1/ppl/m/n/10.95 (+20) Source code for this data pre-processing is avail-abl
-e at [][]$\T1/fvm/m/n/10.95 https : / / github . com /
- []
-
-[11
+[6
 
 ]
-Chapter 3.
-[12
+<figures/workflow.png, id=326, 795.97375pt x 461.725pt>
+File: figures/workflow.png Graphic file (type png)
+<use figures/workflow.png>
+Package pdftex.def Info: figures/workflow.png  used on input line 133.
+(pdftex.def)             Requested size: 426.79135pt x 247.56645pt.
+LaTeX Font Info:    Try loading font information for TS1+ppl on input line 148.
 
-] [13] [14]
-<figures/intensity-1.pdf, id=431, 722.7pt x 505.89pt>
+(/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ts1ppl.fd
+File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
+) [7 <./figures/workflow.png>]
+<figures/ts-plot-1.pdf, id=342, 722.7pt x 505.89pt>
+File: figures/ts-plot-1.pdf Graphic file (type pdf)
+<use figures/ts-plot-1.pdf>
+Package pdftex.def Info: figures/ts-plot-1.pdf  used on input line 197.
+(pdftex.def)             Requested size: 426.79135pt x 298.75812pt.
+[8] [9 <./figures/ts-plot-1.pdf>] [10]
+Chapter 3.
+[11
+
+] [12] [13]
+<figures/intensity-1.pdf, id=415, 722.7pt x 505.89pt>
 File: figures/intensity-1.pdf Graphic file (type pdf)
 <use figures/intensity-1.pdf>
-Package pdftex.def Info: figures/intensity-1.pdf  used on input line 320.
+Package pdftex.def Info: figures/intensity-1.pdf  used on input line 310.
 (pdftex.def)             Requested size: 426.79135pt x 298.75812pt.
-[15] [16 <./figures/intensity-1.pdf>] [17] [18]
+[14 <./figures/intensity-1.pdf>] [15] [16] [17]
 Chapter 4.
-<figures/most-common-1.pdf, id=489, 722.7pt x 505.89pt>
+<figures/most-common-1.pdf, id=471, 722.7pt x 505.89pt>
 File: figures/most-common-1.pdf Graphic file (type pdf)
 <use figures/most-common-1.pdf>
-Package pdftex.def Info: figures/most-common-1.pdf  used on input line 389.
+Package pdftex.def Info: figures/most-common-1.pdf  used on input line 381.
 (pdftex.def)             Requested size: 426.79135pt x 298.75812pt.
-[19
+[18
 
-] [20 <./figures/most-common-1.pdf>]
-<figures/au-video-1.pdf, id=514, 722.7pt x 505.89pt>
+] [19 <./figures/most-common-1.pdf>]
+<figures/au-video-1.pdf, id=497, 722.7pt x 505.89pt>
 File: figures/au-video-1.pdf Graphic file (type pdf)
 <use figures/au-video-1.pdf>
-Package pdftex.def Info: figures/au-video-1.pdf  used on input line 403.
+Package pdftex.def Info: figures/au-video-1.pdf  used on input line 395.
 (pdftex.def)             Requested size: 426.79135pt x 298.75812pt.
-[21 <./figures/au-video-1.pdf>]
-<figures/intensity-boxplot-1.pdf, id=529, 722.7pt x 505.89pt>
+[20 <./figures/au-video-1.pdf>]
+<figures/intensity-boxplot-1.pdf, id=512, 722.7pt x 505.89pt>
 File: figures/intensity-boxplot-1.pdf Graphic file (type pdf)
 <use figures/intensity-boxplot-1.pdf>
-Package pdftex.def Info: figures/intensity-boxplot-1.pdf  used on input line 42
-0.
+Package pdftex.def Info: figures/intensity-boxplot-1.pdf  used on input line 41
+2.
 (pdftex.def)             Requested size: 426.79135pt x 298.75812pt.
-<figures/high-intensity-points-1.pdf, id=531, 722.7pt x 505.89pt>
+<figures/high-intensity-points-1.pdf, id=514, 722.7pt x 505.89pt>
 File: figures/high-intensity-points-1.pdf Graphic file (type pdf)
 <use figures/high-intensity-points-1.pdf>
 Package pdftex.def Info: figures/high-intensity-points-1.pdf  used on input lin
-e 434.
+e 426.
 (pdftex.def)             Requested size: 426.79135pt x 298.75812pt.
-[22 <./figures/intensity-boxplot-1.pdf>] [23 <./figures/high-intensity-points-1
-.pdf>] [24] [25]
-<figures/model2-plot-1.pdf, id=586, 722.7pt x 505.89pt>
+[21 <./figures/intensity-boxplot-1.pdf>] [22 <./figures/high-intensity-points-1
+.pdf>] [23] [24]
+<figures/model2-plot-1.pdf, id=570, 722.7pt x 505.89pt>
 File: figures/model2-plot-1.pdf Graphic file (type pdf)
 <use figures/model2-plot-1.pdf>
-Package pdftex.def Info: figures/model2-plot-1.pdf  used on input line 544.
+Package pdftex.def Info: figures/model2-plot-1.pdf  used on input line 536.
 (pdftex.def)             Requested size: 426.79135pt x 298.75812pt.
-[26] [27 <./figures/model2-plot-1.pdf>]
-<figures/intensity-video-1.pdf, id=613, 722.7pt x 505.89pt>
+[25] [26 <./figures/model2-plot-1.pdf>]
+<figures/intensity-video-1.pdf, id=596, 722.7pt x 505.89pt>
 File: figures/intensity-video-1.pdf Graphic file (type pdf)
 <use figures/intensity-video-1.pdf>
-Package pdftex.def Info: figures/intensity-video-1.pdf  used on input line 565.
+Package pdftex.def Info: figures/intensity-video-1.pdf  used on input line 557.
 
 (pdftex.def)             Requested size: 426.79135pt x 298.75812pt.
-[28 <./figures/intensity-video-1.pdf>] [29] [30]
-Chapter 5.
-[31
 
-] [32] [33]
-Chapter 6.
-[34
+LaTeX Warning: Reference `fig:model3-plot' on page 27 undefined on input line 5
+67.
+
+[27 <./figures/intensity-video-1.pdf>] [28] [29]
+Chapter 5.
+[30
+
+] [31] [32]
+Appendix A.
+[33
 
 ]
-<figures/landmarking.png, id=705, 441.65pt x 397.485pt>
+<figures/landmarking.png, id=686, 441.65pt x 397.485pt>
 File: figures/landmarking.png Graphic file (type png)
 <use figures/landmarking.png>
-Package pdftex.def Info: figures/landmarking.png  used on input line 736.
+Package pdftex.def Info: figures/landmarking.png  used on input line 730.
 (pdftex.def)             Requested size: 426.79135pt x 384.12862pt.
-[35]
-Overfull \hbox (70.9423pt too wide) in paragraph at lines 749--773
+[34]
+Overfull \hbox (39.97624pt too wide) in paragraph at lines 743--767
  [] 
  []
 
-[36 <./figures/landmarking.png>] [37] [38] [39] [40] [41] [42] [43] [44]
-<figures/resid-judge-1.pdf, id=758, 722.7pt x 361.35pt>
+[35 <./figures/landmarking.png>] [36] [37] [38] [39] [40] [41] [42] [43]
+<figures/resid-judge-1.pdf, id=739, 722.7pt x 361.35pt>
 File: figures/resid-judge-1.pdf Graphic file (type pdf)
 <use figures/resid-judge-1.pdf>
-Package pdftex.def Info: figures/resid-judge-1.pdf  used on input line 996.
+Package pdftex.def Info: figures/resid-judge-1.pdf  used on input line 990.
 (pdftex.def)             Requested size: 426.79135pt x 213.39867pt.
-<figures/resid-video-1.pdf, id=759, 722.7pt x 361.35pt>
+<figures/resid-video-1.pdf, id=740, 722.7pt x 361.35pt>
 File: figures/resid-video-1.pdf Graphic file (type pdf)
 <use figures/resid-video-1.pdf>
-Package pdftex.def Info: figures/resid-video-1.pdf  used on input line 1005.
+Package pdftex.def Info: figures/resid-video-1.pdf  used on input line 999.
 (pdftex.def)             Requested size: 426.79135pt x 213.39867pt.
-[45 <./figures/resid-judge-1.pdf> <./figures/resid-video-1.pdf>]
-<figures/model3-plot-1.pdf, id=776, 722.7pt x 505.89pt>
-File: figures/model3-plot-1.pdf Graphic file (type pdf)
-<use figures/model3-plot-1.pdf>
-Package pdftex.def Info: figures/model3-plot-1.pdf  used on input line 1017.
-(pdftex.def)             Requested size: 426.79135pt x 298.75812pt.
-[46 <./figures/model3-plot-1.pdf>]
-<figures/intensity-speaker-1.pdf, id=790, 722.7pt x 505.89pt>
+[44 <./figures/resid-judge-1.pdf> <./figures/resid-video-1.pdf>]
+<figures/intensity-speaker-1.pdf, id=757, 722.7pt x 505.89pt>
 File: figures/intensity-speaker-1.pdf Graphic file (type pdf)
 <use figures/intensity-speaker-1.pdf>
 Package pdftex.def Info: figures/intensity-speaker-1.pdf  used on input line 10
-29.
+14.
 (pdftex.def)             Requested size: 426.79135pt x 298.75812pt.
-[47 <./figures/intensity-speaker-1.pdf>] [48
+[45 <./figures/intensity-speaker-1.pdf>] [46
 
-] [49] [50]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1039.
-[51]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1039.
+] [47] [48]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1025.
+[49]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1025.
 (./final-thesis.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1039.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1039.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1025.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1025.
 
 Package rerunfilecheck Info: File `final-thesis.out' has not changed.
-(rerunfilecheck)             Checksum: D9F7F1DE8BD88D70DDD079FE20B484F3;2562.
+(rerunfilecheck)             Checksum: FF05E84A9A04B0653F00C937A7DFF6EC;2571.
+
+LaTeX Warning: There were undefined references.
+
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -1472,13 +1449,13 @@ Package logreq Info: Writing requests to 'final-thesis.run.xml'.
 ### semi simple group (level 1) entered at line 102 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 29409 strings out of 494553
- 532017 string characters out of 6176312
- 1039698 words of memory out of 5000000
- 32270 multiletter control sequences out of 15000+600000
- 630692 words of font info for 249 fonts, out of 8000000 for 9000
+ 29360 strings out of 494553
+ 531010 string characters out of 6176312
+ 1038917 words of memory out of 5000000
+ 32242 multiletter control sequences out of 15000+600000
+ 630074 words of font info for 241 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 48i,12n,65p,1150b,17389s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 48i,12n,65p,1415b,17390s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/Users/huizezhang/Library/TinyTeX/texmf-dist/fonts/enc/dvips/b
 ase/8r.enc}</Users/huizezhang/Library/TinyTeX/texmf-dist/fonts/type1/public/ams
 fonts/cm/cmmi10.pfb></Users/huizezhang/Library/TinyTeX/texmf-dist/fonts/type1/p
@@ -1492,10 +1469,10 @@ TinyTeX/texmf-dist/fonts/type1/public/bera/fvsr8a.pfb></Users/huizezhang/Librar
 y/TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></Users/huizezhang/Lib
 rary/TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></Users/huizezhang/
 Library/TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on final-thesis.pdf (58 pages, 962176 bytes).
+Output written on final-thesis.pdf (56 pages, 931388 bytes).
 PDF statistics:
- 938 PDF objects out of 1000 (max. 8388607)
- 829 compressed objects within 9 object streams
- 255 named destinations out of 1000 (max. 500000)
- 34172 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 902 PDF objects out of 1000 (max. 8388607)
+ 798 compressed objects within 8 object streams
+ 247 named destinations out of 1000 (max. 500000)
+ 34167 words of extra memory for PDF output out of 35830 (max. 10000000)
 

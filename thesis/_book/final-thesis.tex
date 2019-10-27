@@ -39,7 +39,7 @@
 \chapter*{Acknowledgements}\label{acknowledgements}}
 \addcontentsline{toc}{chapter}{Acknowledgements}
 
-I would like to express my gratitude to Professor Di Cook, my supervisors, for detailed guidance and kindness support throughout and Professor Russell Smyth for raising the idea of this project. I would like to appreciate Stephanie Kobakian, with whom I have countless discussion with about the project. I would also like to extend my thank to my friends, colleagues and family for standing behind me unconditionally.
+I would like to express my gratitude to Professor Di Cook, my supervisors, for detailed guidance and kindness support throughout the project and Professor Russell Smyth for raising the idea of this project. I would like to appreciate Stephanie Kobakian, with whom I have countless discussions with about the project. I would also like to extend my thank to my friends, colleagues and family for standing behind me unconditionally.
 
 \let\cleardoublepage\clearpage
 
@@ -56,8 +56,8 @@ I hereby declare that this thesis contains no material which has been accepted f
 \chapter*{Abstract}\label{abstract}}
 \addcontentsline{toc}{chapter}{Abstract}
 
-It is part of human nature to react to change by expressing emotions. However in some situations it is necessary to attempt to restrict reactions, and expressions of emotions.
-In many court systems it is required that Justices, or Judges, restrict emotional displays and ensure the judgement is not biased towards a particular party.In this study, facial recognition software is used to objectively assess the facial expressions of six Justices in seven cases heard in the High Court of Australia. Facial information derived by the software is applied in a logistic model to find the presence of a selected range of action units. The intensity of the action units is modelled by a two part model. It is observed that the Justices generally remain impartial during the court proceedings. Negative emotions such as sadness, fear and anger are associated with action units that occur more intensely or frequently. The requirement to remain expressionless is difficult for some Justices, especially in criminal cases that involve drugs and sexual assaults.
+It is part of human nature to react to change by expressing emotions. However, in some situations it is necessary to attempt to restrict reactions, and expressions of emotions.
+In many court systems it is required that Justices should restrict emotional displays to ensure the judgement is not biased towards a particular party. In this study, facial recognition software is used to objectively assess the facial expressions of six Justices in six cases (seven videos) heard in the High Court of Australia. Facial information derived from the software is applied in a logistic regression to model the presence score of a selected range of action units. The intensity of the action units is modelled by a two part model. It is observed that Justices generally remain impartial during the court proceedings. Negative emotions such as sadness, fear and anger are associated with action units that occur more intensely or frequently. The requirement to remain expressionless is difficult for some Justices, especially in criminal cases that involve drugs and sexual assaults.
 
 \clearpage\pagenumbering{arabic}\setcounter{page}{1}
 \let\cleardoublepage\clearpage
@@ -68,58 +68,53 @@ In many court systems it is required that Justices, or Judges, restrict emotiona
 \hypertarget{background-and-motivation}{%
 \section{Background and motivation}\label{background-and-motivation}}
 
-The decisions of Justices have always been a source of debate and discussion. Since the realist movement in the United States emerged in the 1930s, many attempts have been made to predict decisions using specific characteristics of the Justices such as gender, political views, and religious backgrounds. More recently, scholars \autocites{Shullman2004illusion}{chen2016justice} have utilised Audio Visual (AV) recordings and transcripts to predict the outcome of cases in the U.S. Supreme Court. \textcite{tutton2018judicial} have used an ethnographic approach to present an observational study of judicial behaviour, based on manually watching the audio footage and taking notes when an obvious emotion is observed. Manually observing the AV recordings may lead to subjective evaluations of facial expression and this motivates us to extend \textcite{tutton2018judicial}'s work and employ facial recognition technology to study the facial expression of the justices to obtain objective judgements.
+The decisions of Justices have always been a source of debate and discussion. Since the realist movement in the United States emerged in the 1930s, many attempts have been made to predict decisions using specific characteristics of the Justices such as gender, political views, and religious backgrounds. More recently, scholars \autocites{Shullman2004illusion}{chen2016justice} have utilised Audio Visual (AV) recordings and transcripts to predict the outcome of cases in the U.S. Supreme Court. \textcite{tutton2018judicial} have used an ethnographic approach to study the judicial behaviour. The study involves manually observing the audio footage and taking notes when an obvious emotion is observed. Manually observation may lead to subjective evaluations of facial expressions when different individuals are observing the same AV recordings. This motivates us to extend \textcite{tutton2018judicial}'s work and employ facial recognition technology to study the facial expressions of the Justices to obtain objective judgements.
 
 \hypertarget{literature-review}{%
 \section{Literature review}\label{literature-review}}
 
-The literature summary is divided into two parts: (1) current work in legal studies to understand the behaviour of the Justices and (2) existing facial recognition and emotion tagging technology.
+The literature summary is divided into two sections: (1) current work in legal studies to understand the behaviour of the Justices and (2) existing facial recognition and emotion tagging technology.
 
 \hypertarget{legal-study-from-a-behaviour-perspective}{%
 \subsection{Legal study from a behaviour perspective}\label{legal-study-from-a-behaviour-perspective}}
 
-There is comprehensive law, economics and political science literature that attempts to predict how the Justices will vote in court cases. This literature considers characteristics of the Justices and characteristics of the parties in the case; these include gender, political views, religious background of Justices or gender and race of the defendant in criminal cases \autocites{Stuart1962}{Peter1984}{Combining1987}{Steffensmeier2001}{Kulik2003}.
+There is comprehensive law, economics and political science literature that attempts to predict how the Justices will vote in court cases. Some characteristics of the Justices, for example, gender, political view, religious background has been considered in the literature \autocites{Stuart1962}{Peter1984}{Combining1987}{Steffensmeier2001}{Kulik2003}.
 
-Many studies depart from static characteristics of Justices to incorporate the language used by the them in the court to predict the decision of the Justices.
-\textcite{black2011emotions} have studied the use of pleasant and unpleasant language by the Justices and \textcite{Shullman2004illusion} and \textcite{johnson2009inquiring} have studied the effect of frequency and content of Justices' questions. \textcite{epstein2010inferring} use a regression analysis involving the number of questions asked by the Justices to predict the winning party in a case.
+More studies depart from static characteristics of Justices and incorporate the language used by the Justices in the court to understand the decision of the Justices. \textcite{black2011emotions} have studied the use of pleasant and unpleasant language by the Justices. \textcite{Shullman2004illusion} and \textcite{johnson2009inquiring} have studied the effect of frequency and content of Justices' questions. \textcite{epstein2010inferring} has utilised the number of questions asked by the Justices in regression analysis to predict the winning party in a case .
 
-Recently, legal studies have focused on the usage of emotion and vocal characteristics of the Justices to predict their decisions. \textcite{judicalguid} present the following code of conduct:
+Recently, legal studies have focused on the usage of emotion and vocal characteristics of the Justices. From a behavioural perpsective, Paul Ekman \autocite{ekman1991invited} suggests that speakers are often unaware of their own facial and vocal inflections. In 2016, \textcite{chen2016perceived} have studied the emotion of the Justices from vocal characteristics and suggest that perceived masculinity is strongly correlated with the court outcomes. \textcite{dietrich2019emotional} also suggest that subconscious vocal inflections contain information that is not available from text transcripts using multilevel logistic model with random effects. Another study by \textcite{chen2018justice} have incorporated both vocal and image information into a machine learning model to predict the votes of the Justices, and case outcome, using the U.S. Supreme Court data from 1946-2014. They found that image and audio features have improved the prediction of case outcomes. This demonstrates the potential of incorporating facial information to understand the Justices.
+
+The literature often considers the U.S. Supreme Court Database and far less studies have been conducted using Australian High Court data. The Guide to Judical Conduct \autocite{judicalguid} has presented the following code of conduct:
 
 \begin{quote}
 It is important for judges to maintain a standard of behaviour in court that is consistent with the status of judicial office and does not diminish the confidence of litigants in particular, and the public in general, in the ability, the integrity, the impartiality and the independence of the judge.
 \end{quote}
 
-This highlights the value of impartiality discussed by \textcite{tutton2018judicial} and \textcite{goffman1956nature}.
-Paul Ekman \textcite{ekman1991invited} takes a behavioural perspective and suggests that speakers are often unaware of their own facial and vocal inflections. \textcite{chen2016perceived}; \textcite{chen2017covering} and \textcite{schubert1992observing} have studied the emotion of the Justices from vocal characteristics and suggest that perceived masculinity is strongly correlated with the court outcomes. \textcite{dietrich2019emotional} has used a multilevel logistic model with random effects to suggest that subconscious vocal inflections contain information that is not available from text transcripts.
-A sizeable study by \textcite{chen2018justice} incorporated vocal and image information of the Justices into a machine learning model to predict the votes of the Justices, and case outcome, using the U.S. Supreme Court data from 1946-2014. This study showed that image features increased prediction of case outcomes from 64\% to 69\% and audio features improved prediction of case outcomes from 67\% to 69\%. This demonstrates the potential of incorporating facial information to understand and predict the decision of the Justices.
-
-The literature often considers the U.S. Supreme Court Database and far less studies have been conducted using Australian High Court data. \textcite{tutton2018judicial} has used a novel ethnographic approach to study the judicial demeanour in the High Court of Australia by using transcripts and AV recordings. The study found that Justices present a detached facial demeanour during the court most of the time, but some human display of emotions such as laughter and humour were also captured. Tutton's \autocite*{tutton2018judicial} work has confirmed the potential of using image information to analyse the Justices' behaviour. However this approach could be biased and lead to subjective results influenced by the people observing the videos. Tutton's \autocite*{tutton2018judicial} study, presents an opportunity to extend image use by utilising facial recognition technology to produce objective results.
+This highlights the expectation for the Justices to present impartial in the courtroom. \textcite{tutton2018judicial} has used a novel ethnographic approach to study the judicial demeanour in the High Court of Australia by using transcripts and AV recordings. The study found that Justices present a detached facial demeanour during the court most of the time, but some human display of emotions such as laughter and humour were also captured. However, their approach of manually observing the AV recordings could be biased and lead to subjective results influenced by the individuals observing the videos. An objective approach utilising facial recognition technology is employed in this project to study the expressions of the Justices aiming to produce objective results.
 
 \hypertarget{facial-recognition}{%
 \subsection{Facial recognition}\label{facial-recognition}}
 
-An anatomical study of the decomposition of facial muscles by \textcite{ekman1976measuring} led to the development of Facial Action Code (FAC) and identification of the six universal emotions on human faces. This work has laid a solid foundation for analysing facial expression and developing facial recognition software \autocites{huang1997}{Tong2007}.
-
-To analyse facial expressions, effective facial recognition capture technology is needed to extract faces from images. Facial recognition software DeepFace \autocite{taigman2014deepface} from Facebook and FaceNet \autocite{schroff2015facenet} from Google have been developed for face detection in search and social media platforms. OpenFace \autocite{baltrusaitis2018openface} is the first open-sourced face recognition software that provides facial expression detection, including facial landmarking, head pose estimation, eye gaze tracking and facial action unit detection. The OpenFace toolkit has been used in different area in research including depression classification \autocite{yang2016decision}, emotion studies \autocite{huber2018emotional} and even sports analytics. \autocite{kovalchik2018going}.
+An anatomical study of the decomposition of facial muscles by \textcite{ekman1976measuring} has led to the development of Facial Action Code (FAC), and the identification of the six universal emotions on human faces. This work has laid a solid foundation for analysing facial expressions. Effective facial recognition software, for example DeepFace \autocite{taigman2014deepface} from Facebook and FaceNet \autocite{schroff2015facenet} from Google, have been developed for face detection in search and social media platforms. OpenFace \autocite{baltrusaitis2018openface} is the first open-sourced face recognition software that provides facial expression detection, including facial landmarking, head pose estimation, eye gaze tracking and facial action unit detection. The OpenFace toolkit has been used in different research areas including depression classification \autocite{yang2016decision}, emotion studies \autocite{huber2018emotional} and sports analytics. \autocite{kovalchik2018going}.
 
 \hypertarget{cases-selected-in-the-project}{%
 \section{Cases selected in the project}\label{cases-selected-in-the-project}}
 
-Six cases have been analysed in this project and they are chosen to cover a broad range of legal areas. Two cases from \textbf{immigration} law were chosen because a series of decisions made by the High Court of Australia related to refugee and immigration status has led the Republic of Nauru to abolish the mechanism that parties could appeal decision from the Supreme Court of Nauru to the High Court of Australia.
+Six cases have been analysed in this project and they are chosen to cover a broad range of legal areas. Two cases from \textbf{immigration} law were chosen because a series of decisions made by the High Court of Australia related to refugee and immigration status has led the Republic of Nauru to abolish the mechanism that parties could appeal decisions from the Supreme Court of Nauru to the High Court of Australia.
 
-In Republic of Nauru v WET040 {[}No.~2{]} {[}2018{]} HCA 60, an Iranian national (respondent) was seeking for asylum protection from the Secretary of the Department of Justice and Border Control and was rejected. He then appealed to the Supreme Court of Nauru and won. The appellant, Refugee Status Review Tribunal then appeal to the High Court of Australia. Three High Court Justices sat the hearings were Justices Gageler, Justices Nettle and Justices Edelman and we refer this case as Nauru-a in this project.
+In Republic of Nauru v WET040 {[}No.~2{]} {[}2018{]} HCA 60, an Iranian national (respondent) was seeking for asylum protection from the Secretary of the Department of Justice and Border Control (DJBC) and was rejected. Three High Court Justices sat the hearings were Justices Gageler, Nettle and Edelman and the case is referred to as Nauru-a in this project.
 
-Another case from immigration law is TTY167 v Republic of Nauru {[}2018{]} HCA 61 is chosen, where a Bangladesh citizen (Appellant) applied to Nauru's Secretary of the Department of Justice and Border Control for refugee protection. The appellant then appealed to the Tribunal and further appealed to the High Court of Nauru but was rejected. He then appealed to the High Court of Australia and successfully got his refugee status. This case is also heard by Justices Gageler, Justices Nettle and Justices Edelman and we refer to this case as Nauru-b.
+Another case from immigration law is TTY167 v Republic of Nauru {[}2018{]} HCA 61, where a Bangladesh citizen (appellant) applied to Nauru's Secretary of the Department of Justice and Border Control for refugee protection. The appellant then appealed to the Tribunal and further appealed to the High Court of Nauru but was rejected. He then appealed to the High Court of Australia and successfully got his refugee status. This case is also heard by Justices Gageler, Nettle and Edelman and it is referred as Nauru-b.
 
-Rinehart v Hancock Prospecting Pty Ltd {[}2019{]} HCA 13 is a \textbf{commercial} case discussing commercial arbitration. The court decided that a non-party to the arbitration agreement can participate in the arbitration by claiming `through and under' a party to the agreement. This case were held in two hearings due to its complexity and they are named Rinehart-a and Rinehart-b in the project. Chief Justices Kiefel, Justices Gageler, Nettle, Gordon, and Edelman heard the case. A distinct characteristics of this case is that the decision is not a unanimous decision of all the Justices. Justice Edelman took a narrow interpretation of the principle of privity of contract while the majority of the Justices interpret the situation broadly.
+Rinehart v Hancock Prospecting Pty Ltd {[}2019{]} HCA 13 is a \textbf{commercial} case discussing commercial arbitration. Due to its complexity, the case were held in two hearings named Rinehart-a and Rinehart-b in the project. Chief Justices Kiefel, Justices Gageler, Nettle, Gordon, and Edelman heard the case. A distinct characteristics of this case is that the decision is not a unanimous decision of all the Justices. Justice Edelman took a narrow interpretation of legal issue while the majority of the Justices tokk a broad interpreation.
 
-Parkes Shire Council v South West Helicopters Pty Limited {[}2019{]} HCA 14 is a \textbf{civil} case where the appellant, the Stephenson claimed for psychiatric harm resulting from the death of Mr Stephenson, who was carried and subsequently killed due to the crash of the helicopter by the Parkes city council (respondent). Chief Justices Kiefel, Justices Bell, Keane, Gordon, and Edelman heard the case and it is named Parkes in the project.
+Parkes Shire Council v South West Helicopters Pty Limited {[}2019{]} HCA 14 is a \textbf{civil} case where the appellant, the Stephenson claimed for psychiatric harm resulting from the death of Mr Stephenson, who was carried and subsequently killed due to the helicopter crash by the Parkes city council (respondent). Chief Justices Kiefel, Justices Bell, Keane, Gordon, and Edelman heard the case and it is referred to as Parkes.
 
-Another two \textbf{criminal} law cases are chosen in the project as the nature of criminal cases are highly different from civil cases. In McKell v The Queen {[}2019{]} HCA 5, which is referred as McKell, the appellant is a truck driver and was involved in the importation of drug and cash. The trial judge sentenced a 18 years imprisonment and the appellant appealed to the Court of Criminal Appeal and further to the High Court of Australia. The High Court Justices Bell, Gageler, Keane, Gordon, Edelman decided there's a miscarriage of justice and quashed the conviction of the appellant.
+Another two \textbf{criminal} law cases are chosen in the project as the nature of criminal cases are highly different from civil cases. In McKell v The Queen {[}2019{]} HCA 5, which is referred to as case McKell, the appellant is a truck driver and was involved in the importation of drug and cash. The trial judge sentenced a 18 years imprisonment and the appellant appealed to the Court of Criminal Appeal and further to the High Court of Australia. The High Court Justices Bell, Gageler, Keane, Gordon, Edelman decided there's a miscarriage of justice and quashed the conviction of the appellant.
 
-In OKS v Western Australia {[}2019{]} HCA 10, the appellant is charged with misconduct with children and the Court of appeal of the Supreme Court of Western Australia charged the appellant for conviction, the Appellant then appealed to the High Court of Australia. As another criminal case, this time, Justices Bell, Keane, Nettle, Gordon and Edelman also unanimously allowed the appeal and issued a new trial.
+In OKS v Western Australia {[}2019{]} HCA 10, the appellant is charged with misconduct with children. The Court of appeal of the Supreme Court of Western Australia charged the appellant for conviction and the appellant then appealed to the High Court of Australia. Justices Bell, Keane, Nettle, Gordon and Edelman unanimously allowed the appeal and issued a new trial.
 
-A full list of the videos chosen for this study is also available in the Appendix.
+The links to the hearings of the cases can be found in Table A.1 in the Appendix.
 
 \let\cleardoublepage\clearpage
 
@@ -129,14 +124,9 @@ A full list of the videos chosen for this study is also available in the Appendi
 \hypertarget{data-processing}{%
 \section{Data processing}\label{data-processing}}
 
-The audio visual recordings of cases described heard by the High Court of Australia \autocite{judicalguid} are available on the High Court of Australia website. These videos displayed the Justices' faces above the required level of resolution of the OpenFace software, more than 30 pixels.
+The Audio Visual (AV) recordings of cases described heard by the High Court of Australia are available on the High Court of Australia website. The workflow to obtain the facial landmarks and expression information from the source videos has been displayed in Figure \ref{fig:workflow}.
 
-To analyse the facial expressions of the Justices the videos must be processed by OpenFace. To download videos from the High Court of Australia \autocite{judicalguid} the software Youtube-dl \autocite{youtube-dl} was used. Image frames were extracted from each of the videos, at every one minute interval via ffmpeg \autocite{ffmpeg}, this resulted in in 1021 image frames.
-
-The Justices remain seated in the same position throughout the hearings, this means the same region of every image can be extracted to form a set of images containing each individual Justice. Taipan \autocite{Taipan} is used to find the x-y coordinates of a box denoting the location of the Justices in each image frame. ImageMagick \autocite{ImageMagick} was used to crop the face of each Justice from each image frame based on the coordinates from Taipan.
-
-The resulting 4601 cropped regions containing Justice's faces are then sent to OpenFace \autocite{baltrusaitis2018openface} to be processed. The results provided by OpenFace contained facial variables, these include facial landmarking, head pose, eye gaze and action units. The results are stored as separate comma-separated values (csv) files for each of the 4601 faces and post-processing is done in R to combine the separate csv files into a dataframe with additional index columns for frame, judge and video.
-The workflow to obtain the facial landmarks and expression information from the source videos has been displayed in Figure \ref{fig:workflow}.
+To download videos from the High Court of Australia the software Youtube-dl \autocite{youtube-dl} is used. Image frames are extracted from each of the videos, at every one minute interval via ffmpeg (\url{http://www.ffmpeg.org/}), this results in 1021 image frames. The Justices remain seated in the same position throughout the hearings, this means the same region of every image can be extracted to form a set of images containing each individual Justice. Taipan \autocite{Taipan} is used to find the x-y coordinates of a box denoting the location of the Justices in each image frame. ImageMagick \autocite{ImageMagick} is used to crop the face of each Justice from each image frame based on the coordinates from Taipan. The resulting 4601 cropped regions containing Justice's faces are then sent to OpenFace \autocite{baltrusaitis2018openface} to be processed. The results provided by OpenFace contain facial variables including facial landmarking, head pose, eye gaze and action units. These are stored as separate comma-separated values (csv) files for each of the 4601 faces. Post-processing is done in R to combine the separate csv files into a dataframe with additional index columns for frame, judge and video. Lastly, metadata related to the speaking party are extracted from transcript of hearings.
 
 \begin{figure}
 
@@ -157,21 +147,21 @@ OpenFace provides more than 711 variables measuring different aspects of a given
 \item
   \textbf{Confidence}: How confident OpenFace is in the detection.
 \item
-  \textbf{Gaze}: the vector from the pupil to corneal reflection. The dataset contains information on the gaze for both eyes with no distinct difference between the eyes.
+  \textbf{Gaze}: The vector from the pupil to corneal reflection.
 \item
-  \textbf{Pose}: the location of the head with respect to camera.
+  \textbf{Pose}: The location of the head with respect to camera.
 \item
-  \textbf{Landmarking}: the location of certain characteristic points on the face and around the eyes. An illustration of face landmarks can be found in Figure \ref{fig:landmarking} in the Appendix.
+  \textbf{Landmarking}: The location of certain characteristic points on the face and around the eyes. An illustration of face landmarks can be found in Figure \ref{fig:landmarking} in the Appendix.
 \item
   \textbf{Action Unit}: An action unit is used to describe the movement of a single facial muscle.
 \end{itemize}
 
-The human facial expression can be de-constructed into a combination of action units. For example, happiness is the addition of action unit 6 and 12, which can be described as a raising check and a pull on the lip corner respectively. The Facial Action Coding System (FACS) is the common standard for describing facial expressions via anatomically decomposing a emotion into action units. To decompose an emotion of sadness, three action units are utilised. Action unit 01 describes the raise of inner brow; action unit 04 describes the general lower of brow and action unit 15 depicts the lower of lip corner. The subset of action units OpenFace is able to recognise is provided in Table \ref{tab:au} in the Appendix, along with their meaning and related emotions.
+Human facial expression can be de-constructed into a combination of action units. Happiness is the addition of action unit 6, cheek raiser and action unit 12, lip corner puller. The Facial Action Coding System (FACS) is the common standard for describing facial expressions. To decompose an emotion of sadness, three action units are utilised. Action unit 01 describes the raise of inner brow; action unit 04 is brow lowerer and action unit 15 depicts the lower of lip corner. Action units are chosen to study the facial expressions of the Justices as suggested by \textcite{kovalchik2018going}. The action units OpenFace is able to recognise have been provided in Table \ref{tab:au} in the Appendix.
 
 \hypertarget{data-format}{%
 \section{Data format}\label{data-format}}
 
-The data can be expressed in the long format with action unit as an index and presence and intensity presented as observations in two columns. Table \ref{tab:long} presents the data for Justices Edelman in case McKell for all the action units in the first frame in a long format. Since the frame is cropped at one minute interval, the intensity and presence can also be viewed as time series and Figure \ref{fig:ts-plot} plots the action unit 1 of Justices Edelman in case McKell across time.
+Table \ref{tab:long} presents an illustration of the data extracted via the workflow described above in the long format. The presented data is shows the action unit as index adn presence and intensity presented as observations in two columns for Justices Edelman in the first frame of case McKell. Since the frame is cropped at one minute interval, the intensity and presence can also be viewed as time series and Figure \ref{fig:ts-plot} plots the action unit 1 of Justices Edelman in case McKell across time.
 
 \begin{table}[ht]
 \begin{center}
@@ -214,14 +204,14 @@ Edelman & McKell & 1 & Appellent & AU45 & 0 & 0.25 \\
 \hypertarget{missing-value-imputation}{%
 \section{Missing value imputation}\label{missing-value-imputation}}
 
-Missing values occur in the data whenever the justice is not looking straight ahead. This might occur when they are reading materials on their desk, or perhaps if conversing with their legal assistant behind them. It can also occur when there are five judges on a case, and the video resolution is not sufficiently high to detect the face or action units. The data structure that we created specifically places an NA in these positions. This has allowed us to examine the pattern of missings and check it happens more often in some recognisable way, for example when an appellant is speaking. We did not find any over-arching pattern, and thus have used a simple procedure to impute missings for intensity, which was then used to impute presence.
+Missing values occur in the data whenever the Justice is not looking straight ahead. This might occur when they are reading materials on their desk, or perhaps if conversing with their legal assistant behind them. It can also occur when there are five Justices on a case, and the video resolution is not sufficiently high to detect the face or action units. The data structure that we created specifically places an NA in these positions. This has allowed us to examine the pattern of missings and check it happens more often in some recognisable way, for example when an appellant is speaking. We did not find any over-arching pattern, and thus have used a simple procedure to impute missings for intensity, which was then used to impute presence.
 
-Intensity is a continuous variable ranging from zero or five measuring how strong the action unit is presented. The missing values of intensity are related to missing values in presence. Intensity being zero means the action unit is not present, being one means the action unit is present at minimum intensity and being five means the action unit is present at maximum intensity. Linear interpolation function (\texttt{na.interp()}) from \texttt{forecast} package is used to impute Intensity. The missing value of presence is then imputed based on if the intensity score of the missing observations are greater than one.
+Intensity is a continuous variable ranging from zero or five measuring how strong the action unit is presented. Linear interpolation function (\texttt{na.interp()}) from \texttt{forecast} package is used to impute Intensity. The missing value of presence is then imputed as one if the intensity score of the missing observations are greater than one and zero otherwise.
 
 \hypertarget{source-code}{%
 \section{Source code}\label{source-code}}
 
-Source code for this data pre-processing is available at \url{https://github.com/huizezhang-sherry/ETC4860/data_pre_processing}.
+Source code for the workflow of data processing is available at \url{https://github.com/huizezhang-sherry/ETC4860/data_pre_processing}. The full data obtained from OpenFace after post-process is named \texttt{full\_data} available in the \texttt{raw\_data} folder in the same repository. The imputed dataset contains only action unit is named \texttt{au\_imputed} and also available in the \texttt{raw\_data} folder.
 
 \let\cleardoublepage\clearpage
 
@@ -231,7 +221,7 @@ Source code for this data pre-processing is available at \url{https://github.com
 \hypertarget{notation}{%
 \section{Notation}\label{notation}}
 
-Let \(\mathbf{X}\) be a matrix of predictors, and \(\mathbf{Y}\) variable in our case is bivariate matrix of response variables, including a binary indicator of presence/absence and a numeric value measuring intensity, of facial action unit, where
+Let \(\mathbf{X}\) be a matrix of predictors, and \(\mathbf{Y}\) variable is a bivariate matrix of response variables, including a binary indicator of presence/absence and a numeric value measuring intensity, of facial action unit, where
 
 \begin{itemize}
 \tightlist
@@ -253,7 +243,7 @@ A full, main effects model for the data might be expressed as:
 
 \[Y_{ijklt} = \mu + \alpha_i + \beta_j + \gamma_k + \delta_l + \varepsilon_{ijklt}\]
 
-\noindent Also, let \(P_{jitkl}\) represent the response variable presence, and \(I_{jitkl}\) represent the response variable intensity. This notation will be helpful for defining the plots and models explained in this section.
+\noindent Also, let \(P_{ijklt}\) represent the response variable presence, and \(I_{ijklt}\) represent the response variable intensity. This notation will be helpful for defining the plots and models explained in this section.
 
 \hypertarget{modelling-presence}{%
 \section{Modelling presence}\label{modelling-presence}}
@@ -261,29 +251,29 @@ A full, main effects model for the data might be expressed as:
 \hypertarget{model-structure}{%
 \subsection{Model structure}\label{model-structure}}
 
-The presence score is a binary variable that is one when a particular action unit is observed and zero if not. This suggests using a logistic model and we implement this using the \texttt{glm()} function from base R. The link function of a matter of choice in the \texttt{glm()} function and the logit link is chosen because it is the canonical link of the binomial family. An alternative link could be a probit link but theoretically, these two links give very similar result in terms of prediction \autocite{faraway2016extending}. The structure of the model is written as in Equation \ref{eq:logit-structure} with the first equation linking the mean of the presence to the linear prediction and the second equation specifying the linkage between \(\eta\) to the predictors. The next section will specify three different function form of the linear predictor by introducing different variables and interactions.
+The presence score is a binary variable that is one when a particular action unit is observed and zero if not. A logistic model is able to capture this binary feature of the presence score and we implement it using the \texttt{glm()} function from base R. The link function of a matter of choice in the generalised linear model and the logit link is chosen because it is the canonical link of the binomial family. An alternative link could be a probit link but theoretically, these two links give very similar result in terms of prediction \autocite{faraway2016extending}. The structure of the model is written in Equation \ref{eq:logit-structure} with the first equation linking the mean of the presence to the linear prediction and the second equation specifying the linkage between \(\eta\) to predictors. The next section will specify three different function forms for the linear predictor.
 
-\begin{align}\label{eq:logit-structure}
+\begin{align}
 \mu &= \frac{e^{\eta}}{1 + e^{\eta}} \\
-\eta &= f(\alpha_i\text{,}\beta_j\text{,}\gamma_k\text{,}\delta_l)
+\eta &= f(\alpha_i\text{,}\beta_j\text{,}\gamma_k\text{,}\delta_l) \label{eq:logit-structure}
 \end{align}
 
 \hypertarget{model-1-action-unit}{%
 \subsection{Model 1: Action unit}\label{model-1-action-unit}}
 
-The first linear function is written in Equation \ref{eq:judge_au}. It includes the main effect of judge and action unit and also their interaction. Interaction terms are included to capture the judge-wise differences for different action units and it is necessary because we suspect different judges could have different average presence scores for different action units.
+The first linear predictor is presented in Equation \ref{eq:judge_au}. It includes the main effect of judge, action unit and also their interaction. Interaction terms are included to capture the judge-wise differences for different action units and it is necessary because we suspect different judges could have different average presence scores for different action units.
 
 \begin{align}\label{eq:judge_au}
-\eta_{ik} &= \mu + \alpha_i + \gamma_k + (\alpha\gamma)_{ik}
+\eta_{ik} &= \mu + \alpha_i + \gamma_k + (\alpha\gamma)_{ik} + \varepsilon_{ik}
 \end{align}
 
 \hypertarget{model-2-video}{%
 \subsection{Model 2: Video}\label{model-2-video}}
 
-Build upon the first model, the second model adds the video related main effect and interactions, as shown in Equation \ref{eq:judge_video}. The interactions allow both judge and action unit variables to differ in different videos, which is useful to answer the research questions \emph{whether the judges are behaving same or different across videos}.
+Build upon the first model, the second model adds the video related main effect and interactions, as shown in Equation \ref{eq:judge_video}. The interactions allow both variable judge and action unit to differ in different videos. This model structure is useful to answer the research questions \emph{Whether the judges are behaving same or different across videos}?
 
 \begin{align}\label{eq:judge_video}
-\eta_{ijk} &= \mu + \alpha_i + \beta_j +\gamma_k + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk}
+\eta_{ijk} &= \mu + \alpha_i + \beta_j +\gamma_k + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + \varepsilon_{ijk}
 \end{align}
 
 \noindent 
@@ -291,21 +281,21 @@ Build upon the first model, the second model adds the video related main effect 
 \hypertarget{model-3-speaker}{%
 \subsection{Model 3: Speaker}\label{model-3-speaker}}
 
-Build upon the second model, the third model is aimed to capture the speaker-wise effect by including the judge and speaker interaction as in Equation \ref{eq:judge_speaker}. This model would be helpful to answer the question \emph{do the expressions of the judges change when different parties are speaking}. The reason for not including more interaction between speaker and video or action unit is because this could cause the model to run out of degree of freedom given the number of observations we have.
+Build upon the second model, the third model is aimed to capture the speaker-wise effect by including the judge and speaker interaction as in Equation \ref{eq:judge_speaker}. This model is built attempting to answer the question: \emph{Do the expressions of the judges change when different parties are speaking}?
 
 \begin{align}\label{eq:judge_speaker}
-\eta_{ijkl} &= \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\delta)_{il}
+\eta_{ijkl} &= \mu + \alpha_i + \beta_j +\gamma_k + \delta_l + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\delta)_{il} + \varepsilon_{ijkl}
 \end{align}
 
 \hypertarget{model-comparison}{%
 \subsection{Model comparison}\label{model-comparison}}
 
-The analysis of variance (ANOVA) \autocites{faraway2016extending}{gelman2006data} is a statistical method that can be used to compare different models. Different packages in R conduct ANOVA test: \texttt{anova()} and \texttt{drop()} from base R, \texttt{Anova()} from \texttt{car} package and \texttt{aov()} from \texttt{stats} package. We use the base R \texttt{anova()} function to compare the three models via chi-square tests.
+The analysis of variance (ANOVA) \autocites{faraway2016extending}{gelman2006data} is a statistical method for model comparison. We use the base R \texttt{anova()} function to compare the three models via chi-square tests.
 
 \hypertarget{modelling-intensity}{%
 \section{Modelling intensity}\label{modelling-intensity}}
 
-The intensity score is a continuous variable, with 0 indicating an action unit is not present to a maximum intensity of 5. A histogram of the intensity is plotted in Figure \ref{fig:intensity} and the distribution has a high proportion of zeros with highly skewed continuous value. This type of data is the so-called semi-continuous data \autocite{twopart2010}. The semi-continuous data can be modelled in the econometrics literature by the two part model \autocite{cragg1971some}. In the two part model, the data is viewed to be generated via a sequential modelling technique, which is a mixed distribution of
+The intensity score is a continuous variable, with zero indicating an action unit is not present to a maximum intensity of five and a histogram of the intensity is plotted in Figure \ref{fig:intensity}. The data has a high proportion of zeros and the non-zero values are highly skewed. This type of data is the so-called semi-continuous data \autocite{twopart2010}. and can be modelled in the econometrics literature by a two part model \autocite{cragg1971some}. In the two part model, the data is viewed to be generated sequentially, which has a mixed distribution of
 
 \begin{itemize}
 \tightlist
@@ -324,7 +314,7 @@ The intensity score is a continuous variable, with 0 indicating an action unit i
 \caption{From the histogram of the intensity score, the data is highly skewed with an excessive amount of zeros. The two part model is about to accommodate the excessive zeros via the logistic model and gamma regression is about to capture the skewness in the data.}\label{fig:intensity}
 \end{figure}
 
-The choice of model between two part model and sample selection model is always discussed in the literature. Monte-Carlo simulation studies by different researchers \autocites{leung1996choice}{duan1984choosing}{manning1987monte} show different results on whether these different classes of model are answering the same or distinct inferential questions. The reason for us to choose two part model rather than sample selection model is because the problem of not being able to observe \(Y\) for those observations with selection variable \(z = 0\) doesn't exist in our data. In another word, if an action unit is not present for an observation, it doesn't make sense to talk about ``intensity score if the action unit is present''. Tobit model is not appropriate because the data can't be viewed as normally distributed with negative value censored as zero (meaningless to say negative intensity value). Zero inflated model is not used because it considers two source of zeros in the data while there is no zeros being generated from the second model (only one source of zeros).
+The choice of model between two part model and sample selection model is always discussed in the literature. Monte-Carlo simulation studies by different researchers \autocites{leung1996choice}{duan1984choosing}{manning1987monte} show different results on whether these two classes of model are answering the same or distinct inferential questions. The reason for us to choose two part model rather than sample selection model is because unobservability is not a problem in our case. In another word, if an action unit is not present for an observation, it doesn't make sense to talk about ``intensity score if the action unit was present''. Tobit model is not appropriate because the data can't be viewed as normally distributed with negative value censored as zero (meaningless to say negative intensity value). Zero inflated model is not used because it considers two source of zeros in the data while there is no zeros being generated from the conditional distribution defined below.
 
 The two part model has a general structure as in Equation \ref{eq:two-part-general}.
 
@@ -335,7 +325,9 @@ The two part model has a general structure as in Equation \ref{eq:two-part-gener
 E(I \mid I > 0) &= f(\alpha_i, \beta_j, \gamma_k, \delta_l)
 \end{align}
 
-\noindent The first two equations capture the logistic link and its linear predictor. The next two specify the functional form of the conditional distribution. The functional form of the conditional distribution need to be able to capture the highly skewed nature of the non-zero observations. A convention approach is to assume the conditional distribution is a lognormal distribution \autocites{manning1981two}{diehr1999methods}. More recent literature proposes the use of gamma or generalised gamma regression model for the conditional distribution \autocite{twopart2010}. Gamma regression is used to because it could also capture the right skewness and it is easier to implement via the \texttt{glm()} function. The log link function is used because the canonical inverse link for gamma distribution will cause some estimated marginal mean to be extremely high and thus meaningless for intensity score.
+\noindent where \(\mu^1\) is the mean of the intensity score and \(\mu^2\) is the mean for intensity given intensity \textgreater{} 0. The first two equations capture the logit link and its linear predictor in the logistic regression. The third and fourth equation specify the functional form of the conditional distribution.
+
+The functional form of the conditional distribution need to be able to capture the highly skewed nature of the non-zero observations. A convention approach is to assume the conditional distribution is a lognormal distribution \autocite{diehr1999methods}. More recent literature proposes the use of gamma or generalised gamma regression model \autocite{twopart2010}. Gamma regression is chosen to because it could also capture the right skewness and it can be easily implemented via the \texttt{glm()} function. The log link is used in the gamma regression because the canonical inverse link will cause some estimated marginal means to be extremely high and thus meaningless for intensity score.
 
 The linear predictor of the conditional intensity that includes video and relevant interactions is written in Equation \ref{eq:two-part1}.
 
@@ -352,19 +344,19 @@ E(I_{ijkl} \mid I_{ijkl} > 0) &= \mu + \alpha_i + \beta_j +\gamma_k + \delta_l +
 \hypertarget{post-model-analysis}{%
 \section{Post-model analysis}\label{post-model-analysis}}
 
-The estimates of variables from the model summary are not particularly useful in our case. This is because firstly, the estimates of the coefficient are not interpretable in the logistic regression. Secondly, we are interested in whether the mean for each treatment is same or different. To assess which level of the factor is different requires post-model analysis.
+The estimates of variables from the model summary are not particularly useful for our purpose. This is because firstly, the estimates of the coefficients are not interpretable in the logistic regression. Secondly, we are interested in \emph{whether the mean for each treatment is same or different}? To assess which level of the factor is different requires post-model analysis.
 
 \hypertarget{estimated-marginal-mean-emm}{%
 \subsection{Estimated Marginal Mean (EMM)}\label{estimated-marginal-mean-emm}}
 
-The estimated marginal mean \autocite{gelman2006data} is the fitted value from a model over the treatment effects. In our data, the treatment effects include judge, video and action unit. The estimated marginal mean is computed using \texttt{emmean()} from the \texttt{emmenas} package. The probability from estimated marginal mean have a nice interpretation as the estimated probability of presence score for a particular combination of action unit, judge and video. This output allows us to compare how the estimated presence probabilities of each judge, video and action unit combination are different or similar from each other.
+The estimated marginal mean \autocite{gelman2006data} is the fitted value from a model over the treatment effects. The treatment effects include judge, video and action unit in Model 2 and an additional speaker in Model 3. The estimated marginal mean is computed using \texttt{emmean()} from the \texttt{emmenas} package. The probability from estimated marginal mean can be interpreted as the estimated probability of presence (and intensity) score for a particular combination of action unit, judge and video. This output allows us to compare how the estimated presence (and intensity) are different or similar from each other.
 
 \hypertarget{confidence-interval-adjustment}{%
 \subsection{Confidence Interval Adjustment}\label{confidence-interval-adjustment}}
 
 The confidence intervals computed from the \texttt{emmean()} function need to be adjusted for simultaneous inference. A 5\% significance level indicates if we conduct 100 tests simultaneously, about 5 tests will show significance out of randomness. This is a problem we need to pay attention to when comparing the estimated presence probability or we may wrongly conclude judges has a different facial expression than others but they are actually not.
 
-When multiple estimated mean are compared at the same time, the confidence level (or \(\alpha\) in p-value) need to be adjusted to control the family-wise error rate to be less than \(\alpha\). Bonferroni adjustment makes the adjustment to reject a hypothesis test at \(\alpha/N\) level so that the type I error of whole family of the simultaneous tests (Family-wise Error Rate (FWER)) is control be less than \(\alpha\). To do this, \texttt{confint()} function from base R is used with additional argument \texttt{adjust\ =\ "bonferroni"}.
+When multiple estimated mean are compared at the same time, the confidence level need to be adjusted to control the family-wise error rate to be less than \(\alpha\). Bonferroni adjustment makes the adjustment to reject a hypothesis test at \(\alpha/N\) to control for the Family-wise Error Rate. \texttt{Confint()} function from base R is used with argument \texttt{adjust\ =\ "bonferroni"}.
 
 \let\cleardoublepage\clearpage
 
@@ -380,9 +372,9 @@ When multiple estimated mean are compared at the same time, the confidence level
 \hypertarget{mean-presence-score-and-most-common-action-units}{%
 \subsubsection{Mean presence score and most common action units}\label{mean-presence-score-and-most-common-action-units}}
 
-Follow the notation defined in section \ref{Ch:method}, the average presence score (\(P_{ik}\)) of each action unit is computed for each judge as \[P_{ik} = \frac{\sum_{jt}X_{ijtk}}{\sum_{j = 1}^JT_j}\]
+Follow the notation defined in Chapter \ref{Ch:method}, the average presence score (\(P_{ik}\)) of each action unit is computed for each judge as \[P_{ik} = \frac{\sum_{jt}X_{ijtk}}{\sum_{j = 1}^JT_j}\]
 
-\noindent Figure \ref{fig:mean_presence} graphs the presence score of all the action units across all the judges. The order of action unit on the y axis is ranked by the average presence of all the judges. The five most frequent action units are highlighted in blue. From Figure \ref{fig:mean_presence}, some of the action units are common across almost most of the Justices, these includes AU02 (outer eyebrow raiser), AU20 (lip stretcher), AU15 (lip corner depressor), AU01 (inner brow raiser) and AU14 (dimpler). Relating to emotions, AU01 and AU15 contribute to sadness. AU02, outer eyebrow raising can be associated with surprise, fear or interested. Dimpler (AU14) could be linked to contempt or boredom and Action unit 20, Lip Stretcher, is commonly contribute to fear, which is most sophisticated emotion that requires seven separate action units to describe.
+\noindent Figure \ref{fig:mean_presence} graphs the presence score of all the action units across all the judges. The order of action unit on the y axis is ranked by the average presence of all the judges. The five most frequent action units are highlighted in blue. From Figure \ref{fig:mean_presence}, some of the action units are common across almost most of the Justices, these includes AU02 (outer eyebrow raiser), AU20 (lip stretcher), AU15 (lip corner depressor), AU01 (inner brow raiser) and AU14 (dimpler). Relating to emotions, AU01 and AU15 contribute to sadness. AU02, outer eyebrow raising, can be associated with surprise, fear or interested. Dimpler (AU14) could be linked to contempt or boredom and Action unit 20, Lip Stretcher, is commonly contribute to fear, which is most sophisticated emotion that requires seven separate action units to describe.
 
 \begin{figure}
 
@@ -413,7 +405,7 @@ The main presence score of the judges by video (\(P_{ijk}\)) is computed as \[P_
 \hypertarget{general-intensity-plot}{%
 \subsubsection{General intensity plot}\label{general-intensity-plot}}
 
-The boxplot of the intensity for all the Justices across all the videos is presented in Figure \ref{fig:intensity}. Each bar-and-whisker represents the intensity (\(I_{ijtk}\)) of all the action units aggregated on time for a particular Justices \(i\) in a specific case \(j\). For example, the first bar-and-whisker in case Nauru\_a is created using all the action units of Edelman through out the elapsed time in Nauru\_a case. The square root transformation is applied so that the mean of the intensity can be easier to visualise. Most of the action units have low intensity score as shown in the figure, which matches with the prior belief that the Justices are expected not to express to much of their expressions in the court room. Justices Nettle, colored in pink has the highest average in all the four cases he appeared.
+The boxplot of the intensity for all the Justices across all the videos is presented in Figure \ref{fig:intensity}. Each bar-and-whisker represents the intensity (\(I_{ijtk}\)) of all the action units aggregated on time for a particular Justices \(i\) in a specific case \(j\). For example, the first bar-and-whisker in case Nauru\_a is created using all the action units of Edelman throughout the elapsed time in Nauru\_a case. The square root transformation is applied to make the mean easier to be visualised. Most of the action units have low intensity score as shown in the figure, which matches with the prior belief that the Justices are expected not to express to much of their expressions in the courtroom. Justices Nettle, colored in pink has the highest average in all the four cases he appeared.
 
 \begin{figure}
 
@@ -427,7 +419,7 @@ The boxplot of the intensity for all the Justices across all the videos is prese
 \hypertarget{high-intensity-points}{%
 \subsubsection{High intensity points}\label{high-intensity-points}}
 
-The points with intensity greater than two are shown against time for all the justices in Figure \ref{fig:high-intensity-points}. Justices Edelman, Gageler and Nettle are the judges have stronger emotion that can be detected since they have more points with intensity greater than two. Different Justices also have different time where they display stronger emotions. For example, Justice Edelman are more likely to have stronger emotion throughout the time while Justices Nettle is more likely to have intense facial expressions at the beginning and ending of the hearing.
+The points with intensity greater than two are shown against time for all the justices in Figure \ref{fig:high-intensity-points}. Justices Edelman, Gageler and Nettle are the judges have stronger expressions that can be detected since they have more points with intensity greater than two. Different Justices also have different time where they display stronger emotions. For example, Justice Edelman are more likely to have stronger emotion throughout the time while Justices Nettle is more likely to have intense facial expressions at the beginning and ending of the hearing.
 
 \begin{figure}
 
@@ -443,15 +435,15 @@ The points with intensity greater than two are shown against time for all the ju
 \hypertarget{summary}{%
 \subsection{Summary}\label{summary}}
 
-The findings from the exploratory data analysis are summarised below
+The findings from the exploratory data analysis are summarised below:
 
 \begin{itemize}
 \item
-  The most common action unit from the Justices are AU02 (outer eyebrow raiser), AU20 (lip stretcher), AU15 (lip corner depressor) and AU14 (dimpler).
+  The most commonly presented action unit from the Justices are AU02 (outer eyebrow raiser), AU20 (lip stretcher), AU15 (lip corner depressor) and AU14 (dimpler).
 \item
   Some Justices show relatively consistent facial expression through different videos while others, for example Justices Gageler and Bell have larger fluctuation on their facial expressions in different cases.
 \item
-  The overall intensity of the action units are low while Justices Nettle seems to have a relatively higher intensity than other Justices.
+  The overall intensity of the action units are low while Justices Nettle has a relatively higher mean intensity than other Justices.
 \item
   Edelman, Gageler and Nettle are the Justices with more intense facial expressions in the courtroom and Justices Nettle is the only Justice that tends to have stronger expression towards the end of the hearing.
 \end{itemize}
@@ -493,7 +485,7 @@ AU45 & Blink & NA \\
 
 The three models in Equation \ref{eq:judge_au}, \ref{eq:judge_video} and \ref{eq:judge_speaker} have been fitted and ANOVA test is performed to choose the best model. The ANOVA result for comparing Model 1 and 2 is presented in Table \ref{tab:anova-1}. After incorporating the main effect of case and its interaction with judge in Model 2, the degree of freedom is reduced by 61. This has a significant improvement on the model since the p-value (1e-88) is close to zero, indicating the null hypothesis that Model 1 and Model 2 are the same is rejected.
 
-The ANOVA result between Model 2 and Model 3 is presented in Table \ref{tab:anova-2}. The additional six variables associated with speakers in Model 3 have improved the model at 95\% significance level since the p-value (0.027) is less than 0.05, however, at 99\% significicance level, this improvement is not significant. Model 2 is chosen as the final model because the interpretation of video-wise effect using Model 2 after post-model analysis provides more interesting findings about the expressions of the Justices than the speaker-wise effect using Model 3.
+The ANOVA result between Model 2 and Model 3 is presented in Table \ref{tab:anova-2}. The additional six variables associated with speakers in Model 3 have improved the model at 95\% significance level since the p-value is 0.05, however, at 99\% significicance level, this improvement is not significant. Model 2 is chosen as the final model because the interpretation of video-wise effect using Model 2 after post-model analysis provides more interesting findings about the expressions of the Justices than the speaker-wise effect using Model 3.
 
 \begin{table}[ht]
 \begin{center}
@@ -502,8 +494,8 @@ The ANOVA result between Model 2 and Model 3 is presented in Table \ref{tab:anov
 \toprule
 Model & Resid. Df & Resid. Dev & Df & Deviance & Pr(>Chi) \\
 \midrule
-Model 1 & 30320 & 35850.07 &   &   &   \\
-Model 2 & 30259 & 35255.72 & 61 & 594 & 1.8e-88 \\
+Model 1 & 30310 & 30322.65 &   &   &   \\
+Model 2 & 30249 & 28407.13 & 61 & 1916 &  0 \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -516,8 +508,8 @@ Model 2 & 30259 & 35255.72 & 61 & 594 & 1.8e-88 \\
 \toprule
 Model & Resid. Df & Resid. Dev & Df & Deviance & Pr(>Chi) \\
 \midrule
-Model 2 & 30259 & 35255.72 &   &   &   \\
-Model 3 & 30253 & 35241.51 & 6 & 14 & 0.027 \\
+Model 2 & 30249 & 28407.13 &   &   &   \\
+Model 3 & 30243 & 28394.54 & 6 & 13 & 0.05 \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -629,6 +621,8 @@ Faces could be extracted more often than at 1 minute intervals to allow research
 \section{Acknowledgement}\label{acknowledgement}}
 
 The analysis is conducted using R \autocite{Rlanguage}, and the following packages: forecast \autocite{forecast}, tidyverse \autocite{tidyverse}, emmenas \autocite{emmeans} and broom \autocite{broom}. This thesis document is created with knitr \autocite{knitr}, R Markdown \autocite{rmarkdown} and bookdown \autocite{bookdown}. All matrials required to reproduce the project can be found at \url{https://github.com/huizezhang-sherry/ETC4860/}.
+
+\appendix
 
 \hypertarget{appendix}{%
 \chapter{Appendix}\label{appendix}}
@@ -748,7 +742,7 @@ Gordon, Gageler, Kiefel, Nettle, Edelman\strut
 \caption{\label{tab:au} The subset of action units OpenFace is able to recognise.}
 \begin{tabular}{lll}
 \toprule
-AU-number & AU-meaning & emotion \\
+AU & Meaning & Emotion \\
 \midrule
 AU01 & AU01: Inner brow raiser & sadness, surprise and fear \\
 AU02 & AU02: Outer brow raiser & surprise, fear and interested \\
@@ -785,206 +779,206 @@ judge & video & AU & prob & SE & asymp.LCL & asymp.UCL \\
 \endhead
 \bottomrule
 \endfoot
-Edelman & Nauru-a & AU01 & 0.678 & 0.0276 & 0.599 & 0.747 \\
-Nettle & Nauru-a & AU01 & 0.721 & 0.0269 & 0.643 & 0.787 \\
-Gageler & Nauru-a & AU01 & 0.337 & 0.0283 & 0.265 & 0.416 \\
-Edelman & Nauru-b & AU01 & 0.589 & 0.0354 & 0.491 & 0.680 \\
-Nettle & Nauru-b & AU01 & 0.673 & 0.0337 & 0.577 & 0.756 \\
-Gageler & Nauru-b & AU01 & 0.273 & 0.0302 & 0.200 & 0.361 \\
-Edelman & Rinehart-a & AU01 & 0.597 & 0.0212 & 0.539 & 0.652 \\
-Kiefel & Rinehart-a & AU01 & 0.524 & 0.0245 & 0.458 & 0.589 \\
-Nettle & Rinehart-a & AU01 & 0.697 & 0.0215 & 0.637 & 0.752 \\
-Gageler & Rinehart-a & AU01 & 0.323 & 0.0208 & 0.270 & 0.382 \\
-Edelman & Rinehart-b & AU01 & 0.628 & 0.0561 & 0.469 & 0.763 \\
-Nettle & Rinehart-b & AU01 & 0.824 & 0.0375 & 0.700 & 0.904 \\
-Gageler & Rinehart-b & AU01 & 0.409 & 0.0577 & 0.267 & 0.568 \\
-Edelman & McKell & AU01 & 0.419 & 0.0316 & 0.337 & 0.505 \\
-Keane & McKell & AU01 & 0.055 & 0.0109 & 0.032 & 0.093 \\
-Gageler & McKell & AU01 & 0.247 & 0.0264 & 0.183 & 0.325 \\
-Bell & McKell & AU01 & 0.650 & 0.0330 & 0.557 & 0.733 \\
-Edelman & OKS & AU01 & 0.575 & 0.0542 & 0.427 & 0.710 \\
-Keane & OKS & AU01 & 0.202 & 0.0414 & 0.112 & 0.336 \\
-Gageler & OKS & AU01 & 0.592 & 0.0533 & 0.445 & 0.725 \\
-Bell & OKS & AU01 & 0.941 & 0.0154 & 0.883 & 0.971 \\
-Edelman & Parkes & AU01 & 0.604 & 0.0256 & 0.534 & 0.670 \\
-Keane & Parkes & AU01 & 0.125 & 0.0187 & 0.082 & 0.184 \\
-Kiefel & Parkes & AU01 & 0.445 & 0.0276 & 0.372 & 0.520 \\
-Bell & Parkes & AU01 & 0.672 & 0.0273 & 0.595 & 0.741 \\
-Edelman & Nauru-a & AU04 & 0.573 & 0.0298 & 0.492 & 0.651 \\
-Nettle & Nauru-a & AU04 & 0.386 & 0.0302 & 0.309 & 0.470 \\
-Gageler & Nauru-a & AU04 & 0.471 & 0.0303 & 0.391 & 0.552 \\
-Edelman & Nauru-b & AU04 & 0.535 & 0.0356 & 0.439 & 0.629 \\
-Nettle & Nauru-b & AU04 & 0.387 & 0.0353 & 0.297 & 0.485 \\
-Gageler & Nauru-b & AU04 & 0.454 & 0.0355 & 0.361 & 0.550 \\
-Edelman & Rinehart-a & AU04 & 0.315 & 0.0202 & 0.263 & 0.371 \\
-Kiefel & Rinehart-a & AU04 & 0.082 & 0.0122 & 0.055 & 0.122 \\
-Nettle & Rinehart-a & AU04 & 0.215 & 0.0184 & 0.169 & 0.268 \\
-Gageler & Rinehart-a & AU04 & 0.289 & 0.0199 & 0.239 & 0.346 \\
-Edelman & Rinehart-b & AU04 & 0.467 & 0.0567 & 0.322 & 0.617 \\
-Nettle & Rinehart-b & AU04 & 0.481 & 0.0578 & 0.332 & 0.634 \\
-Gageler & Rinehart-b & AU04 & 0.497 & 0.0567 & 0.349 & 0.645 \\
-Edelman & McKell & AU04 & 0.352 & 0.0291 & 0.278 & 0.433 \\
-Keane & McKell & AU04 & 0.177 & 0.0234 & 0.123 & 0.249 \\
-Gageler & McKell & AU04 & 0.404 & 0.0318 & 0.322 & 0.492 \\
-Bell & McKell & AU04 & 0.673 & 0.0315 & 0.583 & 0.751 \\
-Edelman & OKS & AU04 & 0.183 & 0.0354 & 0.106 & 0.298 \\
-Keane & OKS & AU04 & 0.171 & 0.0354 & 0.096 & 0.288 \\
-Gageler & OKS & AU04 & 0.399 & 0.0529 & 0.268 & 0.546 \\
-Bell & OKS & AU04 & 0.794 & 0.0402 & 0.666 & 0.882 \\
-Edelman & Parkes & AU04 & 0.458 & 0.0273 & 0.386 & 0.532 \\
-Keane & Parkes & AU04 & 0.279 & 0.0260 & 0.215 & 0.354 \\
-Kiefel & Parkes & AU04 & 0.104 & 0.0156 & 0.069 & 0.154 \\
-Bell & Parkes & AU04 & 0.625 & 0.0280 & 0.547 & 0.697 \\
-Edelman & Nauru-a & AU05 & 0.323 & 0.0280 & 0.253 & 0.402 \\
-Nettle & Nauru-a & AU05 & 0.215 & 0.0237 & 0.158 & 0.286 \\
-Gageler & Nauru-a & AU05 & 0.627 & 0.0296 & 0.545 & 0.703 \\
-Edelman & Nauru-b & AU05 & 0.284 & 0.0313 & 0.208 & 0.375 \\
-Nettle & Nauru-b & AU05 & 0.211 & 0.0273 & 0.147 & 0.294 \\
-Gageler & Nauru-b & AU05 & 0.604 & 0.0358 & 0.505 & 0.695 \\
-Edelman & Rinehart-a & AU05 & 0.333 & 0.0204 & 0.280 & 0.390 \\
-Kiefel & Rinehart-a & AU05 & 0.391 & 0.0240 & 0.329 & 0.457 \\
-Nettle & Rinehart-a & AU05 & 0.267 & 0.0207 & 0.215 & 0.326 \\
-Gageler & Rinehart-a & AU05 & 0.702 & 0.0202 & 0.645 & 0.753 \\
-Edelman & Rinehart-b & AU05 & 0.218 & 0.0431 & 0.124 & 0.355 \\
-Nettle & Rinehart-b & AU05 & 0.266 & 0.0493 & 0.155 & 0.417 \\
-Gageler & Rinehart-b & AU05 & 0.626 & 0.0567 & 0.466 & 0.763 \\
-Edelman & McKell & AU05 & 0.288 & 0.0269 & 0.222 & 0.366 \\
-Keane & McKell & AU05 & 0.539 & 0.0340 & 0.447 & 0.628 \\
-Gageler & McKell & AU05 & 0.730 & 0.0272 & 0.651 & 0.796 \\
-Bell & McKell & AU05 & 0.647 & 0.0317 & 0.558 & 0.727 \\
-Edelman & OKS & AU05 & 0.057 & 0.0135 & 0.029 & 0.106 \\
-Keane & OKS & AU05 & 0.287 & 0.0472 & 0.177 & 0.428 \\
-Gageler & OKS & AU05 & 0.486 & 0.0548 & 0.344 & 0.630 \\
-Bell & OKS & AU05 & 0.552 & 0.0558 & 0.402 & 0.693 \\
-Edelman & Parkes & AU05 & 0.294 & 0.0230 & 0.236 & 0.359 \\
-Keane & Parkes & AU05 & 0.581 & 0.0284 & 0.503 & 0.655 \\
-Kiefel & Parkes & AU05 & 0.274 & 0.0240 & 0.214 & 0.343 \\
-Bell & Parkes & AU05 & 0.495 & 0.0289 & 0.418 & 0.572 \\
-Edelman & Nauru-a & AU07 & 0.439 & 0.0301 & 0.361 & 0.521 \\
-Nettle & Nauru-a & AU07 & 0.511 & 0.0312 & 0.427 & 0.593 \\
-Gageler & Nauru-a & AU07 & 0.269 & 0.0253 & 0.206 & 0.342 \\
-Edelman & Nauru-b & AU07 & 0.402 & 0.0350 & 0.312 & 0.498 \\
-Nettle & Nauru-b & AU07 & 0.511 & 0.0368 & 0.413 & 0.609 \\
-Gageler & Nauru-b & AU07 & 0.255 & 0.0290 & 0.185 & 0.341 \\
-Edelman & Rinehart-a & AU07 & 0.378 & 0.0212 & 0.323 & 0.437 \\
-Kiefel & Rinehart-a & AU07 & 0.176 & 0.0182 & 0.132 & 0.230 \\
-Nettle & Rinehart-a & AU07 & 0.507 & 0.0237 & 0.443 & 0.570 \\
-Gageler & Rinehart-a & AU07 & 0.276 & 0.0195 & 0.227 & 0.332 \\
-Edelman & Rinehart-b & AU07 & 0.316 & 0.0517 & 0.195 & 0.468 \\
-Nettle & Rinehart-b & AU07 & 0.582 & 0.0579 & 0.423 & 0.725 \\
-Gageler & Rinehart-b & AU07 & 0.269 & 0.0476 & 0.161 & 0.414 \\
-Edelman & McKell & AU07 & 0.421 & 0.0304 & 0.342 & 0.504 \\
-Keane & McKell & AU07 & 0.648 & 0.0320 & 0.558 & 0.729 \\
-Gageler & McKell & AU07 & 0.391 & 0.0313 & 0.311 & 0.478 \\
-Bell & McKell & AU07 & 0.714 & 0.0294 & 0.629 & 0.786 \\
-Edelman & OKS & AU07 & 0.257 & 0.0428 & 0.159 & 0.387 \\
-Keane & OKS & AU07 & 0.670 & 0.0499 & 0.526 & 0.789 \\
-Gageler & OKS & AU07 & 0.419 & 0.0522 & 0.289 & 0.563 \\
-Bell & OKS & AU07 & 0.844 & 0.0326 & 0.735 & 0.913 \\
-Edelman & Parkes & AU07 & 0.378 & 0.0257 & 0.312 & 0.449 \\
-Keane & Parkes & AU07 & 0.640 & 0.0275 & 0.563 & 0.710 \\
-Kiefel & Parkes & AU07 & 0.131 & 0.0167 & 0.092 & 0.182 \\
-Bell & Parkes & AU07 & 0.521 & 0.0291 & 0.443 & 0.598 \\
-Edelman & Nauru-a & AU14 & 0.464 & 0.0299 & 0.386 & 0.545 \\
-Nettle & Nauru-a & AU14 & 0.465 & 0.0307 & 0.384 & 0.548 \\
-Gageler & Nauru-a & AU14 & 0.567 & 0.0297 & 0.486 & 0.644 \\
-Edelman & Nauru-b & AU14 & 0.477 & 0.0354 & 0.384 & 0.572 \\
-Nettle & Nauru-b & AU14 & 0.517 & 0.0363 & 0.420 & 0.613 \\
-Gageler & Nauru-b & AU14 & 0.600 & 0.0344 & 0.505 & 0.688 \\
-Edelman & Rinehart-a & AU14 & 0.404 & 0.0210 & 0.349 & 0.461 \\
-Kiefel & Rinehart-a & AU14 & 0.552 & 0.0243 & 0.486 & 0.617 \\
-Nettle & Rinehart-a & AU14 & 0.463 & 0.0235 & 0.401 & 0.527 \\
-Gageler & Rinehart-a & AU14 & 0.578 & 0.0221 & 0.517 & 0.636 \\
-Edelman & Rinehart-b & AU14 & 0.491 & 0.0582 & 0.340 & 0.643 \\
-Nettle & Rinehart-b & AU14 & 0.686 & 0.0519 & 0.533 & 0.807 \\
-Gageler & Rinehart-b & AU14 & 0.712 & 0.0489 & 0.566 & 0.825 \\
-Edelman & McKell & AU14 & 0.448 & 0.0313 & 0.366 & 0.533 \\
-Keane & McKell & AU14 & 0.699 & 0.0308 & 0.610 & 0.775 \\
-Gageler & McKell & AU14 & 0.698 & 0.0286 & 0.616 & 0.769 \\
-Bell & McKell & AU14 & 0.178 & 0.0251 & 0.121 & 0.256 \\
-Edelman & OKS & AU14 & 0.363 & 0.0508 & 0.240 & 0.507 \\
-Keane & OKS & AU14 & 0.791 & 0.0393 & 0.666 & 0.878 \\
-Gageler & OKS & AU14 & 0.793 & 0.0371 & 0.676 & 0.876 \\
-Bell & OKS & AU14 & 0.410 & 0.0558 & 0.272 & 0.564 \\
-Edelman & Parkes & AU14 & 0.412 & 0.0256 & 0.345 & 0.483 \\
-Keane & Parkes & AU14 & 0.698 & 0.0263 & 0.623 & 0.764 \\
-Kiefel & Parkes & AU14 & 0.474 & 0.0278 & 0.401 & 0.549 \\
-Bell & Parkes & AU14 & 0.089 & 0.0139 & 0.058 & 0.134 \\
-Edelman & Nauru-a & AU15 & 0.377 & 0.0290 & 0.303 & 0.458 \\
-Nettle & Nauru-a & AU15 & 0.699 & 0.0280 & 0.619 & 0.769 \\
-Gageler & Nauru-a & AU15 & 0.480 & 0.0306 & 0.399 & 0.562 \\
-Edelman & Nauru-b & AU15 & 0.503 & 0.0367 & 0.406 & 0.601 \\
-Nettle & Nauru-b & AU15 & 0.820 & 0.0247 & 0.744 & 0.877 \\
-Gageler & Nauru-b & AU15 & 0.627 & 0.0348 & 0.530 & 0.715 \\
-Edelman & Rinehart-a & AU15 & 0.457 & 0.0217 & 0.399 & 0.515 \\
-Kiefel & Rinehart-a & AU15 & 0.454 & 0.0244 & 0.389 & 0.520 \\
-Nettle & Rinehart-a & AU15 & 0.804 & 0.0179 & 0.751 & 0.847 \\
-Gageler & Rinehart-a & AU15 & 0.632 & 0.0217 & 0.572 & 0.688 \\
-Edelman & Rinehart-b & AU15 & 0.318 & 0.0525 & 0.195 & 0.472 \\
-Nettle & Rinehart-b & AU15 & 0.802 & 0.0409 & 0.669 & 0.890 \\
-Gageler & Rinehart-b & AU15 & 0.548 & 0.0588 & 0.390 & 0.696 \\
-Edelman & McKell & AU15 & 0.443 & 0.0318 & 0.360 & 0.529 \\
-Keane & McKell & AU15 & 0.823 & 0.0253 & 0.745 & 0.881 \\
-Gageler & McKell & AU15 & 0.696 & 0.0292 & 0.612 & 0.768 \\
-Bell & McKell & AU15 & 0.871 & 0.0203 & 0.806 & 0.917 \\
-Edelman & OKS & AU15 & 0.504 & 0.0614 & 0.344 & 0.663 \\
-Keane & OKS & AU15 & 0.933 & 0.0194 & 0.858 & 0.970 \\
-Gageler & OKS & AU15 & 0.874 & 0.0301 & 0.769 & 0.935 \\
-Bell & OKS & AU15 & 0.975 & 0.0079 & 0.942 & 0.990 \\
-Edelman & Parkes & AU15 & 0.513 & 0.0266 & 0.442 & 0.584 \\
-Keane & Parkes & AU15 & 0.877 & 0.0177 & 0.821 & 0.917 \\
-Kiefel & Parkes & AU15 & 0.424 & 0.0275 & 0.352 & 0.499 \\
-Bell & Parkes & AU15 & 0.824 & 0.0220 & 0.757 & 0.876 \\
-Edelman & Nauru-a & AU20 & 0.779 & 0.0233 & 0.710 & 0.835 \\
-Nettle & Nauru-a & AU20 & 0.727 & 0.0269 & 0.649 & 0.793 \\
-Gageler & Nauru-a & AU20 & 0.468 & 0.0311 & 0.386 & 0.552 \\
-Edelman & Nauru-b & AU20 & 0.766 & 0.0282 & 0.682 & 0.834 \\
-Nettle & Nauru-b & AU20 & 0.743 & 0.0305 & 0.653 & 0.816 \\
-Gageler & Nauru-b & AU20 & 0.471 & 0.0369 & 0.374 & 0.570 \\
-Edelman & Rinehart-a & AU20 & 0.754 & 0.0183 & 0.701 & 0.800 \\
-Kiefel & Rinehart-a & AU20 & 0.865 & 0.0157 & 0.817 & 0.902 \\
-Nettle & Rinehart-a & AU20 & 0.746 & 0.0202 & 0.688 & 0.796 \\
-Gageler & Rinehart-a & AU20 & 0.506 & 0.0230 & 0.444 & 0.567 \\
-Edelman & Rinehart-b & AU20 & 0.663 & 0.0536 & 0.508 & 0.790 \\
-Nettle & Rinehart-b & AU20 & 0.770 & 0.0444 & 0.631 & 0.868 \\
-Gageler & Rinehart-b & AU20 & 0.455 & 0.0583 & 0.308 & 0.612 \\
-Edelman & McKell & AU20 & 0.842 & 0.0201 & 0.780 & 0.889 \\
-Keane & McKell & AU20 & 0.940 & 0.0129 & 0.895 & 0.967 \\
-Gageler & McKell & AU20 & 0.715 & 0.0298 & 0.629 & 0.788 \\
-Bell & McKell & AU20 & 0.768 & 0.0283 & 0.683 & 0.835 \\
-Edelman & OKS & AU20 & 0.846 & 0.0381 & 0.714 & 0.923 \\
-Keane & OKS & AU20 & 0.974 & 0.0091 & 0.934 & 0.990 \\
-Gageler & OKS & AU20 & 0.859 & 0.0355 & 0.735 & 0.931 \\
-Bell & OKS & AU20 & 0.939 & 0.0187 & 0.865 & 0.974 \\
-Edelman & Parkes & AU20 & 0.741 & 0.0233 & 0.674 & 0.799 \\
-Keane & Parkes & AU20 & 0.907 & 0.0166 & 0.852 & 0.943 \\
-Kiefel & Parkes & AU20 & 0.809 & 0.0215 & 0.745 & 0.860 \\
-Bell & Parkes & AU20 & 0.481 & 0.0301 & 0.401 & 0.562 \\
-Edelman & Nauru-a & AU45 & 0.201 & 0.0238 & 0.144 & 0.272 \\
-Nettle & Nauru-a & AU45 & 0.091 & 0.0157 & 0.056 & 0.143 \\
-Gageler & Nauru-a & AU45 & 0.384 & 0.0319 & 0.303 & 0.472 \\
-Edelman & Nauru-b & AU45 & 0.137 & 0.0224 & 0.087 & 0.209 \\
-Nettle & Nauru-b & AU45 & 0.069 & 0.0144 & 0.039 & 0.119 \\
-Gageler & Nauru-b & AU45 & 0.300 & 0.0362 & 0.212 & 0.405 \\
-Edelman & Rinehart-a & AU45 & 0.124 & 0.0131 & 0.093 & 0.164 \\
-Kiefel & Rinehart-a & AU45 & 0.825 & 0.0185 & 0.770 & 0.870 \\
-Nettle & Rinehart-a & AU45 & 0.067 & 0.0106 & 0.043 & 0.102 \\
-Gageler & Rinehart-a & AU45 & 0.321 & 0.0219 & 0.265 & 0.382 \\
-Edelman & Rinehart-b & AU45 & 0.067 & 0.0216 & 0.028 & 0.154 \\
-Nettle & Rinehart-b & AU45 & 0.061 & 0.0206 & 0.024 & 0.146 \\
-Gageler & Rinehart-b & AU45 & 0.233 & 0.0563 & 0.115 & 0.415 \\
-Edelman & McKell & AU45 & 0.114 & 0.0157 & 0.078 & 0.163 \\
-Keane & McKell & AU45 & 0.543 & 0.0353 & 0.447 & 0.635 \\
-Gageler & McKell & AU45 & 0.376 & 0.0330 & 0.292 & 0.468 \\
-Bell & McKell & AU45 & 0.179 & 0.0244 & 0.123 & 0.254 \\
-Edelman & OKS & AU45 & 0.025 & 0.0069 & 0.012 & 0.052 \\
-Keane & OKS & AU45 & 0.353 & 0.0549 & 0.222 & 0.510 \\
-Gageler & OKS & AU45 & 0.220 & 0.0430 & 0.126 & 0.356 \\
-Bell & OKS & AU45 & 0.164 & 0.0367 & 0.087 & 0.288 \\
-Edelman & Parkes & AU45 & 0.225 & 0.0220 & 0.171 & 0.290 \\
-Keane & Parkes & AU45 & 0.756 & 0.0242 & 0.685 & 0.815 \\
-Kiefel & Parkes & AU45 & 0.872 & 0.0171 & 0.819 & 0.911 \\
-Bell & Parkes & AU45 & 0.204 & 0.0229 & 0.150 & 0.273 \\
+Edelman & Nauru-a & AU01 & 0.6397 & 0.0294 & 0.5574 & 0.715 \\
+Nettle & Nauru-a & AU01 & 0.6955 & 0.0285 & 0.6138 & 0.766 \\
+Gageler & Nauru-a & AU01 & 0.3337 & 0.0290 & 0.2606 & 0.416 \\
+Edelman & Nauru-b & AU01 & 0.5650 & 0.0364 & 0.4657 & 0.659 \\
+Nettle & Nauru-b & AU01 & 0.6734 & 0.0342 & 0.5757 & 0.758 \\
+Gageler & Nauru-b & AU01 & 0.2765 & 0.0312 & 0.2009 & 0.367 \\
+Edelman & Rinehart-a & AU01 & 0.2545 & 0.0196 & 0.2054 & 0.311 \\
+Kiefel & Rinehart-a & AU01 & 0.0589 & 0.0112 & 0.0352 & 0.097 \\
+Nettle & Rinehart-a & AU01 & 0.2167 & 0.0191 & 0.1698 & 0.272 \\
+Gageler & Rinehart-a & AU01 & 0.1295 & 0.0137 & 0.0969 & 0.171 \\
+Edelman & Rinehart-b & AU01 & 0.2567 & 0.0496 & 0.1464 & 0.410 \\
+Nettle & Rinehart-b & AU01 & 0.3336 & 0.0567 & 0.2014 & 0.498 \\
+Gageler & Rinehart-b & AU01 & 0.2430 & 0.0473 & 0.1384 & 0.391 \\
+Edelman & Parkes & AU01 & 0.1980 & 0.0229 & 0.1434 & 0.267 \\
+Keane & Parkes & AU01 & 0.0625 & 0.0127 & 0.0360 & 0.107 \\
+Kiefel & Parkes & AU01 & 0.0415 & 0.0092 & 0.0227 & 0.075 \\
+Bell & Parkes & AU01 & 0.0196 & 0.0057 & 0.0089 & 0.042 \\
+Edelman & McKell & AU01 & 0.3169 & 0.0323 & 0.2370 & 0.409 \\
+Keane & McKell & AU01 & 0.0672 & 0.0147 & 0.0369 & 0.119 \\
+Gageler & McKell & AU01 & 0.1418 & 0.0207 & 0.0946 & 0.207 \\
+Bell & McKell & AU01 & 0.0423 & 0.0118 & 0.0198 & 0.088 \\
+Edelman & OKS & AU01 & 0.3060 & 0.0512 & 0.1873 & 0.458 \\
+Keane & OKS & AU01 & 0.1652 & 0.0383 & 0.0857 & 0.295 \\
+Gageler & OKS & AU01 & 0.1961 & 0.0397 & 0.1103 & 0.324 \\
+Bell & OKS & AU01 & 0.1898 & 0.0454 & 0.0958 & 0.341 \\
+Edelman & Nauru-a & AU04 & 0.5512 & 0.0317 & 0.4654 & 0.634 \\
+Nettle & Nauru-a & AU04 & 0.2980 & 0.0304 & 0.2232 & 0.385 \\
+Gageler & Nauru-a & AU04 & 0.4886 & 0.0318 & 0.4041 & 0.574 \\
+Edelman & Nauru-b & AU04 & 0.4966 & 0.0372 & 0.3979 & 0.596 \\
+Nettle & Nauru-b & AU04 & 0.2963 & 0.0345 & 0.2125 & 0.396 \\
+Gageler & Nauru-b & AU04 & 0.4447 & 0.0368 & 0.3491 & 0.545 \\
+Edelman & Rinehart-a & AU04 & 0.1167 & 0.0134 & 0.0852 & 0.158 \\
+Kiefel & Rinehart-a & AU04 & 0.0314 & 0.0076 & 0.0162 & 0.060 \\
+Nettle & Rinehart-a & AU04 & 0.0280 & 0.0049 & 0.0174 & 0.045 \\
+Gageler & Rinehart-a & AU04 & 0.1371 & 0.0150 & 0.1015 & 0.183 \\
+Edelman & Rinehart-b & AU04 & 0.2821 & 0.0529 & 0.1629 & 0.442 \\
+Nettle & Rinehart-b & AU04 & 0.1328 & 0.0333 & 0.0657 & 0.250 \\
+Gageler & Rinehart-b & AU04 & 0.5018 & 0.0623 & 0.3402 & 0.663 \\
+Edelman & Parkes & AU04 & 0.1435 & 0.0181 & 0.1012 & 0.199 \\
+Keane & Parkes & AU04 & 0.1751 & 0.0214 & 0.1247 & 0.240 \\
+Kiefel & Parkes & AU04 & 0.0378 & 0.0094 & 0.0192 & 0.073 \\
+Bell & Parkes & AU04 & 0.2868 & 0.0265 & 0.2209 & 0.363 \\
+Edelman & McKell & AU04 & 0.2056 & 0.0243 & 0.1477 & 0.279 \\
+Keane & McKell & AU04 & 0.1587 & 0.0231 & 0.1058 & 0.231 \\
+Gageler & McKell & AU04 & 0.2027 & 0.0253 & 0.1430 & 0.279 \\
+Bell & McKell & AU04 & 0.4225 & 0.0360 & 0.3298 & 0.521 \\
+Edelman & OKS & AU04 & 0.1188 & 0.0278 & 0.0618 & 0.216 \\
+Keane & OKS & AU04 & 0.2211 & 0.0428 & 0.1271 & 0.356 \\
+Gageler & OKS & AU04 & 0.1706 & 0.0360 & 0.0941 & 0.289 \\
+Bell & OKS & AU04 & 0.6800 & 0.0518 & 0.5281 & 0.801 \\
+Edelman & Nauru-a & AU05 & 0.2579 & 0.0259 & 0.1946 & 0.333 \\
+Nettle & Nauru-a & AU05 & 0.2282 & 0.0256 & 0.1665 & 0.304 \\
+Gageler & Nauru-a & AU05 & 0.5006 & 0.0315 & 0.4167 & 0.585 \\
+Edelman & Nauru-b & AU05 & 0.2324 & 0.0286 & 0.1643 & 0.318 \\
+Nettle & Nauru-b & AU05 & 0.2413 & 0.0305 & 0.1687 & 0.332 \\
+Gageler & Nauru-b & AU05 & 0.4768 & 0.0373 & 0.3786 & 0.577 \\
+Edelman & Rinehart-a & AU05 & 0.2008 & 0.0175 & 0.1577 & 0.252 \\
+Kiefel & Rinehart-a & AU05 & 0.0378 & 0.0092 & 0.0195 & 0.072 \\
+Nettle & Rinehart-a & AU05 & 0.1187 & 0.0139 & 0.0861 & 0.162 \\
+Gageler & Rinehart-a & AU05 & 0.5283 & 0.0236 & 0.4648 & 0.591 \\
+Edelman & Rinehart-b & AU05 & 0.1086 & 0.0294 & 0.0511 & 0.216 \\
+Nettle & Rinehart-b & AU05 & 0.1046 & 0.0289 & 0.0484 & 0.211 \\
+Gageler & Rinehart-b & AU05 & 0.5368 & 0.0662 & 0.3616 & 0.703 \\
+Edelman & Parkes & AU05 & 0.1183 & 0.0163 & 0.0811 & 0.170 \\
+Keane & Parkes & AU05 & 0.4062 & 0.0292 & 0.3306 & 0.486 \\
+Kiefel & Parkes & AU05 & 0.0197 & 0.0055 & 0.0092 & 0.042 \\
+Bell & Parkes & AU05 & 0.0769 & 0.0135 & 0.0476 & 0.122 \\
+Edelman & McKell & AU05 & 0.1831 & 0.0221 & 0.1309 & 0.250 \\
+Keane & McKell & AU05 & 0.3965 & 0.0347 & 0.3078 & 0.493 \\
+Gageler & McKell & AU05 & 0.4496 & 0.0342 & 0.3602 & 0.542 \\
+Bell & McKell & AU05 & 0.1409 & 0.0231 & 0.0894 & 0.215 \\
+Edelman & OKS & AU05 & 0.0707 & 0.0179 & 0.0353 & 0.136 \\
+Keane & OKS & AU05 & 0.3917 & 0.0544 & 0.2584 & 0.543 \\
+Gageler & OKS & AU05 & 0.3009 & 0.0495 & 0.1861 & 0.448 \\
+Bell & OKS & AU05 & 0.2367 & 0.0456 & 0.1359 & 0.380 \\
+Edelman & Nauru-a & AU07 & 0.3670 & 0.0300 & 0.2905 & 0.451 \\
+Nettle & Nauru-a & AU07 & 0.4918 & 0.0325 & 0.4054 & 0.579 \\
+Gageler & Nauru-a & AU07 & 0.2207 & 0.0240 & 0.1630 & 0.292 \\
+Edelman & Nauru-b & AU07 & 0.3492 & 0.0347 & 0.2624 & 0.447 \\
+Nettle & Nauru-b & AU07 & 0.5251 & 0.0381 & 0.4231 & 0.625 \\
+Gageler & Nauru-b & AU07 & 0.2148 & 0.0274 & 0.1502 & 0.298 \\
+Edelman & Rinehart-a & AU07 & 0.1649 & 0.0158 & 0.1266 & 0.212 \\
+Kiefel & Rinehart-a & AU07 & 0.0514 & 0.0103 & 0.0298 & 0.088 \\
+Nettle & Rinehart-a & AU07 & 0.1720 & 0.0171 & 0.1308 & 0.223 \\
+Gageler & Rinehart-a & AU07 & 0.1298 & 0.0140 & 0.0966 & 0.172 \\
+Edelman & Rinehart-b & AU07 & 0.1621 & 0.0383 & 0.0831 & 0.292 \\
+Nettle & Rinehart-b & AU07 & 0.2669 & 0.0527 & 0.1500 & 0.429 \\
+Gageler & Rinehart-b & AU07 & 0.2376 & 0.0486 & 0.1316 & 0.391 \\
+Edelman & Parkes & AU07 & 0.1346 & 0.0170 & 0.0950 & 0.187 \\
+Keane & Parkes & AU07 & 0.4619 & 0.0293 & 0.3846 & 0.541 \\
+Kiefel & Parkes & AU07 & 0.0393 & 0.0090 & 0.0211 & 0.072 \\
+Bell & Parkes & AU07 & 0.1704 & 0.0207 & 0.1216 & 0.233 \\
+Edelman & McKell & AU07 & 0.3280 & 0.0302 & 0.2525 & 0.414 \\
+Keane & McKell & AU07 & 0.6076 & 0.0339 & 0.5137 & 0.694 \\
+Gageler & McKell & AU07 & 0.2315 & 0.0269 & 0.1670 & 0.312 \\
+Bell & McKell & AU07 & 0.4314 & 0.0360 & 0.3384 & 0.529 \\
+Edelman & OKS & AU07 & 0.0687 & 0.0183 & 0.0331 & 0.137 \\
+Keane & OKS & AU07 & 0.4036 & 0.0563 & 0.2650 & 0.559 \\
+Gageler & OKS & AU07 & 0.0661 & 0.0174 & 0.0321 & 0.131 \\
+Bell & OKS & AU07 & 0.3902 & 0.0565 & 0.2526 & 0.548 \\
+Edelman & Nauru-a & AU14 & 0.4537 & 0.0308 & 0.3729 & 0.537 \\
+Nettle & Nauru-a & AU14 & 0.4547 & 0.0322 & 0.3702 & 0.542 \\
+Gageler & Nauru-a & AU14 & 0.5287 & 0.0307 & 0.4461 & 0.610 \\
+Edelman & Nauru-b & AU14 & 0.4751 & 0.0362 & 0.3798 & 0.572 \\
+Nettle & Nauru-b & AU14 & 0.5287 & 0.0375 & 0.4280 & 0.627 \\
+Gageler & Nauru-b & AU14 & 0.5606 & 0.0357 & 0.4635 & 0.653 \\
+Edelman & Rinehart-a & AU14 & 0.1624 & 0.0150 & 0.1259 & 0.207 \\
+Kiefel & Rinehart-a & AU14 & 0.1119 & 0.0148 & 0.0777 & 0.158 \\
+Nettle & Rinehart-a & AU14 & 0.1093 & 0.0129 & 0.0792 & 0.149 \\
+Gageler & Rinehart-a & AU14 & 0.2882 & 0.0206 & 0.2360 & 0.347 \\
+Edelman & Rinehart-b & AU14 & 0.1416 & 0.0348 & 0.0709 & 0.263 \\
+Nettle & Rinehart-b & AU14 & 0.1573 & 0.0380 & 0.0794 & 0.288 \\
+Gageler & Rinehart-b & AU14 & 0.4234 & 0.0627 & 0.2689 & 0.595 \\
+Edelman & Parkes & AU14 & 0.2020 & 0.0212 & 0.1509 & 0.265 \\
+Keane & Parkes & AU14 & 0.5648 & 0.0295 & 0.4846 & 0.642 \\
+Kiefel & Parkes & AU14 & 0.1359 & 0.0187 & 0.0931 & 0.194 \\
+Bell & Parkes & AU14 & 0.0092 & 0.0039 & 0.0029 & 0.029 \\
+Edelman & McKell & AU14 & 0.2849 & 0.0282 & 0.2155 & 0.366 \\
+Keane & McKell & AU14 & 0.5401 & 0.0357 & 0.4438 & 0.633 \\
+Gageler & McKell & AU14 & 0.4046 & 0.0330 & 0.3199 & 0.495 \\
+Bell & McKell & AU14 & 0.0169 & 0.0072 & 0.0054 & 0.052 \\
+Edelman & OKS & AU14 & 0.1477 & 0.0329 & 0.0790 & 0.259 \\
+Keane & OKS & AU14 & 0.5962 & 0.0564 & 0.4402 & 0.735 \\
+Gageler & OKS & AU14 & 0.3148 & 0.0511 & 0.1954 & 0.465 \\
+Bell & OKS & AU14 & 0.0401 & 0.0176 & 0.0121 & 0.125 \\
+Edelman & Nauru-a & AU15 & 0.4242 & 0.0306 & 0.3446 & 0.508 \\
+Nettle & Nauru-a & AU15 & 0.6179 & 0.0309 & 0.5322 & 0.697 \\
+Gageler & Nauru-a & AU15 & 0.4877 & 0.0309 & 0.4057 & 0.570 \\
+Edelman & Nauru-b & AU15 & 0.5538 & 0.0367 & 0.4541 & 0.649 \\
+Nettle & Nauru-b & AU15 & 0.7708 & 0.0288 & 0.6844 & 0.839 \\
+Gageler & Nauru-b & AU15 & 0.6259 & 0.0350 & 0.5282 & 0.714 \\
+Edelman & Rinehart-a & AU15 & 0.1433 & 0.0142 & 0.1091 & 0.186 \\
+Kiefel & Rinehart-a & AU15 & 0.0388 & 0.0083 & 0.0216 & 0.069 \\
+Nettle & Rinehart-a & AU15 & 0.1880 & 0.0178 & 0.1447 & 0.241 \\
+Gageler & Rinehart-a & AU15 & 0.2504 & 0.0195 & 0.2016 & 0.307 \\
+Edelman & Rinehart-b & AU15 & 0.0952 & 0.0260 & 0.0446 & 0.192 \\
+Nettle & Rinehart-b & AU15 & 0.2065 & 0.0464 & 0.1083 & 0.358 \\
+Gageler & Rinehart-b & AU15 & 0.3094 & 0.0573 & 0.1788 & 0.480 \\
+Edelman & Parkes & AU15 & 0.1964 & 0.0211 & 0.1456 & 0.259 \\
+Keane & Parkes & AU15 & 0.7268 & 0.0254 & 0.6534 & 0.790 \\
+Kiefel & Parkes & AU15 & 0.0534 & 0.0115 & 0.0297 & 0.094 \\
+Bell & Parkes & AU15 & 0.2217 & 0.0237 & 0.1644 & 0.292 \\
+Edelman & McKell & AU15 & 0.2236 & 0.0246 & 0.1644 & 0.296 \\
+Keane & McKell & AU15 & 0.6432 & 0.0331 & 0.5500 & 0.727 \\
+Gageler & McKell & AU15 & 0.3196 & 0.0308 & 0.2430 & 0.407 \\
+Bell & McKell & AU15 & 0.2833 & 0.0313 & 0.2070 & 0.375 \\
+Edelman & OKS & AU15 & 0.0694 & 0.0177 & 0.0345 & 0.135 \\
+Keane & OKS & AU15 & 0.5745 & 0.0556 & 0.4226 & 0.713 \\
+Gageler & OKS & AU15 & 0.1591 & 0.0338 & 0.0874 & 0.272 \\
+Bell & OKS & AU15 & 0.3637 & 0.0541 & 0.2335 & 0.517 \\
+Edelman & Nauru-a & AU20 & 0.7315 & 0.0256 & 0.6575 & 0.795 \\
+Nettle & Nauru-a & AU20 & 0.6862 & 0.0287 & 0.6044 & 0.758 \\
+Gageler & Nauru-a & AU20 & 0.4630 & 0.0310 & 0.3814 & 0.547 \\
+Edelman & Nauru-b & AU20 & 0.7393 & 0.0298 & 0.6518 & 0.811 \\
+Nettle & Nauru-b & AU20 & 0.7376 & 0.0309 & 0.6464 & 0.812 \\
+Gageler & Nauru-b & AU20 & 0.4836 & 0.0369 & 0.3861 & 0.582 \\
+Edelman & Rinehart-a & AU20 & 0.3795 & 0.0217 & 0.3231 & 0.439 \\
+Kiefel & Rinehart-a & AU20 & 0.3075 & 0.0229 & 0.2496 & 0.372 \\
+Nettle & Rinehart-a & AU20 & 0.2363 & 0.0197 & 0.1874 & 0.293 \\
+Gageler & Rinehart-a & AU20 & 0.2302 & 0.0182 & 0.1849 & 0.283 \\
+Edelman & Rinehart-b & AU20 & 0.2815 & 0.0518 & 0.1644 & 0.438 \\
+Nettle & Rinehart-b & AU20 & 0.2617 & 0.0502 & 0.1498 & 0.416 \\
+Gageler & Rinehart-b & AU20 & 0.2901 & 0.0517 & 0.1722 & 0.445 \\
+Edelman & Parkes & AU20 & 0.4594 & 0.0275 & 0.3868 & 0.534 \\
+Keane & Parkes & AU20 & 0.7955 & 0.0231 & 0.7265 & 0.851 \\
+Kiefel & Parkes & AU20 & 0.3712 & 0.0279 & 0.2997 & 0.449 \\
+Bell & Parkes & AU20 & 0.0452 & 0.0094 & 0.0256 & 0.078 \\
+Edelman & McKell & AU20 & 0.6266 & 0.0310 & 0.5402 & 0.706 \\
+Keane & McKell & AU20 & 0.8154 & 0.0251 & 0.7383 & 0.874 \\
+Gageler & McKell & AU20 & 0.4014 & 0.0326 & 0.3176 & 0.491 \\
+Bell & McKell & AU20 & 0.0991 & 0.0191 & 0.0583 & 0.163 \\
+Edelman & OKS & AU20 & 0.5417 & 0.0558 & 0.3924 & 0.684 \\
+Keane & OKS & AU20 & 0.8999 & 0.0234 & 0.8170 & 0.948 \\
+Gageler & OKS & AU20 & 0.4233 & 0.0542 & 0.2878 & 0.571 \\
+Bell & OKS & AU20 & 0.3017 & 0.0524 & 0.1813 & 0.457 \\
+Edelman & Nauru-a & AU45 & 0.2105 & 0.0260 & 0.1488 & 0.289 \\
+Nettle & Nauru-a & AU45 & 0.0576 & 0.0147 & 0.0286 & 0.112 \\
+Gageler & Nauru-a & AU45 & 0.3810 & 0.0334 & 0.2961 & 0.474 \\
+Edelman & Nauru-b & AU45 & 0.1530 & 0.0254 & 0.0964 & 0.234 \\
+Nettle & Nauru-b & AU45 & 0.0486 & 0.0137 & 0.0225 & 0.102 \\
+Gageler & Nauru-b & AU45 & 0.3033 & 0.0373 & 0.2130 & 0.412 \\
+Edelman & Rinehart-a & AU45 & 0.0418 & 0.0066 & 0.0274 & 0.063 \\
+Kiefel & Rinehart-a & AU45 & 0.3845 & 0.0251 & 0.3196 & 0.454 \\
+Nettle & Rinehart-a & AU45 & 0.0063 & 0.0019 & 0.0028 & 0.014 \\
+Gageler & Rinehart-a & AU45 & 0.1348 & 0.0157 & 0.0978 & 0.183 \\
+Edelman & Rinehart-b & AU45 & 0.0333 & 0.0137 & 0.0109 & 0.097 \\
+Nettle & Rinehart-b & AU45 & 0.0088 & 0.0043 & 0.0024 & 0.032 \\
+Gageler & Rinehart-b & AU45 & 0.2078 & 0.0610 & 0.0883 & 0.416 \\
+Edelman & Parkes & AU45 & 0.0812 & 0.0125 & 0.0532 & 0.122 \\
+Keane & Parkes & AU45 & 0.5562 & 0.0303 & 0.4739 & 0.635 \\
+Kiefel & Parkes & AU45 & 0.5475 & 0.0302 & 0.4657 & 0.627 \\
+Bell & Parkes & AU45 & 0.0117 & 0.0053 & 0.0034 & 0.039 \\
+Edelman & McKell & AU45 & 0.0814 & 0.0139 & 0.0509 & 0.128 \\
+Keane & McKell & AU45 & 0.4193 & 0.0369 & 0.3245 & 0.520 \\
+Gageler & McKell & AU45 & 0.2052 & 0.0271 & 0.1417 & 0.288 \\
+Bell & McKell & AU45 & 0.0138 & 0.0064 & 0.0040 & 0.047 \\
+Edelman & OKS & AU45 & 0.0138 & 0.0052 & 0.0050 & 0.038 \\
+Keane & OKS & AU45 & 0.2478 & 0.0571 & 0.1262 & 0.429 \\
+Gageler & OKS & AU45 & 0.0596 & 0.0199 & 0.0237 & 0.142 \\
+Bell & OKS & AU45 & 0.0122 & 0.0067 & 0.0028 & 0.052 \\
 \end{longtable}
 \end{center}
 
@@ -1012,15 +1006,6 @@ Bell & Parkes & AU45 & 0.204 & 0.0229 & 0.150 & 0.273 \\
 \hypertarget{the-presence-of-facial-expression-of-the-justices-by-speaker}{%
 \section{The presence of facial expression of the justices by speaker}\label{the-presence-of-facial-expression-of-the-justices-by-speaker}}
 
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{figures/model3-plot-1} 
-
-}
-
-\caption{The 95\% confidence interval for estimated mearginal mean of presence after bonferroni adjustment. The x axis represents video and the y axis represents the estimated marginal mean of an action unit being observed. The facet shows the Justices in columns and action units in rows. The intervals for different speakers are overlaid with different colors. }\label{fig:model3-plot}
-\end{figure}
-
 \hypertarget{the-intensity-of-facial-expression-of-the-justices-by-speakers}{%
 \section{The intensity of facial expression of the justices by speakers}\label{the-intensity-of-facial-expression-of-the-justices-by-speakers}}
 
@@ -1035,5 +1020,6 @@ Bell & Parkes & AU45 & 0.204 & 0.0229 & 0.150 & 0.273 \\
 
 \printbibliography[heading=bibintoc]
 
+\appendix
 
 \end{document}
