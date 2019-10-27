@@ -69,4 +69,4 @@ organised <- dt %>%
   arrange(judge,video, frame)
   
 
-save(organised,file = "raw_data/new_dt.rda")
+save(organised,file = "raw_data/full_data.rda")
