@@ -1,4 +1,4 @@
-# Honours project: Exploration of Judicial Facial Expression in Videos and Transcripts of Legal Proceedings
+# Honours Project: Exploration of Judicial Facial Expression in Videos of Legal Proceedings
 
 ## Milestone
 
