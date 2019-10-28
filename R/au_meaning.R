@@ -1,7 +1,8 @@
 library(datapasta)
+library(tidyverse)
 library(rvest)
 
-load("../raw_data/au_imputed.rda")
+load(here::here("raw_data", "au_imputed.rda"))
 au_raw <- read_html("https://en.wikipedia.org/wiki/Facial_Action_Coding_System") %>% 
   html_nodes("table:nth-child(30)") %>% 
   html_table() 
@@ -29,19 +30,19 @@ related_emotion <- c("sadness, surprise and fear",
                      "happiness",
                      "fear, anger and confusion", 
                      "disgust",
-                     NA, 
+                     "no specific related emotion", 
                      "happiness and possibly contempt if appears unilateraly", 
                      "contempt or boredom if appears unilateraly", 
                      "sadness, disgust and confusion", 
                      "interested and confusion", 
                      "fear", 
                      "anger, confusion or bordom", 
-                     NA, 
+                     "no specific related emotion", 
                      "surprise and fear", 
-                     NA, 
-                     NA)
+                     "no specific related emotion", 
+                     "no specific related emotion")
 
 au_meaning <- au_meaning %>% mutate(Emotion = related_emotion)
 
 
-save(au_meaning, file = "../raw_data/au_meaning.rda")
+save(au_meaning, file = here::here("raw_data", "au_meaning.rda"))
