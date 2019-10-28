@@ -58,18 +58,18 @@ We simply drop Judge Gordon - only one video case.
 au_intensity <- au %>% 
   filter(judge_id %in% c("Keane", "Nettle", "Edelman", "Gageler", "Bell")|
            (judge_id == "Kiefel" & video_id != "Rinehart_b")) %>% 
-  select(frame_id, judge_id, video_id, ends_with("_r")) %>% 
+  dplyr::select(frame_id, judge_id, video_id, ends_with("_r")) %>% 
   gather(AU, value, -c(frame_id: video_id)) %>% 
   group_by(judge_id, video_id, AU) %>% 
   nest() %>% 
   mutate(interp = map(data, 
                       ~.x %>% pull(value) %>% na.interp %>% as.numeric)) %>% 
-  select(judge_id, video_id, AU, interp) %>% 
+  dplyr::select(judge_id, video_id, AU, interp) %>% 
   unnest() %>% 
   group_by(judge_id, video_id, AU) %>%
   mutate(frame_id = row_number()) %>% # add back frame_id as index
   spread(AU, interp) %>% 
-  left_join(au %>% select(judge_id: speaker)) # add back speaker column
+  left_join(au %>% dplyr::select(judge_id: speaker)) # add back speaker column
 ```
 
 Binomial imputation function 
