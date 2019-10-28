@@ -10,5 +10,6 @@
 ## Analysis
 - `R` folder contains most of the analysis
 - `data_pre_processing` contains all the material needed for obtaining facial variables from High Court videos
+- `working_progression` contains weekly working materials
 
 The folders storing the intermediate data for each step in data processing are not uploaded onto Github due to their size. They are available on request. 
