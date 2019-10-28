@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.10.22)  28 OCT 2019 10:34
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.10.22)  28 OCT 2019 12:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1036,7 +1036,13 @@ Package: booktabs 2016/04/27 v1.618033 publication quality tables
 \@thisruleclass=\count413
 \@lastruleclass=\count414
 \@thisrulewidth=\dimen188
-))
+)) (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/appendix/appendix.st
+y
+Package: appendix 2009/09/02 v1.2b extra appendix facilities
+\c@@pps=\count415
+\c@@ppsavesec=\count416
+\c@@ppsaveapp=\count417
+)
 Package biblatex Info: Trying to load language 'english'...
 Package biblatex Info: ... file 'english.lbx' found.
 
@@ -1044,8 +1050,8 @@ Package biblatex Info: ... file 'english.lbx' found.
 x
 File: english.lbx 2019/08/31 v3.13a biblatex localization (PK/MW)
 )
-\@quotelevel=\count415
-\@quotereset=\count416
+\@quotelevel=\count418
+\@quotereset=\count419
 (./final-thesis.aux
 
 LaTeX Warning: Label `fig:intensity' multiply defined.
@@ -1074,27 +1080,27 @@ LaTeX Warning: Label `tab:result-2' multiply defined.
 )
 \openout1 = `final-thesis.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 28.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 28.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 29.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 29.
 (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Try loading font information for T1+ppl on input line 28.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Try loading font information for T1+ppl on input line 29.
 (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/psnfss/t1ppl.fd
 File: t1ppl.fd 2001/06/04 font definitions for T1/ppl.
 )
@@ -1158,7 +1164,7 @@ s.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-LaTeX Info: Redefining \microtypecontext on input line 28.
+LaTeX Info: Redefining \microtypecontext on input line 29.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -1179,10 +1185,10 @@ Package biblatex Info: Data encoding 'utf8' specified.
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'final-thesis.bbl' found.
 (./final-thesis.bbl)
-Package biblatex Info: Reference section=0 on input line 28.
-Package biblatex Info: Reference segment=0 on input line 28.
+Package biblatex Info: Reference section=0 on input line 29.
+Package biblatex Info: Reference segment=0 on input line 29.
 \AtBeginShipoutBox=\box54
-Package hyperref Info: Link coloring ON on input line 28.
+Package hyperref Info: Link coloring ON on input line 29.
 (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 
@@ -1190,48 +1196,48 @@ Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 ng.sty
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count417
+\c@section@level=\count420
 )
-LaTeX Info: Redefining \ref on input line 28.
-LaTeX Info: Redefining \pageref on input line 28.
-LaTeX Info: Redefining \nameref on input line 28.
+LaTeX Info: Redefining \ref on input line 29.
+LaTeX Info: Redefining \pageref on input line 29.
+LaTeX Info: Redefining \nameref on input line 29.
 (./final-thesis.out) (./final-thesis.out)
 \@outlinefile=\write5
 \openout5 = `final-thesis.out'.
 
-LaTeX Font Info:    Try loading font information for T1+fvs on input line 32.
+LaTeX Font Info:    Try loading font information for T1+fvs on input line 33.
 (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/bera/t1fvs.fd
 File: t1fvs.fd 2004/09/07 scalable font definitions for T1/fvs.
 )
 LaTeX Font Info:    Font shape `T1/fvs/m/n' will be
-(Font)              scaled to size 9.85492pt on input line 32.
+(Font)              scaled to size 9.85492pt on input line 33.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `fvs' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `T1/fvs/m/n' will be
-(Font)              scaled to size 22.39185pt on input line 32.
+(Font)              scaled to size 22.39185pt on input line 33.
 LaTeX Font Info:    Font shape `T1/fvs/b/n' will be
-(Font)              scaled to size 22.39185pt on input line 32.
+(Font)              scaled to size 22.39185pt on input line 33.
 LaTeX Font Info:    Font shape `T1/fvs/m/n' will be
-(Font)              scaled to size 12.9599pt on input line 32.
+(Font)              scaled to size 12.9599pt on input line 33.
 LaTeX Font Info:    Font shape `T1/fvs/m/n' will be
-(Font)              scaled to size 15.55188pt on input line 32.
+(Font)              scaled to size 15.55188pt on input line 33.
 <figures/crest.jpg, id=156, 509.905pt x 553.06625pt>
 File: figures/crest.jpg Graphic file (type jpg)
 <use figures/crest.jpg>
-Package pdftex.def Info: figures/crest.jpg  used on input line 32.
+Package pdftex.def Info: figures/crest.jpg  used on input line 33.
 (pdftex.def)             Requested size: 85.35826pt x 92.57692pt.
 LaTeX Font Info:    Font shape `T1/fvs/m/n' will be
-(Font)              scaled to size 10.79993pt on input line 32.
+(Font)              scaled to size 10.79993pt on input line 33.
 [1
 
 {/Users/huizezhang/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map
 } <./figures/crest.jpg>]
 LaTeX Font Info:    Font shape `T1/fvs/m/n' will be
-(Font)              scaled to size 21.59985pt on input line 34.
+(Font)              scaled to size 21.59985pt on input line 35.
 LaTeX Font Info:    Font shape `T1/fvs/b/n' will be
-(Font)              scaled to size 21.59985pt on input line 34.
+(Font)              scaled to size 21.59985pt on input line 35.
 (./final-thesis.toc
 LaTeX Font Info:    Font shape `T1/fvs/b/n' will be
 (Font)              scaled to size 9.85492pt on input line 3.
@@ -1264,13 +1270,13 @@ Package microtype Info: Loading generic protrusion settings for font family
 \openout6 = `final-thesis.toc'.
 
 LaTeX Font Info:    Font shape `T1/fvs/b/n' will be
-(Font)              scaled to size 12.9599pt on input line 36.
+(Font)              scaled to size 12.9599pt on input line 37.
 [3] [0
 
 
 ]
 LaTeX Font Info:    Font shape `T1/fvs/b/n' will be
-(Font)              scaled to size 18.66588pt on input line 39.
+(Font)              scaled to size 18.66588pt on input line 40.
 [1] [2
 
 ] [3
@@ -1278,14 +1284,14 @@ LaTeX Font Info:    Font shape `T1/fvs/b/n' will be
 ]
 Chapter 1.
 LaTeX Font Info:    Font shape `T1/fvs/b/n' will be
-(Font)              scaled to size 13.49991pt on input line 69.
+(Font)              scaled to size 13.49991pt on input line 70.
 LaTeX Font Info:    Font shape `T1/fvs/b/n' will be
-(Font)              scaled to size 10.79993pt on input line 79.
+(Font)              scaled to size 10.79993pt on input line 80.
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.82 
+l.83 
       [1
 
 
@@ -1293,20 +1299,20 @@ l.82
  been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.91 \end{quote}
+l.92 \end{quote}
                  [2]pdfTeX warning (ext4): destination with the same identifier
  (name{page.3}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.104 
+l.105 
        [3] [4] [5]
 Chapter 2.
-LaTeX Font Info:    Try loading font information for T1+fvm on input line 129.
+LaTeX Font Info:    Try loading font information for T1+fvm on input line 130.
 (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/bera/t1fvm.fd
 File: t1fvm.fd 2004/09/07 scalable font definitions for T1/fvm.
 )
 LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
-(Font)              scaled to size 9.85492pt on input line 129.
+(Font)              scaled to size 9.85492pt on input line 130.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `fvm' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
@@ -1317,9 +1323,9 @@ Package microtype Info: Loading generic protrusion settings for font family
 <figures/workflow.png, id=326, 795.97375pt x 461.725pt>
 File: figures/workflow.png Graphic file (type png)
 <use figures/workflow.png>
-Package pdftex.def Info: figures/workflow.png  used on input line 133.
+Package pdftex.def Info: figures/workflow.png  used on input line 134.
 (pdftex.def)             Requested size: 426.79135pt x 247.56645pt.
-LaTeX Font Info:    Try loading font information for TS1+ppl on input line 148.
+LaTeX Font Info:    Try loading font information for TS1+ppl on input line 149.
 
 (/Users/huizezhang/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ts1ppl.fd
 File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
@@ -1327,7 +1333,7 @@ File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
 <figures/ts-plot-1.pdf, id=342, 722.7pt x 505.89pt>
 File: figures/ts-plot-1.pdf Graphic file (type pdf)
 <use figures/ts-plot-1.pdf>
-Package pdftex.def Info: figures/ts-plot-1.pdf  used on input line 197.
+Package pdftex.def Info: figures/ts-plot-1.pdf  used on input line 198.
 (pdftex.def)             Requested size: 426.79135pt x 298.75812pt.
 [8] [9 <./figures/ts-plot-1.pdf>] [10]
 Chapter 3.
@@ -1337,14 +1343,14 @@ Chapter 3.
 <figures/intensity-1.pdf, id=415, 722.7pt x 505.89pt>
 File: figures/intensity-1.pdf Graphic file (type pdf)
 <use figures/intensity-1.pdf>
-Package pdftex.def Info: figures/intensity-1.pdf  used on input line 310.
+Package pdftex.def Info: figures/intensity-1.pdf  used on input line 311.
 (pdftex.def)             Requested size: 426.79135pt x 298.75812pt.
 [14 <./figures/intensity-1.pdf>] [15] [16] [17]
 Chapter 4.
 <figures/most-common-1.pdf, id=471, 722.7pt x 505.89pt>
 File: figures/most-common-1.pdf Graphic file (type pdf)
 <use figures/most-common-1.pdf>
-Package pdftex.def Info: figures/most-common-1.pdf  used on input line 381.
+Package pdftex.def Info: figures/most-common-1.pdf  used on input line 382.
 (pdftex.def)             Requested size: 426.79135pt x 298.75812pt.
 [18
 
@@ -1352,35 +1358,35 @@ Package pdftex.def Info: figures/most-common-1.pdf  used on input line 381.
 <figures/au-video-1.pdf, id=497, 722.7pt x 505.89pt>
 File: figures/au-video-1.pdf Graphic file (type pdf)
 <use figures/au-video-1.pdf>
-Package pdftex.def Info: figures/au-video-1.pdf  used on input line 395.
+Package pdftex.def Info: figures/au-video-1.pdf  used on input line 396.
 (pdftex.def)             Requested size: 426.79135pt x 298.75812pt.
 [20 <./figures/au-video-1.pdf>]
 <figures/intensity-boxplot-1.pdf, id=512, 722.7pt x 505.89pt>
 File: figures/intensity-boxplot-1.pdf Graphic file (type pdf)
 <use figures/intensity-boxplot-1.pdf>
 Package pdftex.def Info: figures/intensity-boxplot-1.pdf  used on input line 41
-2.
+3.
 (pdftex.def)             Requested size: 426.79135pt x 298.75812pt.
 <figures/high-intensity-points-1.pdf, id=514, 722.7pt x 505.89pt>
 File: figures/high-intensity-points-1.pdf Graphic file (type pdf)
 <use figures/high-intensity-points-1.pdf>
 Package pdftex.def Info: figures/high-intensity-points-1.pdf  used on input lin
-e 426.
+e 427.
 (pdftex.def)             Requested size: 426.79135pt x 298.75812pt.
 [21 <./figures/intensity-boxplot-1.pdf>] [22 <./figures/high-intensity-points-1
 .pdf>] [23] [24]
-<figures/model2-plot-1.pdf, id=570, 722.7pt x 505.89pt>
+<figures/model2-plot-1.pdf, id=569, 722.7pt x 505.89pt>
 File: figures/model2-plot-1.pdf Graphic file (type pdf)
 <use figures/model2-plot-1.pdf>
-Package pdftex.def Info: figures/model2-plot-1.pdf  used on input line 536.
-(pdftex.def)             Requested size: 426.79135pt x 298.75812pt.
+Package pdftex.def Info: figures/model2-plot-1.pdf  used on input line 537.
+(pdftex.def)             Requested size: 426.79732pt x 337.1691pt.
 [25] [26 <./figures/model2-plot-1.pdf>]
 <figures/intensity-video-1.pdf, id=596, 722.7pt x 505.89pt>
 File: figures/intensity-video-1.pdf Graphic file (type pdf)
 <use figures/intensity-video-1.pdf>
-Package pdftex.def Info: figures/intensity-video-1.pdf  used on input line 557.
+Package pdftex.def Info: figures/intensity-video-1.pdf  used on input line 558.
 
-(pdftex.def)             Requested size: 426.79135pt x 298.75812pt.
+(pdftex.def)             Requested size: 426.79732pt x 337.1691pt.
 [27 <./figures/intensity-video-1.pdf>] [28] [29]
 Chapter 5.
 [30
@@ -1393,10 +1399,10 @@ Appendix A.
 <figures/landmarking.png, id=688, 441.65pt x 397.485pt>
 File: figures/landmarking.png Graphic file (type png)
 <use figures/landmarking.png>
-Package pdftex.def Info: figures/landmarking.png  used on input line 730.
-(pdftex.def)             Requested size: 426.79135pt x 384.12862pt.
+Package pdftex.def Info: figures/landmarking.png  used on input line 731.
+(pdftex.def)             Requested size: 426.80957pt x 337.17241pt.
 [34]
-Overfull \hbox (39.97624pt too wide) in paragraph at lines 743--767
+Overfull \hbox (39.97624pt too wide) in paragraph at lines 744--768
  [] 
  []
 
@@ -1404,25 +1410,25 @@ Overfull \hbox (39.97624pt too wide) in paragraph at lines 743--767
 <figures/resid-judge-1.pdf, id=741, 722.7pt x 361.35pt>
 File: figures/resid-judge-1.pdf Graphic file (type pdf)
 <use figures/resid-judge-1.pdf>
-Package pdftex.def Info: figures/resid-judge-1.pdf  used on input line 990.
+Package pdftex.def Info: figures/resid-judge-1.pdf  used on input line 991.
 (pdftex.def)             Requested size: 426.79135pt x 213.39867pt.
 <figures/resid-video-1.pdf, id=742, 722.7pt x 361.35pt>
 File: figures/resid-video-1.pdf Graphic file (type pdf)
 <use figures/resid-video-1.pdf>
-Package pdftex.def Info: figures/resid-video-1.pdf  used on input line 999.
+Package pdftex.def Info: figures/resid-video-1.pdf  used on input line 1000.
 (pdftex.def)             Requested size: 426.79135pt x 213.39867pt.
 [44 <./figures/resid-judge-1.pdf> <./figures/resid-video-1.pdf>]
 <figures/model3-plot-1.pdf, id=759, 722.7pt x 505.89pt>
 File: figures/model3-plot-1.pdf Graphic file (type pdf)
 <use figures/model3-plot-1.pdf>
-Package pdftex.def Info: figures/model3-plot-1.pdf  used on input line 1011.
+Package pdftex.def Info: figures/model3-plot-1.pdf  used on input line 1012.
 (pdftex.def)             Requested size: 426.79135pt x 298.75812pt.
 [45 <./figures/model3-plot-1.pdf>]
 <figures/intensity-speaker-1.pdf, id=773, 722.7pt x 505.89pt>
 File: figures/intensity-speaker-1.pdf Graphic file (type pdf)
 <use figures/intensity-speaker-1.pdf>
 Package pdftex.def Info: figures/intensity-speaker-1.pdf  used on input line 10
-23.
+24.
 (pdftex.def)             Requested size: 426.79135pt x 298.75812pt.
 [46 <./figures/intensity-speaker-1.pdf>] [47
 
@@ -1448,13 +1454,13 @@ Package logreq Info: Writing requests to 'final-thesis.run.xml'.
 ### semi simple group (level 1) entered at line 102 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 29367 strings out of 494553
- 531194 string characters out of 6176312
- 1039305 words of memory out of 5000000
- 32246 multiletter control sequences out of 15000+600000
- 630074 words of font info for 241 fonts, out of 8000000 for 9000
+ 29462 strings out of 494553
+ 532614 string characters out of 6176312
+ 1040734 words of memory out of 5000000
+ 32335 multiletter control sequences out of 15000+600000
+ 630233 words of font info for 243 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 48i,12n,65p,1415b,17389s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 48i,12n,65p,1415b,17479s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/Users/huizezhang/Library/TinyTeX/texmf-dist/fonts/enc/dvips/b
 ase/8r.enc}</Users/huizezhang/Library/TinyTeX/texmf-dist/fonts/type1/public/ams
 fonts/cm/cmmi10.pfb></Users/huizezhang/Library/TinyTeX/texmf-dist/fonts/type1/p
@@ -1468,7 +1474,7 @@ TinyTeX/texmf-dist/fonts/type1/public/bera/fvsr8a.pfb></Users/huizezhang/Librar
 y/TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></Users/huizezhang/Lib
 rary/TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></Users/huizezhang/
 Library/TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on final-thesis.pdf (57 pages, 958092 bytes).
+Output written on final-thesis.pdf (57 pages, 958259 bytes).
 PDF statistics:
  918 PDF objects out of 1000 (max. 8388607)
  810 compressed objects within 9 object streams

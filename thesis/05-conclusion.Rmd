@@ -26,5 +26,5 @@ Faces could be extracted more often than at 1 minute intervals to allow research
 
 ## Acknowledgement
 
-The analysis is conducted using R [@Rlanguage], and the following packages: forecast [@forecast], tidyverse [@tidyverse], emmenas [@emmeans] and broom [@broom]. This thesis document is created with knitr [@knitr], R Markdown [@rmarkdown] and bookdown [@bookdown]. All matrials required to reproduce the project can be found at https://github.com/huizezhang-sherry/ETC4860/. 
+The analysis is conducted using R [@Rlanguage], and the following packages: forecast [@forecast], tidyverse [@tidyverse], emmenas [@emmeans] and broom [@broom]. This thesis document is created with knitr [@knitr], R Markdown [@rmarkdown] and bookdown [@bookdown]. All materials required to reproduce the project can be found at https://github.com/huizezhang-sherry/ETC4860/. 
 

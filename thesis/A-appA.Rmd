@@ -4,7 +4,7 @@ knit: "bookdown::render_book"
 
 \appendix
 
-# Appendix 
+# Appendix{#Ch:Appendix} 
 
 ## List of videos used in the project
 
@@ -22,13 +22,13 @@ Table: Details of videos processed.
 
 ## An illustration of face landmarking
 
-```{r landmarking, fig.cap="An illustration of the face landmarking where 67 key points on a face is identified. OpenFace provides 2D and 3D coordinates of these landmarking points", fig.height=5}
+```{r landmarking, fig.cap="An illustration of the face landmarking where 67 key points on a face is identified. OpenFace provides 2D and 3D coordinates of these landmarking points", out.height="50%"}
 include_graphics("figures/landmarking.png")
 ```
 
 ## Description of action units recognised by OpenFace
 
-```{r au, results='asis'}
+```{r au, results='asis',out.height="30%"}
 
 knitLatex::xTab(au_meaning, booktabs = TRUE, caption.top = "\\label{tab:au} The subset of action units OpenFace is able to recognise.")
 
@@ -77,7 +77,7 @@ p1 + p2
 
 ## The presence of facial expression of the justices by speaker
 
-```{r model3-plot, fig.cap="The 95\\% confidence interval for estimated mearginal mean of presence after bonferroni adjustment. The x axis represents video and the y axis represents the estimated marginal mean of an action unit being observed. The facet shows the Justices in columns and action units in rows. The intervals for different speakers are overlaid with different colors. "}
+```{r model3-plot, fig.cap="The 95\\% confidence interval for estimated marginal mean of presence after Bonferroni adjustment. The x axis represents video and the y axis represents the estimated marginal mean of an action unit being observed. The facet shows the Justices in columns and action units in rows. The intervals for different speakers are overlaid with different colors. "}
 emmean_obj_3 <- emmeans(binomial_model_3, c("judge", "video", "AU", "speaker"),
                         type = "response")
 
@@ -94,14 +94,15 @@ int_3 %>%
   facet_grid(Meaning ~ judge, scales = "free",
              labeller = label_wrap_gen(width = 5)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1),
-        strip.text.y = element_text(angle = 0),) +
-  xlab("video")
+        strip.text.y = element_text(angle = 0),
+        axis.title.x = element_blank()) +
+  ylab("Estimated Marginal Mean")
 
 ```   
 
 ## The intensity of facial expression of the justices by speakers
 
-```{r intensity-speaker, fig.cap="The 95\\% confidence interval for estimated mearginal mean of intensity after bonferroni adjustment. The x axis represents video and the y axis represents the estimated marginal mean of the intensity. The facet shows the Justices in columns and action units in rows. The intervals for different speakers are overlaid with different colors."}
+```{r intensity-speaker, fig.cap="The 95\\% confidence interval for estimated marginal mean of intensity after Bonferroni adjustment. The x axis represents video and the y axis represents the estimated marginal mean of the intensity. The facet shows the Justices in columns and action units in rows. The intervals for different speakers are overlaid with different colors."}
 
 m1 <- glm(non_zero ~ judge*video + judge*AU + video*AU + judge * speaker,
           data = model_dt, family = binomial(link = "logit"))
@@ -122,6 +123,7 @@ int_3i %>%
   facet_grid(Meaning ~ judge, scales = "free",
              labeller = label_wrap_gen(width = 5)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1),
-        strip.text.y = element_text(angle = 0),) +
-  xlab("video")
+        strip.text.y = element_text(angle = 0),
+        axis.title.x = element_blank()) +
+  ylab("Estimated Marginal Mean")
 ```

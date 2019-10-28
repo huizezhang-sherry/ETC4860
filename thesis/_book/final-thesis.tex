@@ -4,6 +4,7 @@
 % Version: 6 September 2016
 
 \documentclass{monashthesis}
+\usepackage[toc,page]{appendix}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Add any LaTeX packages and other preamble here if required
@@ -39,7 +40,7 @@
 \chapter*{Acknowledgements}\label{acknowledgements}}
 \addcontentsline{toc}{chapter}{Acknowledgements}
 
-I would like to express my gratitude to Professor Di Cook, my supervisors, for detailed guidance and kindness support throughout the project and Professor Russell Smyth for raising the idea of this project. I would like to appreciate Stephanie Kobakian, with whom I have countless discussions with about the project. I would also like to extend my thank to my friends, colleagues and family for standing behind me unconditionally.
+I would like to express my gratitude to my supervisors Professor Di Cook and Professor Russell Smyth for detailed guidance and kindness support throughout the project. I would like to appreciate Stephanie Kobakian, with whom I have countless discussions with about the project. I would also like to extend my thank to my friends, colleagues and family for standing behind me unconditionally.
 
 \let\cleardoublepage\clearpage
 
@@ -82,9 +83,9 @@ There is comprehensive law, economics and political science literature that atte
 
 More studies depart from static characteristics of Justices and incorporate the language used by the Justices in the court to understand the decision of the Justices. \textcite{black2011emotions} have studied the use of pleasant and unpleasant language by the Justices. \textcite{Shullman2004illusion} and \textcite{johnson2009inquiring} have studied the effect of frequency and content of Justices' questions. \textcite{epstein2010inferring} has utilised the number of questions asked by the Justices in regression analysis to predict the winning party in a case .
 
-Recently, legal studies have focused on the usage of emotion and vocal characteristics of the Justices. From a behavioural perpsective, Paul Ekman \autocite{ekman1991invited} suggests that speakers are often unaware of their own facial and vocal inflections. In 2016, \textcite{chen2016perceived} have studied the emotion of the Justices from vocal characteristics and suggest that perceived masculinity is strongly correlated with the court outcomes. \textcite{dietrich2019emotional} also suggest that subconscious vocal inflections contain information that is not available from text transcripts using multilevel logistic model with random effects. Another study by \textcite{chen2018justice} have incorporated both vocal and image information into a machine learning model to predict the votes of the Justices, and case outcome, using the U.S. Supreme Court data from 1946-2014. They found that image and audio features have improved the prediction of case outcomes. This demonstrates the potential of incorporating facial information to understand the Justices.
+Recently, legal studies have focused on the usage of emotion and vocal characteristics of the Justices. From a behavioural perspective, Paul Ekman \autocite{ekman1991invited} suggests that speakers are often unaware of their own facial and vocal inflections. In 2016, \textcite{chen2016perceived} have studied the emotion of the Justices from vocal characteristics and suggest that perceived masculinity is strongly correlated with the court outcomes. \textcite{dietrich2019emotional} also suggest that subconscious vocal inflections contain information that is not available from text transcripts using multilevel logistic model with random effects. Another study by \textcite{chen2018justice} have incorporated both vocal and image information into a machine learning model to predict the votes of the Justices, and case outcome, using the U.S. Supreme Court data from 1946-2014. They found that image and audio features have improved the prediction of case outcomes. This demonstrates the potential of incorporating facial information to understand the Justices.
 
-The literature often considers the U.S. Supreme Court Database and far less studies have been conducted using Australian High Court data. The Guide to Judical Conduct \autocite{judicalguid} has presented the following code of conduct:
+The literature often considers the U.S. Supreme Court Database and far less studies have been conducted using Australian High Court data. The Guide to Judicial Conduct \autocite{judicalguid} has presented the following code of conduct:
 
 \begin{quote}
 It is important for judges to maintain a standard of behaviour in court that is consistent with the status of judicial office and does not diminish the confidence of litigants in particular, and the public in general, in the ability, the integrity, the impartiality and the independence of the judge.
@@ -106,7 +107,7 @@ In Republic of Nauru v WET040 {[}No.~2{]} {[}2018{]} HCA 60, an Iranian national
 
 Another case from immigration law is TTY167 v Republic of Nauru {[}2018{]} HCA 61, where a Bangladesh citizen (appellant) applied to Nauru's Secretary of the Department of Justice and Border Control for refugee protection. The appellant then appealed to the Tribunal and further appealed to the High Court of Nauru but was rejected. He then appealed to the High Court of Australia and successfully got his refugee status. This case is also heard by Justices Gageler, Nettle and Edelman and it is referred as Nauru-b.
 
-Rinehart v Hancock Prospecting Pty Ltd {[}2019{]} HCA 13 is a \textbf{commercial} case discussing commercial arbitration. Due to its complexity, the case were held in two hearings named Rinehart-a and Rinehart-b in the project. Chief Justices Kiefel, Justices Gageler, Nettle, Gordon, and Edelman heard the case. A distinct characteristics of this case is that the decision is not a unanimous decision of all the Justices. Justice Edelman took a narrow interpretation of legal issue while the majority of the Justices tokk a broad interpreation.
+Rinehart v Hancock Prospecting Pty Ltd {[}2019{]} HCA 13 is a \textbf{commercial} case discussing commercial arbitration. Due to its complexity, the case were held in two hearings named Rinehart-a and Rinehart-b in the project. Chief Justices Kiefel, Justices Gageler, Nettle, Gordon, and Edelman heard the case. A distinct characteristics of this case is that the decision is not a unanimous decision of all the Justices. Justice Edelman took a narrow interpretation of legal issue while the majority of the Justices took a broad interpretation.
 
 Parkes Shire Council v South West Helicopters Pty Limited {[}2019{]} HCA 14 is a \textbf{civil} case where the appellant, the Stephenson claimed for psychiatric harm resulting from the death of Mr Stephenson, who was carried and subsequently killed due to the helicopter crash by the Parkes city council (respondent). Chief Justices Kiefel, Justices Bell, Keane, Gordon, and Edelman heard the case and it is referred to as Parkes.
 
@@ -161,7 +162,7 @@ Human facial expression can be de-constructed into a combination of action units
 \hypertarget{data-format}{%
 \section{Data format}\label{data-format}}
 
-Table \ref{tab:long} presents an illustration of the data extracted via the workflow described above in the long format. The presented data is shows the action unit as index adn presence and intensity presented as observations in two columns for Justices Edelman in the first frame of case McKell. Since the frame is cropped at one minute interval, the intensity and presence can also be viewed as time series and Figure \ref{fig:ts-plot} plots the action unit 1 of Justices Edelman in case McKell across time.
+Table \ref{tab:long} presents an illustration of the data extracted via the workflow described above in the long format. The presented data is shows the action unit as index and presence and intensity presented as observations in two columns for Justices Edelman in the first frame of case McKell. Since the frame is cropped at one minute interval, the intensity and presence can also be viewed as time series and Figure \ref{fig:ts-plot} plots the action unit 1 of Justices Edelman in case McKell across time.
 
 \begin{table}[ht]
 \begin{center}
@@ -471,7 +472,7 @@ AU07 & Lid tightener & fear, anger and confusion \\
 AU14 & Dimpler & contempt or boredom if appears unilateraly \\
 AU15 & Lip corner depressor & sadness, disgust and confusion \\
 AU20 & Lip stretcher & fear \\
-AU45 & Blink & NA \\
+AU45 & Blink & no specific related emotion \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -485,7 +486,7 @@ AU45 & Blink & NA \\
 
 The three models in Equation \ref{eq:judge_au}, \ref{eq:judge_video} and \ref{eq:judge_speaker} have been fitted and ANOVA test is performed to choose the best model. The ANOVA result for comparing Model 1 and 2 is presented in Table \ref{tab:anova-1}. After incorporating the main effect of case and its interaction with judge in Model 2, the degree of freedom is reduced by 61. This has a significant improvement on the model since the p-value (1e-88) is close to zero, indicating the null hypothesis that Model 1 and Model 2 are the same is rejected.
 
-The ANOVA result between Model 2 and Model 3 is presented in Table \ref{tab:anova-2}. The additional six variables associated with speakers in Model 3 have improved the model at 95\% significance level since the p-value is 0.05, however, at 99\% significicance level, this improvement is not significant. Model 2 is chosen as the final model because the interpretation of video-wise effect using Model 2 after post-model analysis provides more interesting findings about the expressions of the Justices than the speaker-wise effect using Model 3.
+The ANOVA result between Model 2 and Model 3 is presented in Table \ref{tab:anova-2}. The additional six variables associated with speakers in Model 3 have improved the model at 95\% significance level since the p-value less than 0.05, however, at 99\% significance level, this improvement is not significant. Model 2 is chosen as the final model because the interpretation of video-wise effect using Model 2 after post-model analysis provides more interesting findings about the expressions of the Justices than the speaker-wise effect using Model 3.
 
 \begin{table}[ht]
 \begin{center}
@@ -533,11 +534,11 @@ Bell presents similar reactions to Gageler, showing a significantly higher propo
 
 \begin{figure}
 
-{\centering \includegraphics[width=1\linewidth]{figures/model2-plot-1} 
+{\centering \includegraphics[width=1\linewidth,height=0.5\textheight]{figures/model2-plot-1} 
 
 }
 
-\caption{The 95\% confidence interval for estimated mearginal mean for presence after bonferroni adjustment. The x axis represents video and the y axis represents the estimated marginal mean of an action unit being observed. The facet shows the Justices in columns and action units in rows. }\label{fig:model2-plot}
+\caption{The 95\% confidence interval for estimated marginal mean for presence after Bonferroni adjustment. The x axis represents video and the y axis represents the estimated marginal mean of an action unit being observed. The facet shows the Justices in columns and action units in rows. }\label{fig:model2-plot}
 \end{figure}
 
 \hypertarget{modelling-result-for-intensity}{%
@@ -548,17 +549,17 @@ Bell presents similar reactions to Gageler, showing a significantly higher propo
 
 The two part model in equation \ref{eq:two-part1} is estimated for the intensity data. Estimated marginal mean and confidence interval adjustment procedure are performed as modelling presence data. The 95\% confidence interval plot is presented in Figure \ref{fig:intensity-video}. This shows that Justices Edelman has significantly stronger expressions of brow lowerer (AU04) in case Nauru-a, Nauru-b and Rinehart-a, but less intensity when expressing lid tightener (AU07) in case OKS. Justice Keane also shows more intense expressions of lid tightener (AU07) in case McKell.
 
-Action unit 5 (upperlid raiser) and 20 (lip stretcher) are exhibited significantly more intense for Justices Gageler in case OKS. The mean for brow lowerer (AU04) seems to higher than those in other cases for Justices Gageler but this result is not significant.
+Action unit 5 (upper lid raiser) and 20 (lip stretcher) are exhibited significantly more intense for Justices Gageler in case OKS. The mean for brow lowerer (AU04) seems to higher than those in other cases for Justices Gageler but this result is not significant.
 
 For Justice Bell, the intensity of inner brow raiser (AU01), upper lid raiser (AU05), dimpler (AU14) and Lip stretcher (AU20) are also significantly higher in case OKS.
 
 \begin{figure}
 
-{\centering \includegraphics[width=1\linewidth]{figures/intensity-video-1} 
+{\centering \includegraphics[width=1\linewidth,height=0.5\textheight]{figures/intensity-video-1} 
 
 }
 
-\caption{The 95\% confidence interval for estimated mearginal mean for presence after bonferroni adjustment. The x axis represents video and the y axis represents the estimated marginal mean of the intensity. The facet shows the Justices in columns and action units in rows. }\label{fig:intensity-video}
+\caption{The 95\% confidence interval for estimated mearginal mean for presence after Bonferroni adjustment. The x axis represents video and the y axis represents the estimated marginal mean of the intensity. The facet shows the Justices in columns and action units in rows.}\label{fig:intensity-video}
 \end{figure}
 
 \hypertarget{the-expression-of-the-justices-by-speaker}{%
@@ -620,12 +621,12 @@ Faces could be extracted more often than at 1 minute intervals to allow research
 \hypertarget{acknowledgement}{%
 \section{Acknowledgement}\label{acknowledgement}}
 
-The analysis is conducted using R \autocite{Rlanguage}, and the following packages: forecast \autocite{forecast}, tidyverse \autocite{tidyverse}, emmenas \autocite{emmeans} and broom \autocite{broom}. This thesis document is created with knitr \autocite{knitr}, R Markdown \autocite{rmarkdown} and bookdown \autocite{bookdown}. All matrials required to reproduce the project can be found at \url{https://github.com/huizezhang-sherry/ETC4860/}.
+The analysis is conducted using R \autocite{Rlanguage}, and the following packages: forecast \autocite{forecast}, tidyverse \autocite{tidyverse}, emmenas \autocite{emmeans} and broom \autocite{broom}. This thesis document is created with knitr \autocite{knitr}, R Markdown \autocite{rmarkdown} and bookdown \autocite{bookdown}. All materials required to reproduce the project can be found at \url{https://github.com/huizezhang-sherry/ETC4860/}.
 
 \appendix
 
-\hypertarget{appendix}{%
-\chapter{Appendix}\label{appendix}}
+\hypertarget{Ch:Appendix}{%
+\chapter{Appendix}\label{Ch:Appendix}}
 
 \hypertarget{list-of-videos-used-in-the-project}{%
 \section{List of videos used in the project}\label{list-of-videos-used-in-the-project}}
@@ -727,7 +728,7 @@ Gordon, Gageler, Kiefel, Nettle, Edelman\strut
 
 \begin{figure}
 
-{\centering \includegraphics[width=1\linewidth]{figures/landmarking} 
+{\centering \includegraphics[width=1\linewidth,height=0.5\textheight]{figures/landmarking} 
 
 }
 
@@ -751,17 +752,17 @@ AU05 & AU05: Upper lid raiser & surprise, fear, anger adn interested \\
 AU06 & AU06: Cheek raiser & happiness \\
 AU07 & AU07: Lid tightener & fear, anger and confusion \\
 AU09 & AU09: Nose wrinkler & disgust \\
-AU10 & AU10: Upper lip raiser & NA \\
+AU10 & AU10: Upper lip raiser & no specific related emotion \\
 AU12 & AU12: Lip corner puller & happiness and possibly contempt if appears unilateraly \\
 AU14 & AU14: Dimpler & contempt or boredom if appears unilateraly \\
 AU15 & AU15: Lip corner depressor & sadness, disgust and confusion \\
 AU17 & AU17: Chin raiser & interested and confusion \\
 AU20 & AU20: Lip stretcher & fear \\
 AU23 & AU23: Lip tightener & anger, confusion or bordom \\
-AU25 & AU25: Lips part & NA \\
+AU25 & AU25: Lips part & no specific related emotion \\
 AU26 & AU26: Jaw drop & surprise and fear \\
-AU28 & AU28: Lip suck & NA \\
-AU45 & AU45: Blink & NA \\
+AU28 & AU28: Lip suck & no specific related emotion \\
+AU45 & AU45: Blink & no specific related emotion \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -1012,7 +1013,7 @@ Bell & OKS & AU45 & 0.164 & 0.0367 & 0.087 & 0.288 \\
 
 }
 
-\caption{The 95\% confidence interval for estimated mearginal mean of presence after bonferroni adjustment. The x axis represents video and the y axis represents the estimated marginal mean of an action unit being observed. The facet shows the Justices in columns and action units in rows. The intervals for different speakers are overlaid with different colors. }\label{fig:model3-plot}
+\caption{The 95\% confidence interval for estimated marginal mean of presence after Bonferroni adjustment. The x axis represents video and the y axis represents the estimated marginal mean of an action unit being observed. The facet shows the Justices in columns and action units in rows. The intervals for different speakers are overlaid with different colors. }\label{fig:model3-plot}
 \end{figure}
 
 \hypertarget{the-intensity-of-facial-expression-of-the-justices-by-speakers}{%
@@ -1024,11 +1025,10 @@ Bell & OKS & AU45 & 0.164 & 0.0367 & 0.087 & 0.288 \\
 
 }
 
-\caption{The 95\% confidence interval for estimated mearginal mean of intensity after bonferroni adjustment. The x axis represents video and the y axis represents the estimated marginal mean of the intensity. The facet shows the Justices in columns and action units in rows. The intervals for different speakers are overlaid with different colors.}\label{fig:intensity-speaker}
+\caption{The 95\% confidence interval for estimated marginal mean of intensity after Bonferroni adjustment. The x axis represents video and the y axis represents the estimated marginal mean of the intensity. The facet shows the Justices in columns and action units in rows. The intervals for different speakers are overlaid with different colors.}\label{fig:intensity-speaker}
 \end{figure}
 
 \printbibliography[heading=bibintoc]
 
-\appendix
 
 \end{document}

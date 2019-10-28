@@ -1,5 +1,5 @@
 # Acknowledgements {-}
 
-I would like to express my gratitude to Professor Di Cook, my supervisors, for detailed guidance and kindness support throughout the project and Professor Russell Smyth for raising the idea of this project. I would like to appreciate Stephanie Kobakian, with whom I have countless discussions with about the project. I would also like to extend my thank to my friends, colleagues and family for standing behind me unconditionally.
+I would like to express my gratitude to my supervisors Professor Di Cook and Professor Russell Smyth for detailed guidance and kindness support throughout the project. I would like to appreciate Stephanie Kobakian, with whom I have countless discussions with about the project. I would also like to extend my thank to my friends, colleagues and family for standing behind me unconditionally.
 
 \let\cleardoublepage\clearpage

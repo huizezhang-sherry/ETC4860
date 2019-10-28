@@ -30,7 +30,7 @@ Human facial expression can be de-constructed into a combination of action units
 
 ## Data format
 
-Table \ref{tab:long} presents  an illustration of the data extracted via the workflow described above in the long format. The presented data is shows the action unit as index adn presence and intensity presented as observations in two columns for  Justices Edelman in the first frame of case McKell. Since the frame is cropped at one minute interval, the intensity and presence can also be viewed as time series and Figure \ref{fig:ts-plot} plots the action unit 1 of Justices Edelman in case McKell across time. 
+Table \ref{tab:long} presents  an illustration of the data extracted via the workflow described above in the long format. The presented data is shows the action unit as index and presence and intensity presented as observations in two columns for  Justices Edelman in the first frame of case McKell. Since the frame is cropped at one minute interval, the intensity and presence can also be viewed as time series and Figure \ref{fig:ts-plot} plots the action unit 1 of Justices Edelman in case McKell across time. 
 
 ```{r results='asis'}
 long <- au_imputed %>%

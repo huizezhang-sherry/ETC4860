@@ -41,7 +41,7 @@ knitLatex::xTab(au_selected, booktabs = TRUE, caption.top = "\\label{tab:au-incl
 
 The three models in Equation \ref{eq:judge_au}, \ref{eq:judge_video} and \ref{eq:judge_speaker} have been fitted and ANOVA test is performed to choose the best model. The ANOVA result for comparing Model 1 and 2 is presented in Table \ref{tab:anova-1}. After incorporating the main effect of case and its interaction with judge in Model 2, the degree of freedom is reduced by 61. This has a significant improvement on the model since the p-value (1e-88) is close to zero, indicating the null hypothesis that Model 1 and Model 2 are the same is rejected. 
 
-The ANOVA result between Model 2 and Model 3 is presented in Table \ref{tab:anova-2}. The additional six variables associated with speakers in Model 3 have improved the model at 95% significance level since the p-value less than 0.05, however, at 99% significicance level, this improvement is not significant. Model 2 is chosen as the final model because the interpretation of video-wise effect using Model 2 after post-model analysis provides more interesting findings about the expressions of the Justices than the speaker-wise effect using Model 3. 
+The ANOVA result between Model 2 and Model 3 is presented in Table \ref{tab:anova-2}. The additional six variables associated with speakers in Model 3 have improved the model at 95% significance level since the p-value less than 0.05, however, at 99% significance level, this improvement is not significant. Model 2 is chosen as the final model because the interpretation of video-wise effect using Model 2 after post-model analysis provides more interesting findings about the expressions of the Justices than the speaker-wise effect using Model 3. 
 
 ```{r}
 model_dt <- au_tidy %>%
@@ -129,7 +129,7 @@ Justice Edelman and Keane behave consistently throughout all the videos, while t
 
 Bell presents similar reactions to Gageler, showing a significantly higher proportion of emotions associated with action unit 1 (inner brow raiser), 14 (dimpler), 15 (lip corner depressor) and 20 (lip stretcher) in case OKS. Bell also  exhibits less presence of action unit 07 (lid tightener) and 20 (lip stretcher) in case Parkes. 
 
-```{r model2-plot, fig.cap="The 95\\% confidence interval for estimated mearginal mean for presence after bonferroni adjustment. The x axis represents video and the y axis represents the estimated marginal mean of an action unit being observed. The facet shows the Justices in columns and action units in rows. "}
+```{r model2-plot, fig.cap="The 95\\% confidence interval for estimated marginal mean for presence after Bonferroni adjustment. The x axis represents video and the y axis represents the estimated marginal mean of an action unit being observed. The facet shows the Justices in columns and action units in rows. ", out.height="50%"}
 emmean_obj_2 <- emmeans(binomial_model_2, c("judge", "video", "AU"),
                         type = "response")
 
@@ -147,8 +147,9 @@ int_2 %>%
              labeller = label_wrap_gen(width = 5)) + 
   theme(axis.text.x = element_text(angle = 90, hjust = 1), 
         strip.text.y = element_text(angle = 0),
-        legend.position = "none") + 
-  xlab("video")
+        legend.position = "none",
+        axis.title.x = element_blank()) + 
+  ylab("Estimated Marginal Mean")
 
 ```    
 
@@ -158,7 +159,7 @@ int_2 %>%
 
 The two part model in equation \ref{eq:two-part1} is estimated for the intensity data. Estimated marginal mean and confidence interval adjustment procedure are performed as modelling presence data. The 95% confidence interval plot is presented in Figure \ref{fig:intensity-video}. This shows that Justices Edelman has significantly stronger expressions of brow lowerer (AU04) in case Nauru-a, Nauru-b and Rinehart-a, but less intensity when expressing lid tightener (AU07) in case OKS. Justice Keane also shows more intense expressions of lid tightener (AU07) in case McKell. 
 
-Action unit 5 (upperlid raiser) and 20 (lip stretcher) are exhibited significantly more intense for Justices Gageler in case OKS. The mean for brow lowerer (AU04) seems to higher than those in other cases for Justices Gageler but this result is not significant. 
+Action unit 5 (upper lid raiser) and 20 (lip stretcher) are exhibited significantly more intense for Justices Gageler in case OKS. The mean for brow lowerer (AU04) seems to higher than those in other cases for Justices Gageler but this result is not significant. 
 
 For Justice Bell, the intensity of inner brow raiser (AU01), upper lid raiser (AU05), dimpler (AU14) and Lip stretcher (AU20) are also significantly higher in case OKS. 
 
@@ -170,7 +171,7 @@ model_dt <- au_tidy %>%
   mutate(judge = fct_relevel(judge, c("Edelman", "Keane", "Kiefel",
                                       "Nettle", "Gageler", "Bell")),
          video = fct_relevel(video, c("Nauru-a", "Nauru-b", "Rinehart-a",
-                                      "Rinehart-b", "McKell", "OKS", "Parkes")),
+                                      "Rinehart-b", "Parkes", "McKell", "OKS")),
          AU = fct_relevel(AU, "AU01"),
          non_zero = as.factor(ifelse(intensity ==0, 0, 1)))
 
@@ -186,7 +187,7 @@ m2 <- glm(intensity ~ judge*video + judge*AU + video*AU,
           family = Gamma(link = "log"))
 ```
 
-```{r intensity-video, fig.cap="The 95\\% confidence interval for estimated mearginal mean for presence after bonferroni adjustment. The x axis represents video and the y axis represents the estimated marginal mean of the intensity. The facet shows the Justices in columns and action units in rows. "}
+```{r intensity-video, fig.cap="The 95\\% confidence interval for estimated mearginal mean for presence after Bonferroni adjustment. The x axis represents video and the y axis represents the estimated marginal mean of the intensity. The facet shows the Justices in columns and action units in rows.", out.height="50%"}
 
 emmean_m2 <-  emmeans(m2, c("judge", "video", "AU"), type = "response")
 int_2i <- confint(emmean_m2, by = c("judge", "AU"), adjust = "bonferroni") # the by argument prescribe
@@ -204,8 +205,9 @@ int_2i %>%
              labeller = label_wrap_gen(width = 5)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1),
         strip.text.y = element_text(angle = 0),
-        legend.position = "none") +
-  xlab("video")
+        legend.position = "none",
+        axis.title.x = element_blank()) +
+  ylab("Estimated Marginal Mean")
 ```
 
 ### The expression of the justices by speaker
